@@ -33,8 +33,7 @@
   <entry>
     <title>20240320-配置GitHub-SSH默认使用443端口</title>
     <url>/2024/09/20/20240320-%E9%85%8D%E7%BD%AEGitHub-SSH%E9%BB%98%E8%AE%A4%E4%BD%BF%E7%94%A8443%E7%AB%AF%E5%8F%A3/</url>
-    <content><![CDATA[<hr>
-<h2 id="title-配置GitHub-SSH默认使用443端口date-2024-03-26tags-Git-GitHub-SSHcategories-笔记"><a href="#title-配置GitHub-SSH默认使用443端口date-2024-03-26tags-Git-GitHub-SSHcategories-笔记" class="headerlink" title="title: 配置GitHub SSH默认使用443端口date: 2024&#x2F;03&#x2F;26tags: - Git - GitHub - SSHcategories: - 笔记"></a>title: 配置GitHub SSH默认使用443端口<br>date: 2024&#x2F;03&#x2F;26<br>tags:<br> - Git<br> - GitHub<br> - SSH<br>categories:<br> - 笔记</h2><h1 id="配置GitHub-SSH默认使用443端口"><a href="#配置GitHub-SSH默认使用443端口" class="headerlink" title="配置GitHub SSH默认使用443端口"></a>配置GitHub SSH默认使用443端口</h1><h2 id="1-测试443端口是否可用"><a href="#1-测试443端口是否可用" class="headerlink" title="1.测试443端口是否可用"></a>1.测试443端口是否可用</h2><p>首先测试一下使用443端口进行GitHub SSH连接：</p>
+    <content><![CDATA[<h1 id="配置GitHub-SSH默认使用443端口"><a href="#配置GitHub-SSH默认使用443端口" class="headerlink" title="配置GitHub SSH默认使用443端口"></a>配置GitHub SSH默认使用443端口</h1><h2 id="1-测试443端口是否可用"><a href="#1-测试443端口是否可用" class="headerlink" title="1.测试443端口是否可用"></a>1.测试443端口是否可用</h2><p>首先测试一下使用443端口进行GitHub SSH连接：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -T -p 443 git@ssh.github.com</span><br></pre></td></tr></table></figure>
 
 <p>如果一切正常，那么你应该得到如下输出：</p>
@@ -64,8 +63,7 @@
   <entry>
     <title>20240326-Typora激活教程</title>
     <url>/2024/09/20/20240326-Typora%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[<hr>
-<h2 id="title-Typora激活教程date-2024-03-26tags-Typora-破解categories-杂谈"><a href="#title-Typora激活教程date-2024-03-26tags-Typora-破解categories-杂谈" class="headerlink" title="title: Typora激活教程date: 2024&#x2F;03&#x2F;26tags: - Typora - 破解categories: - 杂谈"></a>title: Typora激活教程<br>date: 2024&#x2F;03&#x2F;26<br>tags:<br> - Typora<br> - 破解<br>categories:<br> - 杂谈</h2><p>::: tip 声明<br>本博客仅以学习为目的进行记录，请支持正版，并将本博客提及相关文件于24h内删除。<br>:::</p>
+    <content><![CDATA[<p>::: tip 声明<br>本博客仅以学习为目的进行记录，请支持正版，并将本博客提及相关文件于24h内删除。<br>:::</p>
 <h2 id="1-安装原版Typora"><a href="#1-安装原版Typora" class="headerlink" title="1.安装原版Typora"></a>1.安装原版Typora</h2><p><strong>安装过程略过</strong></p>
 <h2 id="2-克隆相关仓库"><a href="#2-克隆相关仓库" class="headerlink" title="2.克隆相关仓库"></a>2.克隆相关仓库</h2><h3 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h3><p>直接克隆<a href="https://github.com/hazukieq/Yporaject">Yporaject</a> (此项目对原两个项目进行了合并)，好处是一键编译即可，坏处是此项目并未和原项目代码同步。</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">可以直接克隆本项目的仓库, depth=1 表示仅克隆最新版本,以减少等待时间</span></span><br><span class="line">git clone https://github.com/hazukieq/Yporaject.git --depth=1</span><br></pre></td></tr></table></figure>
@@ -98,8 +96,7 @@
   <entry>
     <title>20240327-LeetCode-15.三数之和</title>
     <url>/2024/09/20/20240327-LeetCode-15.%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C/</url>
-    <content><![CDATA[<hr>
-<h2 id="title-LeetCode-15-三数之和date-2024-03-27tags-LeetCode-双指针categories-笔记"><a href="#title-LeetCode-15-三数之和date-2024-03-27tags-LeetCode-双指针categories-笔记" class="headerlink" title="title: LeetCode-15.三数之和date: 2024&#x2F;03&#x2F;27tags: - LeetCode - 双指针categories: - 笔记"></a>title: LeetCode-15.三数之和<br>date: 2024&#x2F;03&#x2F;27<br>tags:<br> - LeetCode<br> - 双指针<br>categories:<br> - 笔记</h2><h1 id="15-三数之和"><a href="#15-三数之和" class="headerlink" title="15.三数之和"></a>15.三数之和</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给你一个整数数组 <code>nums</code> ，判断是否存在三元组 <code>[nums[i], nums[j], nums[k]]</code> 满足 <code>i != j</code>、<code>i != k</code> 且 <code>j != k</code> ，同时还满足 <code>nums[i] + nums[j] + nums[k] == 0</code> 。请</p>
+    <content><![CDATA[<h1 id="15-三数之和"><a href="#15-三数之和" class="headerlink" title="15.三数之和"></a>15.三数之和</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给你一个整数数组 <code>nums</code> ，判断是否存在三元组 <code>[nums[i], nums[j], nums[k]]</code> 满足 <code>i != j</code>、<code>i != k</code> 且 <code>j != k</code> ，同时还满足 <code>nums[i] + nums[j] + nums[k] == 0</code> 。请</p>
 <p>你返回所有和为 <code>0</code> 且不重复的三元组。</p>
 <p>**注意：**答案中不可以包含重复的三元组。</p>
 <p><strong>示例 1：</strong></p>
@@ -130,8 +127,7 @@
   <entry>
     <title>20240328-Debian12根分区扩容记录</title>
     <url>/2024/09/20/20240328-Debian12%E6%A0%B9%E5%88%86%E5%8C%BA%E6%89%A9%E5%AE%B9%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<hr>
-<h2 id="title-Debian12根分区扩容记录date-2024-03-29tags-Debian-扩容categories-杂谈"><a href="#title-Debian12根分区扩容记录date-2024-03-29tags-Debian-扩容categories-杂谈" class="headerlink" title="title: Debian12根分区扩容记录date: 2024&#x2F;03&#x2F;29tags: - Debian - 扩容categories: - 杂谈"></a>title: Debian12根分区扩容记录<br>date: 2024&#x2F;03&#x2F;29<br>tags:<br> - Debian<br> - 扩容<br>categories:<br> - 杂谈</h2><blockquote>
+    <content><![CDATA[<blockquote>
 <p>[!WARNING]</p>
 <p>以下操作可能会导致包括但不仅限于数据丢失、无法启动等问题，严重时您可能需要重装系统，如要继续，请确保已做好数据备份等准备工作。</p>
 </blockquote>
@@ -197,8 +193,7 @@
   <entry>
     <title>20240408-Rust-01-猜数字游戏</title>
     <url>/2024/09/20/20240408-Rust-01-%E7%8C%9C%E6%95%B0%E5%AD%97%E6%B8%B8%E6%88%8F/</url>
-    <content><![CDATA[<hr>
-<h2 id="title-Rust-01-猜数字游戏date-2024-04-08tags-Rustcategories-笔记"><a href="#title-Rust-01-猜数字游戏date-2024-04-08tags-Rustcategories-笔记" class="headerlink" title="title: Rust-01-猜数字游戏date: 2024&#x2F;04&#x2F;08tags: - Rustcategories: - 笔记"></a>title: Rust-01-猜数字游戏<br>date: 2024&#x2F;04&#x2F;08<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><h1 id="猜数字游戏"><a href="#猜数字游戏" class="headerlink" title="猜数字游戏"></a>猜数字游戏</h1><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> rand::Rng;</span><br><span class="line"><span class="keyword">use</span> std::cmp::Ordering;</span><br><span class="line"><span class="keyword">use</span> std::io;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The main function of the program.</span></span><br><span class="line"><span class="comment"> * It starts the game by printing a welcome message, generating a secret number, and then entering a loop where it prompts the user to guess the number.</span></span><br><span class="line"><span class="comment"> * It continues to loop until the user guesses the correct number.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;Guess the number!&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Generates a secret number between 1 and 100 (inclusive) using the `rand::thread_rng().gen_range(1..101)` function.</span></span><br><span class="line"><span class="comment">     * This number will be the target that the user will try to guess.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">secret_number</span> = rand::<span class="title function_ invoke__">thread_rng</span>().<span class="title function_ invoke__">gen_range</span>(<span class="number">1</span>..<span class="number">101</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The main game loop. It will continue to run until the user guesses the correct number.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">loop</span> &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;Enter your guess: &quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Reads a line of input from the user.</span></span><br><span class="line"><span class="comment">         * If the input cannot be read, the program will panic with the message &quot;Failed to read line&quot;.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">guess</span> = <span class="type">String</span>::<span class="title function_ invoke__">new</span>();</span><br><span class="line">        io::<span class="title function_ invoke__">stdin</span>()</span><br><span class="line">            .<span class="title function_ invoke__">read_line</span>(&amp;<span class="keyword">mut</span> guess)</span><br><span class="line">            .<span class="title function_ invoke__">expect</span>(<span class="string">&quot;Failed to read line&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Parses the user&#x27;s input into a u32 integer.</span></span><br><span class="line"><span class="comment">         * If the input cannot be parsed, the program will skip the current iteration of the loop and continue to the next one.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">guess</span>: <span class="type">u32</span> = <span class="keyword">match</span> guess.<span class="title function_ invoke__">trim</span>().<span class="title function_ invoke__">parse</span>() &#123;</span><br><span class="line">            <span class="title function_ invoke__">Ok</span>(num) =&gt; num,</span><br><span class="line">            <span class="title function_ invoke__">Err</span>(_) =&gt; <span class="keyword">continue</span>,</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;You guessed: &#123;&#125;&quot;</span>, guess);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Compares the user&#x27;s guess with the secret number.</span></span><br><span class="line"><span class="comment">         * If the guess is less than the secret number, it prints &quot;Too small!&quot;.</span></span><br><span class="line"><span class="comment">         * If the guess is greater than the secret number, it prints &quot;Too big!&quot;.</span></span><br><span class="line"><span class="comment">         * If the guess is equal to the secret number, it prints &quot;You got it!&quot; and breaks out of the loop.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">match</span> guess.<span class="title function_ invoke__">cmp</span>(&amp;secret_number) &#123;</span><br><span class="line">            Ordering::Less =&gt; <span class="built_in">println!</span>(<span class="string">&quot;Too small!&quot;</span>),</span><br><span class="line">            Ordering::Greater =&gt; <span class="built_in">println!</span>(<span class="string">&quot;Too big!&quot;</span>),</span><br><span class="line">            Ordering::Equal =&gt; &#123;</span><br><span class="line">                <span class="built_in">println!</span>(<span class="string">&quot;You got it!&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h1 id="猜数字游戏"><a href="#猜数字游戏" class="headerlink" title="猜数字游戏"></a>猜数字游戏</h1><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> rand::Rng;</span><br><span class="line"><span class="keyword">use</span> std::cmp::Ordering;</span><br><span class="line"><span class="keyword">use</span> std::io;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The main function of the program.</span></span><br><span class="line"><span class="comment"> * It starts the game by printing a welcome message, generating a secret number, and then entering a loop where it prompts the user to guess the number.</span></span><br><span class="line"><span class="comment"> * It continues to loop until the user guesses the correct number.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;Guess the number!&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Generates a secret number between 1 and 100 (inclusive) using the `rand::thread_rng().gen_range(1..101)` function.</span></span><br><span class="line"><span class="comment">     * This number will be the target that the user will try to guess.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">secret_number</span> = rand::<span class="title function_ invoke__">thread_rng</span>().<span class="title function_ invoke__">gen_range</span>(<span class="number">1</span>..<span class="number">101</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The main game loop. It will continue to run until the user guesses the correct number.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">loop</span> &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;Enter your guess: &quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Reads a line of input from the user.</span></span><br><span class="line"><span class="comment">         * If the input cannot be read, the program will panic with the message &quot;Failed to read line&quot;.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">guess</span> = <span class="type">String</span>::<span class="title function_ invoke__">new</span>();</span><br><span class="line">        io::<span class="title function_ invoke__">stdin</span>()</span><br><span class="line">            .<span class="title function_ invoke__">read_line</span>(&amp;<span class="keyword">mut</span> guess)</span><br><span class="line">            .<span class="title function_ invoke__">expect</span>(<span class="string">&quot;Failed to read line&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Parses the user&#x27;s input into a u32 integer.</span></span><br><span class="line"><span class="comment">         * If the input cannot be parsed, the program will skip the current iteration of the loop and continue to the next one.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">guess</span>: <span class="type">u32</span> = <span class="keyword">match</span> guess.<span class="title function_ invoke__">trim</span>().<span class="title function_ invoke__">parse</span>() &#123;</span><br><span class="line">            <span class="title function_ invoke__">Ok</span>(num) =&gt; num,</span><br><span class="line">            <span class="title function_ invoke__">Err</span>(_) =&gt; <span class="keyword">continue</span>,</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;You guessed: &#123;&#125;&quot;</span>, guess);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Compares the user&#x27;s guess with the secret number.</span></span><br><span class="line"><span class="comment">         * If the guess is less than the secret number, it prints &quot;Too small!&quot;.</span></span><br><span class="line"><span class="comment">         * If the guess is greater than the secret number, it prints &quot;Too big!&quot;.</span></span><br><span class="line"><span class="comment">         * If the guess is equal to the secret number, it prints &quot;You got it!&quot; and breaks out of the loop.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">match</span> guess.<span class="title function_ invoke__">cmp</span>(&amp;secret_number) &#123;</span><br><span class="line">            Ordering::Less =&gt; <span class="built_in">println!</span>(<span class="string">&quot;Too small!&quot;</span>),</span><br><span class="line">            Ordering::Greater =&gt; <span class="built_in">println!</span>(<span class="string">&quot;Too big!&quot;</span>),</span><br><span class="line">            Ordering::Equal =&gt; &#123;</span><br><span class="line">                <span class="built_in">println!</span>(<span class="string">&quot;You got it!&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>笔记</category>
@@ -210,8 +205,7 @@
   <entry>
     <title>20240409-Rust-02-变量与可变性</title>
     <url>/2024/09/20/20240409-Rust-02-%E5%8F%98%E9%87%8F%E4%B8%8E%E5%8F%AF%E5%8F%98%E6%80%A7/</url>
-    <content><![CDATA[<hr>
-<h2 id="title-Rust-02-变量与可变性date-2024-04-09tags-Rustcategories-笔记"><a href="#title-Rust-02-变量与可变性date-2024-04-09tags-Rustcategories-笔记" class="headerlink" title="title: Rust-02-变量与可变性date: 2024&#x2F;04&#x2F;09tags: - Rustcategories: - 笔记"></a>title: Rust-02-变量与可变性<br>date: 2024&#x2F;04&#x2F;09<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><h1 id="变量与可变性"><a href="#变量与可变性" class="headerlink" title="变量与可变性"></a>变量与可变性</h1><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#![allow(unused)]</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="comment">// 变量默认是不可变的，如要声明可变变量，应使用mut关键字</span></span><br><span class="line">    <span class="comment">// let x = 5;</span></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">x</span> = <span class="number">5</span>;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The value of x is &#123;&#125;&quot;</span>, x); <span class="comment">// 5</span></span><br><span class="line">    x = <span class="number">6</span>;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The value of x is &#123;&#125;&quot;</span>, x); <span class="comment">// 6</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 常量，命名约定是全部字母大写，并以下划线分隔单词</span></span><br><span class="line">    <span class="comment">// 在声明的作用域内，常量在程序运行的整个过程中都有效</span></span><br><span class="line">    <span class="keyword">const</span> THREE_HOURS_IN_SECONDS: <span class="type">u32</span> = <span class="number">60</span> * <span class="number">60</span> * <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遮蔽(shadow)，可以通过使用相同的变量名并重复使用 let 关键字来遮蔽之前的变量</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">x</span> = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">x</span> = x + <span class="number">1</span>;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="variable">x</span> = x * <span class="number">2</span>;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;The value of x in the inner scope is: &#123;&#125;&quot;</span>, x); <span class="comment">// 12</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The value of x is: &#123;&#125;&quot;</span>, x); <span class="comment">// 6</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遮蔽也可以改变变量的类型</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">spaces</span> = <span class="string">&quot;   &quot;</span>;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">spaces</span> = spaces.<span class="title function_ invoke__">len</span>();</span><br><span class="line">    <span class="comment">// 而 mut 不行</span></span><br><span class="line">    <span class="comment">// let mut spaces = &quot;   &quot;;</span></span><br><span class="line">    <span class="comment">// spaces = spaces.len();</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h1 id="变量与可变性"><a href="#变量与可变性" class="headerlink" title="变量与可变性"></a>变量与可变性</h1><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#![allow(unused)]</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="comment">// 变量默认是不可变的，如要声明可变变量，应使用mut关键字</span></span><br><span class="line">    <span class="comment">// let x = 5;</span></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">x</span> = <span class="number">5</span>;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The value of x is &#123;&#125;&quot;</span>, x); <span class="comment">// 5</span></span><br><span class="line">    x = <span class="number">6</span>;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The value of x is &#123;&#125;&quot;</span>, x); <span class="comment">// 6</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 常量，命名约定是全部字母大写，并以下划线分隔单词</span></span><br><span class="line">    <span class="comment">// 在声明的作用域内，常量在程序运行的整个过程中都有效</span></span><br><span class="line">    <span class="keyword">const</span> THREE_HOURS_IN_SECONDS: <span class="type">u32</span> = <span class="number">60</span> * <span class="number">60</span> * <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遮蔽(shadow)，可以通过使用相同的变量名并重复使用 let 关键字来遮蔽之前的变量</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">x</span> = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">x</span> = x + <span class="number">1</span>;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="variable">x</span> = x * <span class="number">2</span>;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;The value of x in the inner scope is: &#123;&#125;&quot;</span>, x); <span class="comment">// 12</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The value of x is: &#123;&#125;&quot;</span>, x); <span class="comment">// 6</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遮蔽也可以改变变量的类型</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">spaces</span> = <span class="string">&quot;   &quot;</span>;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">spaces</span> = spaces.<span class="title function_ invoke__">len</span>();</span><br><span class="line">    <span class="comment">// 而 mut 不行</span></span><br><span class="line">    <span class="comment">// let mut spaces = &quot;   &quot;;</span></span><br><span class="line">    <span class="comment">// spaces = spaces.len();</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>笔记</category>
@@ -223,8 +217,7 @@
   <entry>
     <title>20240409-Rust-03-数据类型</title>
     <url>/2024/09/20/20240409-Rust-03-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url>
-    <content><![CDATA[<hr>
-<h2 id="title-Rust-03-数据类型date-2024-04-09tags-Rustcategories-笔记"><a href="#title-Rust-03-数据类型date-2024-04-09tags-Rustcategories-笔记" class="headerlink" title="title: Rust-03-数据类型date: 2024&#x2F;04&#x2F;09tags: - Rustcategories: - 笔记"></a>title: Rust-03-数据类型<br>date: 2024&#x2F;04&#x2F;09<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><blockquote>
+    <content><![CDATA[<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><blockquote>
 <p>Rust 的每个值都有确切的<strong>数据类型</strong>（<em>data type</em>），该类型告诉 Rust 数据是被指定成哪类数据，从而让 Rust 知道如何使用该数据。在本节中，我们将介绍两种数据类型：标量类型和复合类型。</p>
 <p>请记住 Rust 是一种<strong>静态类型</strong>（<em>statically typed</em>）的语言，这意味着它必须在编译期知道所有变量的类型。</p>
 </blockquote>
@@ -419,8 +412,7 @@
   <entry>
     <title>20240410-Rust-00-前言</title>
     <url>/2024/09/20/20240410-Rust-00-%E5%89%8D%E8%A8%80/</url>
-    <content><![CDATA[<hr>
-<h2 id="title-Rust-00-前言date-2024-04-10tags-Rustcategories-笔记"><a href="#title-Rust-00-前言date-2024-04-10tags-Rustcategories-笔记" class="headerlink" title="title: Rust-00-前言date: 2024&#x2F;04&#x2F;10tags: - Rustcategories: - 笔记"></a>title: Rust-00-前言<br>date: 2024&#x2F;04&#x2F;10<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><blockquote>
+    <content><![CDATA[<blockquote>
 <p>你说得对，但是Rust 是由 Mozilla 自主研发的一款全新零开销抽象编程语言。语言采用一种被称作「RAII」 的资源管理机制，在这里，退出作用域的对象将触发「drop」方法，进而被销毀。你将扮演一位名为「Rustacean」的神秘角色，在编码过程中邂逅形状各异、形式独特的生命周期们，和它们一起击败编译错误，找回失去的内存安全——同时，逐步发掘「servo」的真相。</p>
 </blockquote>
 ]]></content>
@@ -434,8 +426,7 @@
   <entry>
     <title>20240410-Rust-04-语句与表达式与函数</title>
     <url>/2024/09/20/20240410-Rust-04-%E8%AF%AD%E5%8F%A5%E4%B8%8E%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E5%87%BD%E6%95%B0/</url>
-    <content><![CDATA[<hr>
-<h2 id="title-Rust-04-语句与表达式与函数date-2024-04-10tags-Rustcategories-笔记"><a href="#title-Rust-04-语句与表达式与函数date-2024-04-10tags-Rustcategories-笔记" class="headerlink" title="title: Rust-04-语句与表达式与函数date: 2024&#x2F;04&#x2F;10tags: - Rustcategories: - 笔记"></a>title: Rust-04-语句与表达式与函数<br>date: 2024&#x2F;04&#x2F;10<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><h1 id="语句与表达式与函数"><a href="#语句与表达式与函数" class="headerlink" title="语句与表达式与函数"></a>语句与表达式与函数</h1><h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p><code>main</code>函数是程序入口，<code>fn</code>是用来声明新函数的关键字。</p>
+    <content><![CDATA[<h1 id="语句与表达式与函数"><a href="#语句与表达式与函数" class="headerlink" title="语句与表达式与函数"></a>语句与表达式与函数</h1><h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p><code>main</code>函数是程序入口，<code>fn</code>是用来声明新函数的关键字。</p>
 <p>Rust代码中的函数和变量名都使用下划线命名法（<em>snake case</em>，直译为蛇形命名法）规范风格。此命名法中，所有字母都是小写并使用下划线分隔单词。</p>
 <p>与C&#x2F;C++不同的是，Rust 不关心函数定义于何处，只要定义了就行。</p>
 <p>形参必须标注类型。</p>
@@ -503,8 +494,7 @@
   <entry>
     <title>20240410-Rust-05-控制流</title>
     <url>/2024/09/20/20240410-Rust-05-%E6%8E%A7%E5%88%B6%E6%B5%81/</url>
-    <content><![CDATA[<hr>
-<h2 id="title-Rust-05-控制流date-2024-04-10tags-Rustcategories-笔记"><a href="#title-Rust-05-控制流date-2024-04-10tags-Rustcategories-笔记" class="headerlink" title="title: Rust-05-控制流date: 2024&#x2F;04&#x2F;10tags: - Rustcategories: - 笔记"></a>title: Rust-05-控制流<br>date: 2024&#x2F;04&#x2F;10<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><h1 id="控制流"><a href="#控制流" class="headerlink" title="控制流"></a>控制流</h1><blockquote>
+    <content><![CDATA[<h1 id="控制流"><a href="#控制流" class="headerlink" title="控制流"></a>控制流</h1><blockquote>
 <p>根据条件是否为真来决定是否执行某些代码，或根据条件是否为真来重复运行一段代码，是大部分编程语言的基本组成部分。Rust 代码中最常见的用来控制执行流的结构是 <code>if</code> 表达式和循环。</p>
 </blockquote>
 <h2 id="if-表达式"><a href="#if-表达式" class="headerlink" title="if 表达式"></a>if 表达式</h2><p>每个分支的代码块都必须以<code>{}</code>包裹，哪怕只有一行或一条表达式。</p>
@@ -586,8 +576,7 @@
   <entry>
     <title>20240411-Rust-06-所有权</title>
     <url>/2024/09/20/20240411-Rust-06-%E6%89%80%E6%9C%89%E6%9D%83/</url>
-    <content><![CDATA[<hr>
-<h2 id="title-Rust-06-所有权date-2024-04-11tags-Rustcategories-笔记"><a href="#title-Rust-06-所有权date-2024-04-11tags-Rustcategories-笔记" class="headerlink" title="title: Rust-06-所有权date: 2024&#x2F;04&#x2F;11tags: - Rustcategories: - 笔记"></a>title: Rust-06-所有权<br>date: 2024&#x2F;04&#x2F;11<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><h1 id="所有权"><a href="#所有权" class="headerlink" title="所有权"></a>所有权</h1><blockquote>
+    <content><![CDATA[<h1 id="所有权"><a href="#所有权" class="headerlink" title="所有权"></a>所有权</h1><blockquote>
 <p>所有权（系统）是 Rust 最为与众不同的特性，它让 Rust 无需垃圾回收器（garbage collector）即可保证内存安全。因此，理解 Rust 中所有权的运作方式非常重要。在本章中，我们将讨论所有权以及相关功能：借用、slice 以及 Rust 如何在内存中存放数据。</p>
 </blockquote>
 <h2 id="什么是所有权？"><a href="#什么是所有权？" class="headerlink" title="什么是所有权？"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch04-01-what-is-ownership.html#%E4%BB%80%E4%B9%88%E6%98%AF%E6%89%80%E6%9C%89%E6%9D%83">什么是所有权？</a></h2><p>Rust 的核心功能（之一）是 <strong>所有权</strong>（<em>ownership</em>）。虽然该功能很容易解释，但它对语言的其他部分有着深刻的影响。</p>
@@ -733,8 +722,7 @@
   <entry>
     <title>20240411-Rust-07-引用与借用</title>
     <url>/2024/09/20/20240411-Rust-07-%E5%BC%95%E7%94%A8%E4%B8%8E%E5%80%9F%E7%94%A8/</url>
-    <content><![CDATA[<hr>
-<h2 id="title-Rust-07-引用与借用date-2024-04-11tags-Rustcategories-笔记"><a href="#title-Rust-07-引用与借用date-2024-04-11tags-Rustcategories-笔记" class="headerlink" title="title: Rust-07-引用与借用date: 2024&#x2F;04&#x2F;11tags: - Rustcategories: - 笔记"></a>title: Rust-07-引用与借用<br>date: 2024&#x2F;04&#x2F;11<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><h2 id="引用与借用"><a href="#引用与借用" class="headerlink" title="引用与借用"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch04-02-references-and-borrowing.html#%E5%BC%95%E7%94%A8%E4%B8%8E%E5%80%9F%E7%94%A8">引用与借用</a></h2><p>示例 4-5 中的元组代码有这样一个问题：我们必须将 <code>String</code> 返回给调用函数，以便在调用 <code>calculate_length</code> 后仍能使用 <code>String</code>，因为 <code>String</code> 被移动到了 <code>calculate_length</code> 内。</p>
+    <content><![CDATA[<h2 id="引用与借用"><a href="#引用与借用" class="headerlink" title="引用与借用"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch04-02-references-and-borrowing.html#%E5%BC%95%E7%94%A8%E4%B8%8E%E5%80%9F%E7%94%A8">引用与借用</a></h2><p>示例 4-5 中的元组代码有这样一个问题：我们必须将 <code>String</code> 返回给调用函数，以便在调用 <code>calculate_length</code> 后仍能使用 <code>String</code>，因为 <code>String</code> 被移动到了 <code>calculate_length</code> 内。</p>
 <p>下面是如何定义并使用一个（新的）<code>calculate_length</code> 函数，它以一个对象的引用作为参数而不是获取值的所有权：</p>
 <p>文件名: src&#x2F;main.rs</p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">s1</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">len</span> = <span class="title function_ invoke__">calculate_length</span>(&amp;s1);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The length of &#x27;&#123;&#125;&#x27; is &#123;&#125;.&quot;</span>, s1, len);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">calculate_length</span>(s: &amp;<span class="type">String</span>) <span class="punctuation">-&gt;</span> <span class="type">usize</span> &#123;</span><br><span class="line">    s.<span class="title function_ invoke__">len</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -837,8 +825,7 @@
   <entry>
     <title>20240411-Rust-08-切片</title>
     <url>/2024/09/20/20240411-Rust-08-%E5%88%87%E7%89%87/</url>
-    <content><![CDATA[<hr>
-<h2 id="title-Rust-08-切片date-2024-04-11tags-Rustcategories-笔记"><a href="#title-Rust-08-切片date-2024-04-11tags-Rustcategories-笔记" class="headerlink" title="title: Rust-08-切片date: 2024&#x2F;04&#x2F;11tags: - Rustcategories: - 笔记"></a>title: Rust-08-切片<br>date: 2024&#x2F;04&#x2F;11<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><h2 id="切片-Slice-类型"><a href="#切片-Slice-类型" class="headerlink" title="切片 Slice 类型"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch04-03-slices.html#%E5%88%87%E7%89%87-slice-%E7%B1%BB%E5%9E%8B">切片 Slice 类型</a></h2><p>另一个没有所有权的数据类型是 <em>slice</em>。slice 允许你引用集合中一段连续的元素序列，而不用引用整个集合。</p>
+    <content><![CDATA[<h2 id="切片-Slice-类型"><a href="#切片-Slice-类型" class="headerlink" title="切片 Slice 类型"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch04-03-slices.html#%E5%88%87%E7%89%87-slice-%E7%B1%BB%E5%9E%8B">切片 Slice 类型</a></h2><p>另一个没有所有权的数据类型是 <em>slice</em>。slice 允许你引用集合中一段连续的元素序列，而不用引用整个集合。</p>
 <p>这里有一个编程小习题：编写一个函数，该函数接收一个字符串，并返回在该字符串中找到的第一个单词。如果函数在该字符串中并未找到空格，则整个字符串就是一个单词，所以应该返回整个字符串。</p>
 <p>让我们考虑一下这个函数的签名：</p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">first_word</span>(s: &amp;<span class="type">String</span>) <span class="punctuation">-&gt;</span> ?</span><br></pre></td></tr></table></figure>
@@ -941,8 +928,7 @@
   <entry>
     <title>20240413-Rust-09-结构体</title>
     <url>/2024/09/20/20240413-Rust-09-%E7%BB%93%E6%9E%84%E4%BD%93/</url>
-    <content><![CDATA[<hr>
-<h2 id="title-Rust-09-结构体date-2024-04-13tags-Rustcategories-笔记"><a href="#title-Rust-09-结构体date-2024-04-13tags-Rustcategories-笔记" class="headerlink" title="title: Rust-09-结构体date: 2024&#x2F;04&#x2F;13tags: - Rustcategories: - 笔记"></a>title: Rust-09-结构体<br>date: 2024&#x2F;04&#x2F;13<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><h1 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h1><h2 id="定义并实例化结构体"><a href="#定义并实例化结构体" class="headerlink" title="定义并实例化结构体"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch05-01-defining-structs.html#%E5%AE%9A%E4%B9%89%E5%B9%B6%E5%AE%9E%E4%BE%8B%E5%8C%96%E7%BB%93%E6%9E%84%E4%BD%93">定义并实例化结构体</a></h2><p>结构体和我们在<a href="https://www.rustwiki.org.cn/zh-CN/book/ch03-02-data-types.html#%E5%85%83%E7%BB%84%E7%B1%BB%E5%9E%8B">“元组类型”</a>章节论过的元组类似。和元组一样，结构体的每一部分可以是不同类型。但不同于元组，结构体需要命名各部分数据以便能清楚的表明其值的意义。由于有了这些名字，结构体比元组更灵活：不需要依赖顺序来指定或访问实例中的值。</p>
+    <content><![CDATA[<h1 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h1><h2 id="定义并实例化结构体"><a href="#定义并实例化结构体" class="headerlink" title="定义并实例化结构体"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch05-01-defining-structs.html#%E5%AE%9A%E4%B9%89%E5%B9%B6%E5%AE%9E%E4%BE%8B%E5%8C%96%E7%BB%93%E6%9E%84%E4%BD%93">定义并实例化结构体</a></h2><p>结构体和我们在<a href="https://www.rustwiki.org.cn/zh-CN/book/ch03-02-data-types.html#%E5%85%83%E7%BB%84%E7%B1%BB%E5%9E%8B">“元组类型”</a>章节论过的元组类似。和元组一样，结构体的每一部分可以是不同类型。但不同于元组，结构体需要命名各部分数据以便能清楚的表明其值的意义。由于有了这些名字，结构体比元组更灵活：不需要依赖顺序来指定或访问实例中的值。</p>
 <p>定义结构体，需要使用 <code>struct</code> 关键字并为整个结构体提供一个名字。结构体的名字需要描述它所组合的数据的意义。接着，在大括号中，定义每一部分数据的名字和类型，我们称为 <strong>字段</strong>（<em>field</em>）。例如，示例 5-1 展示了一个存储用户账号信息的结构体：</p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    active: <span class="type">bool</span>,</span><br><span class="line">    username: <span class="type">String</span>,</span><br><span class="line">    email: <span class="type">String</span>,</span><br><span class="line">    sign_in_count: <span class="type">u64</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -1025,8 +1011,7 @@
   <entry>
     <title>20240414-C++-Concepts</title>
     <url>/2024/09/20/20240414-C++-Concepts/</url>
-    <content><![CDATA[<hr>
-<h2 id="title-C-Conceptsdate-2024-04-14tags-C-categories-笔记"><a href="#title-C-Conceptsdate-2024-04-14tags-C-categories-笔记" class="headerlink" title="title: C++-Conceptsdate: 2024&#x2F;04&#x2F;14tags: - C++categories: - 笔记"></a>title: C++-Concepts<br>date: 2024&#x2F;04&#x2F;14<br>tags:<br> - C++<br>categories:<br> - 笔记</h2><h1 id="C-Concepts"><a href="#C-Concepts" class="headerlink" title="C++ Concepts"></a>C++ Concepts</h1><p>概念（Concepts）是C++20中引入的一项特性，它们是对模板参数的约束，用于指定模板参数必须满足的接口（例如，一组必需的函数、类型、操作符等）和语义要求。概念旨在提高模板编程的表达力和安全性，通过更清晰的语义来改善编译器错误信息，并促使编写更干净、更易于理解的代码。</p>
+    <content><![CDATA[<h1 id="C-Concepts"><a href="#C-Concepts" class="headerlink" title="C++ Concepts"></a>C++ Concepts</h1><p>概念（Concepts）是C++20中引入的一项特性，它们是对模板参数的约束，用于指定模板参数必须满足的接口（例如，一组必需的函数、类型、操作符等）和语义要求。概念旨在提高模板编程的表达力和安全性，通过更清晰的语义来改善编译器错误信息，并促使编写更干净、更易于理解的代码。</p>
 <p>在C++20之前，模板编程通常是通过特化和重载来实现各种约束的，这往往会产生冗长的错误信息，让人难以理解实际的问题所在。概念允许你以更声明式的方式指定约束，使得模板的意图更明确，能够在编译时提早发现错误，同时生成更有用的错误信息。</p>
 <p><strong>以下是一些使用概念的优势：</strong></p>
 <ol>
@@ -1060,8 +1045,7 @@
   <entry>
     <title>20240627-WebServer-0</title>
     <url>/2024/09/20/20240627-WebServer-0/</url>
-    <content><![CDATA[<hr>
-<h2 id="title-WebServer-0date-2024-06-27tags-WebServercategories-笔记"><a href="#title-WebServer-0date-2024-06-27tags-WebServercategories-笔记" class="headerlink" title="title: WebServer-0date: 2024&#x2F;06&#x2F;27tags: - WebServercategories: - 笔记"></a>title: WebServer-0<br>date: 2024&#x2F;06&#x2F;27<br>tags:<br> - WebServer<br>categories:<br> - 笔记</h2><p>在设计一个WebServer时，选择线程池还是协程取决于你的具体需求、预期的并发量、以及你对编程模型的偏好。下面我将从几个方面分析线程池和协程的优缺点，以帮助你做出决策。</p>
+    <content><![CDATA[<p>在设计一个WebServer时，选择线程池还是协程取决于你的具体需求、预期的并发量、以及你对编程模型的偏好。下面我将从几个方面分析线程池和协程的优缺点，以帮助你做出决策。</p>
 <h3 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h3><p><strong>优点：</strong></p>
 <ol>
 <li><strong>成熟稳定</strong>：线程池是多线程编程中常用的技术，已经非常成熟和稳定。</li>
@@ -1161,8 +1145,7 @@
   <entry>
     <title>BMP图片格式</title>
     <url>/2024/09/20/BMP%E5%9B%BE%E7%89%87%E6%A0%BC%E5%BC%8F/</url>
-    <content><![CDATA[<hr>
-<h2 id="title-BMP图片格式date-2023-07-08tags-BMP图片categories-笔记"><a href="#title-BMP图片格式date-2023-07-08tags-BMP图片categories-笔记" class="headerlink" title="title: BMP图片格式date: 2023&#x2F;07&#x2F;08tags: - BMP图片categories: - 笔记"></a>title: BMP图片格式<br>date: 2023&#x2F;07&#x2F;08<br>tags:<br> - BMP图片<br>categories:<br> - 笔记</h2><p><img src="https://s2.loli.net/2024/09/20/hmtQkegKV2XfE45.png" alt="bmp.png"></p>
+    <content><![CDATA[<p><img src="https://s2.loli.net/2024/09/20/hmtQkegKV2XfE45.png" alt="bmp.png"></p>
 ]]></content>
       <categories>
         <category>笔记</category>
@@ -1174,7 +1157,7 @@
   <entry>
     <title>LeetCode-189.轮转数组</title>
     <url>/2024/09/20/LeetCode-189.%E8%BD%AE%E8%BD%AC%E6%95%B0%E7%BB%84/</url>
-    <content><![CDATA[<h2 id="—"><a href="#—" class="headerlink" title="—"></a>—</h2><h2 id="title-LeetCode-189-轮转数组date-2024-03-21tags-LeetCode-C-categories-笔记"><a href="#title-LeetCode-189-轮转数组date-2024-03-21tags-LeetCode-C-categories-笔记" class="headerlink" title="title: LeetCode-189.轮转数组date: 2024&#x2F;03&#x2F;21tags: - LeetCode - C++categories: - 笔记"></a>title: LeetCode-189.轮转数组<br>date: 2024&#x2F;03&#x2F;21<br>tags:<br> - LeetCode<br> - C++<br>categories:<br> - 笔记</h2><h1 id="189-轮转数组"><a href="#189-轮转数组" class="headerlink" title="189.轮转数组"></a>189.轮转数组</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个整数数组 <code>nums</code>，将数组中的元素向右轮转 <code>k</code> 个位置，其中 <code>k</code> 是非负数。</p>
+    <content><![CDATA[<h1 id="189-轮转数组"><a href="#189-轮转数组" class="headerlink" title="189.轮转数组"></a>189.轮转数组</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个整数数组 <code>nums</code>，将数组中的元素向右轮转 <code>k</code> 个位置，其中 <code>k</code> 是非负数。</p>
 <p><strong>示例 1:</strong></p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">输入: nums = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>], k = <span class="number">3</span></span><br><span class="line">输出: [<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line">解释:</span><br><span class="line">向右轮转 <span class="number">1</span> 步: [<span class="number">7</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line">向右轮转 <span class="number">2</span> 步: [<span class="number">6</span>,<span class="number">7</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line">向右轮转 <span class="number">3</span> 步: [<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br></pre></td></tr></table></figure>
 
@@ -1210,13 +1193,13 @@
       <tags>
         <tag>算法</tag>
         <tag>LeetCode</tag>
+        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
     <title>LeetCode-80.删除有序数组中的重复项II</title>
     <url>/2024/09/20/LeetCode-80.%E5%88%A0%E9%99%A4%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E9%A1%B9II/</url>
-    <content><![CDATA[<hr>
-<h2 id="title-LeetCode-80-删除有序数组中的重复项IIdate-2024-03-20tags-LeetCode-原地去重-快慢指针categories-笔记"><a href="#title-LeetCode-80-删除有序数组中的重复项IIdate-2024-03-20tags-LeetCode-原地去重-快慢指针categories-笔记" class="headerlink" title="title: LeetCode-80.删除有序数组中的重复项IIdate: 2024&#x2F;03&#x2F;20tags: - LeetCode - 原地去重 - 快慢指针categories: - 笔记"></a>title: LeetCode-80.删除有序数组中的重复项II<br>date: 2024&#x2F;03&#x2F;20<br>tags:<br> - LeetCode<br> - 原地去重<br> - 快慢指针<br>categories:<br> - 笔记</h2><h1 id="80-删除有序数组中的重复项II"><a href="#80-删除有序数组中的重复项II" class="headerlink" title="80.删除有序数组中的重复项II"></a>80.删除有序数组中的重复项II</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给你一个有序数组 <code>nums</code> ，请你**<a href="http://baike.baidu.com/item/%E5%8E%9F%E5%9C%B0%E7%AE%97%E6%B3%95"> 原地</a>** 删除重复出现的元素，使得出现次数超过两次的元素<strong>只出现两次</strong> ，返回删除后数组的新长度。</p>
+    <content><![CDATA[<h1 id="80-删除有序数组中的重复项II"><a href="#80-删除有序数组中的重复项II" class="headerlink" title="80.删除有序数组中的重复项II"></a>80.删除有序数组中的重复项II</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给你一个有序数组 <code>nums</code> ，请你**<a href="http://baike.baidu.com/item/%E5%8E%9F%E5%9C%B0%E7%AE%97%E6%B3%95"> 原地</a>** 删除重复出现的元素，使得出现次数超过两次的元素<strong>只出现两次</strong> ，返回删除后数组的新长度。</p>
 <p>不要使用额外的数组空间，你必须在 <strong><a href="https://baike.baidu.com/item/%E5%8E%9F%E5%9C%B0%E7%AE%97%E6%B3%95">原地 </a>修改输入数组</strong> 并在使用 O(1) 额外空间的条件下完成。</p>
 <p><strong>说明：</strong></p>
 <p>为什么返回数值是整数，但输出的答案是数组呢？</p>
@@ -1259,17 +1242,7 @@
   <entry>
     <title>Linux内存分页及虚拟地址到物理地址的计算</title>
     <url>/2024/09/20/Linux%E5%86%85%E5%AD%98%E5%88%86%E9%A1%B5%E5%8F%8A%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E5%88%B0%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80%E7%9A%84%E8%AE%A1%E7%AE%97/</url>
-    <content><![CDATA[<hr>
-<p>title: Linux内存分页及虚拟地址到物理地址的计算<br>date: 2023&#x2F;07&#x2F;10<br>tags:</p>
-<ul>
-<li>Linux</li>
-<li>kernel</li>
-<li>mmu</li>
-<li>内存管理<br>categories:</li>
-<li>笔记</li>
-</ul>
-<hr>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><ul>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><ul>
 <li>MMU(内存管理单元): MMU的主要作用是地址的转换，将虚拟地址转换为物理地址。不连续的物理地址也可以映射为连续的虚拟地址。</li>
 <li>待续。。。</li>
 </ul>
@@ -1285,8 +1258,7 @@
   <entry>
     <title>Linux内核态赋予进程root权限</title>
     <url>/2024/09/20/Linux%E5%86%85%E6%A0%B8%E6%80%81%E8%B5%8B%E4%BA%88%E8%BF%9B%E7%A8%8Broot%E6%9D%83%E9%99%90/</url>
-    <content><![CDATA[<hr>
-<h2 id="title-Linux内核态赋予进程root权限date-2023-07-10tags-Linux-kernel-rootcategories-笔记"><a href="#title-Linux内核态赋予进程root权限date-2023-07-10tags-Linux-kernel-rootcategories-笔记" class="headerlink" title="title: Linux内核态赋予进程root权限date: 2023&#x2F;07&#x2F;10tags: - Linux - kernel - rootcategories: - 笔记"></a>title: Linux内核态赋予进程root权限<br>date: 2023&#x2F;07&#x2F;10<br>tags:<br> - Linux<br> - kernel<br> - root<br>categories:<br> - 笔记</h2><h3 id="一、Linux中进程的用户管理"><a href="#一、Linux中进程的用户管理" class="headerlink" title="一、Linux中进程的用户管理"></a>一、Linux中进程的用户管理</h3><p>在Linux中，每个进程都拥有真实用户ID (&#x3D;&#x3D;uid&#x3D;&#x3D;)和真实组ID (&#x3D;&#x3D;gid&#x3D;&#x3D;)，有效用户ID (&#x3D;&#x3D;euid&#x3D;&#x3D;)和有效组ID (&#x3D;&#x3D;egid&#x3D;&#x3D;)，保存的设置用户ID (&#x3D;&#x3D;suid&#x3D;&#x3D;)和保存的设置组ID (&#x3D;&#x3D;sgid&#x3D;&#x3D;)，另外地，还有文件系统用户ID (&#x3D;&#x3D;fsuid&#x3D;&#x3D;)和文件系统组ID (&#x3D;&#x3D;fsgid&#x3D;&#x3D;)。</p>
+    <content><![CDATA[<h3 id="一、Linux中进程的用户管理"><a href="#一、Linux中进程的用户管理" class="headerlink" title="一、Linux中进程的用户管理"></a>一、Linux中进程的用户管理</h3><p>在Linux中，每个进程都拥有真实用户ID (&#x3D;&#x3D;uid&#x3D;&#x3D;)和真实组ID (&#x3D;&#x3D;gid&#x3D;&#x3D;)，有效用户ID (&#x3D;&#x3D;euid&#x3D;&#x3D;)和有效组ID (&#x3D;&#x3D;egid&#x3D;&#x3D;)，保存的设置用户ID (&#x3D;&#x3D;suid&#x3D;&#x3D;)和保存的设置组ID (&#x3D;&#x3D;sgid&#x3D;&#x3D;)，另外地，还有文件系统用户ID (&#x3D;&#x3D;fsuid&#x3D;&#x3D;)和文件系统组ID (&#x3D;&#x3D;fsgid&#x3D;&#x3D;)。</p>
 <blockquote>
 <p>(1) 真实用户、组 (uid&#x2F;gid)：指的是进程的实际所有者和所属组，一般就是执行此进程的用户。</p>
 <p>(2) 有效用户、组 (euid&#x2F;egid)：用来判断进程执行各种操作的权限。</p>
@@ -2194,9 +2166,7 @@
   <entry>
     <title>云服务器Debian12根分区扩容记录</title>
     <url>/2025/04/18/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8Debian12%E6%A0%B9%E5%88%86%E5%8C%BA%E6%89%A9%E5%AE%B9%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<hr>
-<h2 id="title-20240328-Debian12根分区扩容记录id-d08f41e3-5620-4a42-b801-74ae009af89fdate-2024-09-20-20-46-05auther-liccsucover-nullexcerpt-title-Debian12根分区扩容记录-date-2024-03-29-tags-Debian-扩容-categories-杂谈-WARNING-以下操作可能会导致包括但不仅限于数据丢失、无法启动等问题，严重时您可能需要重装系统，如要继续，请确保已做好数据备份等准备工作。-Debicategories-jiao-chengtags-linux-yun-wei"><a href="#title-20240328-Debian12根分区扩容记录id-d08f41e3-5620-4a42-b801-74ae009af89fdate-2024-09-20-20-46-05auther-liccsucover-nullexcerpt-title-Debian12根分区扩容记录-date-2024-03-29-tags-Debian-扩容-categories-杂谈-WARNING-以下操作可能会导致包括但不仅限于数据丢失、无法启动等问题，严重时您可能需要重装系统，如要继续，请确保已做好数据备份等准备工作。-Debicategories-jiao-chengtags-linux-yun-wei" class="headerlink" title="title: 20240328-Debian12根分区扩容记录id: d08f41e3-5620-4a42-b801-74ae009af89fdate: 2024-09-20 20:46:05auther: liccsucover: nullexcerpt: title Debian12根分区扩容记录 date 2024&#x2F;03&#x2F;29 tags Debian 扩容 categories 杂谈 [!WARNING] 以下操作可能会导致包括但不仅限于数据丢失、无法启动等问题，严重时您可能需要重装系统，如要继续，请确保已做好数据备份等准备工作。 Debicategories: - jiao-chengtags: - linux - yun-wei"></a>title: 20240328-Debian12根分区扩容记录<br>id: d08f41e3-5620-4a42-b801-74ae009af89f<br>date: 2024-09-20 20:46:05<br>auther: liccsu<br>cover: null<br>excerpt: title Debian12根分区扩容记录 date 2024&#x2F;03&#x2F;29 tags Debian 扩容 categories 杂谈 [!WARNING] 以下操作可能会导致包括但不仅限于数据丢失、无法启动等问题，严重时您可能需要重装系统，如要继续，请确保已做好数据备份等准备工作。 Debi<br>categories:<br> - jiao-cheng<br>tags:<br> - linux<br> - yun-wei</h2><hr>
-<h2 id="title-Debian12根分区扩容记录date-2024-03-29tags-Debian-扩容categories-杂谈"><a href="#title-Debian12根分区扩容记录date-2024-03-29tags-Debian-扩容categories-杂谈" class="headerlink" title="title: Debian12根分区扩容记录date: 2024&#x2F;03&#x2F;29tags: - Debian - 扩容categories: - 杂谈"></a>title: Debian12根分区扩容记录<br>date: 2024&#x2F;03&#x2F;29<br>tags:<br> - Debian<br> - 扩容<br>categories:<br> - 杂谈</h2><blockquote>
+    <content><![CDATA[<blockquote>
 <p>[!WARNING]</p>
 <p>以下操作可能会导致包括但不仅限于数据丢失、无法启动等问题，严重时您可能需要重装系统，如要继续，请确保已做好数据备份等准备工作。</p>
 </blockquote>
@@ -2306,6 +2276,8 @@
       </categories>
       <tags>
         <tag>服务器运维</tag>
+        <tag>Debian</tag>
+        <tag>扩容</tag>
       </tags>
   </entry>
   <entry>
@@ -2675,6 +2647,11 @@
 </blockquote>
 <h4 id="8-2-全局配置文件-config-yml，新增"><a href="#8-2-全局配置文件-config-yml，新增" class="headerlink" title="8.2 全局配置文件_config.yml，新增"></a>8.2 全局配置文件_config.yml，新增</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">    path: search.xml</span><br><span class="line">    field: post</span><br><span class="line">    format: html</span><br><span class="line">    limit: 10000</span><br></pre></td></tr></table></figure>
 <h4 id="8-3-hexo主题配置文件（-themes-next-config-yml），修改local-search的enable为true"><a href="#8-3-hexo主题配置文件（-themes-next-config-yml），修改local-search的enable为true" class="headerlink" title="8.3 hexo主题配置文件（\themes\next_config.yml），修改local_search的enable为true"></a>8.3 hexo主题配置文件（\themes\next_config.yml），修改local_search的enable为true</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Local search</span><br><span class="line"># Dependencies: https://github.com/flashlab/hexo-generator-search</span><br><span class="line">local_search:</span><br><span class="line">    enable: true</span><br><span class="line">    # if auto, trigger search by changing input</span><br><span class="line">    # if manual, trigger search by pressing enter key or search button</span><br><span class="line">    trigger: auto</span><br><span class="line">    # show top n results per article, show all results by setting to -1</span><br><span class="line">    top_n_per_article: 1</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
+    <title>构建自己的服务器项目</title>
+    <url>/2026/09/10/%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%A1%B9%E7%9B%AE/</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>操作系统知识梳理</title>
@@ -3624,10 +3601,5 @@ producerconsumer.insert(item);
       <tags>
         <tag>操作系统</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>构建自己的服务器项目</title>
-    <url>/2026/09/10/%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%A1%B9%E7%9B%AE/</url>
-    <content><![CDATA[]]></content>
   </entry>
 </search>
