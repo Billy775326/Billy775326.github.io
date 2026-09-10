@@ -2664,6 +2664,55 @@
       </tags>
   </entry>
   <entry>
+    <title>搭建博客 (Hexo github butterfly主题)</title>
+    <url>/2026/09/10/%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2-Hexo-github-butterfly%E4%B8%BB%E9%A2%98/</url>
+    <content><![CDATA[<h1 id="搭建博客-Hexo-github-butterfly主题"><a href="#搭建博客-Hexo-github-butterfly主题" class="headerlink" title="搭建博客 (Hexo + github + butterfly主题)"></a>搭建博客 (Hexo + github + butterfly主题)</h1><h3 id="1、下载安装Nodejs"><a href="#1、下载安装Nodejs" class="headerlink" title="1、下载安装Nodejs"></a>1、下载安装Nodejs</h3><p>自行查找教程</p>
+<blockquote>
+<p>node -v<br>npm -v</p>
+</blockquote>
+<p>查看是否安装成功</p>
+<h3 id="2、安装淘宝镜像cnpm管理器"><a href="#2、安装淘宝镜像cnpm管理器" class="headerlink" title="2、安装淘宝镜像cnpm管理器"></a>2、安装淘宝镜像cnpm管理器</h3><blockquote>
+<p>npm install -g cnpm –registry&#x3D;<a href="http://registry.npm.taobao.org/">http://registry.npm.taobao.org</a><br>cnpm -v　</p>
+</blockquote>
+<h3 id="3、安装hexo框架"><a href="#3、安装hexo框架" class="headerlink" title="3、安装hexo框架"></a>3、安装hexo框架</h3><blockquote>
+<p>cnpm install -g hexo-cli<br>hexo -v</p>
+</blockquote>
+<h3 id="4、安装git-若有github账号可直接跳过本条"><a href="#4、安装git-若有github账号可直接跳过本条" class="headerlink" title="4、安装git (若有github账号可直接跳过本条)"></a>4、安装git (若有github账号可直接跳过本条)</h3><p>git使用前配置：<br>下载完git后，需要告诉 git 你是谁，在向 git 仓库中提交时需要用到。</p>
+<ul>
+<li>1、配置提交人姓名：git config –global user.name 提交人姓名</li>
+<li>2、配置提交人姓名：git config –global user.email 提交人邮箱</li>
+<li>3、查看git配置信息：git config –list</li>
+</ul>
+<h3 id="5、使用hexo搭建博客-git-bash-shell-打开"><a href="#5、使用hexo搭建博客-git-bash-shell-打开" class="headerlink" title="5、使用hexo搭建博客 (git bash&#x2F;shell 打开)"></a>5、使用hexo搭建博客 (git bash&#x2F;shell 打开)</h3><h4 id="5-1-在指定位置创建文件夹，初始化hexo"><a href="#5-1-在指定位置创建文件夹，初始化hexo" class="headerlink" title="5.1 在指定位置创建文件夹，初始化hexo"></a>5.1 在指定位置创建文件夹，初始化hexo</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir blog  #创建blog目录</span><br><span class="line">cd blog   #进入blog目录</span><br><span class="line">hexo init  #生成博客 初始化博客</span><br><span class="line">hexo s  /  hexo server  #启动本地博客服务</span><br><span class="line"></span><br><span class="line">初始化之后，ls -al 查看可得文件</span><br><span class="line">_config.landscape.yml db.json package.json public/ source/ yarn.lock</span><br><span class="line">_config.yml node_modules/ package-lock.json scaffolds/ themes/</span><br><span class="line"></span><br><span class="line">其中 _config.yml 是配置文件</span><br><span class="line">themes/ 存放博客主题</span><br></pre></td></tr></table></figure>
+<h4 id="5-2-创建post"><a href="#5-2-创建post" class="headerlink" title="5.2 创建post"></a>5.2 创建post</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new &quot;我的第一篇博客文章&quot;</span><br><span class="line"></span><br><span class="line">cd source/_posts</span><br><span class="line">ls -al</span><br><span class="line">可查看所有的.md文件</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-3-编辑博客文章内容"><a href="#5-3-编辑博客文章内容" class="headerlink" title="5.3 编辑博客文章内容"></a>5.3 编辑博客文章内容</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim 我的第一篇博客文章.md</span><br><span class="line">编写格式遵循markdown格式</span><br></pre></td></tr></table></figure>
+<h4 id="5-4-进入创建博客目录blog的主目录，执行清理工作，再执行生成工作"><a href="#5-4-进入创建博客目录blog的主目录，执行清理工作，再执行生成工作" class="headerlink" title="5.4 进入创建博客目录blog的主目录，执行清理工作，再执行生成工作"></a>5.4 进入创建博客目录blog的主目录，执行清理工作，再执行生成工作</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls   (查看在_posts目录)</span><br><span class="line">cd ../..  </span><br><span class="line">pwd </span><br><span class="line">hexo clean </span><br><span class="line">hexo g  /  hexo generate   #生成发布用的静态页面,存在public文件中</span><br><span class="line"></span><br><span class="line">生成工作完成后，会出现目录 ......../我的第一篇博客文章/index.html</span><br></pre></td></tr></table></figure>
+<h4 id="5-5-重新启动"><a href="#5-5-重新启动" class="headerlink" title="5.5 重新启动"></a>5.5 重新启动</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo s  </span><br></pre></td></tr></table></figure>
+<p>至此，博客仅在本地localhost:4000启动,但是若需要可被远程访问，<br>接下来可部署到github来公开使用</p>
+<h3 id="6、github创建博客仓库"><a href="#6、github创建博客仓库" class="headerlink" title="6、github创建博客仓库"></a>6、github创建博客仓库</h3><h4 id="6-1-进入github-创建Repository-空仓库"><a href="#6-1-进入github-创建Repository-空仓库" class="headerlink" title="6.1 进入github,创建Repository 空仓库"></a>6.1 进入github,创建Repository 空仓库</h4><p>注意：Repository name 命名格式为 （owner）.github.io<br>必须是自己的github用户名.github.io,不能是用户昵称</p>
+<p>比如 ：<br>    Owner : Billy775326(billy)<br>    Repository name : Billy775326.github.io</p>
+<h4 id="6-2-进入command-bash窗口，在创建的blog目录下安装一个git-部署插件"><a href="#6-2-进入command-bash窗口，在创建的blog目录下安装一个git-部署插件" class="headerlink" title="6.2 进入command&#x2F;bash窗口，在创建的blog目录下安装一个git 部署插件"></a>6.2 进入command&#x2F;bash窗口，在创建的blog目录下安装一个git 部署插件</h4><blockquote>
+<p>cnpm install –save hexo-deployer-git</p>
+</blockquote>
+<h4 id="6-3-设置-config-yml配置文件"><a href="#6-3-设置-config-yml配置文件" class="headerlink" title="6.3 设置_config.yml配置文件"></a>6.3 设置_config.yml配置文件</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim _config.yml</span><br><span class="line"></span><br><span class="line">_config.yml配置文件中：</span><br><span class="line">    #Deployment</span><br><span class="line">    ##Docs: https://hexo.io/docs/deployment.html</span><br><span class="line">    deploy:</span><br><span class="line">        type: git</span><br><span class="line">        repo: https://github.com/Billy775326/Billy775326.github.io.git</span><br><span class="line">        branch: main</span><br></pre></td></tr></table></figure>
+<p>配置好，保存退出</p>
+<h4 id="6-4-将博客部署到远端"><a href="#6-4-将博客部署到远端" class="headerlink" title="6.4 将博客部署到远端"></a>6.4 将博客部署到远端</h4><blockquote>
+<p>hexo deploy &#x2F; hexo d<br>输入账号密码</p>
+</blockquote>
+<h4 id="6-5-刷新创库，访问-Billy775326-github-io"><a href="#6-5-刷新创库，访问-Billy775326-github-io" class="headerlink" title="6.5 刷新创库，访问 Billy775326.github.io"></a>6.5 刷新创库，访问 Billy775326.github.io</h4><h3 id="7、更换主题"><a href="#7、更换主题" class="headerlink" title="7、更换主题"></a>7、更换主题</h3><p>打开butterfly网站<br><a href="https://butterfly.js.org/posts/21cfbf15/">https://butterfly.js.org/posts/21cfbf15/</a></p>
+<h4 id="7-1-下载主题"><a href="#7-1-下载主题" class="headerlink" title="7.1 下载主题"></a>7.1 下载主题</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone -b master https://github.com/jerryc127/hexo-theme-butterfly.git themes/butterfly</span><br></pre></td></tr></table></figure>
+<h4 id="7-2-修改配置"><a href="#7-2-修改配置" class="headerlink" title="7.2 修改配置"></a>7.2 修改配置</h4><p>修改站點配置文件_config.yml，把主題改為butterfly</p>
+<p>_config.yml配置文件中：<br>    theme: butterfly</p>
+<h4 id="7-3-进行清理，再重新生成，部署，再推送上传至github"><a href="#7-3-进行清理，再重新生成，部署，再推送上传至github" class="headerlink" title="7.3 进行清理，再重新生成，部署，再推送上传至github"></a>7.3 进行清理，再重新生成，部署，再推送上传至github</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo clean </span><br><span class="line">hexo g</span><br><span class="line">hexo s  </span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+<p>补充：<br>换主题时报 extends includes&#x2F;layout.pug block content #recent-posts.recent-posts include includes&#x2F;recent-posts.pug include includes&#x2F;pagination.pug<br>解决：<br>在hexo目录下打开git bash，输入命令：<br>npm install –save hexo-renderer-jade hexo-generator-feed hexo-generator-sitemap hexo-browsersync hexo-generator-archive</p>
+<h3 id="8、Hexo增加搜索功能"><a href="#8、Hexo增加搜索功能" class="headerlink" title="8、Hexo增加搜索功能"></a>8、Hexo增加搜索功能</h3><h4 id="8-1-安装搜索：在Hexo的根目录下"><a href="#8-1-安装搜索：在Hexo的根目录下" class="headerlink" title="8.1 安装搜索：在Hexo的根目录下"></a>8.1 安装搜索：在Hexo的根目录下</h4><blockquote>
+<p>npm install hexo-generator-searchdb –save</p>
+</blockquote>
+<h4 id="8-2-全局配置文件-config-yml，新增"><a href="#8-2-全局配置文件-config-yml，新增" class="headerlink" title="8.2 全局配置文件_config.yml，新增"></a>8.2 全局配置文件_config.yml，新增</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">    path: search.xml</span><br><span class="line">    field: post</span><br><span class="line">    format: html</span><br><span class="line">    limit: 10000</span><br></pre></td></tr></table></figure>
+<h4 id="8-3-hexo主题配置文件（-themes-next-config-yml），修改local-search的enable为true"><a href="#8-3-hexo主题配置文件（-themes-next-config-yml），修改local-search的enable为true" class="headerlink" title="8.3 hexo主题配置文件（\themes\next_config.yml），修改local_search的enable为true"></a>8.3 hexo主题配置文件（\themes\next_config.yml），修改local_search的enable为true</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Local search</span><br><span class="line"># Dependencies: https://github.com/flashlab/hexo-generator-search</span><br><span class="line">local_search:</span><br><span class="line">    enable: true</span><br><span class="line">    # if auto, trigger search by changing input</span><br><span class="line">    # if manual, trigger search by pressing enter key or search button</span><br><span class="line">    trigger: auto</span><br><span class="line">    # show top n results per article, show all results by setting to -1</span><br><span class="line">    top_n_per_article: 1</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
     <title>操作系统知识梳理</title>
     <url>//archives/h2d3BrOE</url>
     <content><![CDATA[<blockquote>
@@ -3616,54 +3665,5 @@ producerconsumer.insert(item);
     <title>构建自己的服务器项目</title>
     <url>/2026/09/10/%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%A1%B9%E7%9B%AE/</url>
     <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>搭建博客 (Hexo github butterfly主题)</title>
-    <url>/2026/09/10/%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2-Hexo-github-butterfly%E4%B8%BB%E9%A2%98/</url>
-    <content><![CDATA[<h1 id="搭建博客-Hexo-github-butterfly主题"><a href="#搭建博客-Hexo-github-butterfly主题" class="headerlink" title="搭建博客 (Hexo + github + butterfly主题)"></a>搭建博客 (Hexo + github + butterfly主题)</h1><h3 id="1、下载安装Nodejs"><a href="#1、下载安装Nodejs" class="headerlink" title="1、下载安装Nodejs"></a>1、下载安装Nodejs</h3><p>自行查找教程</p>
-<blockquote>
-<p>node -v<br>npm -v</p>
-</blockquote>
-<p>查看是否安装成功</p>
-<h3 id="2、安装淘宝镜像cnpm管理器"><a href="#2、安装淘宝镜像cnpm管理器" class="headerlink" title="2、安装淘宝镜像cnpm管理器"></a>2、安装淘宝镜像cnpm管理器</h3><blockquote>
-<p>npm install -g cnpm –registry&#x3D;<a href="http://registry.npm.taobao.org/">http://registry.npm.taobao.org</a><br>cnpm -v　</p>
-</blockquote>
-<h3 id="3、安装hexo框架"><a href="#3、安装hexo框架" class="headerlink" title="3、安装hexo框架"></a>3、安装hexo框架</h3><blockquote>
-<p>cnpm install -g hexo-cli<br>hexo -v</p>
-</blockquote>
-<h3 id="4、安装git-若有github账号可直接跳过本条"><a href="#4、安装git-若有github账号可直接跳过本条" class="headerlink" title="4、安装git (若有github账号可直接跳过本条)"></a>4、安装git (若有github账号可直接跳过本条)</h3><p>git使用前配置：<br>下载完git后，需要告诉 git 你是谁，在向 git 仓库中提交时需要用到。</p>
-<ul>
-<li>1、配置提交人姓名：git config –global user.name 提交人姓名</li>
-<li>2、配置提交人姓名：git config –global user.email 提交人邮箱</li>
-<li>3、查看git配置信息：git config –list</li>
-</ul>
-<h3 id="5、使用hexo搭建博客-git-bash-shell-打开"><a href="#5、使用hexo搭建博客-git-bash-shell-打开" class="headerlink" title="5、使用hexo搭建博客 (git bash&#x2F;shell 打开)"></a>5、使用hexo搭建博客 (git bash&#x2F;shell 打开)</h3><h4 id="5-1-在指定位置创建文件夹，初始化hexo"><a href="#5-1-在指定位置创建文件夹，初始化hexo" class="headerlink" title="5.1 在指定位置创建文件夹，初始化hexo"></a>5.1 在指定位置创建文件夹，初始化hexo</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir blog  #创建blog目录</span><br><span class="line">cd blog   #进入blog目录</span><br><span class="line">hexo init  #生成博客 初始化博客</span><br><span class="line">hexo s  /  hexo server  #启动本地博客服务</span><br><span class="line"></span><br><span class="line">初始化之后，ls -al 查看可得文件</span><br><span class="line">_config.landscape.yml db.json package.json public/ source/ yarn.lock</span><br><span class="line">_config.yml node_modules/ package-lock.json scaffolds/ themes/</span><br><span class="line"></span><br><span class="line">其中 _config.yml 是配置文件</span><br><span class="line">themes/ 存放博客主题</span><br></pre></td></tr></table></figure>
-<h4 id="5-2-创建post"><a href="#5-2-创建post" class="headerlink" title="5.2 创建post"></a>5.2 创建post</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new &quot;我的第一篇博客文章&quot;</span><br><span class="line"></span><br><span class="line">cd source/_posts</span><br><span class="line">ls -al</span><br><span class="line">可查看所有的.md文件</span><br></pre></td></tr></table></figure>
-
-<h4 id="5-3-编辑博客文章内容"><a href="#5-3-编辑博客文章内容" class="headerlink" title="5.3 编辑博客文章内容"></a>5.3 编辑博客文章内容</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim 我的第一篇博客文章.md</span><br><span class="line">编写格式遵循markdown格式</span><br></pre></td></tr></table></figure>
-<h4 id="5-4-进入创建博客目录blog的主目录，执行清理工作，再执行生成工作"><a href="#5-4-进入创建博客目录blog的主目录，执行清理工作，再执行生成工作" class="headerlink" title="5.4 进入创建博客目录blog的主目录，执行清理工作，再执行生成工作"></a>5.4 进入创建博客目录blog的主目录，执行清理工作，再执行生成工作</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls   (查看在_posts目录)</span><br><span class="line">cd ../..  </span><br><span class="line">pwd </span><br><span class="line">hexo clean </span><br><span class="line">hexo g  /  hexo generate   #生成发布用的静态页面,存在public文件中</span><br><span class="line"></span><br><span class="line">生成工作完成后，会出现目录 ......../我的第一篇博客文章/index.html</span><br></pre></td></tr></table></figure>
-<h4 id="5-5-重新启动"><a href="#5-5-重新启动" class="headerlink" title="5.5 重新启动"></a>5.5 重新启动</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo s  </span><br></pre></td></tr></table></figure>
-<p>至此，博客仅在本地localhost:4000启动,但是若需要可被远程访问，<br>接下来可部署到github来公开使用</p>
-<h3 id="6、github创建博客仓库"><a href="#6、github创建博客仓库" class="headerlink" title="6、github创建博客仓库"></a>6、github创建博客仓库</h3><h4 id="6-1-进入github-创建Repository-空仓库"><a href="#6-1-进入github-创建Repository-空仓库" class="headerlink" title="6.1 进入github,创建Repository 空仓库"></a>6.1 进入github,创建Repository 空仓库</h4><p>注意：Repository name 命名格式为 （owner）.github.io<br>必须是自己的github用户名.github.io,不能是用户昵称</p>
-<p>比如 ：<br>    Owner : Billy775326(billy)<br>    Repository name : Billy775326.github.io</p>
-<h4 id="6-2-进入command-bash窗口，在创建的blog目录下安装一个git-部署插件"><a href="#6-2-进入command-bash窗口，在创建的blog目录下安装一个git-部署插件" class="headerlink" title="6.2 进入command&#x2F;bash窗口，在创建的blog目录下安装一个git 部署插件"></a>6.2 进入command&#x2F;bash窗口，在创建的blog目录下安装一个git 部署插件</h4><blockquote>
-<p>cnpm install –save hexo-deployer-git</p>
-</blockquote>
-<h4 id="6-3-设置-config-yml配置文件"><a href="#6-3-设置-config-yml配置文件" class="headerlink" title="6.3 设置_config.yml配置文件"></a>6.3 设置_config.yml配置文件</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim _config.yml</span><br><span class="line"></span><br><span class="line">_config.yml配置文件中：</span><br><span class="line">    #Deployment</span><br><span class="line">    ##Docs: https://hexo.io/docs/deployment.html</span><br><span class="line">    deploy:</span><br><span class="line">        type: git</span><br><span class="line">        repo: https://github.com/Billy775326/Billy775326.github.io.git</span><br><span class="line">        branch: main</span><br></pre></td></tr></table></figure>
-<p>配置好，保存退出</p>
-<h4 id="6-4-将博客部署到远端"><a href="#6-4-将博客部署到远端" class="headerlink" title="6.4 将博客部署到远端"></a>6.4 将博客部署到远端</h4><blockquote>
-<p>hexo deploy &#x2F; hexo d<br>输入账号密码</p>
-</blockquote>
-<h4 id="6-5-刷新创库，访问-Billy775326-github-io"><a href="#6-5-刷新创库，访问-Billy775326-github-io" class="headerlink" title="6.5 刷新创库，访问 Billy775326.github.io"></a>6.5 刷新创库，访问 Billy775326.github.io</h4><h3 id="7、更换主题"><a href="#7、更换主题" class="headerlink" title="7、更换主题"></a>7、更换主题</h3><p>打开butterfly网站<br><a href="https://butterfly.js.org/posts/21cfbf15/">https://butterfly.js.org/posts/21cfbf15/</a></p>
-<h4 id="7-1-下载主题"><a href="#7-1-下载主题" class="headerlink" title="7.1 下载主题"></a>7.1 下载主题</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone -b master https://github.com/jerryc127/hexo-theme-butterfly.git themes/butterfly</span><br></pre></td></tr></table></figure>
-<h4 id="7-2-修改配置"><a href="#7-2-修改配置" class="headerlink" title="7.2 修改配置"></a>7.2 修改配置</h4><p>修改站點配置文件_config.yml，把主題改為butterfly</p>
-<p>_config.yml配置文件中：<br>    theme: butterfly</p>
-<h4 id="7-3-进行清理，再重新生成，部署，再推送上传至github"><a href="#7-3-进行清理，再重新生成，部署，再推送上传至github" class="headerlink" title="7.3 进行清理，再重新生成，部署，再推送上传至github"></a>7.3 进行清理，再重新生成，部署，再推送上传至github</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo clean </span><br><span class="line">hexo g</span><br><span class="line">hexo s  </span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
-<p>补充：<br>换主题时报 extends includes&#x2F;layout.pug block content #recent-posts.recent-posts include includes&#x2F;recent-posts.pug include includes&#x2F;pagination.pug<br>解决：<br>在hexo目录下打开git bash，输入命令：<br>npm install –save hexo-renderer-jade hexo-generator-feed hexo-generator-sitemap hexo-browsersync hexo-generator-archive</p>
-<h3 id="8、Hexo增加搜索功能"><a href="#8、Hexo增加搜索功能" class="headerlink" title="8、Hexo增加搜索功能"></a>8、Hexo增加搜索功能</h3><h4 id="8-1-安装搜索：在Hexo的根目录下"><a href="#8-1-安装搜索：在Hexo的根目录下" class="headerlink" title="8.1 安装搜索：在Hexo的根目录下"></a>8.1 安装搜索：在Hexo的根目录下</h4><blockquote>
-<p>npm install hexo-generator-searchdb –save</p>
-</blockquote>
-<h4 id="8-2-全局配置文件-config-yml，新增"><a href="#8-2-全局配置文件-config-yml，新增" class="headerlink" title="8.2 全局配置文件_config.yml，新增"></a>8.2 全局配置文件_config.yml，新增</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">    path: search.xml</span><br><span class="line">    field: post</span><br><span class="line">    format: html</span><br><span class="line">    limit: 10000</span><br></pre></td></tr></table></figure>
-<h4 id="8-3-hexo主题配置文件（-themes-next-config-yml），修改local-search的enable为true"><a href="#8-3-hexo主题配置文件（-themes-next-config-yml），修改local-search的enable为true" class="headerlink" title="8.3 hexo主题配置文件（\themes\next_config.yml），修改local_search的enable为true"></a>8.3 hexo主题配置文件（\themes\next_config.yml），修改local_search的enable为true</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Local search</span><br><span class="line"># Dependencies: https://github.com/flashlab/hexo-generator-search</span><br><span class="line">local_search:</span><br><span class="line">    enable: true</span><br><span class="line">    # if auto, trigger search by changing input</span><br><span class="line">    # if manual, trigger search by pressing enter key or search button</span><br><span class="line">    trigger: auto</span><br><span class="line">    # show top n results per article, show all results by setting to -1</span><br><span class="line">    top_n_per_article: 1</span><br></pre></td></tr></table></figure>]]></content>
   </entry>
 </search>
