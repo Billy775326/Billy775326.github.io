@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>1Panel面板容器无法使用localhost、127.0.0.1配置链接的问题说明及解决办法</title>
-    <url>//archives/bxGDQCiv</url>
+    <url>/2024/09/20/1Panel%E9%9D%A2%E6%9D%BF%E5%AE%B9%E5%99%A8%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8localhost%E3%80%81127.0.0.1%E9%85%8D%E7%BD%AE%E9%93%BE%E6%8E%A5%E7%9A%84%E9%97%AE%E9%A2%98%E8%AF%B4%E6%98%8E%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
     <content><![CDATA[<h2 id="报错现象："><a href="#报错现象：" class="headerlink" title="报错现象："></a>报错现象：</h2><p>安装图床应用时无法连接数据库,但是MySQL进程无报错<br>mysql：报错信息一览</p>
 <blockquote>
 <p>SQLSTATE[HY000] [2002] Connection refused</p>
@@ -32,7 +32,7 @@
   </entry>
   <entry>
     <title>20240320-配置GitHub-SSH默认使用443端口</title>
-    <url>//archives/QXShRlio</url>
+    <url>/2024/09/20/20240320-%E9%85%8D%E7%BD%AEGitHub-SSH%E9%BB%98%E8%AE%A4%E4%BD%BF%E7%94%A8443%E7%AB%AF%E5%8F%A3/</url>
     <content><![CDATA[<hr>
 <h2 id="title-配置GitHub-SSH默认使用443端口date-2024-03-26tags-Git-GitHub-SSHcategories-笔记"><a href="#title-配置GitHub-SSH默认使用443端口date-2024-03-26tags-Git-GitHub-SSHcategories-笔记" class="headerlink" title="title: 配置GitHub SSH默认使用443端口date: 2024&#x2F;03&#x2F;26tags: - Git - GitHub - SSHcategories: - 笔记"></a>title: 配置GitHub SSH默认使用443端口<br>date: 2024&#x2F;03&#x2F;26<br>tags:<br> - Git<br> - GitHub<br> - SSH<br>categories:<br> - 笔记</h2><h1 id="配置GitHub-SSH默认使用443端口"><a href="#配置GitHub-SSH默认使用443端口" class="headerlink" title="配置GitHub SSH默认使用443端口"></a>配置GitHub SSH默认使用443端口</h1><h2 id="1-测试443端口是否可用"><a href="#1-测试443端口是否可用" class="headerlink" title="1.测试443端口是否可用"></a>1.测试443端口是否可用</h2><p>首先测试一下使用443端口进行GitHub SSH连接：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -T -p 443 git@ssh.github.com</span><br></pre></td></tr></table></figure>
@@ -63,7 +63,7 @@
   </entry>
   <entry>
     <title>20240326-Typora激活教程</title>
-    <url>//archives/BMFx6zGD</url>
+    <url>/2024/09/20/20240326-Typora%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/</url>
     <content><![CDATA[<hr>
 <h2 id="title-Typora激活教程date-2024-03-26tags-Typora-破解categories-杂谈"><a href="#title-Typora激活教程date-2024-03-26tags-Typora-破解categories-杂谈" class="headerlink" title="title: Typora激活教程date: 2024&#x2F;03&#x2F;26tags: - Typora - 破解categories: - 杂谈"></a>title: Typora激活教程<br>date: 2024&#x2F;03&#x2F;26<br>tags:<br> - Typora<br> - 破解<br>categories:<br> - 杂谈</h2><p>::: tip 声明<br>本博客仅以学习为目的进行记录，请支持正版，并将本博客提及相关文件于24h内删除。<br>:::</p>
 <h2 id="1-安装原版Typora"><a href="#1-安装原版Typora" class="headerlink" title="1.安装原版Typora"></a>1.安装原版Typora</h2><p><strong>安装过程略过</strong></p>
@@ -97,7 +97,7 @@
   </entry>
   <entry>
     <title>20240327-LeetCode-15.三数之和</title>
-    <url>//archives/YV40MAMM</url>
+    <url>/2024/09/20/20240327-LeetCode-15.%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C/</url>
     <content><![CDATA[<hr>
 <h2 id="title-LeetCode-15-三数之和date-2024-03-27tags-LeetCode-双指针categories-笔记"><a href="#title-LeetCode-15-三数之和date-2024-03-27tags-LeetCode-双指针categories-笔记" class="headerlink" title="title: LeetCode-15.三数之和date: 2024&#x2F;03&#x2F;27tags: - LeetCode - 双指针categories: - 笔记"></a>title: LeetCode-15.三数之和<br>date: 2024&#x2F;03&#x2F;27<br>tags:<br> - LeetCode<br> - 双指针<br>categories:<br> - 笔记</h2><h1 id="15-三数之和"><a href="#15-三数之和" class="headerlink" title="15.三数之和"></a>15.三数之和</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给你一个整数数组 <code>nums</code> ，判断是否存在三元组 <code>[nums[i], nums[j], nums[k]]</code> 满足 <code>i != j</code>、<code>i != k</code> 且 <code>j != k</code> ，同时还满足 <code>nums[i] + nums[j] + nums[k] == 0</code> 。请</p>
 <p>你返回所有和为 <code>0</code> 且不重复的三元组。</p>
@@ -129,7 +129,7 @@
   </entry>
   <entry>
     <title>20240328-Debian12根分区扩容记录</title>
-    <url>//archives/d7gSaRt5</url>
+    <url>/2024/09/20/20240328-Debian12%E6%A0%B9%E5%88%86%E5%8C%BA%E6%89%A9%E5%AE%B9%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<hr>
 <h2 id="title-Debian12根分区扩容记录date-2024-03-29tags-Debian-扩容categories-杂谈"><a href="#title-Debian12根分区扩容记录date-2024-03-29tags-Debian-扩容categories-杂谈" class="headerlink" title="title: Debian12根分区扩容记录date: 2024&#x2F;03&#x2F;29tags: - Debian - 扩容categories: - 杂谈"></a>title: Debian12根分区扩容记录<br>date: 2024&#x2F;03&#x2F;29<br>tags:<br> - Debian<br> - 扩容<br>categories:<br> - 杂谈</h2><blockquote>
 <p>[!WARNING]</p>
@@ -196,7 +196,7 @@
   </entry>
   <entry>
     <title>20240408-Rust-01-猜数字游戏</title>
-    <url>//archives/gmhwx1Cf</url>
+    <url>/2024/09/20/20240408-Rust-01-%E7%8C%9C%E6%95%B0%E5%AD%97%E6%B8%B8%E6%88%8F/</url>
     <content><![CDATA[<hr>
 <h2 id="title-Rust-01-猜数字游戏date-2024-04-08tags-Rustcategories-笔记"><a href="#title-Rust-01-猜数字游戏date-2024-04-08tags-Rustcategories-笔记" class="headerlink" title="title: Rust-01-猜数字游戏date: 2024&#x2F;04&#x2F;08tags: - Rustcategories: - 笔记"></a>title: Rust-01-猜数字游戏<br>date: 2024&#x2F;04&#x2F;08<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><h1 id="猜数字游戏"><a href="#猜数字游戏" class="headerlink" title="猜数字游戏"></a>猜数字游戏</h1><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> rand::Rng;</span><br><span class="line"><span class="keyword">use</span> std::cmp::Ordering;</span><br><span class="line"><span class="keyword">use</span> std::io;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The main function of the program.</span></span><br><span class="line"><span class="comment"> * It starts the game by printing a welcome message, generating a secret number, and then entering a loop where it prompts the user to guess the number.</span></span><br><span class="line"><span class="comment"> * It continues to loop until the user guesses the correct number.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;Guess the number!&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Generates a secret number between 1 and 100 (inclusive) using the `rand::thread_rng().gen_range(1..101)` function.</span></span><br><span class="line"><span class="comment">     * This number will be the target that the user will try to guess.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">secret_number</span> = rand::<span class="title function_ invoke__">thread_rng</span>().<span class="title function_ invoke__">gen_range</span>(<span class="number">1</span>..<span class="number">101</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The main game loop. It will continue to run until the user guesses the correct number.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">loop</span> &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;Enter your guess: &quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Reads a line of input from the user.</span></span><br><span class="line"><span class="comment">         * If the input cannot be read, the program will panic with the message &quot;Failed to read line&quot;.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">guess</span> = <span class="type">String</span>::<span class="title function_ invoke__">new</span>();</span><br><span class="line">        io::<span class="title function_ invoke__">stdin</span>()</span><br><span class="line">            .<span class="title function_ invoke__">read_line</span>(&amp;<span class="keyword">mut</span> guess)</span><br><span class="line">            .<span class="title function_ invoke__">expect</span>(<span class="string">&quot;Failed to read line&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Parses the user&#x27;s input into a u32 integer.</span></span><br><span class="line"><span class="comment">         * If the input cannot be parsed, the program will skip the current iteration of the loop and continue to the next one.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">guess</span>: <span class="type">u32</span> = <span class="keyword">match</span> guess.<span class="title function_ invoke__">trim</span>().<span class="title function_ invoke__">parse</span>() &#123;</span><br><span class="line">            <span class="title function_ invoke__">Ok</span>(num) =&gt; num,</span><br><span class="line">            <span class="title function_ invoke__">Err</span>(_) =&gt; <span class="keyword">continue</span>,</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;You guessed: &#123;&#125;&quot;</span>, guess);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Compares the user&#x27;s guess with the secret number.</span></span><br><span class="line"><span class="comment">         * If the guess is less than the secret number, it prints &quot;Too small!&quot;.</span></span><br><span class="line"><span class="comment">         * If the guess is greater than the secret number, it prints &quot;Too big!&quot;.</span></span><br><span class="line"><span class="comment">         * If the guess is equal to the secret number, it prints &quot;You got it!&quot; and breaks out of the loop.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">match</span> guess.<span class="title function_ invoke__">cmp</span>(&amp;secret_number) &#123;</span><br><span class="line">            Ordering::Less =&gt; <span class="built_in">println!</span>(<span class="string">&quot;Too small!&quot;</span>),</span><br><span class="line">            Ordering::Greater =&gt; <span class="built_in">println!</span>(<span class="string">&quot;Too big!&quot;</span>),</span><br><span class="line">            Ordering::Equal =&gt; &#123;</span><br><span class="line">                <span class="built_in">println!</span>(<span class="string">&quot;You got it!&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
@@ -209,7 +209,7 @@
   </entry>
   <entry>
     <title>20240409-Rust-02-变量与可变性</title>
-    <url>//archives/N78wS1qy</url>
+    <url>/2024/09/20/20240409-Rust-02-%E5%8F%98%E9%87%8F%E4%B8%8E%E5%8F%AF%E5%8F%98%E6%80%A7/</url>
     <content><![CDATA[<hr>
 <h2 id="title-Rust-02-变量与可变性date-2024-04-09tags-Rustcategories-笔记"><a href="#title-Rust-02-变量与可变性date-2024-04-09tags-Rustcategories-笔记" class="headerlink" title="title: Rust-02-变量与可变性date: 2024&#x2F;04&#x2F;09tags: - Rustcategories: - 笔记"></a>title: Rust-02-变量与可变性<br>date: 2024&#x2F;04&#x2F;09<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><h1 id="变量与可变性"><a href="#变量与可变性" class="headerlink" title="变量与可变性"></a>变量与可变性</h1><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#![allow(unused)]</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="comment">// 变量默认是不可变的，如要声明可变变量，应使用mut关键字</span></span><br><span class="line">    <span class="comment">// let x = 5;</span></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">x</span> = <span class="number">5</span>;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The value of x is &#123;&#125;&quot;</span>, x); <span class="comment">// 5</span></span><br><span class="line">    x = <span class="number">6</span>;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The value of x is &#123;&#125;&quot;</span>, x); <span class="comment">// 6</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 常量，命名约定是全部字母大写，并以下划线分隔单词</span></span><br><span class="line">    <span class="comment">// 在声明的作用域内，常量在程序运行的整个过程中都有效</span></span><br><span class="line">    <span class="keyword">const</span> THREE_HOURS_IN_SECONDS: <span class="type">u32</span> = <span class="number">60</span> * <span class="number">60</span> * <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遮蔽(shadow)，可以通过使用相同的变量名并重复使用 let 关键字来遮蔽之前的变量</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">x</span> = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">x</span> = x + <span class="number">1</span>;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="variable">x</span> = x * <span class="number">2</span>;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;The value of x in the inner scope is: &#123;&#125;&quot;</span>, x); <span class="comment">// 12</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The value of x is: &#123;&#125;&quot;</span>, x); <span class="comment">// 6</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遮蔽也可以改变变量的类型</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">spaces</span> = <span class="string">&quot;   &quot;</span>;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">spaces</span> = spaces.<span class="title function_ invoke__">len</span>();</span><br><span class="line">    <span class="comment">// 而 mut 不行</span></span><br><span class="line">    <span class="comment">// let mut spaces = &quot;   &quot;;</span></span><br><span class="line">    <span class="comment">// spaces = spaces.len();</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
@@ -222,7 +222,7 @@
   </entry>
   <entry>
     <title>20240409-Rust-03-数据类型</title>
-    <url>//archives/swabJbRZ</url>
+    <url>/2024/09/20/20240409-Rust-03-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url>
     <content><![CDATA[<hr>
 <h2 id="title-Rust-03-数据类型date-2024-04-09tags-Rustcategories-笔记"><a href="#title-Rust-03-数据类型date-2024-04-09tags-Rustcategories-笔记" class="headerlink" title="title: Rust-03-数据类型date: 2024&#x2F;04&#x2F;09tags: - Rustcategories: - 笔记"></a>title: Rust-03-数据类型<br>date: 2024&#x2F;04&#x2F;09<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><blockquote>
 <p>Rust 的每个值都有确切的<strong>数据类型</strong>（<em>data type</em>），该类型告诉 Rust 数据是被指定成哪类数据，从而让 Rust 知道如何使用该数据。在本节中，我们将介绍两种数据类型：标量类型和复合类型。</p>
@@ -418,7 +418,7 @@
   </entry>
   <entry>
     <title>20240410-Rust-00-前言</title>
-    <url>//archives/qE53k0cQ</url>
+    <url>/2024/09/20/20240410-Rust-00-%E5%89%8D%E8%A8%80/</url>
     <content><![CDATA[<hr>
 <h2 id="title-Rust-00-前言date-2024-04-10tags-Rustcategories-笔记"><a href="#title-Rust-00-前言date-2024-04-10tags-Rustcategories-笔记" class="headerlink" title="title: Rust-00-前言date: 2024&#x2F;04&#x2F;10tags: - Rustcategories: - 笔记"></a>title: Rust-00-前言<br>date: 2024&#x2F;04&#x2F;10<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><blockquote>
 <p>你说得对，但是Rust 是由 Mozilla 自主研发的一款全新零开销抽象编程语言。语言采用一种被称作「RAII」 的资源管理机制，在这里，退出作用域的对象将触发「drop」方法，进而被销毀。你将扮演一位名为「Rustacean」的神秘角色，在编码过程中邂逅形状各异、形式独特的生命周期们，和它们一起击败编译错误，找回失去的内存安全——同时，逐步发掘「servo」的真相。</p>
@@ -433,7 +433,7 @@
   </entry>
   <entry>
     <title>20240410-Rust-04-语句与表达式与函数</title>
-    <url>//archives/Lnt0LaJW</url>
+    <url>/2024/09/20/20240410-Rust-04-%E8%AF%AD%E5%8F%A5%E4%B8%8E%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<hr>
 <h2 id="title-Rust-04-语句与表达式与函数date-2024-04-10tags-Rustcategories-笔记"><a href="#title-Rust-04-语句与表达式与函数date-2024-04-10tags-Rustcategories-笔记" class="headerlink" title="title: Rust-04-语句与表达式与函数date: 2024&#x2F;04&#x2F;10tags: - Rustcategories: - 笔记"></a>title: Rust-04-语句与表达式与函数<br>date: 2024&#x2F;04&#x2F;10<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><h1 id="语句与表达式与函数"><a href="#语句与表达式与函数" class="headerlink" title="语句与表达式与函数"></a>语句与表达式与函数</h1><h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p><code>main</code>函数是程序入口，<code>fn</code>是用来声明新函数的关键字。</p>
 <p>Rust代码中的函数和变量名都使用下划线命名法（<em>snake case</em>，直译为蛇形命名法）规范风格。此命名法中，所有字母都是小写并使用下划线分隔单词。</p>
@@ -502,7 +502,7 @@
   </entry>
   <entry>
     <title>20240410-Rust-05-控制流</title>
-    <url>//archives/8L8b3RBh</url>
+    <url>/2024/09/20/20240410-Rust-05-%E6%8E%A7%E5%88%B6%E6%B5%81/</url>
     <content><![CDATA[<hr>
 <h2 id="title-Rust-05-控制流date-2024-04-10tags-Rustcategories-笔记"><a href="#title-Rust-05-控制流date-2024-04-10tags-Rustcategories-笔记" class="headerlink" title="title: Rust-05-控制流date: 2024&#x2F;04&#x2F;10tags: - Rustcategories: - 笔记"></a>title: Rust-05-控制流<br>date: 2024&#x2F;04&#x2F;10<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><h1 id="控制流"><a href="#控制流" class="headerlink" title="控制流"></a>控制流</h1><blockquote>
 <p>根据条件是否为真来决定是否执行某些代码，或根据条件是否为真来重复运行一段代码，是大部分编程语言的基本组成部分。Rust 代码中最常见的用来控制执行流的结构是 <code>if</code> 表达式和循环。</p>
@@ -585,7 +585,7 @@
   </entry>
   <entry>
     <title>20240411-Rust-06-所有权</title>
-    <url>//archives/8cOm8xEi</url>
+    <url>/2024/09/20/20240411-Rust-06-%E6%89%80%E6%9C%89%E6%9D%83/</url>
     <content><![CDATA[<hr>
 <h2 id="title-Rust-06-所有权date-2024-04-11tags-Rustcategories-笔记"><a href="#title-Rust-06-所有权date-2024-04-11tags-Rustcategories-笔记" class="headerlink" title="title: Rust-06-所有权date: 2024&#x2F;04&#x2F;11tags: - Rustcategories: - 笔记"></a>title: Rust-06-所有权<br>date: 2024&#x2F;04&#x2F;11<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><h1 id="所有权"><a href="#所有权" class="headerlink" title="所有权"></a>所有权</h1><blockquote>
 <p>所有权（系统）是 Rust 最为与众不同的特性，它让 Rust 无需垃圾回收器（garbage collector）即可保证内存安全。因此，理解 Rust 中所有权的运作方式非常重要。在本章中，我们将讨论所有权以及相关功能：借用、slice 以及 Rust 如何在内存中存放数据。</p>
@@ -732,7 +732,7 @@
   </entry>
   <entry>
     <title>20240411-Rust-07-引用与借用</title>
-    <url>//archives/hJ60mviw</url>
+    <url>/2024/09/20/20240411-Rust-07-%E5%BC%95%E7%94%A8%E4%B8%8E%E5%80%9F%E7%94%A8/</url>
     <content><![CDATA[<hr>
 <h2 id="title-Rust-07-引用与借用date-2024-04-11tags-Rustcategories-笔记"><a href="#title-Rust-07-引用与借用date-2024-04-11tags-Rustcategories-笔记" class="headerlink" title="title: Rust-07-引用与借用date: 2024&#x2F;04&#x2F;11tags: - Rustcategories: - 笔记"></a>title: Rust-07-引用与借用<br>date: 2024&#x2F;04&#x2F;11<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><h2 id="引用与借用"><a href="#引用与借用" class="headerlink" title="引用与借用"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch04-02-references-and-borrowing.html#%E5%BC%95%E7%94%A8%E4%B8%8E%E5%80%9F%E7%94%A8">引用与借用</a></h2><p>示例 4-5 中的元组代码有这样一个问题：我们必须将 <code>String</code> 返回给调用函数，以便在调用 <code>calculate_length</code> 后仍能使用 <code>String</code>，因为 <code>String</code> 被移动到了 <code>calculate_length</code> 内。</p>
 <p>下面是如何定义并使用一个（新的）<code>calculate_length</code> 函数，它以一个对象的引用作为参数而不是获取值的所有权：</p>
@@ -836,7 +836,7 @@
   </entry>
   <entry>
     <title>20240411-Rust-08-切片</title>
-    <url>//archives/E8ejgpyB</url>
+    <url>/2024/09/20/20240411-Rust-08-%E5%88%87%E7%89%87/</url>
     <content><![CDATA[<hr>
 <h2 id="title-Rust-08-切片date-2024-04-11tags-Rustcategories-笔记"><a href="#title-Rust-08-切片date-2024-04-11tags-Rustcategories-笔记" class="headerlink" title="title: Rust-08-切片date: 2024&#x2F;04&#x2F;11tags: - Rustcategories: - 笔记"></a>title: Rust-08-切片<br>date: 2024&#x2F;04&#x2F;11<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><h2 id="切片-Slice-类型"><a href="#切片-Slice-类型" class="headerlink" title="切片 Slice 类型"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch04-03-slices.html#%E5%88%87%E7%89%87-slice-%E7%B1%BB%E5%9E%8B">切片 Slice 类型</a></h2><p>另一个没有所有权的数据类型是 <em>slice</em>。slice 允许你引用集合中一段连续的元素序列，而不用引用整个集合。</p>
 <p>这里有一个编程小习题：编写一个函数，该函数接收一个字符串，并返回在该字符串中找到的第一个单词。如果函数在该字符串中并未找到空格，则整个字符串就是一个单词，所以应该返回整个字符串。</p>
@@ -940,7 +940,7 @@
   </entry>
   <entry>
     <title>20240413-Rust-09-结构体</title>
-    <url>//archives/aM067JxP</url>
+    <url>/2024/09/20/20240413-Rust-09-%E7%BB%93%E6%9E%84%E4%BD%93/</url>
     <content><![CDATA[<hr>
 <h2 id="title-Rust-09-结构体date-2024-04-13tags-Rustcategories-笔记"><a href="#title-Rust-09-结构体date-2024-04-13tags-Rustcategories-笔记" class="headerlink" title="title: Rust-09-结构体date: 2024&#x2F;04&#x2F;13tags: - Rustcategories: - 笔记"></a>title: Rust-09-结构体<br>date: 2024&#x2F;04&#x2F;13<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><h1 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h1><h2 id="定义并实例化结构体"><a href="#定义并实例化结构体" class="headerlink" title="定义并实例化结构体"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch05-01-defining-structs.html#%E5%AE%9A%E4%B9%89%E5%B9%B6%E5%AE%9E%E4%BE%8B%E5%8C%96%E7%BB%93%E6%9E%84%E4%BD%93">定义并实例化结构体</a></h2><p>结构体和我们在<a href="https://www.rustwiki.org.cn/zh-CN/book/ch03-02-data-types.html#%E5%85%83%E7%BB%84%E7%B1%BB%E5%9E%8B">“元组类型”</a>章节论过的元组类似。和元组一样，结构体的每一部分可以是不同类型。但不同于元组，结构体需要命名各部分数据以便能清楚的表明其值的意义。由于有了这些名字，结构体比元组更灵活：不需要依赖顺序来指定或访问实例中的值。</p>
 <p>定义结构体，需要使用 <code>struct</code> 关键字并为整个结构体提供一个名字。结构体的名字需要描述它所组合的数据的意义。接着，在大括号中，定义每一部分数据的名字和类型，我们称为 <strong>字段</strong>（<em>field</em>）。例如，示例 5-1 展示了一个存储用户账号信息的结构体：</p>
@@ -1024,7 +1024,7 @@
   </entry>
   <entry>
     <title>20240414-C++-Concepts</title>
-    <url>//archives/77nfM1Or</url>
+    <url>/2024/09/20/20240414-C++-Concepts/</url>
     <content><![CDATA[<hr>
 <h2 id="title-C-Conceptsdate-2024-04-14tags-C-categories-笔记"><a href="#title-C-Conceptsdate-2024-04-14tags-C-categories-笔记" class="headerlink" title="title: C++-Conceptsdate: 2024&#x2F;04&#x2F;14tags: - C++categories: - 笔记"></a>title: C++-Concepts<br>date: 2024&#x2F;04&#x2F;14<br>tags:<br> - C++<br>categories:<br> - 笔记</h2><h1 id="C-Concepts"><a href="#C-Concepts" class="headerlink" title="C++ Concepts"></a>C++ Concepts</h1><p>概念（Concepts）是C++20中引入的一项特性，它们是对模板参数的约束，用于指定模板参数必须满足的接口（例如，一组必需的函数、类型、操作符等）和语义要求。概念旨在提高模板编程的表达力和安全性，通过更清晰的语义来改善编译器错误信息，并促使编写更干净、更易于理解的代码。</p>
 <p>在C++20之前，模板编程通常是通过特化和重载来实现各种约束的，这往往会产生冗长的错误信息，让人难以理解实际的问题所在。概念允许你以更声明式的方式指定约束，使得模板的意图更明确，能够在编译时提早发现错误，同时生成更有用的错误信息。</p>
@@ -1059,7 +1059,7 @@
   </entry>
   <entry>
     <title>20240627-WebServer-0</title>
-    <url>//archives/lPnLR5uE</url>
+    <url>/2024/09/20/20240627-WebServer-0/</url>
     <content><![CDATA[<hr>
 <h2 id="title-WebServer-0date-2024-06-27tags-WebServercategories-笔记"><a href="#title-WebServer-0date-2024-06-27tags-WebServercategories-笔记" class="headerlink" title="title: WebServer-0date: 2024&#x2F;06&#x2F;27tags: - WebServercategories: - 笔记"></a>title: WebServer-0<br>date: 2024&#x2F;06&#x2F;27<br>tags:<br> - WebServer<br>categories:<br> - 笔记</h2><p>在设计一个WebServer时，选择线程池还是协程取决于你的具体需求、预期的并发量、以及你对编程模型的偏好。下面我将从几个方面分析线程池和协程的优缺点，以帮助你做出决策。</p>
 <h3 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h3><p><strong>优点：</strong></p>
@@ -1160,7 +1160,7 @@
   </entry>
   <entry>
     <title>BMP图片格式</title>
-    <url>//archives/G5jdeIAT</url>
+    <url>/2024/09/20/BMP%E5%9B%BE%E7%89%87%E6%A0%BC%E5%BC%8F/</url>
     <content><![CDATA[<hr>
 <h2 id="title-BMP图片格式date-2023-07-08tags-BMP图片categories-笔记"><a href="#title-BMP图片格式date-2023-07-08tags-BMP图片categories-笔记" class="headerlink" title="title: BMP图片格式date: 2023&#x2F;07&#x2F;08tags: - BMP图片categories: - 笔记"></a>title: BMP图片格式<br>date: 2023&#x2F;07&#x2F;08<br>tags:<br> - BMP图片<br>categories:<br> - 笔记</h2><p><img src="https://s2.loli.net/2024/09/20/hmtQkegKV2XfE45.png" alt="bmp.png"></p>
 ]]></content>
@@ -1173,7 +1173,7 @@
   </entry>
   <entry>
     <title>LeetCode-189.轮转数组</title>
-    <url>//archives/ZoZ6hMsB</url>
+    <url>/2024/09/20/LeetCode-189.%E8%BD%AE%E8%BD%AC%E6%95%B0%E7%BB%84/</url>
     <content><![CDATA[<h2 id="—"><a href="#—" class="headerlink" title="—"></a>—</h2><h2 id="title-LeetCode-189-轮转数组date-2024-03-21tags-LeetCode-C-categories-笔记"><a href="#title-LeetCode-189-轮转数组date-2024-03-21tags-LeetCode-C-categories-笔记" class="headerlink" title="title: LeetCode-189.轮转数组date: 2024&#x2F;03&#x2F;21tags: - LeetCode - C++categories: - 笔记"></a>title: LeetCode-189.轮转数组<br>date: 2024&#x2F;03&#x2F;21<br>tags:<br> - LeetCode<br> - C++<br>categories:<br> - 笔记</h2><h1 id="189-轮转数组"><a href="#189-轮转数组" class="headerlink" title="189.轮转数组"></a>189.轮转数组</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个整数数组 <code>nums</code>，将数组中的元素向右轮转 <code>k</code> 个位置，其中 <code>k</code> 是非负数。</p>
 <p><strong>示例 1:</strong></p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">输入: nums = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>], k = <span class="number">3</span></span><br><span class="line">输出: [<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line">解释:</span><br><span class="line">向右轮转 <span class="number">1</span> 步: [<span class="number">7</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line">向右轮转 <span class="number">2</span> 步: [<span class="number">6</span>,<span class="number">7</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line">向右轮转 <span class="number">3</span> 步: [<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br></pre></td></tr></table></figure>
@@ -1214,7 +1214,7 @@
   </entry>
   <entry>
     <title>LeetCode-80.删除有序数组中的重复项II</title>
-    <url>//archives/BAk4QRFj</url>
+    <url>/2024/09/20/LeetCode-80.%E5%88%A0%E9%99%A4%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E9%A1%B9II/</url>
     <content><![CDATA[<hr>
 <h2 id="title-LeetCode-80-删除有序数组中的重复项IIdate-2024-03-20tags-LeetCode-原地去重-快慢指针categories-笔记"><a href="#title-LeetCode-80-删除有序数组中的重复项IIdate-2024-03-20tags-LeetCode-原地去重-快慢指针categories-笔记" class="headerlink" title="title: LeetCode-80.删除有序数组中的重复项IIdate: 2024&#x2F;03&#x2F;20tags: - LeetCode - 原地去重 - 快慢指针categories: - 笔记"></a>title: LeetCode-80.删除有序数组中的重复项II<br>date: 2024&#x2F;03&#x2F;20<br>tags:<br> - LeetCode<br> - 原地去重<br> - 快慢指针<br>categories:<br> - 笔记</h2><h1 id="80-删除有序数组中的重复项II"><a href="#80-删除有序数组中的重复项II" class="headerlink" title="80.删除有序数组中的重复项II"></a>80.删除有序数组中的重复项II</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给你一个有序数组 <code>nums</code> ，请你**<a href="http://baike.baidu.com/item/%E5%8E%9F%E5%9C%B0%E7%AE%97%E6%B3%95"> 原地</a>** 删除重复出现的元素，使得出现次数超过两次的元素<strong>只出现两次</strong> ，返回删除后数组的新长度。</p>
 <p>不要使用额外的数组空间，你必须在 <strong><a href="https://baike.baidu.com/item/%E5%8E%9F%E5%9C%B0%E7%AE%97%E6%B3%95">原地 </a>修改输入数组</strong> 并在使用 O(1) 额外空间的条件下完成。</p>
@@ -1258,7 +1258,7 @@
   </entry>
   <entry>
     <title>Linux内存分页及虚拟地址到物理地址的计算</title>
-    <url>//archives/SkqU0XkR</url>
+    <url>/2024/09/20/Linux%E5%86%85%E5%AD%98%E5%88%86%E9%A1%B5%E5%8F%8A%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E5%88%B0%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80%E7%9A%84%E8%AE%A1%E7%AE%97/</url>
     <content><![CDATA[<hr>
 <p>title: Linux内存分页及虚拟地址到物理地址的计算<br>date: 2023&#x2F;07&#x2F;10<br>tags:</p>
 <ul>
@@ -1284,7 +1284,7 @@
   </entry>
   <entry>
     <title>Linux内核态赋予进程root权限</title>
-    <url>//archives/ie7FYgJ7</url>
+    <url>/2024/09/20/Linux%E5%86%85%E6%A0%B8%E6%80%81%E8%B5%8B%E4%BA%88%E8%BF%9B%E7%A8%8Broot%E6%9D%83%E9%99%90/</url>
     <content><![CDATA[<hr>
 <h2 id="title-Linux内核态赋予进程root权限date-2023-07-10tags-Linux-kernel-rootcategories-笔记"><a href="#title-Linux内核态赋予进程root权限date-2023-07-10tags-Linux-kernel-rootcategories-笔记" class="headerlink" title="title: Linux内核态赋予进程root权限date: 2023&#x2F;07&#x2F;10tags: - Linux - kernel - rootcategories: - 笔记"></a>title: Linux内核态赋予进程root权限<br>date: 2023&#x2F;07&#x2F;10<br>tags:<br> - Linux<br> - kernel<br> - root<br>categories:<br> - 笔记</h2><h3 id="一、Linux中进程的用户管理"><a href="#一、Linux中进程的用户管理" class="headerlink" title="一、Linux中进程的用户管理"></a>一、Linux中进程的用户管理</h3><p>在Linux中，每个进程都拥有真实用户ID (&#x3D;&#x3D;uid&#x3D;&#x3D;)和真实组ID (&#x3D;&#x3D;gid&#x3D;&#x3D;)，有效用户ID (&#x3D;&#x3D;euid&#x3D;&#x3D;)和有效组ID (&#x3D;&#x3D;egid&#x3D;&#x3D;)，保存的设置用户ID (&#x3D;&#x3D;suid&#x3D;&#x3D;)和保存的设置组ID (&#x3D;&#x3D;sgid&#x3D;&#x3D;)，另外地，还有文件系统用户ID (&#x3D;&#x3D;fsuid&#x3D;&#x3D;)和文件系统组ID (&#x3D;&#x3D;fsgid&#x3D;&#x3D;)。</p>
 <blockquote>
@@ -1492,7 +1492,7 @@
   </entry>
   <entry>
     <title>Markdown Editor</title>
-    <url>//archives/1721809019801</url>
+    <url>/2024/07/24/Markdown%20Editor/</url>
     <content><![CDATA[<h3 id="主要特性"><a href="#主要特性" class="headerlink" title="主要特性"></a>主要特性</h3><ul>
 <li>支持“标准”Markdown &#x2F; CommonMark和Github风格的语法，也可变身为代码编辑器；</li>
 <li>支持实时预览、图片（跨域）上传、预格式文本&#x2F;代码&#x2F;表格插入、代码折叠、搜索替换、只读模式、自定义样式主题和多语言语法高亮等功能；</li>
@@ -1763,7 +1763,7 @@
   </entry>
   <entry>
     <title>ROCO乐园宠获取方式一览</title>
-    <url>//archives/9zc4JCNL</url>
+    <url>/2024/09/20/ROCO%E4%B9%90%E5%9B%AD%E5%AE%A0%E8%8E%B7%E5%8F%96%E6%96%B9%E5%BC%8F%E4%B8%80%E8%A7%88/</url>
     <content><![CDATA[<ul>
 <li><p>萌奇彩羊：<br>诱捕道具：电果多（乐园探险），彩虹棒棒糖（乐园商店）<br>羁绊宠物：梅花鹿</p>
 </li>
@@ -1811,158 +1811,6 @@
         <tag>洛克王国</tag>
         <tag>游戏</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>ReDroid MAA：在Linux下游玩明日方舟</title>
-    <url>/2026/09/10/ReDroid+MAA%EF%BC%9A%E5%9C%A8Linux%E4%B8%8B%E6%B8%B8%E7%8E%A9%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F/</url>
-    <content><![CDATA[<p><a href="https://lbqaq.top/p/redroid-maa/"><img src="https://lbqaq.top/p/redroid-maa/103123878.webp" alt="Featured image of post ReDroid+MAA：在Linux下游玩明日方舟"></a></p>
-<p><a href="https://lbqaq.top/categories/linux/">Linux</a></p>
-<h2 id="ReDroid-MAA：在Linux下游玩明日方舟"><a href="#ReDroid-MAA：在Linux下游玩明日方舟" class="headerlink" title="ReDroid+MAA：在Linux下游玩明日方舟"></a><a href="https://lbqaq.top/p/redroid-maa/">ReDroid+MAA：在Linux下游玩明日方舟</a></h2><h3 id="介绍了ReDroid以及MAA安装配置方法，实现在Linux环境下优雅的玩方舟"><a href="#介绍了ReDroid以及MAA安装配置方法，实现在Linux环境下优雅的玩方舟" class="headerlink" title="介绍了ReDroid以及MAA安装配置方法，实现在Linux环境下优雅的玩方舟"></a>介绍了ReDroid以及MAA安装配置方法，实现在Linux环境下优雅的玩方舟</h3><p>最近打算将ArchLinux作为主力系统挑战一下，由于平时有用电脑挂明日方舟的习惯，于是打算安装模拟器在Linux上。相较于Windows下各种xx模拟器百花齐放，Linux下就惨不忍睹了。网上搜索到的知名模拟器中，Anbox已经被作者弃坑了，Android Studio模拟器则是面向开发者，想要使用还要安装Android Studio开发环境。</p>
-<p><img src="https://lbqaq.top/p/redroid-maa/IMAGE/FUrYLxA.jpg" alt="be like"></p>
-<p>在搜索中，我发现ReDroid可以满足我的需求。作为一个“云手机”的方案，自然是可以部署在本地，摸索明白了部署到服务器上也挺不错(雾。</p>
-<p>具体的安装的教程我参考的是Ivon大佬的<a href="https://ivonblog.com/posts/redroid-android-docker/">这篇文章</a>，在此基础上作了一些小小的修改。</p>
-<h2 id="ReDroid配置"><a href="#ReDroid配置" class="headerlink" title="# ReDroid配置"></a><a href="#redroid%E9%85%8D%E7%BD%AE">#</a> ReDroid配置</h2><h3 id="安装环境"><a href="#安装环境" class="headerlink" title="# 安装环境"></a><a href="#%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83">#</a> 安装环境</h3><p>ReDroid需要Linux内核启用binderfs模块，Arch Liunx默认的linux内核并不包含此模块，需要安装linux-zen模块。</p>
-<p>这里我强烈建议安装官方的<a href="https://github.com/remote-android/redroid-doc/blob/master/deploy/README.md">安装指南</a>来，我一开始按照Ivon大佬的教程尝试在默认的Linux内核里启用该模块，结果ReDroid一直启动不了。最后更换内核后就成功运行起来了QAQ。</p>
-<p>接着安装docker和docker-compose，用来运行ReDroid的容器</p>
-<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo pacman -S docker docker-compose
-</span></span></code></pre></td></tr></tbody></table>
-
-<p>还要安装ADB和Scrcpy，用于连接到安卓虚拟机</p>
-<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo pacman -S android-tools
-</span></span><span class="line"><span class="cl">sudo pacman -S scrcpy
-</span></span></code></pre></td></tr></tbody></table>
-
-<h3 id="可选-配置ARM转译器"><a href="#可选-配置ARM转译器" class="headerlink" title="# [可选]配置ARM转译器"></a><a href="#%E5%8F%AF%E9%80%89%E9%85%8D%E7%BD%AEarm%E8%BD%AC%E8%AF%91%E5%99%A8">#</a> [可选]配置ARM转译器</h3><p>大部分安卓应用都只有ARM版，这也意味着无法在X86的电脑上运行，这时就需要安装ARM转译器了。</p>
-<p>然而，明日方舟居然支持X86，我们可以通过压缩工具解压方舟的安装包，可以看到<code>lib</code>下有<code>x86</code>目录。这也意味着如果只是用来玩方舟的话，完全不需要配置ARM转译。</p>
-<p>同时，根据大佬的教程配置好转译器后，方舟反而会闪退，所以完全不用做此步😥。如果需要安装arm应用，可以看上面大佬的教程来做。</p>
-<p>我后面可能会考虑使用libhoudini来作为ReDroid的转译器。</p>
-<h3 id="启动镜像"><a href="#启动镜像" class="headerlink" title="# 启动镜像"></a><a href="#%E5%90%AF%E5%8A%A8%E9%95%9C%E5%83%8F">#</a> 启动镜像</h3><p>我这里就使用不包含ARM转译器的ReDroid继续了。通过下面的命令即可部署ReDroid：</p>
-<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo docker run -itd --privileged <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>    -v /home/luobo/redroid:/data <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>    -p 5555:5555 <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>    --name redroid11 <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>    redroid/redroid:11.0.0-latest
-</span></span></code></pre></td></tr></tbody></table>
-
-<p>然后使用adb连接，并执行Scrcpy，显示手机画面：</p>
-<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">adb connect localhost:5555
-</span></span><span class="line"><span class="cl">scrcpy -s localhost:5555
-</span></span></code></pre></td></tr></tbody></table>
-
-<p>对于Google服务框架，我并不是刚需，就不安装了。如果需要安装，可以查看之前提到的教程。</p>
-<p>Scrcpy2.0版本，已经自带了声音模块，无需再安装额外的软件。</p>
-<p>如果遇到报错<code>Failed to initialize audio/opus, error 0xfffffffe</code></p>
-<p>只需要手动指定其他的音频解析器即可，如下面所示：</p>
-<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">scrcpy -s localhost:5555 --audio-codec<span class="o">=</span>aac
-</span></span></code></pre></td></tr></tbody></table>
-
-<p>如果不需要声音，只需要加上<code>--no-audio</code>，如下面所示：</p>
-<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">scrcpy -s localhost:5555 --no-audio
-</span></span></code></pre></td></tr></tbody></table>
-
-<p><img src="https://lbqaq.top/p/redroid-maa/IMAGE/image-20230617164434447.png" alt="运行截图"></p>
-<h3 id="安装应用及开关机"><a href="#安装应用及开关机" class="headerlink" title="# 安装应用及开关机"></a><a href="#%E5%AE%89%E8%A3%85%E5%BA%94%E7%94%A8%E5%8F%8A%E5%BC%80%E5%85%B3%E6%9C%BA">#</a> 安装应用及开关机</h3><p>向ReDroid安装应用，只需要使用adb即可</p>
-<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">adb -s localhost:5555 install <span class="s2">"/mnt/data/Downloads/mrfz_2.0.11_20230605_102450_87eb5.apk"</span>
-</span></span></code></pre></td></tr></tbody></table>
-
-<p>开关机也很简单，我们只需对docker容器进行操作。</p>
-<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo docker stop redroid11  <span class="c1">#关机</span>
-</span></span><span class="line"><span class="cl">sudo docker start redroid11 <span class="c1">#开机</span>
-</span></span></code></pre></td></tr></tbody></table>
-
-<h2 id="MAA配置"><a href="#MAA配置" class="headerlink" title="# MAA配置"></a><a href="#maa%E9%85%8D%E7%BD%AE">#</a> MAA配置</h2><p>MAA作为自动化的挂机长草神器，肯定是要安排上的。</p>
-<h3 id="安装MAA"><a href="#安装MAA" class="headerlink" title="# 安装MAA"></a><a href="#%E5%AE%89%E8%A3%85maa">#</a> 安装MAA</h3><p>Arch用户直接aur安装即可</p>
-<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">yay -S maa-assistant-arknights
-</span></span></code></pre></td></tr></tbody></table>
-
-<p>我使用yay安装时，会安装许多用不到的库，而且会因为依赖错误而无法安装。故还是去<a href="https://maa.plus/">官网</a>下载压缩包解压使用。</p>
-<h3 id="配置MAA"><a href="#配置MAA" class="headerlink" title="# 配置MAA"></a><a href="#%E9%85%8D%E7%BD%AEmaa">#</a> 配置MAA</h3><p>我们需要修改<code>./MAA-v{版本号}-linux-{架构}/Python/</code> 目录下的 <code>sample.py</code> 文件</p>
-<p>首先需要配置adb连接，由于我们之前已经安装过adb了，这里直接替换地址即可：</p>
-<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">if</span> <span class="n">asst</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'adb'</span><span class="p">,</span> <span class="s1">'127.0.0.1:5555'</span><span class="p">):</span>
-</span></span></code></pre></td></tr></tbody></table>
-
-<p>我们可以执行<code>python sample.py</code>，如果输出<code>连接成功</code>则配置成功</p>
-<p>之后我们需要配置MAA的任务，这里可以参考<a href="https://maa.plus/docs/3.1-%E9%9B%86%E6%88%90%E6%96%87%E6%A1%A3.html">官方的文档</a>进行修改</p>
-<p>这里附上我的配置</p>
-<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="n">asst</span><span class="o">.</span><span class="n">append_task</span><span class="p">(</span><span class="s1">'StartUp'</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">asst</span><span class="o">.</span><span class="n">append_task</span><span class="p">(</span><span class="s1">'Fight'</span><span class="p">,</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="s1">'stage'</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span>                        <span class="c1"># 关卡名，可选，默认为空，识别当前/上次的关卡。</span>
-</span></span><span class="line"><span class="cl">        <span class="s1">'report_to_penguin'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>          <span class="c1"># 是否汇报企鹅数据</span>
-</span></span><span class="line"><span class="cl">        <span class="s2">"expiring_medicine"</span><span class="p">:</span> <span class="mi">999</span><span class="p">,</span>           <span class="c1"># 最大使用 48 小时内过期理智药数量，可选，默认 0</span>
-</span></span><span class="line"><span class="cl">        <span class="c1"># 'penguin_id': '1234567'</span>
-</span></span><span class="line"><span class="cl">    <span class="p">})</span>
-</span></span><span class="line"><span class="cl">    <span class="n">asst</span><span class="o">.</span><span class="n">append_task</span><span class="p">(</span><span class="s1">'Recruit'</span><span class="p">,</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="s1">'enable'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>                     <span class="c1"># 是否启用本任务，可选，默认为 true</span>
-</span></span><span class="line"><span class="cl">        <span class="s1">'select'</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>                   <span class="c1"># 会去点击标签的 Tag 等级，必选</span>
-</span></span><span class="line"><span class="cl">        <span class="s1">'confirm'</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">        <span class="s1">'times'</span><span class="p">:</span> <span class="mi">4</span>
-</span></span><span class="line"><span class="cl">    <span class="p">})</span>
-</span></span><span class="line"><span class="cl">    <span class="n">asst</span><span class="o">.</span><span class="n">append_task</span><span class="p">(</span><span class="s1">'Infrast'</span><span class="p">,</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="s1">'facility'</span><span class="p">:</span> <span class="p">[</span>
-</span></span><span class="line"><span class="cl">            <span class="s2">"Mfg"</span><span class="p">,</span> <span class="s2">"Trade"</span><span class="p">,</span> <span class="s2">"Control"</span><span class="p">,</span> <span class="s2">"Power"</span><span class="p">,</span> <span class="s2">"Reception"</span><span class="p">,</span> <span class="s2">"Office"</span><span class="p">,</span> <span class="s2">"Dorm"</span>
-</span></span><span class="line"><span class="cl">        <span class="p">],</span>
-</span></span><span class="line"><span class="cl">        <span class="s1">'drones'</span><span class="p">:</span> <span class="s2">"Money"</span><span class="p">,</span>                  <span class="c1"># 无人机用途 "_NotUse"、"Money"、"SyntheticJade"、"CombatRecord"、"PureGold"、"OriginStone"、"Chip"</span>
-</span></span><span class="line"><span class="cl">        <span class="s1">'replenish'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>                  <span class="c1"># 贸易站“源石碎片”是否自动补货,</span>
-</span></span><span class="line"><span class="cl">        <span class="s1">'dorm_trust_enabled'</span><span class="p">:</span> <span class="kc">True</span>          <span class="c1"># 是否将宿舍剩余位置填入信赖未满干员</span>
-</span></span><span class="line"><span class="cl">    <span class="p">})</span>
-</span></span><span class="line"><span class="cl">    <span class="n">asst</span><span class="o">.</span><span class="n">append_task</span><span class="p">(</span><span class="s1">'Visit'</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">asst</span><span class="o">.</span><span class="n">append_task</span><span class="p">(</span><span class="s1">'Mall'</span><span class="p">,</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="s1">'shopping'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">        <span class="s1">'buy_first'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'招聘许可'</span><span class="p">,</span> <span class="s1">'龙门币'</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">        <span class="s1">'blacklist'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'家具'</span><span class="p">,</span> <span class="s1">'碳'</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">    <span class="p">})</span>
-</span></span><span class="line"><span class="cl">    <span class="n">asst</span><span class="o">.</span><span class="n">append_task</span><span class="p">(</span><span class="s1">'Award'</span><span class="p">)</span>
-</span></span></code></pre></td></tr></tbody></table>
-
-<p>配置好后只需要一行命令就可以执行脚本了</p>
-<p>至此，我们终于可以愉快的挂机了，再也不用担心体力被浪费了（雾</p>
-<p>由于ReDroid是基于Dokcer的，这也意味着可以将其配置到服务器上，就可以实现24小时自动挂机了。不过，要想流畅的运行方舟，最好还是有4G以上的内存，目前我的服务器还没有这么大的内存，之后有机会再尝试吧。</p>
-]]></content>
   </entry>
   <entry>
     <title>TigerVNC 锁屏问题解决方案</title>
@@ -2143,7 +1991,7 @@
   </entry>
   <entry>
     <title>ubuntu20.04 update to 22.04</title>
-    <url>//archives/7697764b-8bef-4896-bbd1-c0913fc11450</url>
+    <url>/2024/07/31/ubuntu20.04%20update%20to%2022.04/</url>
     <content><![CDATA[<p>你现在使用的 Ubuntu 20.04.6 LTS 已经是最新的长期支持版本（LTS）。要升级到更高的版本（如 Ubuntu 22.04 LTS），需要确保系统配置允许这种升级。以下是步骤：</p>
 <p>确保系统配置正确<br>更新所有包：</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get update &amp;&amp; <span class="built_in">sudo</span> apt-get upgrade</span><br></pre></td></tr></table></figure>
@@ -2175,8 +2023,160 @@
       </categories>
   </entry>
   <entry>
+    <title>ReDroid MAA：在Linux下游玩明日方舟</title>
+    <url>/2026/09/10/ReDroid+MAA%EF%BC%9A%E5%9C%A8Linux%E4%B8%8B%E6%B8%B8%E7%8E%A9%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F/</url>
+    <content><![CDATA[<p><a href="https://lbqaq.top/p/redroid-maa/"><img src="https://lbqaq.top/p/redroid-maa/103123878.webp" alt="Featured image of post ReDroid+MAA：在Linux下游玩明日方舟"></a></p>
+<p><a href="https://lbqaq.top/categories/linux/">Linux</a></p>
+<h2 id="ReDroid-MAA：在Linux下游玩明日方舟"><a href="#ReDroid-MAA：在Linux下游玩明日方舟" class="headerlink" title="ReDroid+MAA：在Linux下游玩明日方舟"></a><a href="https://lbqaq.top/p/redroid-maa/">ReDroid+MAA：在Linux下游玩明日方舟</a></h2><h3 id="介绍了ReDroid以及MAA安装配置方法，实现在Linux环境下优雅的玩方舟"><a href="#介绍了ReDroid以及MAA安装配置方法，实现在Linux环境下优雅的玩方舟" class="headerlink" title="介绍了ReDroid以及MAA安装配置方法，实现在Linux环境下优雅的玩方舟"></a>介绍了ReDroid以及MAA安装配置方法，实现在Linux环境下优雅的玩方舟</h3><p>最近打算将ArchLinux作为主力系统挑战一下，由于平时有用电脑挂明日方舟的习惯，于是打算安装模拟器在Linux上。相较于Windows下各种xx模拟器百花齐放，Linux下就惨不忍睹了。网上搜索到的知名模拟器中，Anbox已经被作者弃坑了，Android Studio模拟器则是面向开发者，想要使用还要安装Android Studio开发环境。</p>
+<p><img src="https://lbqaq.top/p/redroid-maa/IMAGE/FUrYLxA.jpg" alt="be like"></p>
+<p>在搜索中，我发现ReDroid可以满足我的需求。作为一个“云手机”的方案，自然是可以部署在本地，摸索明白了部署到服务器上也挺不错(雾。</p>
+<p>具体的安装的教程我参考的是Ivon大佬的<a href="https://ivonblog.com/posts/redroid-android-docker/">这篇文章</a>，在此基础上作了一些小小的修改。</p>
+<h2 id="ReDroid配置"><a href="#ReDroid配置" class="headerlink" title="# ReDroid配置"></a><a href="#redroid%E9%85%8D%E7%BD%AE">#</a> ReDroid配置</h2><h3 id="安装环境"><a href="#安装环境" class="headerlink" title="# 安装环境"></a><a href="#%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83">#</a> 安装环境</h3><p>ReDroid需要Linux内核启用binderfs模块，Arch Liunx默认的linux内核并不包含此模块，需要安装linux-zen模块。</p>
+<p>这里我强烈建议安装官方的<a href="https://github.com/remote-android/redroid-doc/blob/master/deploy/README.md">安装指南</a>来，我一开始按照Ivon大佬的教程尝试在默认的Linux内核里启用该模块，结果ReDroid一直启动不了。最后更换内核后就成功运行起来了QAQ。</p>
+<p>接着安装docker和docker-compose，用来运行ReDroid的容器</p>
+<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo pacman -S docker docker-compose
+</span></span></code></pre></td></tr></tbody></table>
+
+<p>还要安装ADB和Scrcpy，用于连接到安卓虚拟机</p>
+<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo pacman -S android-tools
+</span></span><span class="line"><span class="cl">sudo pacman -S scrcpy
+</span></span></code></pre></td></tr></tbody></table>
+
+<h3 id="可选-配置ARM转译器"><a href="#可选-配置ARM转译器" class="headerlink" title="# [可选]配置ARM转译器"></a><a href="#%E5%8F%AF%E9%80%89%E9%85%8D%E7%BD%AEarm%E8%BD%AC%E8%AF%91%E5%99%A8">#</a> [可选]配置ARM转译器</h3><p>大部分安卓应用都只有ARM版，这也意味着无法在X86的电脑上运行，这时就需要安装ARM转译器了。</p>
+<p>然而，明日方舟居然支持X86，我们可以通过压缩工具解压方舟的安装包，可以看到<code>lib</code>下有<code>x86</code>目录。这也意味着如果只是用来玩方舟的话，完全不需要配置ARM转译。</p>
+<p>同时，根据大佬的教程配置好转译器后，方舟反而会闪退，所以完全不用做此步😥。如果需要安装arm应用，可以看上面大佬的教程来做。</p>
+<p>我后面可能会考虑使用libhoudini来作为ReDroid的转译器。</p>
+<h3 id="启动镜像"><a href="#启动镜像" class="headerlink" title="# 启动镜像"></a><a href="#%E5%90%AF%E5%8A%A8%E9%95%9C%E5%83%8F">#</a> 启动镜像</h3><p>我这里就使用不包含ARM转译器的ReDroid继续了。通过下面的命令即可部署ReDroid：</p>
+<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo docker run -itd --privileged <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    -v /home/luobo/redroid:/data <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    -p 5555:5555 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    --name redroid11 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    redroid/redroid:11.0.0-latest
+</span></span></code></pre></td></tr></tbody></table>
+
+<p>然后使用adb连接，并执行Scrcpy，显示手机画面：</p>
+<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">adb connect localhost:5555
+</span></span><span class="line"><span class="cl">scrcpy -s localhost:5555
+</span></span></code></pre></td></tr></tbody></table>
+
+<p>对于Google服务框架，我并不是刚需，就不安装了。如果需要安装，可以查看之前提到的教程。</p>
+<p>Scrcpy2.0版本，已经自带了声音模块，无需再安装额外的软件。</p>
+<p>如果遇到报错<code>Failed to initialize audio/opus, error 0xfffffffe</code></p>
+<p>只需要手动指定其他的音频解析器即可，如下面所示：</p>
+<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">scrcpy -s localhost:5555 --audio-codec<span class="o">=</span>aac
+</span></span></code></pre></td></tr></tbody></table>
+
+<p>如果不需要声音，只需要加上<code>--no-audio</code>，如下面所示：</p>
+<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">scrcpy -s localhost:5555 --no-audio
+</span></span></code></pre></td></tr></tbody></table>
+
+<p><img src="https://lbqaq.top/p/redroid-maa/IMAGE/image-20230617164434447.png" alt="运行截图"></p>
+<h3 id="安装应用及开关机"><a href="#安装应用及开关机" class="headerlink" title="# 安装应用及开关机"></a><a href="#%E5%AE%89%E8%A3%85%E5%BA%94%E7%94%A8%E5%8F%8A%E5%BC%80%E5%85%B3%E6%9C%BA">#</a> 安装应用及开关机</h3><p>向ReDroid安装应用，只需要使用adb即可</p>
+<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">adb -s localhost:5555 install <span class="s2">"/mnt/data/Downloads/mrfz_2.0.11_20230605_102450_87eb5.apk"</span>
+</span></span></code></pre></td></tr></tbody></table>
+
+<p>开关机也很简单，我们只需对docker容器进行操作。</p>
+<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo docker stop redroid11  <span class="c1">#关机</span>
+</span></span><span class="line"><span class="cl">sudo docker start redroid11 <span class="c1">#开机</span>
+</span></span></code></pre></td></tr></tbody></table>
+
+<h2 id="MAA配置"><a href="#MAA配置" class="headerlink" title="# MAA配置"></a><a href="#maa%E9%85%8D%E7%BD%AE">#</a> MAA配置</h2><p>MAA作为自动化的挂机长草神器，肯定是要安排上的。</p>
+<h3 id="安装MAA"><a href="#安装MAA" class="headerlink" title="# 安装MAA"></a><a href="#%E5%AE%89%E8%A3%85maa">#</a> 安装MAA</h3><p>Arch用户直接aur安装即可</p>
+<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">yay -S maa-assistant-arknights
+</span></span></code></pre></td></tr></tbody></table>
+
+<p>我使用yay安装时，会安装许多用不到的库，而且会因为依赖错误而无法安装。故还是去<a href="https://maa.plus/">官网</a>下载压缩包解压使用。</p>
+<h3 id="配置MAA"><a href="#配置MAA" class="headerlink" title="# 配置MAA"></a><a href="#%E9%85%8D%E7%BD%AEmaa">#</a> 配置MAA</h3><p>我们需要修改<code>./MAA-v{版本号}-linux-{架构}/Python/</code> 目录下的 <code>sample.py</code> 文件</p>
+<p>首先需要配置adb连接，由于我们之前已经安装过adb了，这里直接替换地址即可：</p>
+<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">if</span> <span class="n">asst</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'adb'</span><span class="p">,</span> <span class="s1">'127.0.0.1:5555'</span><span class="p">):</span>
+</span></span></code></pre></td></tr></tbody></table>
+
+<p>我们可以执行<code>python sample.py</code>，如果输出<code>连接成功</code>则配置成功</p>
+<p>之后我们需要配置MAA的任务，这里可以参考<a href="https://maa.plus/docs/3.1-%E9%9B%86%E6%88%90%E6%96%87%E6%A1%A3.html">官方的文档</a>进行修改</p>
+<p>这里附上我的配置</p>
+<table class="lntable"><tbody><tr><td class="lntd"><pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td><td class="lntd"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="n">asst</span><span class="o">.</span><span class="n">append_task</span><span class="p">(</span><span class="s1">'StartUp'</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">asst</span><span class="o">.</span><span class="n">append_task</span><span class="p">(</span><span class="s1">'Fight'</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">'stage'</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span>                        <span class="c1"># 关卡名，可选，默认为空，识别当前/上次的关卡。</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">'report_to_penguin'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>          <span class="c1"># 是否汇报企鹅数据</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">"expiring_medicine"</span><span class="p">:</span> <span class="mi">999</span><span class="p">,</span>           <span class="c1"># 最大使用 48 小时内过期理智药数量，可选，默认 0</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 'penguin_id': '1234567'</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="n">asst</span><span class="o">.</span><span class="n">append_task</span><span class="p">(</span><span class="s1">'Recruit'</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">'enable'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>                     <span class="c1"># 是否启用本任务，可选，默认为 true</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">'select'</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>                   <span class="c1"># 会去点击标签的 Tag 等级，必选</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">'confirm'</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">'times'</span><span class="p">:</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="n">asst</span><span class="o">.</span><span class="n">append_task</span><span class="p">(</span><span class="s1">'Infrast'</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">'facility'</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">"Mfg"</span><span class="p">,</span> <span class="s2">"Trade"</span><span class="p">,</span> <span class="s2">"Control"</span><span class="p">,</span> <span class="s2">"Power"</span><span class="p">,</span> <span class="s2">"Reception"</span><span class="p">,</span> <span class="s2">"Office"</span><span class="p">,</span> <span class="s2">"Dorm"</span>
+</span></span><span class="line"><span class="cl">        <span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">'drones'</span><span class="p">:</span> <span class="s2">"Money"</span><span class="p">,</span>                  <span class="c1"># 无人机用途 "_NotUse"、"Money"、"SyntheticJade"、"CombatRecord"、"PureGold"、"OriginStone"、"Chip"</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">'replenish'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>                  <span class="c1"># 贸易站“源石碎片”是否自动补货,</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">'dorm_trust_enabled'</span><span class="p">:</span> <span class="kc">True</span>          <span class="c1"># 是否将宿舍剩余位置填入信赖未满干员</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="n">asst</span><span class="o">.</span><span class="n">append_task</span><span class="p">(</span><span class="s1">'Visit'</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">asst</span><span class="o">.</span><span class="n">append_task</span><span class="p">(</span><span class="s1">'Mall'</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">'shopping'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">'buy_first'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'招聘许可'</span><span class="p">,</span> <span class="s1">'龙门币'</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">'blacklist'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'家具'</span><span class="p">,</span> <span class="s1">'碳'</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="n">asst</span><span class="o">.</span><span class="n">append_task</span><span class="p">(</span><span class="s1">'Award'</span><span class="p">)</span>
+</span></span></code></pre></td></tr></tbody></table>
+
+<p>配置好后只需要一行命令就可以执行脚本了</p>
+<p>至此，我们终于可以愉快的挂机了，再也不用担心体力被浪费了（雾</p>
+<p>由于ReDroid是基于Dokcer的，这也意味着可以将其配置到服务器上，就可以实现24小时自动挂机了。不过，要想流畅的运行方舟，最好还是有4G以上的内存，目前我的服务器还没有这么大的内存，之后有机会再尝试吧。</p>
+]]></content>
+  </entry>
+  <entry>
     <title>ubuntu20.04+update+to+22.04</title>
-    <url>//archives/WRs58vSV</url>
+    <url>/2024/09/20/ubuntu20.04+update+to+22.04/</url>
     <content><![CDATA[<p>你现在使用的 Ubuntu 20.04.6 LTS 已经是最新的长期支持版本（LTS）。要升级到更高的版本（如 Ubuntu 22.04 LTS），需要确保系统配置允许这种升级。以下是步骤：</p>
 <p>确保系统配置正确<br>更新所有包：</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get update &amp;&amp; <span class="built_in">sudo</span> apt-get upgrade</span><br></pre></td></tr></table></figure>
@@ -2229,9 +2229,9 @@
   </entry>
   <entry>
     <title>云服务器Debian12根分区扩容记录</title>
-    <url>//archives/uNQ99s5e</url>
+    <url>/2025/04/18/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8Debian12%E6%A0%B9%E5%88%86%E5%8C%BA%E6%89%A9%E5%AE%B9%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<hr>
-<h2 id="title-20240328-Debian12根分区扩容记录id-d08f41e3-5620-4a42-b801-74ae009af89fdate-2024-09-20-20-46-05auther-liccsucover-nullexcerpt-title-Debian12根分区扩容记录-date-2024-03-29-tags-Debian-扩容-categories-杂谈-WARNING-以下操作可能会导致包括但不仅限于数据丢失、无法启动等问题，严重时您可能需要重装系统，如要继续，请确保已做好数据备份等准备工作。-Debipermalink-archives-d7gSaRt5categories-jiao-chengtags-linux-yun-wei"><a href="#title-20240328-Debian12根分区扩容记录id-d08f41e3-5620-4a42-b801-74ae009af89fdate-2024-09-20-20-46-05auther-liccsucover-nullexcerpt-title-Debian12根分区扩容记录-date-2024-03-29-tags-Debian-扩容-categories-杂谈-WARNING-以下操作可能会导致包括但不仅限于数据丢失、无法启动等问题，严重时您可能需要重装系统，如要继续，请确保已做好数据备份等准备工作。-Debipermalink-archives-d7gSaRt5categories-jiao-chengtags-linux-yun-wei" class="headerlink" title="title: 20240328-Debian12根分区扩容记录id: d08f41e3-5620-4a42-b801-74ae009af89fdate: 2024-09-20 20:46:05auther: liccsucover: nullexcerpt: title Debian12根分区扩容记录 date 2024&#x2F;03&#x2F;29 tags Debian 扩容 categories 杂谈 [!WARNING] 以下操作可能会导致包括但不仅限于数据丢失、无法启动等问题，严重时您可能需要重装系统，如要继续，请确保已做好数据备份等准备工作。 Debipermalink: &#x2F;archives&#x2F;d7gSaRt5categories: - jiao-chengtags: - linux - yun-wei"></a>title: 20240328-Debian12根分区扩容记录<br>id: d08f41e3-5620-4a42-b801-74ae009af89f<br>date: 2024-09-20 20:46:05<br>auther: liccsu<br>cover: null<br>excerpt: title Debian12根分区扩容记录 date 2024&#x2F;03&#x2F;29 tags Debian 扩容 categories 杂谈 [!WARNING] 以下操作可能会导致包括但不仅限于数据丢失、无法启动等问题，严重时您可能需要重装系统，如要继续，请确保已做好数据备份等准备工作。 Debi<br>permalink: &#x2F;archives&#x2F;d7gSaRt5<br>categories:<br> - jiao-cheng<br>tags:<br> - linux<br> - yun-wei</h2><hr>
+<h2 id="title-20240328-Debian12根分区扩容记录id-d08f41e3-5620-4a42-b801-74ae009af89fdate-2024-09-20-20-46-05auther-liccsucover-nullexcerpt-title-Debian12根分区扩容记录-date-2024-03-29-tags-Debian-扩容-categories-杂谈-WARNING-以下操作可能会导致包括但不仅限于数据丢失、无法启动等问题，严重时您可能需要重装系统，如要继续，请确保已做好数据备份等准备工作。-Debicategories-jiao-chengtags-linux-yun-wei"><a href="#title-20240328-Debian12根分区扩容记录id-d08f41e3-5620-4a42-b801-74ae009af89fdate-2024-09-20-20-46-05auther-liccsucover-nullexcerpt-title-Debian12根分区扩容记录-date-2024-03-29-tags-Debian-扩容-categories-杂谈-WARNING-以下操作可能会导致包括但不仅限于数据丢失、无法启动等问题，严重时您可能需要重装系统，如要继续，请确保已做好数据备份等准备工作。-Debicategories-jiao-chengtags-linux-yun-wei" class="headerlink" title="title: 20240328-Debian12根分区扩容记录id: d08f41e3-5620-4a42-b801-74ae009af89fdate: 2024-09-20 20:46:05auther: liccsucover: nullexcerpt: title Debian12根分区扩容记录 date 2024&#x2F;03&#x2F;29 tags Debian 扩容 categories 杂谈 [!WARNING] 以下操作可能会导致包括但不仅限于数据丢失、无法启动等问题，严重时您可能需要重装系统，如要继续，请确保已做好数据备份等准备工作。 Debicategories: - jiao-chengtags: - linux - yun-wei"></a>title: 20240328-Debian12根分区扩容记录<br>id: d08f41e3-5620-4a42-b801-74ae009af89f<br>date: 2024-09-20 20:46:05<br>auther: liccsu<br>cover: null<br>excerpt: title Debian12根分区扩容记录 date 2024&#x2F;03&#x2F;29 tags Debian 扩容 categories 杂谈 [!WARNING] 以下操作可能会导致包括但不仅限于数据丢失、无法启动等问题，严重时您可能需要重装系统，如要继续，请确保已做好数据备份等准备工作。 Debi<br>categories:<br> - jiao-cheng<br>tags:<br> - linux<br> - yun-wei</h2><hr>
 <h2 id="title-Debian12根分区扩容记录date-2024-03-29tags-Debian-扩容categories-杂谈"><a href="#title-Debian12根分区扩容记录date-2024-03-29tags-Debian-扩容categories-杂谈" class="headerlink" title="title: Debian12根分区扩容记录date: 2024&#x2F;03&#x2F;29tags: - Debian - 扩容categories: - 杂谈"></a>title: Debian12根分区扩容记录<br>date: 2024&#x2F;03&#x2F;29<br>tags:<br> - Debian<br> - 扩容<br>categories:<br> - 杂谈</h2><blockquote>
 <p>[!WARNING]</p>
 <p>以下操作可能会导致包括但不仅限于数据丢失、无法启动等问题，严重时您可能需要重装系统，如要继续，请确保已做好数据备份等准备工作。</p>
@@ -2621,7 +2621,7 @@
   </entry>
   <entry>
     <title>安装x11vnc远程桌面</title>
-    <url>//archives/36GQ1TyC</url>
+    <url>/2024/09/20/%E5%AE%89%E8%A3%85x11vnc%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/</url>
     <content><![CDATA[<h2 id="打开终端并输入以下命令以安装x11vnc："><a href="#打开终端并输入以下命令以安装x11vnc：" class="headerlink" title="打开终端并输入以下命令以安装x11vnc："></a>打开终端并输入以下命令以安装x11vnc：</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get install x11vnc</span><br></pre></td></tr></table></figure>
 
 <p>安装完成后，输入以下命令以生成密码文件：</p>
@@ -2714,7 +2714,7 @@
   </entry>
   <entry>
     <title>操作系统知识梳理</title>
-    <url>//archives/h2d3BrOE</url>
+    <url>/2024/09/20/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/</url>
     <content><![CDATA[<blockquote>
 <p>耗时20天，终于学完啦，顺便写了1.4w字的笔记，坚持互联网开源精神，分享出来</p>
 </blockquote>
