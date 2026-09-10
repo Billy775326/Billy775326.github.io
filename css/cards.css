@@ -1,6 +1,5 @@
-/* Homepage post layout: 3-column card grid, billy12.xyz style */
+/* Homepage post layout: 3-column card grid (on top of Butterfly defaults) */
 
-/* grid container */
 #recent-posts .recent-post-items {
   display: flex;
   flex-wrap: wrap;
@@ -8,30 +7,27 @@
   margin: 0 -10px;
 }
 
-/* card */
 #recent-posts .recent-post-item {
   display: flex;
   flex-direction: column;
   width: calc((100% - 60px) / 3);
   margin: 0 10px 20px;
   height: auto;
-  border: none;
-  border-radius: 16px;
-  background: var(--card-bg);
-  box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.05);
+  border-radius: 12px;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: var(--card-shadow);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 #recent-posts .recent-post-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 16px 8px rgba(7, 17, 27, 0.09);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px 8px rgba(7, 17, 27, 0.1);
 }
 
-/* cover on top, fixed height, cover the whole area */
+/* cover on top */
 #recent-posts .post_cover {
   width: 100%;
-  height: 192px;
+  height: 170px;
   flex: none;
   order: 0;
   margin: 0;
@@ -40,19 +36,21 @@
 #recent-posts .post_cover .article-bg,
 #recent-posts .post_cover img {
   width: 100%;
-  height: 192px;
+  height: 170px;
   object-fit: cover;
   display: block;
   border-radius: 0;
+  margin: 0;
 }
 
+/* info below cover */
 #recent-posts .recent-post-info {
   order: 1;
   flex: 1;
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 18px 20px 14px;
+  padding: 16px 18px 14px;
 }
 
 #recent-posts .recent-post-info .article-title {
@@ -66,18 +64,12 @@
   margin-bottom: 6px;
 }
 
-#recent-posts .recent-post-info .article-meta-wrap {
-  font-size: 0.85em;
-}
-
 #recent-posts .recent-post-info .content {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  -webkit-box-orient: vertical;
   font-size: 0.88em;
-  color: var(--font-color);
   opacity: 0.75;
 }
 
