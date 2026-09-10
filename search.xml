@@ -24,7 +24,7 @@
 <p>配置容器名称后再次连接数据库，你会发现后续重启容器和服务器都不需要重新填写配置信息。redis和其他数据库或服务也是如此配置，使用容器名称进行连接。</p>
 ]]></content>
       <categories>
-        <category>jiao-cheng</category>
+        <category>教程</category>
       </categories>
       <tags>
         <tag>linux</tag>
@@ -54,11 +54,11 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone git@github.com:UserName/RepoName.git</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>jiao-cheng</category>
+        <category>教程</category>
       </categories>
       <tags>
         <tag>linux</tag>
-        <tag>yun-wei</tag>
+        <tag>运维</tag>
       </tags>
   </entry>
   <entry>
@@ -89,10 +89,10 @@
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://github.com/hazukieq/Yporaject/blob/master/README.md">TYpora 最新版激发教程</a></p>
 ]]></content>
       <categories>
-        <category>jiao-cheng</category>
+        <category>教程</category>
       </categories>
       <tags>
-        <tag>ruan-jian</tag>
+        <tag>软件</tag>
       </tags>
   </entry>
   <entry>
@@ -120,11 +120,11 @@
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">threeSum</span>(vector&lt;<span class="type">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; ret; <span class="comment">// 保存结果三元组</span></span><br><span class="line">        <span class="type">int</span> len = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line">        <span class="keyword">if</span> (nums[<span class="number">0</span>] &gt; <span class="number">0</span> || nums[len<span class="number">-1</span>] &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> ret; <span class="comment">// 过滤一下不可能凑出三数之和条件的情况</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; ++i) &#123; <span class="comment">// nums[i]即为选定的第一个数，那么剩下满足条件的两个数就是两数之和问题</span></span><br><span class="line">            <span class="keyword">if</span> (i &gt; <span class="number">0</span> &amp;&amp; nums[i] == nums[i<span class="number">-1</span>]) &#123;</span><br><span class="line">                <span class="keyword">continue</span>; <span class="comment">// 如果和上一轮循环判断的数相同则没必要再判断一次了，跳过直到遇到不同的数</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">int</span> li = i + <span class="number">1</span>, ri = len - <span class="number">1</span>; <span class="comment">// 定义双指针，左指针从左往右，右指针从右往左</span></span><br><span class="line">            <span class="type">int</span> target = -nums[i]; <span class="comment">// nums[i]是选定的数，那么剩下两数之和则为-nums[i]</span></span><br><span class="line">            <span class="keyword">while</span> (li &lt; ri) &#123; <span class="comment">// 左指针必须在右指针左边</span></span><br><span class="line">                <span class="keyword">while</span> (nums[li] + nums[ri] &lt; target &amp;&amp; li &lt; ri) ++li; <span class="comment">// 如果此时左右指针指向的两数之和比目标和小，说明应该增大其中某个数，即左指针右移</span></span><br><span class="line">                <span class="keyword">if</span> (li &gt;= ri) <span class="keyword">break</span>; <span class="comment">// 当左右指针相遇了，说明不存在满足两数之和为target的两个数</span></span><br><span class="line">                <span class="keyword">while</span> (nums[li] + nums[ri] &gt; target &amp;&amp; li &lt; ri) --ri; <span class="comment">// 如果此时左右指针指向的两数之和比目标和大，说明应该减小其中某个数，即右指针左移</span></span><br><span class="line">                <span class="keyword">if</span> (li &gt;= ri) <span class="keyword">break</span>; <span class="comment">// 当左右指针相遇了，说明不存在满足两数之和为target的两个数</span></span><br><span class="line">                <span class="keyword">if</span> (nums[li] + nums[ri] == target) &#123; <span class="comment">// 当找到两个数满足两数之和条件时</span></span><br><span class="line">                    ret.<span class="built_in">push_back</span>(&#123;nums[i], nums[li], nums[ri]&#125;); <span class="comment">// 与第一选定数合并即为满足三数之和的三元组，加入结果集合中</span></span><br><span class="line">                    <span class="keyword">while</span> (nums[li++] == nums[li] &amp;&amp; li &lt; ri); <span class="comment">// 如果和上一轮循环判断的数相同则没必要再判断一次了，跳过直到遇到不同的数</span></span><br><span class="line">                    <span class="keyword">if</span> (li &gt;= ri) <span class="keyword">break</span>; <span class="comment">// 当左右指针相遇了，说明所有可能的二元组都遍历完了</span></span><br><span class="line">                    <span class="keyword">while</span> (nums[ri--] == nums[ri] &amp;&amp; li &lt; ri); <span class="comment">// 如果和上一轮循环判断的数相同则没必要再判断一次了，跳过直到遇到不同的数</span></span><br><span class="line">                    <span class="keyword">if</span> (li &gt;= ri) <span class="keyword">break</span>; <span class="comment">// 当左右指针相遇了，说明所有可能的二元组都遍历完了</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>bi-ji</category>
+        <category>笔记</category>
       </categories>
       <tags>
-        <tag>suan-fa</tag>
-        <tag>leetcode</tag>
+        <tag>算法</tag>
+        <tag>LeetCode</tag>
       </tags>
   </entry>
   <entry>
@@ -187,11 +187,11 @@
 <p>解决方式：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 确保当前根目录处于vda上</span><br><span class="line"># 删除以上损坏的卷和卷组</span><br><span class="line">vgchange -an vg_root # 禁用此卷组</span><br><span class="line">vgreduce --removemissing vg_root # 删除卷组中的已丢失的卷</span><br><span class="line">lvremove /dev/vg_root # 删除此卷组上的逻辑卷</span><br><span class="line">vgremove vg_root # 删除此卷组</span><br><span class="line">pvremove [--force --force] /dev/vdb # [强制]删除此物理卷（添加两个--force选项来强制删除）</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>jiao-cheng</category>
+        <category>教程</category>
       </categories>
       <tags>
         <tag>linux</tag>
-        <tag>yun-wei</tag>
+        <tag>运维</tag>
       </tags>
   </entry>
   <entry>
@@ -201,10 +201,10 @@
 <h2 id="title-Rust-01-猜数字游戏date-2024-04-08tags-Rustcategories-笔记"><a href="#title-Rust-01-猜数字游戏date-2024-04-08tags-Rustcategories-笔记" class="headerlink" title="title: Rust-01-猜数字游戏date: 2024&#x2F;04&#x2F;08tags: - Rustcategories: - 笔记"></a>title: Rust-01-猜数字游戏<br>date: 2024&#x2F;04&#x2F;08<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><h1 id="猜数字游戏"><a href="#猜数字游戏" class="headerlink" title="猜数字游戏"></a>猜数字游戏</h1><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> rand::Rng;</span><br><span class="line"><span class="keyword">use</span> std::cmp::Ordering;</span><br><span class="line"><span class="keyword">use</span> std::io;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The main function of the program.</span></span><br><span class="line"><span class="comment"> * It starts the game by printing a welcome message, generating a secret number, and then entering a loop where it prompts the user to guess the number.</span></span><br><span class="line"><span class="comment"> * It continues to loop until the user guesses the correct number.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;Guess the number!&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Generates a secret number between 1 and 100 (inclusive) using the `rand::thread_rng().gen_range(1..101)` function.</span></span><br><span class="line"><span class="comment">     * This number will be the target that the user will try to guess.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">secret_number</span> = rand::<span class="title function_ invoke__">thread_rng</span>().<span class="title function_ invoke__">gen_range</span>(<span class="number">1</span>..<span class="number">101</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The main game loop. It will continue to run until the user guesses the correct number.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">loop</span> &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;Enter your guess: &quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Reads a line of input from the user.</span></span><br><span class="line"><span class="comment">         * If the input cannot be read, the program will panic with the message &quot;Failed to read line&quot;.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">guess</span> = <span class="type">String</span>::<span class="title function_ invoke__">new</span>();</span><br><span class="line">        io::<span class="title function_ invoke__">stdin</span>()</span><br><span class="line">            .<span class="title function_ invoke__">read_line</span>(&amp;<span class="keyword">mut</span> guess)</span><br><span class="line">            .<span class="title function_ invoke__">expect</span>(<span class="string">&quot;Failed to read line&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Parses the user&#x27;s input into a u32 integer.</span></span><br><span class="line"><span class="comment">         * If the input cannot be parsed, the program will skip the current iteration of the loop and continue to the next one.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">guess</span>: <span class="type">u32</span> = <span class="keyword">match</span> guess.<span class="title function_ invoke__">trim</span>().<span class="title function_ invoke__">parse</span>() &#123;</span><br><span class="line">            <span class="title function_ invoke__">Ok</span>(num) =&gt; num,</span><br><span class="line">            <span class="title function_ invoke__">Err</span>(_) =&gt; <span class="keyword">continue</span>,</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;You guessed: &#123;&#125;&quot;</span>, guess);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Compares the user&#x27;s guess with the secret number.</span></span><br><span class="line"><span class="comment">         * If the guess is less than the secret number, it prints &quot;Too small!&quot;.</span></span><br><span class="line"><span class="comment">         * If the guess is greater than the secret number, it prints &quot;Too big!&quot;.</span></span><br><span class="line"><span class="comment">         * If the guess is equal to the secret number, it prints &quot;You got it!&quot; and breaks out of the loop.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">match</span> guess.<span class="title function_ invoke__">cmp</span>(&amp;secret_number) &#123;</span><br><span class="line">            Ordering::Less =&gt; <span class="built_in">println!</span>(<span class="string">&quot;Too small!&quot;</span>),</span><br><span class="line">            Ordering::Greater =&gt; <span class="built_in">println!</span>(<span class="string">&quot;Too big!&quot;</span>),</span><br><span class="line">            Ordering::Equal =&gt; &#123;</span><br><span class="line">                <span class="built_in">println!</span>(<span class="string">&quot;You got it!&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>bi-ji</category>
+        <category>笔记</category>
       </categories>
       <tags>
-        <tag>rust</tag>
+        <tag>Rust</tag>
       </tags>
   </entry>
   <entry>
@@ -214,10 +214,10 @@
 <h2 id="title-Rust-02-变量与可变性date-2024-04-09tags-Rustcategories-笔记"><a href="#title-Rust-02-变量与可变性date-2024-04-09tags-Rustcategories-笔记" class="headerlink" title="title: Rust-02-变量与可变性date: 2024&#x2F;04&#x2F;09tags: - Rustcategories: - 笔记"></a>title: Rust-02-变量与可变性<br>date: 2024&#x2F;04&#x2F;09<br>tags:<br> - Rust<br>categories:<br> - 笔记</h2><h1 id="变量与可变性"><a href="#变量与可变性" class="headerlink" title="变量与可变性"></a>变量与可变性</h1><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#![allow(unused)]</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="comment">// 变量默认是不可变的，如要声明可变变量，应使用mut关键字</span></span><br><span class="line">    <span class="comment">// let x = 5;</span></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">x</span> = <span class="number">5</span>;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The value of x is &#123;&#125;&quot;</span>, x); <span class="comment">// 5</span></span><br><span class="line">    x = <span class="number">6</span>;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The value of x is &#123;&#125;&quot;</span>, x); <span class="comment">// 6</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 常量，命名约定是全部字母大写，并以下划线分隔单词</span></span><br><span class="line">    <span class="comment">// 在声明的作用域内，常量在程序运行的整个过程中都有效</span></span><br><span class="line">    <span class="keyword">const</span> THREE_HOURS_IN_SECONDS: <span class="type">u32</span> = <span class="number">60</span> * <span class="number">60</span> * <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遮蔽(shadow)，可以通过使用相同的变量名并重复使用 let 关键字来遮蔽之前的变量</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">x</span> = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">x</span> = x + <span class="number">1</span>;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="variable">x</span> = x * <span class="number">2</span>;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;The value of x in the inner scope is: &#123;&#125;&quot;</span>, x); <span class="comment">// 12</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The value of x is: &#123;&#125;&quot;</span>, x); <span class="comment">// 6</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遮蔽也可以改变变量的类型</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">spaces</span> = <span class="string">&quot;   &quot;</span>;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">spaces</span> = spaces.<span class="title function_ invoke__">len</span>();</span><br><span class="line">    <span class="comment">// 而 mut 不行</span></span><br><span class="line">    <span class="comment">// let mut spaces = &quot;   &quot;;</span></span><br><span class="line">    <span class="comment">// spaces = spaces.len();</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>bi-ji</category>
+        <category>笔记</category>
       </categories>
       <tags>
-        <tag>rust</tag>
+        <tag>Rust</tag>
       </tags>
   </entry>
   <entry>
@@ -410,10 +410,10 @@
 <p>这是 Rust 在实践中安全原则的第一个例子。在很多低级语言中，并不进行这种检查，而且在你使用不正确的索引时，可以访问无效的内存。Rust 通过立即退出来的方式防止这种错误，而不是允许内存访问并继续运行程序。</p>
 ]]></content>
       <categories>
-        <category>bi-ji</category>
+        <category>笔记</category>
       </categories>
       <tags>
-        <tag>rust</tag>
+        <tag>Rust</tag>
       </tags>
   </entry>
   <entry>
@@ -425,10 +425,10 @@
 </blockquote>
 ]]></content>
       <categories>
-        <category>bi-ji</category>
+        <category>笔记</category>
       </categories>
       <tags>
-        <tag>rust</tag>
+        <tag>Rust</tag>
       </tags>
   </entry>
   <entry>
@@ -494,10 +494,10 @@
 <p>主要的错误信息 “mismatched types”（类型不匹配）揭示了这段代码的核心问题。函数 <code>plus_one</code> 的定义说明它要返回一个 <code>i32</code> 类型的值，不过语句并不会返回值，此值由单位类型 <code>()</code> 表示，表示不返回值。因为不返回值与函数定义相矛盾，从而出现一个错误。在输出中，Rust 提供了一条信息，可能有助于纠正这个错误：它建议删除分号，这将修复错误。</p>
 ]]></content>
       <categories>
-        <category>bi-ji</category>
+        <category>笔记</category>
       </categories>
       <tags>
-        <tag>rust</tag>
+        <tag>Rust</tag>
       </tags>
   </entry>
   <entry>
@@ -577,10 +577,10 @@
 <h3 id="while-let"><a href="#while-let" class="headerlink" title="while let"></a><code>while let</code></h3><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">some_numbers</span> = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].<span class="title function_ invoke__">into_iter</span>();</span><br><span class="line">    <span class="comment">// 同上 if let</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">let</span> <span class="variable">Some</span>(num) = some_numbers.<span class="title function_ invoke__">next</span>() &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;获得数字：&#123;&#125;&quot;</span>, num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>bi-ji</category>
+        <category>笔记</category>
       </categories>
       <tags>
-        <tag>rust</tag>
+        <tag>Rust</tag>
       </tags>
   </entry>
   <entry>
@@ -724,10 +724,10 @@
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">string</span> = <span class="string">&quot;hello&quot;</span>.<span class="title function_ invoke__">to_string</span>();</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// _是占位符，此处赋值会被忽略，所以并没有发生所有权转移</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">_</span> = string;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// string 仍然可用</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>bi-ji</category>
+        <category>笔记</category>
       </categories>
       <tags>
-        <tag>rust</tag>
+        <tag>Rust</tag>
       </tags>
   </entry>
   <entry>
@@ -828,10 +828,10 @@
 <p>接下来，我们来看看另一种不同类型的引用：slice。</p>
 ]]></content>
       <categories>
-        <category>bi-ji</category>
+        <category>笔记</category>
       </categories>
       <tags>
-        <tag>rust</tag>
+        <tag>Rust</tag>
       </tags>
   </entry>
   <entry>
@@ -932,10 +932,10 @@
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch04-03-slices.html#%E6%80%BB%E7%BB%93">总结</a></h2><p>所有权、借用和 slice 这些概念让 Rust 程序在编译时确保内存安全。Rust 语言提供了跟其他系统编程语言相同的方式来控制你使用的内存，但拥有数据所有者在离开作用域后自动清除其数据的功能意味着你无须额外编写和调试相关的控制代码。</p>
 ]]></content>
       <categories>
-        <category>bi-ji</category>
+        <category>笔记</category>
       </categories>
       <tags>
-        <tag>rust</tag>
+        <tag>Rust</tag>
       </tags>
   </entry>
   <entry>
@@ -1016,10 +1016,10 @@
 <p>总之，类单元结构体在Rust中是一种用于表示没有数据只有类型的结构体。它们在作为标记、实现特质等方面提供了简洁而强大的用途。</p>
 ]]></content>
       <categories>
-        <category>bi-ji</category>
+        <category>笔记</category>
       </categories>
       <tags>
-        <tag>rust</tag>
+        <tag>Rust</tag>
       </tags>
   </entry>
   <entry>
@@ -1051,10 +1051,10 @@
 <p>总的来说，概念使得模板代码的编写和使用变得更加直观和安全，丰富了C++的类型系统，提高了模板编程的整体体验。</p>
 ]]></content>
       <categories>
-        <category>bi-ji</category>
+        <category>笔记</category>
       </categories>
       <tags>
-        <tag>c</tag>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -1109,11 +1109,11 @@
 <p>在实际开发中，Web服务器往往同时包含IO密集型和CPU密集型任务。因此，设计时需要综合考虑，合理分配资源，使用适当的技术和架构来平衡性能和资源消耗。例如，可以使用线程池来处理CPU密集型任务，而使用协程或异步IO来处理IO密集型任务，以达到最佳的性能表现。</p>
 ]]></content>
       <categories>
-        <category>bi-ji</category>
+        <category>笔记</category>
       </categories>
       <tags>
-        <tag>c</tag>
-        <tag>webserver</tag>
+        <tag>C</tag>
+        <tag>WebServer</tag>
       </tags>
   </entry>
   <entry>
@@ -1165,10 +1165,10 @@
 <h2 id="title-BMP图片格式date-2023-07-08tags-BMP图片categories-笔记"><a href="#title-BMP图片格式date-2023-07-08tags-BMP图片categories-笔记" class="headerlink" title="title: BMP图片格式date: 2023&#x2F;07&#x2F;08tags: - BMP图片categories: - 笔记"></a>title: BMP图片格式<br>date: 2023&#x2F;07&#x2F;08<br>tags:<br> - BMP图片<br>categories:<br> - 笔记</h2><p><img src="https://s2.loli.net/2024/09/20/hmtQkegKV2XfE45.png" alt="bmp.png"></p>
 ]]></content>
       <categories>
-        <category>bi-ji</category>
+        <category>笔记</category>
       </categories>
       <tags>
-        <tag>qi-ta</tag>
+        <tag>其他</tag>
       </tags>
   </entry>
   <entry>
@@ -1205,11 +1205,11 @@
 <h4 id="代码：-2"><a href="#代码：-2" class="headerlink" title="代码："></a>代码：</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">rotate</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> len = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len &amp;&amp; count &lt; len; i++) &#123; <span class="comment">// 起点每次往后挪1位，直到count计数到所有元素都遍历过了</span></span><br><span class="line">        	<span class="type">int</span> index = i; <span class="comment">// 从起点开始转</span></span><br><span class="line">        	<span class="type">int</span> current_value = nums[i]; <span class="comment">// 从起点开始转</span></span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                <span class="type">int</span> next = (index + k) % len; <span class="comment">// 下次该从这里转了</span></span><br><span class="line">                <span class="built_in">swap</span>(current_value, nums[next]); <span class="comment">// 把当前的元素current_value转到next位置去，并把原来next位置上的元素保存到current_value下次转</span></span><br><span class="line">                index = next;</span><br><span class="line">                count++;</span><br><span class="line">            &#125; <span class="keyword">while</span> (index != i); <span class="comment">// 当index == i时表示又转回起点了，那么此时如果遍历完了就结束，否则把起点+1再继续遍历</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>bi-ji</category>
+        <category>笔记</category>
       </categories>
       <tags>
-        <tag>suan-fa</tag>
-        <tag>leetcode</tag>
+        <tag>算法</tag>
+        <tag>LeetCode</tag>
       </tags>
   </entry>
   <entry>
@@ -1249,11 +1249,11 @@
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">removeDuplicates</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> index = <span class="number">0</span>; <span class="comment">// 和上面的slow，index是一样的</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> num : nums) &#123;</span><br><span class="line">            <span class="keyword">if</span> (index &lt; k || nums[index - k] != num) &#123; <span class="comment">// 只有重复不超过k次的元素才能留下来，超过的部分就跳过</span></span><br><span class="line">                nums[index++] = num; </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> index;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>bi-ji</category>
+        <category>笔记</category>
       </categories>
       <tags>
-        <tag>suan-fa</tag>
-        <tag>leetcode</tag>
+        <tag>算法</tag>
+        <tag>LeetCode</tag>
       </tags>
   </entry>
   <entry>
@@ -1275,11 +1275,11 @@
 </ul>
 ]]></content>
       <categories>
-        <category>bi-ji</category>
+        <category>笔记</category>
       </categories>
       <tags>
         <tag>linux</tag>
-        <tag>cao-zuo-xi-tong</tag>
+        <tag>操作系统</tag>
       </tags>
   </entry>
   <entry>
@@ -1338,7 +1338,7 @@
 <p>至此，就已经将一个进程提权至<code>root</code>了。</p>
 ]]></content>
       <categories>
-        <category>bi-ji</category>
+        <category>笔记</category>
       </categories>
       <tags>
         <tag>linux</tag>
@@ -1758,7 +1758,7 @@
 
 <h3 id="End"><a href="#End" class="headerlink" title="End"></a>End</h3>]]></content>
       <categories>
-        <category>Tutorial</category>
+        <category>教程</category>
       </categories>
   </entry>
   <entry>
@@ -1805,11 +1805,11 @@
 <p>仙踪宝儿：<br>获得方式：与100只宠物达成友好关系</p>
 ]]></content>
       <categories>
-        <category>za-tan</category>
+        <category>杂谈</category>
       </categories>
       <tags>
-        <tag>luo-ke-wang-guo</tag>
-        <tag>you-xi</tag>
+        <tag>洛克王国</tag>
+        <tag>游戏</tag>
       </tags>
   </entry>
   <entry>
@@ -2171,7 +2171,7 @@
 <p>完成这些步骤后，系统应该能够顺利升级到更新的版本。如果在任何一步遇到错误，请提供详细的错误信息以便进一步诊断。</p>
 ]]></content>
       <categories>
-        <category>Tutorial</category>
+        <category>教程</category>
       </categories>
   </entry>
   <entry>
@@ -2204,7 +2204,7 @@
 <p>完成这些步骤后，系统应该能够顺利升级到更新的版本。如果在任何一步遇到错误，请提供详细的错误信息以便进一步诊断。</p>
 ]]></content>
       <categories>
-        <category>jiao-cheng</category>
+        <category>教程</category>
       </categories>
       <tags>
         <tag>linux</tag>
@@ -2338,10 +2338,10 @@
 }
 </style>]]></content>
       <categories>
-        <category>Tutorial</category>
+        <category>教程</category>
       </categories>
       <tags>
-        <tag>SeverRepair</tag>
+        <tag>服务器运维</tag>
       </tags>
   </entry>
   <entry>
@@ -2657,7 +2657,7 @@
 
 <h4 id="启用并启动-x11vnc-服务：-1"><a href="#启用并启动-x11vnc-服务：-1" class="headerlink" title="启用并启动 x11vnc 服务："></a><strong>启用并启动 x11vnc 服务</strong>：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> x11vnc.service</span><br><span class="line"><span class="built_in">sudo</span> systemctl start x11vnc.service</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>jiao-cheng</category>
+        <category>教程</category>
       </categories>
       <tags>
         <tag>linux</tag>
@@ -3655,10 +3655,10 @@ producerconsumer.insert(item);
 <p>由系统中共用的缓冲区组成。这些缓冲区可以分为：空缓冲队列、装满输入数据的缓冲队列、装满输出数据的缓冲队列</p>
 ]]></content>
       <categories>
-        <category>bi-ji</category>
+        <category>笔记</category>
       </categories>
       <tags>
-        <tag>cao-zuo-xi-tong</tag>
+        <tag>操作系统</tag>
       </tags>
   </entry>
   <entry>
