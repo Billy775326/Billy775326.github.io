@@ -57,12 +57,13 @@
 
 #recent-posts .recent-post-info .article-title.article-title {
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
   line-height: 1.5;
   height: auto;
-  min-height: 3em;
+  min-height: 1.5em;
+  white-space: normal;
   margin-bottom: 6px;
 }
 
