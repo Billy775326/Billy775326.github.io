@@ -2175,42 +2175,6 @@
       </categories>
   </entry>
   <entry>
-    <title>ubuntu20.04+update+to+22.04</title>
-    <url>/2024/09/20/ubuntu20.04+update+to+22.04/</url>
-    <content><![CDATA[<p>你现在使用的 Ubuntu 20.04.6 LTS 已经是最新的长期支持版本（LTS）。要升级到更高的版本（如 Ubuntu 22.04 LTS），需要确保系统配置允许这种升级。以下是步骤：</p>
-<p>确保系统配置正确<br>更新所有包：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get update &amp;&amp; <span class="built_in">sudo</span> apt-get upgrade</span><br></pre></td></tr></table></figure>
-<p>编辑升级配置：<br>确保 &#x2F;etc&#x2F;update-manager&#x2F;release-upgrades 文件中 Prompt 设置为 lts 或 normal。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/update-manager/release-upgrades</span><br></pre></td></tr></table></figure>
-<p>确保文件包含以下内容：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Prompt=lts</span><br></pre></td></tr></table></figure>
-<p>运行升级命令：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> do-release-upgrade</span><br></pre></td></tr></table></figure>
-<p>如果还是无法升级，可以尝试以下步骤<br>清理缓存并修复包依赖：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get clean</span><br><span class="line"><span class="built_in">sudo</span> apt-get autoclean</span><br><span class="line"><span class="built_in">sudo</span> apt-get autoremove</span><br><span class="line"><span class="built_in">sudo</span> apt-get update</span><br><span class="line"><span class="built_in">sudo</span> apt-get dist-upgrade</span><br></pre></td></tr></table></figure>
-<p>尝试强制升级：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> do-release-upgrade -d</span><br></pre></td></tr></table></figure>
-<p>检查是否存在阻止升级的问题<br>检查 PPA 源：<br>升级前，可能需要禁用所有第三方 PPA 源：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">mv</span> /etc/apt/sources.list.d /etc/apt/sources.list.d.bak</span><br></pre></td></tr></table></figure>
-<p>运行升级命令：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> do-release-upgrade</span><br></pre></td></tr></table></figure>
-<p>如果仍然无法升级，请确认以下几点<br>检查网络连接是否正常。<br>确保 Ubuntu 存储库可以访问。<br>尝试手动编辑源列表以指向更高版本的存储库。<br>手动编辑源列表<br>备份当前源列表：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> /etc/apt/sources.list /etc/apt/sources.list.bak</span><br></pre></td></tr></table></figure>
-<p>编辑源列表：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
-<p>将所有 focal 改为 jammy（假设要升级到 22.04），然后保存并退出。</p>
-<p>更新包信息并升级系统：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get update</span><br><span class="line"><span class="built_in">sudo</span> apt-get upgrade</span><br><span class="line"><span class="built_in">sudo</span> apt-get dist-upgrade</span><br></pre></td></tr></table></figure>
-<p>完成这些步骤后，系统应该能够顺利升级到更新的版本。如果在任何一步遇到错误，请提供详细的错误信息以便进一步诊断。</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>vnc viwer reading</title>
     <url>/2026/09/10/vnc%20viwer%20%20reading/</url>
     <content><![CDATA[<h1 id="Ubuntu如何安装图形化界面并使用vnc-viewer连接"><a href="#Ubuntu如何安装图形化界面并使用vnc-viewer连接" class="headerlink" title="Ubuntu如何安装图形化界面并使用vnc viewer连接"></a>Ubuntu如何安装图形化界面并使用vnc viewer连接</h1><h2 id="安装图形用户界面。"><a href="#安装图形用户界面。" class="headerlink" title="安装图形用户界面。"></a>安装图形用户界面。</h2><p>你可以选择安装完整的Ubuntu桌面或者轻量级的图形用户界面，如LXDE。例如，为了安装LXDE，你可以在终端中输入以下命令：</p>
@@ -2711,6 +2675,11 @@
 </blockquote>
 <h4 id="8-2-全局配置文件-config-yml，新增"><a href="#8-2-全局配置文件-config-yml，新增" class="headerlink" title="8.2 全局配置文件_config.yml，新增"></a>8.2 全局配置文件_config.yml，新增</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">    path: search.xml</span><br><span class="line">    field: post</span><br><span class="line">    format: html</span><br><span class="line">    limit: 10000</span><br></pre></td></tr></table></figure>
 <h4 id="8-3-hexo主题配置文件（-themes-next-config-yml），修改local-search的enable为true"><a href="#8-3-hexo主题配置文件（-themes-next-config-yml），修改local-search的enable为true" class="headerlink" title="8.3 hexo主题配置文件（\themes\next_config.yml），修改local_search的enable为true"></a>8.3 hexo主题配置文件（\themes\next_config.yml），修改local_search的enable为true</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Local search</span><br><span class="line"># Dependencies: https://github.com/flashlab/hexo-generator-search</span><br><span class="line">local_search:</span><br><span class="line">    enable: true</span><br><span class="line">    # if auto, trigger search by changing input</span><br><span class="line">    # if manual, trigger search by pressing enter key or search button</span><br><span class="line">    trigger: auto</span><br><span class="line">    # show top n results per article, show all results by setting to -1</span><br><span class="line">    top_n_per_article: 1</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
+    <title>构建自己的服务器项目</title>
+    <url>/2026/09/10/%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%A1%B9%E7%9B%AE/</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>操作系统知识梳理</title>
@@ -3660,10 +3629,5 @@ producerconsumer.insert(item);
       <tags>
         <tag>操作系统</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>构建自己的服务器项目</title>
-    <url>/2026/09/10/%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%A1%B9%E7%9B%AE/</url>
-    <content><![CDATA[]]></content>
   </entry>
 </search>
