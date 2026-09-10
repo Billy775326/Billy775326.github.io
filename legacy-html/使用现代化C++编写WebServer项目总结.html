@@ -1,0 +1,617 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Billy 的博客 | Billy 的博客</title><meta name="author" content="Billy"><meta name="copyright" content="Billy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="项目地址GitHubhttps:&#x2F;&#x2F;github.com&#x2F;Liccsu&#x2F;TinyWebServerGiteehttps:&#x2F;&#x2F;gitee.com&#x2F;Liccsu&#x2F;TinyWebServer项目描述项目整体采用单Reactor多线程这一网络编程模型，其中主线程负责通过IO多路复用监听各个文件描述符，并处理连接的建立和断开 ，以及维护监听的文件描述符列表，当监听的文件描述符产生事件时，将文件描述符的读写以">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Billy 的博客">
+<meta property="og:url" content="https://billy775326.github.io/legacy-html/%E4%BD%BF%E7%94%A8%E7%8E%B0%E4%BB%A3%E5%8C%96C++%E7%BC%96%E5%86%99WebServer%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93.html">
+<meta property="og:site_name" content="Billy 的博客">
+<meta property="og:description" content="项目地址GitHubhttps:&#x2F;&#x2F;github.com&#x2F;Liccsu&#x2F;TinyWebServerGiteehttps:&#x2F;&#x2F;gitee.com&#x2F;Liccsu&#x2F;TinyWebServer项目描述项目整体采用单Reactor多线程这一网络编程模型，其中主线程负责通过IO多路复用监听各个文件描述符，并处理连接的建立和断开 ，以及维护监听的文件描述符列表，当监听的文件描述符产生事件时，将文件描述符的读写以">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://billy775326.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2026-09-10T07:30:01.290Z">
+<meta property="article:modified_time" content="2026-09-10T07:30:01.290Z">
+<meta property="article:author" content="Billy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://billy775326.github.io/img/avatar.jpg"><script type="application/ld+json"></script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://billy775326.github.io/legacy-html/%E4%BD%BF%E7%94%A8%E7%8E%B0%E4%BB%A3%E5%8C%96C++%E7%BC%96%E5%86%99WebServer%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Billy 的博客',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Billy 的博客</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="page-site-info"><h1 id="site-title"></h1></div></header><main class="layout" id="content-inner"><div id="page"><div class="container" id="article-container"><h1 style="" id="%E9%A1%B9%E7%9B%AE%E5%9C%B0%E5%9D%80">项目地址</h1><ul><li><p style=""><strong>GitHub</strong></p></li></ul><hyperlink-card target="_blank" href="https://github.com/Liccsu/TinyWebServer" theme="regular" style="margin-top: 0.75em; margin-bottom: 0;"><a href="https://github.com/Liccsu/TinyWebServer" target="_blank">https://github.com/Liccsu/TinyWebServer</a></hyperlink-card><ul><li><p style=""><strong>Gitee</strong></p></li></ul><hyperlink-card target="_blank" href="https://gitee.com/Liccsu/TinyWebServer" theme="regular" style="margin-top: 0.75em; margin-bottom: 0;"><a href="https://gitee.com/Liccsu/TinyWebServer" target="_blank">https://gitee.com/Liccsu/TinyWebServer</a></hyperlink-card><h1 style="" id="%E9%A1%B9%E7%9B%AE%E6%8F%8F%E8%BF%B0">项目描述</h1><p style="">项目整体采用<strong>单Reactor多线程</strong>这一网络编程模型，其中主线程负责通过<strong>IO多路复用</strong>监听各个文件描述符，并处理连接的建立和断开 ，以及维护监听的文件描述符列表，当监听的文件描述符产生事件时，将文件描述符的读写以及具体事务逻辑提交到<strong>线程池</strong>的任务队列，由线程池中的子线程<strong>异步处理</strong>。当接收到HTTP Request报文时，使用有限状态机进行解析，并根据请求类型生成HTTP Response报文回复。另外还利用RAII机制实现了<strong>数据库连接池</strong>可以用于用户的注册和登录。并且还具有一个高性能的<strong>异步日志库</strong>可以实时输出程序运行过程中的信息。</p><h1 style="" id="%E9%A1%B9%E7%9B%AE%E5%8A%9F%E8%83%BD">项目功能</h1><ul data-type="taskList"><li data-checked="true" data-type="taskItem"><label><input type="checkbox" checked="checked"><span></span></label><div><p style="">使用IO多路复用技术和线程池实现多线程的Reactor高并发模型；</p></div></li><li data-checked="true" data-type="taskItem"><label><input type="checkbox" checked="checked"><span></span></label><div><p style="">使用标准库容器封装应用层动态扩容的缓冲区；</p></div></li><li data-checked="true" data-type="taskItem"><label><input type="checkbox" checked="checked"><span></span></label><div><p style="">基于小根堆实现实现定时器，防止资源被长连接长时间霸占；</p></div></li><li data-checked="true" data-type="taskItem"><label><input type="checkbox" checked="checked"><span></span></label><div><p style="">使用有限状态机解析HTTP报文，实现支持HTTP GET请求和POST请求；</p></div></li><li data-checked="true" data-type="taskItem"><label><input type="checkbox" checked="checked"><span></span></label><div><p style="">使用双缓冲技术实现高性能异步日志库；</p></div></li><li data-checked="true" data-type="taskItem"><label><input type="checkbox" checked="checked"><span></span></label><div><p style="">实现了数据库连接池，并利用RAII机制封装，在降低连接数据库开销的同时实现优雅获取与释放数据库连接；</p></div></li><li data-checked="true" data-type="taskItem"><label><input type="checkbox" checked="checked"><span></span></label><div><p style="">基于<a href="http://www.yaml.org" target="_blank">YAML</a>和<a href="https://github.com/jbeder/yaml-cpp" target="_blank">yaml-cpp</a>实现配置文件解析，支持使用yml文件进行服务参数配置，降低硬编码程度。</p></div></li><li data-checked="false" data-type="taskItem"><label><input type="checkbox"><span></span></label><div><p style="">实现更通用的POST请求；</p></div></li><li data-checked="false" data-type="taskItem"><label><input type="checkbox"><span></span></label><div><p style="">使用更合适的设计模式改善程序的结构和可扩展性；</p></div></li><li data-checked="false" data-type="taskItem"><label><input type="checkbox"><span></span></label><div><p style="">进一步抽象数据库连接池以扩展使用其他数据库。</p></div></li></ul><h1 style="" id="%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90">项目解析</h1><h2 style="" id="buffer%E7%9A%84%E8%AE%BE%E8%AE%A1">Buffer的设计</h2><p style="">为什么需要应用层缓冲区？在解释这个问题之前，需要先说明本项目使用的Reactor模式的本质是<strong>“IO多路复用(IO multiplexing)+非阻塞IO(non-blocking)”</strong>的模式。为什么需要使用非阻塞IO？在实际应用中，IO多路复用和非阻塞IO往往一起搭配使用，原因有两点：</p><ul><li><p style="">如果用轮训来检查某个非阻塞IO操作是否完成的话，太浪费CPU周期，所以需要搭配IO多路复用。</p></li><li><p style="">IO多路复用如果搭配阻塞IO来使用的话，由于<code>read()</code>/<code>write()</code>/<code>accept()</code>都有可能阻塞当前线程，导致线程不能及时处理其他socket上的IO事件。</p></li></ul><p style="">所以使用非阻塞IO的核心思想是避免阻塞在<code>read()</code>或<code>write()</code>或其他IO系统调用上，这样可以最大限度地复用thread-of-control，让一个线程可以处理多个socket连接。IO线程只能阻塞在IO多路复用函数上，在本项目中即阻塞在<code>epoll_wait()</code>上。</p><h3 style="" id="tcp-connection%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81output-buffer%EF%BC%9F">TCP Connection为什么需要Output Buffer？</h3><p style="">考虑一个常见场景：应用程序想通过TCP发送100KB数据，但是在调用<code>write()</code>过程中，操作系统只接受了80KB（受TCP滑动窗口机制控制），如果使用阻塞IO的话，程序会阻塞在这里，直到操作系统接受剩余的20KB数据，但是肯定不能阻塞在这里等待，因为不知道要等多久（取决于对方什么时候接收数据，然后滑动TCP窗口），所以应该使用非阻塞IO（缓冲区满时返回<code>EAGAIN</code>，缓冲区空间不足时返回<code>EWOULDBLOCK</code>）来尽快返回到Event Loop，那么剩下的20KB呢？肯定不能丢掉，这时候就需要一个应用层缓冲区也就是Output Buffer来保管这20KB数据了，然后注册<code>POLLOUT</code>事件，一旦文件描述符变为可写就立即发送数据。当第二次也没能发完这20KB数据时，应该继续关注<code>POLLOUT</code>事件，而如果发完了则应该停止关注<code>POLLOUT</code>事件，以免发生Busy Loop。如果应用程序又想发送50KB数据呢？这时候Output Buffer里还有20KB数据，那么应该将这50KB数据追加到那20KB数据之后再一并发送。</p><h3 style="" id="tcp-connection%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81input-buffer%EF%BC%9F">TCP Connection为什么需要Input Buffer？</h3><p style="">由于TCP是一个无边界的字节流协议，所以接收方必须要处理“一次接收到的数据不足以构成一条完整的消息”和“一次接收到的数据包含多条消息”等情况。考虑一个常见场景：发送方发送了两条1KB的消息（总共2KB），那么接收方接收到的数据可能有以下情况：</p><ul><li><p style="">一次性收到2KB数据；</p></li><li><p style="">分两次收到：第一次600B，第二次1400B；</p></li><li><p style="">分两次收到：第一次1400B，第二次600B；</p></li><li><p style="">分两次收到：第一次1KB，第二次1KB；</p></li><li><p style="">分三次收到：第一次600B，第二次800B，第二次600B；</p></li><li><p style="">其他任何可能：一般而言，长度为n字节的消息分块到达的可能性有<strong>2<sup>n-1</sup></strong>种。</p></li></ul><p style="">也就是说必须要考虑数据不完整的情况，这时候就需要准备一个Input Buffer，先把socket中的数据读到Input Buffer中，等到足够构成一条完整的消息时再通知应用程序的业务处理逻辑。</p><h3 style="" id="buffer%E7%9A%84%E8%AE%BE%E8%AE%A1%E8%A6%81%E7%82%B9">Buffer的设计要点</h3><ul><li><p style="">Buffer对外表现为一块连续的内存，以方便用户代码的编写；</p></li><li><p style="">Buffer并不是固定大小的，其底层使用<code>std::vector&lt;char&gt;</code>容器，所以Buffer的容量可以动态增长以适应不同长度的消息；</p></li><li><p style="">Buffer的读写使用分散读、集中写，以减少系统调用的开销。</p></li></ul><h4 style="" id="buffer%E7%9A%84%E5%88%86%E6%95%A3%E8%AF%BB">Buffer的分散读</h4><p style="">在非阻塞网络编程中，我们一方面希望减少系统调用的次数，一次读的数据越多越划算，所以似乎应该准备一个足够大的缓冲区？但是另一方面我们又希望降低内存占用率，那么如何权衡呢？一个巧妙的方法是使用<code>readv()</code>和栈空间进行分散读，既减少了系统调用的次数，又在一定程度上降低了内存占用率。具体做法是在栈上申请一个65536字节的<code>extrabuf</code>，即<code>iovec</code>有两块，第一块指向Buffer中的<code>vector</code>，第二块则指向<code>extrabuf</code>，这样的话如果数据不多的话就全部读到<code>vector</code>中去了，而如果数据太大超过<code>vector</code>的容量时，则超出的数据会被读到<code>extrabuf</code>中，等到<code>vector</code>扩容后再追加到<code>vector</code>中。如此便解决了数据过大时需要多次<code>read()</code>调用的开销，因为总缓冲区足够大所以通常<code>readv()</code>一次系统调用就能读完，并且也避免了<code>vector</code>初始容量过大造成的内存浪费。</p><h4 style="" id="buffer%E7%9A%84%E9%9B%86%E4%B8%AD%E5%86%99">Buffer的集中写</h4><p style="">在对HTTP Request进行响应时，HTTP Response报文由响应行、响应头和响应正文组成，其中响应行和响应正文在内存中，而响应正文通常为静态HTML资源文件，那么则需要将这两部分分散的数据集中写入到socket中去，本项目采用的方法是使用<code>writev()</code>和内存映射<code>mmap()</code>，同样有两块<code>iovec</code>，第一块指向响应行和响应正文，第二块指向HTML资源文件映射后的内存（如果响应体为空则用不上第二块），这样通常只需通过<code>writev()</code>一次系统调用就能将两部分数据写入socket。</p><h2 style="" id="%E4%BD%BF%E7%94%A8yaml%E6%9D%A5%E9%85%8D%E7%BD%AE%E8%BF%90%E8%A1%8C%E5%8F%82%E6%95%B0">使用<a href="http://www.yaml.org" target="_blank">YAML</a>来配置运行参数</h2><p style="">由于本项目中有多个运行参数需要配置，若是硬编码的话不够灵活，若是命令行传参的话又略显繁琐，最终决定使用YAML作为配置文件，其中YAML配置文件的解析引用了<a href="https://github.com/jbeder/yaml-cpp" target="_blank">yaml-cpp</a>库。对于配置项的读取，我想它应该是方便随用随取的，而由于配置只有也应该只有一份，<code>Config</code> 应该被设计为单例模式。</p><p style="">在多线程编程中，单例模式需要考虑线程安全问题，由于即时加载（饿汉模式）的单例模式本身就是线程安全的，故着重讨论惰性加载（懒汉模式）的单例模式。</p><h3 style="" id="%E7%BA%BF%E7%A8%8B%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F">线程不安全的单例模式</h3><pre><code class="language-cpp">class Singleton {
+    inline static Singleton *instance_ = nullptr;
+
+    Singleton() = default;
+
+    ~Singleton() = default;
+
+public:
+    Singleton(const Singleton &amp;) = delete;
+
+    Singleton &amp;operator=(const Singleton &amp;) = delete;
+
+    static Singleton *getInstance() {
+        if (instance_ == nullptr) {
+            instance_ = new Singleton();
+        }
+        return instance_;
+    }
+};</code></pre><p style="">稍微有一点线程安全意识的读者应该都能发现，上面这个例子中的<code>getInstance()</code>明显不是线程安全的，原因是在判断<code>if (instance == nullptr)</code>时，可能有多个线程进入<code>if</code>块内，从而实例化多个对象，那么怎样保证其线程安全呢？有读者肯定会想到加锁，来看接下来的例子。</p><h3 style="" id="%E4%BD%BF%E7%94%A8%E5%8F%8C%E9%87%8D%E6%A3%80%E6%9F%A5%E9%94%81%E5%AE%9A">使用双重检查锁定</h3><p style="">双重检查锁定（Double check locked, DCL）是Lazy-Initialize的单例模式中一种常见的设计方式，实现形式如下：</p><pre><code class="language-cpp">class Singleton {
+    inline static std::mutex mutex_;
+
+    inline static Singleton *instance_ = nullptr;
+
+    Singleton() = default;
+
+    ~Singleton() = default;
+
+public:
+    Singleton(const Singleton &amp;) = delete;
+
+    Singleton &amp;operator=(const Singleton &amp;) = delete;
+
+    static Singleton *getInstance() {
+        if (instance_ == nullptr) {
+            std::lock_guard lock(mutex_);
+            if (instance_ == nullptr) {
+                instance_ = new Singleton();
+            }
+        }
+        return instance_;
+    }
+};</code></pre><p style="">以上的代码看起来好像是线程安全的，但是其可能仍然存在安全隐患。<code>instance_ = new Singleton();</code>可以分解为三个步骤，内存分配、构造对象和赋值指针，而由于指令重排序的存在，那么指针赋值可能在发生在对象被完全构造之前，那么其他线程就有可能得到一个不为<code>nullptr</code>但是又没有完全被构造的<code>instance_</code>。那么如何保证内存序不被重排呢？答案是使用<code>std::atomic</code>。</p><h3 style="" id="%E4%BD%BF%E7%94%A8std%3A%3Aatomic%E6%8E%A7%E5%88%B6%E5%86%85%E5%AD%98%E5%BA%8F">使用<code>std::atomic</code>控制内存序</h3><pre><code class="language-cpp">class Singleton {
+    inline static std::mutex mutex_;
+
+    inline static std::atomic&lt;Singleton *&gt; instance_ = nullptr;
+
+    Singleton() = default;
+
+    ~Singleton() = default;
+
+public:
+    Singleton(const Singleton &amp;) = delete;
+
+    Singleton &amp;operator=(const Singleton &amp;) = delete;
+
+    static Singleton *getInstance() {
+        Singleton *tmp = instance_.load(std::memory_order_acquire);
+        if (tmp == nullptr) {
+            std::lock_guard lock(mutex_);
+            tmp = instance_.load(std::memory_order_relaxed);
+            if (tmp == nullptr) {
+                tmp = new Singleton();
+                instance_.store(tmp, std::memory_order_release);
+            }
+        }
+        return tmp;
+    }
+};</code></pre><p style="">上面的方式虽然解决了问题，但是比较复杂，那有没有更好的方法呢？C++11引入了<code>std::call_once</code>和<code>std::once_flag</code>。</p><h3 style="" id="%E4%BD%BF%E7%94%A8std%3A%3Acall_once%E5%92%8Cstd%3A%3Aonce_flag">使用<code>std::call_once</code>和<code>std::once_flag</code></h3><pre><code class="language-cpp">class Singleton {
+    inline static std::once_flag flag_;
+
+    inline static Singleton *instance_ = nullptr;
+
+    Singleton() = default;
+
+    ~Singleton() = default;
+
+public:
+    Singleton(const Singleton &amp;) = delete;
+
+    Singleton &amp;operator=(const Singleton &amp;) = delete;
+
+    static Singleton *getInstance() {
+        std::call_once(flag_, [] {
+            instance_ = new Singleton();
+        });
+        return instance_;
+    }
+};</code></pre><p style="">可以看到代码简洁了不少，除此之外，C++11还支持了<strong>“魔法静态变量（Magic static）”</strong>，使用这个特性可以更简单方便地创建单例。</p><h3 style="" id="%E4%BD%BF%E7%94%A8%E5%B1%80%E9%83%A8%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E5%88%9B%E5%BB%BA%E5%8D%95%E4%BE%8B%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89">使用局部静态变量创建单例（推荐）</h3><pre><code class="language-cpp">class Singleton {
+    Singleton() = default;
+
+    ~Singleton() = default;
+
+public:
+    Singleton(const Singleton &amp;) = delete;
+
+    Singleton &amp;operator=(const Singleton &amp;) = delete;
+
+    static Singleton &amp;getInstance() {
+        static Singleton instance;
+        return instance;
+    }
+};</code></pre><p style="">可以看到这是最简洁最方便的方式，C++11标准保证了函数内的静态局部变量的初始化是线程安全的，本项目中所有单例也都是使用这种方式。</p><h3 style="" id="%E6%87%92%E5%8A%A0%E8%BD%BD%E7%9A%84%E9%85%8D%E7%BD%AE%E4%BC%9A%E5%BD%B1%E5%93%8D%E6%80%A7%E8%83%BD%E5%90%97%EF%BC%9F">懒加载的配置会影响性能吗？</h3><p style="">本项目中<code>Config</code>虽然是懒加载的单例，但所有配置项的读取都发生在<code>Server</code>初始化时，故而当程序真正运行起来后不会因为需要读取配置而造成影响。</p><p style=""></p><p style="">可能有读者会发现上面的例子中有一行这样的代码：<code>inline static Singleton *instance_ = nullptr;</code> 关于<code>inline</code>关键字的作用，可以移步我这篇博文：</p><hyperlink-card target="_blank" href="https://liccsu.com/archives/gl28BHsv" theme="regular" style="margin-top: 0.75em; margin-bottom: 0;"><a href="https://liccsu.com/archives/gl28BHsv" target="_blank">https://liccsu.com/archives/gl28BHsv</a></hyperlink-card><h2 style="" id="http-request%E6%8A%A5%E6%96%87%E7%9A%84%E8%A7%A3%E6%9E%90">HTTP Request报文的解析</h2><h3 style="" id="http-request%E6%8A%A5%E6%96%87%E7%9A%84%E7%BB%93%E6%9E%84">HTTP Request报文的结构</h3><p style="">客户端发送一个HTTP请求到服务器的请求消息包括以下格式：请求行（request line）、请求头部（header）、空行和请求数据四个部分组成，下图给出了请求报文的一般格式：</p><p style=""><img src="/upload/HTTP请求报文格式.png" width="100%" height="100%" style="display: inline-block"></p><ul><li><p style=""><strong>请求行</strong>（Request Line）：</p><ul><li><p style=""><strong>方法</strong>：如 GET、POST、PUT、DELETE等，指定要执行的操作。</p></li><li><p style=""><strong>请求 URI</strong>（统一资源标识符）：请求的资源路径，通常包括主机名、端口号（如果非默认）、路径和查询字符串。</p></li><li><p style=""><strong>HTTP 版本</strong>：如 HTTP/1.1 或 HTTP/2。</p></li></ul><p style="">请求行的格式示例：<code>GET /index.html HTTP/1.1</code></p></li><li><p style=""><strong>请求头</strong>（Request Headers）：</p><ul><li><p style="">包含了客户端环境信息、请求体的大小（如果有）、客户端支持的压缩类型等。</p></li><li><p style="">常见的请求头包括<code>Host</code>、<code>User-Agent</code>、<code>Accept</code>、<code>Accept-Encoding</code>、<code>Content-Length</code>等。</p></li></ul></li><li><p style=""><strong>空行</strong>：</p><ul><li><p style="">请求头和请求体之间的分隔符，表示请求头的结束。</p></li></ul></li><li><p style=""><strong>请求体</strong>（可选）：</p><ul><li><p style="">在某些类型的HTTP请求（如 POST 和 PUT）中，请求体包含要发送给服务器的数据。</p></li></ul></li></ul><h3 style="" id="%E4%BD%BF%E7%94%A8%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA%E8%A7%A3%E6%9E%90%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87">使用有限状态机解析请求报文</h3><pre><code class="language-cpp">// 状态集
+enum class ParseState {
+    ParseLine,
+    ParseHeaders,
+    ParseContent,
+    ParseFinish
+};
+
+// 解析状态机
+bool HttpRequest::parse(Buffer &amp;buff) {
+    static constexpr char END[] = "\r\n";
+    // 没有可读的字节
+    if (buff.readableSize() == 0) {
+        LOGW &lt;&lt; "buff.readableSize() == 0";
+        return false;
+    }
+    // 读取数据开始
+    while (buff.readableSize() &amp;&amp; state_ != ParseState::ParseFinish) {
+        // 从 buff 中取出待读取的数据并去除 "\r\n"，返回有效数据的行末指针
+        const char *lineEnd = std::search(buff.peek(), const_cast&lt;const Buffer &amp;&gt;(buff).beginWrite(), END, END + 2);
+        std::string line(buff.peek(), lineEnd);
+        switch (state_) {
+            case ParseState::ParseLine:
+                LOGD &lt;&lt; "parseRequestLine(line): " &lt;&lt; line;
+                if (!parseRequestLine(line)) {
+                    LOGW &lt;&lt; "parseRequestLine(line) failed";
+                    return false;
+                }
+                state_ = ParseState::ParseHeaders;
+                break;
+            case ParseState::ParseHeaders:
+                LOGD &lt;&lt; "parseHeaders(line): " &lt;&lt; line;
+                if (!parseHeaders(line)) {
+                    state_ = ParseState::ParseContent;
+                }
+                break;
+            case ParseState::ParseContent:
+                LOGD &lt;&lt; "parseContent(line): " &lt;&lt; line;
+                parseContent(line);
+                state_ = ParseState::ParseFinish;
+                break;
+            default:
+                break;
+        }
+        // 读完了
+        if (lineEnd == buff.beginWrite()) {
+            buff.retrieveAll();
+            break;
+        }
+        // 跳过 "\r\n"
+        buff.retrieveUntil(lineEnd + 2);
+    }
+    LOGD &lt;&lt; "[" &lt;&lt; METHOD_STR.at(method_) &lt;&lt; "], [" &lt;&lt; path_.c_str() &lt;&lt; "], [" &lt;&lt; VERSION_STR.at(version_) &lt;&lt; "]";
+    return true;
+}</code></pre><h2 style="" id="%E6%9E%84%E9%80%A0http-response%E6%8A%A5%E6%96%87">构造HTTP Response报文</h2><h3 style="" id="http-response%E6%8A%A5%E6%96%87%E7%9A%84%E7%BB%93%E6%9E%84">HTTP Response报文的结构</h3><p style="">HTTP 响应也由四个部分组成，分别是：状态行、消息报头、空行和响应正文。</p><p style=""><img src="/upload/HTTP响应报文格式.jpg" width="100%" height="100%" style="display: inline-block"></p><ul><li><p style=""><strong>状态行</strong>（Status Line）：</p><ul><li><p style=""><strong>HTTP 版本</strong>：与请求消息中的版本相匹配。</p></li><li><p style=""><strong>状态码</strong>：三位数，表示请求的处理结果，如 200 表示成功，404 表示未找到资源。</p></li><li><p style=""><strong>状态信息</strong>：状态码的简短描述。</p></li></ul><p style="">状态行的格式示例：<code>HTTP/1.1 200 OK</code></p></li><li><p style=""><strong>响应头</strong>（Response Headers）：</p><ul><li><p style="">包含了服务器环境信息、响应体的大小、服务器支持的压缩类型等。</p></li><li><p style="">常见的响应头包括<code>Content-Type</code>、<code>Content-Length</code>、<code>Server</code>、<code>Set-Cookie</code>等。</p></li></ul></li><li><p style=""><strong>空行</strong>：</p><ul><li><p style="">响应头和响应体之间的分隔符，表示响应头的结束。</p></li></ul></li><li><p style=""><strong>响应体</strong>（可选）：</p><ul><li><p style="">包含服务器返回的数据，如请求的网页内容、图片、JSON数据等。</p></li></ul></li></ul><h2 style="" id="%E6%97%A5%E5%BF%97%E5%BA%93%E7%9A%84%E8%AE%BE%E8%AE%A1">日志库的设计</h2><p style="">在服务端编程中，日志是必不可少的，当进行故障诊断与排查时，详细的日志往往是最有效的信息。</p><pre><code class="language-text">2024-10-14 01:16:46.916118 14745 I: Client[6][127.0.0.1:18579] has connected, connection count:1 - HttpConnection.cpp:34</code></pre><p style="">本日志库的一条完整的日志包含以下信息：</p><ul><li><p style="">微秒级时间戳，用于检查日志记录的精确时刻；</p></li><li><p style="">发出此条日志消息的线程ID，可用于检查死锁等；</p></li><li><p style="">此条日志的级别，方便过滤不同级别的日志；</p></li><li><p style="">日志消息正文；</p></li><li><p style="">发出此日志的位置文件和行数，方便定位源代码。</p></li></ul><p style="">本日志库大体可分为前端和后端两个部分。前端是供应用程序使用的接口，并生成日志消息；后端则是负责将日志消息写入到目的地。</p><h3 style="" id="%E6%97%A5%E5%BF%97%E5%BA%93%E5%89%8D%E7%AB%AF%E7%9A%84%E8%AE%BE%E8%AE%A1">日志库前端的设计</h3><p style="">C++日志库的前端API大体上有两种风格：</p><ul><li><p style="">C/Java的<code>printf(fmt, ...)</code>风格；</p></li><li><p style="">C++的<code>stream &lt;&lt; ...</code>风格。</p></li></ul><p style="">本日志库采用的是第二种风格，这样用起来更自然，也不必费心考虑字符串格式化和参数类型，可以随用随写。另一个好处是当输出的日志级别高于语句的的日志级别时，打印日志是个空操作，运行时开销接近于零。例如当日志级别设置为<code>WARNING</code>时，<code>LOGI &lt;&lt; getMessage()</code>就是空操作，根本不会调用<code>getMessage()</code>函数，而使用<code>printf</code>风格的话则不容易做到这一点。其中<code>LOGI</code>的宏定义如下：</p><pre><code class="language-cpp">#define LOGI \
+    if (Logger::logLevel() &lt;= LogLevel::Info) \
+        Logger(__FILE_NAME__, __LINE__, LogLevel::Info).logStream()</code></pre><p style="">出于性能的考虑，本日志库也没有使用标准库的iostream，而是另外封装了<a href="https://github.com/Liccsu/TinyWebServer/blob/master/app/logger/LogStream.hpp" target="_blank">class LogStream</a>，其中重载了常用数据类型的输出流运算符。并且为了方便必要的时候进行字符串格式化控制，还实现了<a href="https://github.com/Liccsu/TinyWebServer/blob/master/app/logger/Fmt.hpp" target="_blank">class Fmt</a>辅助类。</p><h3 style="" id="%E6%97%A5%E5%BF%97%E5%BA%93%E5%90%8E%E7%AB%AF%E7%9A%84%E8%AE%BE%E8%AE%A1">日志库后端的设计</h3><p style="">后端采用双缓冲（double-buffering）技术，基本思路是准备两块buffer：A和B，前端负责将日志消息写入buffer A，后端负责将buffer B中的内容写入文件。当buffer A写满后，交换A和B，让后端将buffer A中的消息写入文件，而前端则继续往buffer B中写入消息，如此往复。用两个buffer的好处是新建一条日志消息的时候不必等待磁盘文件操作，也避免每条日志消息都唤醒后端线程。换言之，前端不是将日志消息一条条传给后端，而是将很多条消息组成一个大的buffer再整个传给后端，这样就减少了线程唤醒的频率，降低了开销。另外，为了及时将日志写入文件，即时buffer A未满，日志库也会每3秒执行一次上述交换写入文件的操作。</p><p style="">实际实现采用了四块缓冲，这样可以进一步减少或避免日志库前端的等待。数据结构如下：</p><pre><code class="language-cpp">using LogBuffer = FixedBuffer&lt;LargeBufferSize&gt;;
+using BufferVector = std::vector&lt;std::unique_ptr&lt;LogBuffer&gt; &gt;;
+using BufferPtr = BufferVector::value_type;
+
+std::mutex mutex_;
+std::condition_variable cvBuffersEmpty_;
+// 当前正在写入日志的缓冲区
+BufferPtr currentBuffer_;
+// 预备缓冲区
+BufferPtr nextBuffer_;
+// 已经写满的待同步到磁盘的缓冲区列表
+BufferVector buffers_;</code></pre><p style="">先看发送方发送一条日志的回调函数实现：</p><pre><code class="language-cpp">void AsyncLogging::append(const char *logLine, const size_t len) {
+    std::lock_guard lock(mutex_);
+    if (currentBuffer_-&gt;writableBytes() &gt; len) {
+        // 如果当前工作缓冲区还没有写满，则直接追加到当前工作缓冲区
+        currentBuffer_-&gt;append(logLine, len);
+    } else {
+        // 否则将当前工作缓冲区送入 buffers，以待同步到磁盘
+        buffers_.push_back(std::move(currentBuffer_));
+        // 尝试将预备缓冲区用作当前工作缓冲区
+        if (nextBuffer_) {
+            // 如果存在空闲的预备缓冲区，则将该预备缓冲区用作当前工作缓冲区
+            currentBuffer_ = std::move(nextBuffer_);
+        } else {
+            // 如果前端写日志的速率太快，导致预备缓冲区也被用完了，则新分配一块缓冲区作为当前工作缓冲区（实际应用中极少出现此种情况）
+            currentBuffer_ = std::make_unique&lt;LogBuffer&gt;();
+        }
+        // 将日志追加到新设置的当前工作缓冲区
+        currentBuffer_-&gt;append(logLine, len);
+        // 唤醒后端线程将 buffers 中的缓冲区同步到磁盘
+        cvBuffersEmpty_.notify_one();
+    }
+}</code></pre><p style="">再看接收方（后端）线程函数的实现，此处仅给出临界区内关键代码，其他细节详询<a href="https://github.com/Liccsu/TinyWebServer/blob/master/app/logger/AsyncLogging.cpp" target="_blank">源文件</a>：</p><pre><code class="language-cpp">void AsyncLogging::threadCallback() {
+    // ...
+    // 预分配两块 buffer，以备在临界区内交换
+    BufferPtr newBuffer1(new LogBuffer);
+    BufferPtr newBuffer2(new LogBuffer);
+    // ...
+
+    while (running_) {
+        assert(newBuffer1);
+        assert(newBuffer2);
+        assert(buffersToWrite.empty());
+        {
+            std::unique_lock lock(mutex_);
+            if (buffers_.empty()) {
+                // 当 buffers 里没有待同步到磁盘的缓冲区时，等待条件的发生或者超时 flushInterval_
+                cvBuffersEmpty_.wait_for(lock, std::chrono::seconds(flushInterval_), [&amp;] {
+                    return !buffers_.empty();
+                });
+            }
+            // 条件发生时，将当前工作缓冲区送入 buffers 以待同步到磁盘，目的是哪怕前端在 3s 内没有写满一块缓冲区，也能及时将日志同步到磁盘
+            buffers_.push_back(std::move(currentBuffer_));
+            // 将预分配的空闲缓冲区用作当前工作缓冲区
+            currentBuffer_ = std::move(newBuffer1);
+            // 直接把 buffers 里的缓冲区都拿过来，以便后续安全地访问，避免临界区过长或在访问 buffers 的时候 buffers 又被前端改变
+            buffersToWrite.swap(buffers_);
+            if (!nextBuffer_) {
+                // 如果预备缓冲区也用完了，则将另一块预分配的缓冲区用作预备缓冲区，保证前端始终有一个预备缓冲区可随时取用
+                nextBuffer_ = std::move(newBuffer2);
+            }
+        }
+        // ... write and flush
+    }
+    // ... flush
+}</code></pre><h2 style="" id="%E5%88%A9%E7%94%A8raii%E6%9C%BA%E5%88%B6%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0">利用RAII机制实现数据库连接池</h2><p style=""><strong>RAII</strong>，全称<strong>资源获取即初始化</strong>（英语：<strong>R</strong>esource <strong>A</strong>cquisition <strong>I</strong>s <strong>I</strong>nitialization），它是在一些<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AF%AD%E8%A8%80" class="mw-redirect">面向对象语言</a>中的一种<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=%E6%85%A3%E7%94%A8%E6%B3%95&amp;action=edit&amp;redlink=1" class="new">惯用法</a>。</p><p style="">RAII要求，资源的有效期与持有资源的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E6%9C%9F&amp;action=edit&amp;redlink=1" class="new">对象的生命期</a>严格绑定，即由对象的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0" class="mw-redirect">构造函数</a>完成<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=%E8%B5%84%E6%BA%90%E7%9A%84%E5%88%86%E9%85%8D&amp;action=edit&amp;redlink=1" class="new">资源的分配</a>（获取），同时由<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0" class="mw-redirect">析构函数</a>完成资源的释放。在这种要求下，只要对象能正确地析构，就不会出现<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%B5%84%E6%BA%90%E6%B3%84%E6%BC%8F">资源泄漏</a>问题。</p><p style="">利用RAII包装的数据库连接池，关于其他细节请详询<a href="https://github.com/Liccsu/TinyWebServer/blob/master/app/pool/SqlConnPool.cpp" target="_blank">源文件</a>：</p><pre><code class="language-cpp">// 自定义删除器，用于确保连接被正确关闭
+struct MysqlDeleter {
+    void operator()(MYSQL *conn) const {
+        if (conn) {
+            mysql_close(conn);
+            LOGD &lt;&lt; "MySQL connection closed";
+        }
+    }
+};
+
+using MysqlPtr = std::unique_ptr&lt;MYSQL, MysqlDeleter&gt;;
+
+class SqlConnPool {
+    // RAII 连接包装类
+    class Connection {
+        MYSQL *conn_;
+        SqlConnPool &amp;pool_;
+        bool moved_ = false;
+
+    public:
+        Connection(MYSQL *conn, SqlConnPool &amp;pool) :
+                conn_(conn),
+                pool_(pool) {
+        }
+
+        // 析构时释放连接
+        ~Connection() {
+            if (conn_ &amp;&amp; !moved_) {
+                pool_.releaseConnection(conn_);
+            }
+        }
+
+        // 禁止拷贝
+        Connection(const Connection &amp;) = delete;
+
+        Connection &amp;operator=(const Connection &amp;) = delete;
+
+        // 移动构造
+        Connection(Connection &amp;&amp;other) noexcept:
+                conn_(other.conn_),
+                pool_(other.pool_),
+                moved_(other.moved_) {
+            other.conn_ = nullptr;
+            other.moved_ = true;
+        }
+
+        // 移动赋值
+        Connection &amp;operator=(Connection &amp;&amp;other) noexcept {
+            if (this != &amp;other) {
+                if (conn_ &amp;&amp; !moved_) {
+                    pool_.releaseConnection(conn_);
+                }
+                conn_ = other.conn_;
+                moved_ = other.moved_;
+                other.conn_ = nullptr;
+                other.moved_ = true;
+            }
+            return *this;
+        }
+
+        // 允许转换为 MYSQL * 类型
+        explicit operator MYSQL *() const {
+            return conn_;
+        }
+
+        [[nodiscard]]
+        MYSQL *get() const {
+            return conn_;
+        }
+    };
+
+    // 可用连接队列
+    std::queue&lt;MYSQL *&gt; connQue_;
+    // 使用中的连接指针列表
+    std::list&lt;MYSQL *&gt; usedConn_;
+
+    // 连接池读写锁
+    mutable std::shared_mutex poolMutex_;
+    // 条件变量，使用 condition_variable_any 以配合 shared_mutex
+    std::condition_variable_any cond_;
+
+    // 监控线程
+    std::thread monitorThread_;
+    bool shutdown_ = false;
+
+    // 数据库连接信息
+    std::string host_;
+    uint16_t port_;
+    std::string user_;
+    std::string pwd_;
+    std::string dbName_;
+
+    // 连接池大小控制
+    int minPoolSize_;
+    int maxPoolSize_;
+
+    // 当前连接池大小
+    int currentPoolSize_{};
+    // 空闲可用的连接数量
+    int availableConnections_{};
+
+    SqlConnPool();
+
+    // 创建一个新的 MySQL 连接
+    MysqlPtr createConnection() const;
+
+    Connection _getConnection();
+
+    // 释放连接（仅供Connection类调用）
+    void releaseConnection(MYSQL *conn);
+
+    // 确保数据库存在，如果不存在则创建
+    bool ensureDatabase() const;
+
+    // 监控连接池，动态扩展和收缩，并进行健康检查
+    void monitorPool();
+
+public:
+    // 禁止拷贝和赋值
+    SqlConnPool(const SqlConnPool &amp;) = delete;
+
+    SqlConnPool &amp;operator=(const SqlConnPool &amp;) = delete;
+
+    // 销毁连接池
+    ~SqlConnPool();
+
+    // 获取连接（返回 Connection 对象）
+    static Connection getConnection() {
+        static SqlConnPool sqlConnPool;
+        LOGD &lt;&lt; "SqlConnPool::getConnection()";
+        return sqlConnPool._getConnection();
+    }
+};</code></pre><h2 style="" id="%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E8%AE%BE%E8%AE%A1">线程池的设计</h2><p style="">请移步我的以下两篇博文：</p><hyperlink-card target="_blank" href="https://liccsu.com/archives/sMDCOpd3" theme="regular" style="margin-top: 0.75em; margin-bottom: 0;"><a href="https://liccsu.com/archives/sMDCOpd3" target="_blank">https://liccsu.com/archives/sMDCOpd3</a></hyperlink-card><hyperlink-card target="_blank" href="https://liccsu.com/archives/X0EAQLUK" theme="regular" style="margin-top: 0.75em; margin-bottom: 0;"><a href="https://liccsu.com/archives/X0EAQLUK" target="_blank">https://liccsu.com/archives/X0EAQLUK</a></hyperlink-card><h2 style="" id="%E6%97%B6%E9%97%B4%E5%A0%86%E7%9A%84%E8%AE%BE%E8%AE%A1">时间堆的设计</h2><p style="">为了防止长连接既不活跃又长时间占用服务器资源，我们需要实现一个超时断开连接的操作，于是使用<code>小根堆</code>这一数据结构来管理，当某个连接在指定时间内没有任何操作则执行断开连接的回调，否则刷新超时时间。</p><p style=""><strong>堆</strong>（Heap）是一种常用的数据结构，特别适用于实现优先队列等功能。当堆用于管理基于时间的事件（如定时任务、事件调度等）时，通常被称为<strong>时间堆</strong>。然而，堆的一个限制是，对于堆中任意元素的查找操作（如查找、删除或更新某个特定元素）可能需要线性的时间复杂度 <em>O(n)</em>，因为堆本身并不支持快速查找。为了解决这一问题，本项目中使用<strong>哈希表</strong>（Hash Table）辅助时间堆的查找操作，使其查找操作的时间复杂度降为常数<em>O(1)</em>。</p><p style="">时间堆中节点的结构，完整实现详询<a href="https://github.com/Liccsu/TinyWebServer/blob/master/app/timer/TimerHeap.cpp" target="_blank">源文件</a>：</p><pre><code class="language-cpp">using TimeoutCallback = std::function&lt;void()&gt;;
+using Clock = std::chrono::system_clock;
+using TimePoint = std::chrono::system_clock::time_point;
+
+struct TimerNode {
+    uint64_t id;
+    // 超时时间点
+    TimePoint expiration;
+    // 超时回调function&lt;void()&gt;
+    TimeoutCallback timeoutCallback;
+
+    // 重载三路比较运算符(C++20起)可以同时默认实现 &gt; &lt; &gt;= &lt;= == != 六种基本比较运算符，减少代码冗余
+    // 三路比较运算符(C++20起)可以返回三种类型：
+    // std::strong_ordering：强序，严格的顺序比较。隐含可替换关系，若 a 等价于 b，则 f(a) 等价于 f(b)
+    //   若 a 小于 b，返回 std::strong_ordering::less
+    //   若 a 大于 b，返回 std::strong_ordering::greater
+    //   若 a 等于 b，返回 std::strong_ordering::equal
+    // std::weak_ordering：弱序，允许等价但不严格的顺序比较。不隐含可替换关系，若 a 等价于 b，则 f(a) 不一定等价于 f(b)
+    //   若 a 小于 b，返回 std::weak_ordering::less
+    //   若 a 大于 b，返回 std::weak_ordering::greater
+    //   若 a 等价于 b，返回 std::weak_ordering::equivalent
+    // std::partial_ordering：偏序，允许部分顺序比较。既不隐含可替换关系，也允许完全不可比较关系
+    //   若 a 小于 b，返回 std::partial_ordering::less
+    //   若 a 大于 b，返回 std::partial_ordering::greater
+    //   若 a 等价于 b，返回 std::partial_ordering::equivalent
+    //   否则，返回 std::partial_ordering::unordered
+    // 此处两个 std::chrono::system_clock::time_point 类型比较的返回值应为 std::strong_ordering
+    auto operator&lt;=&gt;(const TimerNode &amp;t) const {
+        return expiration &lt;=&gt; t.expiration;
+    }
+};</code></pre><h1 style="" id="%E5%8F%82%E8%80%83%26%E8%87%B4%E8%B0%A2">参考&amp;致谢</h1><p style="">《Linux多线程服务端编程》 - 陈硕</p><p style=""><hyperlink-inline-card target="_blank" href="https://www.runoob.com/http/http-messages.html" theme="inline"><a href="https://www.runoob.com/http/http-messages.html" target="_blank">https://www.runoob.com/http/http-messages.html</a></hyperlink-inline-card> - 菜鸟教程</p><p style=""><hyperlink-inline-card target="_blank" href="https://zh.cppreference.com/w/cpp/language/raii" theme="inline"><a href="https://zh.cppreference.com/w/cpp/language/raii" target="_blank">https://zh.cppreference.com/w/cpp/language/raii</a></hyperlink-inline-card>- <a href="https://zh.cppreference.com/" target="_blank">cppreference.com</a></p><p style=""></p></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Billy</div><div class="author-info-description">记录学习与折腾</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Billy775326"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，记录学习与折腾</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/10/ArchLinux%20+%20KDE%20%E4%B8%80%E5%91%A8%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93/" title="ArchLinux KDE 一周使用小结">ArchLinux KDE 一周使用小结</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/10/MAAREADME/" title="MAAREADME">MAAREADME</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/10/ReDroid+MAA%EF%BC%9A%E5%9C%A8Linux%E4%B8%8B%E6%B8%B8%E7%8E%A9%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F/" title="ReDroid MAA：在Linux下游玩明日方舟">ReDroid MAA：在Linux下游玩明日方舟</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/10/TigerVNC%20%E9%94%81%E5%B1%8F%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" title="TigerVNC 锁屏问题解决方案">TigerVNC 锁屏问题解决方案</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/10/Ubuntu%20GNOME%20%E6%A1%8C%E9%9D%A2%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE%20TigerVNC%EF%BC%8C%E5%8C%85%E5%90%AB%E6%9C%8D%E5%8A%A1%E8%AE%BE%E7%BD%AE%E3%80%81%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83%E9%80%82%E9%85%8D%E5%92%8C%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE/" title="Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置">Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline"><i class="fas fa-folder-open"></i><span>分类</span></div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tutorial/"><span class="card-category-list-name">Tutorial</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/bi-ji/"><span class="card-category-list-name">bi-ji</span><span class="card-category-list-count">19</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/jiao-cheng/"><span class="card-category-list-name">jiao-cheng</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/za-tan/"><span class="card-category-list-name">za-tan</span><span class="card-category-list-count">1</span></a></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/webserver/" style="font-size: 1.1em; color: #999">webserver</a> <a href="/tags/rust/" style="font-size: 1.5em; color: #99a9bf">rust</a> <a href="/tags/SeverRepair/" style="font-size: 1.1em; color: #999">SeverRepair</a> <a href="/tags/linux/" style="font-size: 1.4em; color: #99a5b6">linux</a> <a href="/tags/ruan-jian/" style="font-size: 1.1em; color: #999">ruan-jian</a> <a href="/tags/qi-ta/" style="font-size: 1.1em; color: #999">qi-ta</a> <a href="/tags/c/" style="font-size: 1.2em; color: #999da3">c</a> <a href="/tags/cao-zuo-xi-tong/" style="font-size: 1.2em; color: #999da3">cao-zuo-xi-tong</a> <a href="/tags/leetcode/" style="font-size: 1.3em; color: #99a1ac">leetcode</a> <a href="/tags/you-xi/" style="font-size: 1.1em; color: #999">you-xi</a> <a href="/tags/suan-fa/" style="font-size: 1.3em; color: #99a1ac">suan-fa</a> <a href="/tags/luo-ke-wang-guo/" style="font-size: 1.1em; color: #999">luo-ke-wang-guo</a> <a href="/tags/yun-wei/" style="font-size: 1.2em; color: #999da3">yun-wei</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/09/">
+            <span class="card-archive-list-date">
+              九月 2026
+            </span>
+            <span class="card-archive-list-count">14</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/04/">
+            <span class="card-archive-list-date">
+              四月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/09/">
+            <span class="card-archive-list-date">
+              九月 2024
+            </span>
+            <span class="card-archive-list-count">26</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/07/">
+            <span class="card-archive-list-date">
+              七月 2024
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">43</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-09-10T07:33:08.502Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Billy</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>

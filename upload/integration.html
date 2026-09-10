@@ -1,0 +1,362 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Billy 的博客 | Billy 的博客</title><meta name="author" content="Billy"><meta name="copyright" content="Billy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="集成文档接口介绍AsstAppendTask接口原型1AsstTaskId ASSTAPI AsstAppendTask(AsstHandle handle, const char* type, const char* params);  接口说明添加任务 返回值 AsstTaskId  若添加成功，返回该任务 ID, 可用于后续设置任务参数；  若添加失败，返回 0  参数说明 AsstHand">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Billy 的博客">
+<meta property="og:url" content="https://billy775326.github.io/upload/integration.html">
+<meta property="og:site_name" content="Billy 的博客">
+<meta property="og:description" content="集成文档接口介绍AsstAppendTask接口原型1AsstTaskId ASSTAPI AsstAppendTask(AsstHandle handle, const char* type, const char* params);  接口说明添加任务 返回值 AsstTaskId  若添加成功，返回该任务 ID, 可用于后续设置任务参数；  若添加失败，返回 0  参数说明 AsstHand">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://billy775326.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2026-09-10T07:30:09.814Z">
+<meta property="article:modified_time" content="2026-09-10T07:30:09.814Z">
+<meta property="article:author" content="Billy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://billy775326.github.io/img/avatar.jpg"><script type="application/ld+json"></script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://billy775326.github.io/upload/integration.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Billy 的博客',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Billy 的博客</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="page-site-info"><h1 id="site-title"></h1></div></header><main class="layout" id="content-inner"><div id="page"><div class="container" id="article-container"><h1 id="集成文档"><a href="#集成文档" class="headerlink" title="集成文档"></a>集成文档</h1><h2 id="接口介绍"><a href="#接口介绍" class="headerlink" title="接口介绍"></a>接口介绍</h2><h3 id="AsstAppendTask"><a href="#AsstAppendTask" class="headerlink" title="AsstAppendTask"></a><code>AsstAppendTask</code></h3><h4 id="接口原型"><a href="#接口原型" class="headerlink" title="接口原型"></a>接口原型</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">AsstTaskId ASSTAPI <span class="title">AsstAppendTask</span><span class="params">(AsstHandle handle, <span class="type">const</span> <span class="type">char</span>* type, <span class="type">const</span> <span class="type">char</span>* params)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="接口说明"><a href="#接口说明" class="headerlink" title="接口说明"></a>接口说明</h4><p>添加任务</p>
+<h4 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h4><ul>
+<li><code>AsstTaskId</code><br>  若添加成功，返回该任务 ID, 可用于后续设置任务参数；<br>  若添加失败，返回 0</li>
+</ul>
+<h4 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h4><ul>
+<li><code>AsstHandle handle</code><br>  实例句柄</li>
+<li><code>const char* type</code><br>  任务类型</li>
+<li><code>const char* params</code><br>  任务参数，json string</li>
+</ul>
+<h5 id="任务类型一览"><a href="#任务类型一览" class="headerlink" title="任务类型一览"></a>任务类型一览</h5><ul>
+<li><code>StartUp</code><br>开始唤醒</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对应的任务参数</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;enable&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>              <span class="comment">// 是否启用本任务，可选，默认为 true</span></span><br><span class="line">    <span class="attr">&quot;client_type&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span>       <span class="comment">// 客户端版本，可选，默认为空</span></span><br><span class="line">                                 <span class="comment">// 选项：&quot;Official&quot; | &quot;Bilibili&quot; | &quot;txwy&quot; | &quot;YoStarEN&quot; | &quot;YoStarJP&quot; | &quot;YoStarKR&quot;</span></span><br><span class="line">    <span class="attr">&quot;start_game_enabled&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>  <span class="comment">// 是否自动启动客户端，可选，默认不启动</span></span><br><span class="line">    <span class="attr">&quot;account_name&quot;</span><span class="punctuation">:</span> string       <span class="comment">// 切换账号，可选，默认不切换</span></span><br><span class="line">                                 <span class="comment">// 仅支持切换至已登录的账号，使用登录名进行查找，保证输入内容在所有已登录账号唯一即可</span></span><br><span class="line">                                 <span class="comment">// 官服：123****4567，可输入 123****4567、4567、123、3****4567</span></span><br><span class="line">                                 <span class="comment">// B服：张三，可输入 张三、张、三</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>CloseDown</code><br>  关闭游戏</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对应的任务参数</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;enable&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>              <span class="comment">// 是否启用本任务，可选，预设为 true</span></span><br><span class="line">    <span class="attr">&quot;client_type&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span>       <span class="comment">// 客户端版本，必选，填空则不执行</span></span><br><span class="line">                                 <span class="comment">// 选项：&quot;Official&quot; | &quot;Bilibili&quot; | &quot;txwy&quot; | &quot;YoStarEN&quot; | &quot;YoStarJP&quot; | &quot;YoStarKR&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Fight</code><br>  刷理智</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对应的任务参数</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;enable&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>             <span class="comment">// 是否启用本任务，可选，默认为 true</span></span><br><span class="line">    <span class="attr">&quot;stage&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span>            <span class="comment">// 关卡名，可选，默认为空，识别当前/上次的关卡。不支持运行中设置</span></span><br><span class="line">                                <span class="comment">// 支持全部主线关卡，如 &quot;1-7&quot;、&quot;S3-2&quot;等</span></span><br><span class="line">                                <span class="comment">// 可在关卡结尾输入Normal/Hard表示需要切换标准与磨难难度</span></span><br><span class="line">                                <span class="comment">// 剿灭作战，必须输入 &quot;Annihilation&quot;</span></span><br><span class="line">                                <span class="comment">// 当期 SS 活动 后三关，必须输入完整关卡编号</span></span><br><span class="line">    <span class="attr">&quot;medicine&quot;</span><span class="punctuation">:</span> int<span class="punctuation">,</span>            <span class="comment">// 最大使用理智药数量，可选，默认 0</span></span><br><span class="line">    <span class="attr">&quot;expiring_medicine&quot;</span><span class="punctuation">:</span> int<span class="punctuation">,</span>   <span class="comment">// 最大使用 48 小时内过期理智药数量，可选，默认 0</span></span><br><span class="line">    <span class="attr">&quot;stone&quot;</span><span class="punctuation">:</span> int<span class="punctuation">,</span>               <span class="comment">// 最大吃石头数量，可选，默认 0</span></span><br><span class="line">    <span class="attr">&quot;times&quot;</span><span class="punctuation">:</span> int<span class="punctuation">,</span>               <span class="comment">// 指定次数，可选，默认无穷大</span></span><br><span class="line">    <span class="attr">&quot;series&quot;</span><span class="punctuation">:</span> int<span class="punctuation">,</span>              <span class="comment">// 连战次数，可选，1~6</span></span><br><span class="line">    <span class="attr">&quot;drops&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span>                  <span class="comment">// 指定掉落数量，可选，默认不指定</span></span><br><span class="line">        <span class="attr">&quot;30011&quot;</span><span class="punctuation">:</span> int<span class="punctuation">,</span>           <span class="comment">// key - item_id, value 数量. key 可参考 resource/item_index.json 文件</span></span><br><span class="line">        <span class="attr">&quot;30062&quot;</span><span class="punctuation">:</span> int            <span class="comment">// 是或的关系</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="comment">/* 以上全部是或的关系，即任一达到即停止任务 */</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">&quot;report_to_penguin&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>  <span class="comment">// 是否汇报企鹅数据，可选，默认 false</span></span><br><span class="line">    <span class="attr">&quot;penguin_id&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span>       <span class="comment">// 企鹅数据汇报 id, 可选，默认为空。仅在 report_to_penguin 为 true 时有效</span></span><br><span class="line">    <span class="attr">&quot;server&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span>           <span class="comment">// 服务器，可选，默认 &quot;CN&quot;, 会影响掉落识别及上传</span></span><br><span class="line">                                <span class="comment">// 选项：&quot;CN&quot; | &quot;US&quot; | &quot;JP&quot; | &quot;KR&quot;</span></span><br><span class="line">    <span class="attr">&quot;client_type&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span>      <span class="comment">// 客户端版本，可选，默认为空。用于游戏崩溃时重启并连回去继续刷，若为空则不启用该功能</span></span><br><span class="line">                                <span class="comment">// 选项：&quot;Official&quot; | &quot;Bilibili&quot; | &quot;txwy&quot; | &quot;YoStarEN&quot; | &quot;YoStarJP&quot; | &quot;YoStarKR&quot;</span></span><br><span class="line">    <span class="attr">&quot;DrGrandet&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>          <span class="comment">// 节省理智碎石模式，可选，默认 false，仅在可能产生碎石效果时生效。</span></span><br><span class="line">                                <span class="comment">// 在碎石确认界面等待，直到当前的 1 点理智恢复完成后再立刻碎石</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>另支持少部分资源关卡名请参考<a target="_blank" rel="noopener" href="https://github.com/MaaAssistantArknights/MaaAssistantArknights/blob/master/tools/AutoLocalization/example/zh-cn.xaml#L260">集成示例</a></p>
+<ul>
+<li><code>Recruit</code><br>公开招募</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对应的任务参数</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;enable&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>             <span class="comment">// 是否启用本任务，可选，默认为 true</span></span><br><span class="line">    <span class="attr">&quot;refresh&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>            <span class="comment">// 是否刷新三星 Tags, 可选，默认 false</span></span><br><span class="line">    <span class="attr">&quot;select&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>                 <span class="comment">// 会去点击标签的 Tag 等级，必选</span></span><br><span class="line">        int<span class="punctuation">,</span></span><br><span class="line">        ...</span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;confirm&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>                <span class="comment">// 会去点击确认的 Tag 等级，必选。若仅公招计算，可设置为空数组</span></span><br><span class="line">        int<span class="punctuation">,</span></span><br><span class="line">        ...</span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;first_tags&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>             <span class="comment">// 首选 Tags，仅在 Tag 等级为 3 时有效。可选，默认为空</span></span><br><span class="line">        string<span class="punctuation">,</span>                 <span class="comment">// 当 Tag 等级为 3 时，会尽可能多地选择这里的 Tags（如果有）</span></span><br><span class="line">        ...                     <span class="comment">// 而且是强制选择，也就是会忽略所有“让 3 星 Tag 不被选择”的设置</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;extra_tags_mode&quot;</span><span class="punctuation">:</span> int<span class="punctuation">,</span>     <span class="comment">// 选择更多的 Tags, 可选, 默认为 0</span></span><br><span class="line">                                <span class="comment">// 0 - 默认行为</span></span><br><span class="line">                                <span class="comment">// 1 - 选 3 个 Tags, 即使可能冲突</span></span><br><span class="line">                                <span class="comment">// 2 - 如果可能, 同时选择更多的高星 Tag 组合, 即使可能冲突</span></span><br><span class="line">    <span class="attr">&quot;times&quot;</span><span class="punctuation">:</span> int<span class="punctuation">,</span>               <span class="comment">// 招募多少次，可选，默认 0。若仅公招计算，可设置为 0</span></span><br><span class="line">    <span class="attr">&quot;set_time&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>           <span class="comment">// 是否设置招募时限。仅在 times 为 0 时生效，可选，默认 true</span></span><br><span class="line">    <span class="attr">&quot;expedite&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>           <span class="comment">// 是否使用加急许可，可选，默认 false</span></span><br><span class="line">    <span class="attr">&quot;expedite_times&quot;</span><span class="punctuation">:</span> int<span class="punctuation">,</span>      <span class="comment">// 加急次数，仅在 expedite 为 true 时有效。</span></span><br><span class="line">                                <span class="comment">// 可选，默认无限使用（直到 times 达到上限）</span></span><br><span class="line">    <span class="attr">&quot;skip_robot&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>         <span class="comment">// 是否在识别到小车词条时跳过，可选，默认跳过</span></span><br><span class="line">    <span class="attr">&quot;recruitment_time&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span>       <span class="comment">// Tag 等级（大于等于 3）和对应的希望招募时限，单位为分钟，默认值都为 540（即 09:00:00）</span></span><br><span class="line">        <span class="attr">&quot;3&quot;</span><span class="punctuation">:</span> int<span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;4&quot;</span><span class="punctuation">:</span> int<span class="punctuation">,</span></span><br><span class="line">        ...</span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;report_to_penguin&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>  <span class="comment">// 是否汇报企鹅数据，可选，默认 false</span></span><br><span class="line">    <span class="attr">&quot;penguin_id&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span>       <span class="comment">// 企鹅数据汇报 id, 可选，默认为空。仅在 report_to_penguin 为 true 时有效</span></span><br><span class="line">    <span class="attr">&quot;report_to_yituliu&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>  <span class="comment">// 是否汇报一图流数据，可选，默认 false</span></span><br><span class="line">    <span class="attr">&quot;yituliu_id&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span>       <span class="comment">// 一图流汇报 id, 可选，默认为空。仅在 report_to_yituliu 为 true 时有效</span></span><br><span class="line">    <span class="attr">&quot;server&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span>           <span class="comment">// 服务器，可选，默认 &quot;CN&quot;, 会影响上传</span></span><br><span class="line">                                <span class="comment">// 选项：&quot;CN&quot; | &quot;US&quot; | &quot;JP&quot; | &quot;KR&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Infrast</code><br>  基建换班</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;enable&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>         <span class="comment">// 是否启用本任务，可选，默认为 true</span></span><br><span class="line">    <span class="attr">&quot;mode&quot;</span><span class="punctuation">:</span> int<span class="punctuation">,</span>            <span class="comment">// 换班工作模式，可选，默认 0</span></span><br><span class="line">                            <span class="comment">// 0 - 默认换班模式，单设施最优解</span></span><br><span class="line">                            <span class="comment">// 10000 - 自定义换班模式，读取用户配置，可参考 protocol/base-scheduling-schema.md</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">&quot;facility&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>           <span class="comment">// 要换班的设施（有序），必选。不支持运行中设置</span></span><br><span class="line">        string<span class="punctuation">,</span>             <span class="comment">// 设施名，&quot;Mfg&quot; | &quot;Trade&quot; | &quot;Power&quot; | &quot;Control&quot; | &quot;Reception&quot; | &quot;Office&quot; | &quot;Dorm&quot;</span></span><br><span class="line">        ...</span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;drones&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span>       <span class="comment">// 无人机用途，可选项，默认 _NotUse</span></span><br><span class="line">                            <span class="comment">// mode==10000 时该字段无效（会被忽略）</span></span><br><span class="line">                            <span class="comment">// &quot;_NotUse&quot;、&quot;Money&quot;、&quot;SyntheticJade&quot;、&quot;CombatRecord&quot;、&quot;PureGold&quot;、&quot;OriginStone&quot;、&quot;Chip&quot;</span></span><br><span class="line">    <span class="attr">&quot;threshold&quot;</span><span class="punctuation">:</span> float<span class="punctuation">,</span>     <span class="comment">// 工作心情阈值，可选，取值范围 [0, 1.0]，默认 0.3</span></span><br><span class="line">                            <span class="comment">// mode==10000 时该字段仅针对 &quot;autofill&quot; 有效</span></span><br><span class="line">    <span class="attr">&quot;replenish&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>      <span class="comment">// 贸易站“源石碎片”是否自动补货，可选，默认 false</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">&quot;dorm_notstationed_enabled&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span> <span class="comment">// 是否启用宿舍“未进驻”选项，可选，默认 false</span></span><br><span class="line">    <span class="attr">&quot;dorm_trust_enabled&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span> <span class="comment">// 是否将宿舍剩余位置填入信赖未满干员，可选，默认 false</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 以下参数仅在 mode=10000 时生效，否则会被忽略 */</span></span><br><span class="line">    <span class="attr">&quot;filename&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span>     <span class="comment">// 自定义配置路径，必选。不支持运行中设置</span></span><br><span class="line">    <span class="attr">&quot;plan_index&quot;</span><span class="punctuation">:</span> int<span class="punctuation">,</span>      <span class="comment">// 使用配置中的方案序号，必选。不支持运行中设置</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Mall</code><br>  领取信用及商店购物。<br>  会先有序的按 <code>buy_first</code> 购买一遍，再从左到右并避开 <code>blacklist</code> 购买第二遍，在信用溢出时则会无视黑名单从左到右购买第三遍直到不再溢出</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对应的任务参数</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;enable&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>         <span class="comment">// 是否启用本任务，可选，默认为 true</span></span><br><span class="line">    <span class="attr">&quot;shopping&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>       <span class="comment">// 是否购物，可选，默认 false。不支持运行中设置</span></span><br><span class="line">    <span class="attr">&quot;buy_first&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>          <span class="comment">// 优先购买列表，可选。不支持运行中设置</span></span><br><span class="line">        string<span class="punctuation">,</span>             <span class="comment">// 商品名，如 &quot;招聘许可&quot;、&quot;龙门币&quot; 等</span></span><br><span class="line">        ...</span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;blacklist&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>          <span class="comment">// 黑名单列表，可选。不支持运行中设置</span></span><br><span class="line">        string<span class="punctuation">,</span>             <span class="comment">// 商品名，如 &quot;加急许可&quot;、&quot;家具零件&quot; 等</span></span><br><span class="line">        ...</span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;force_shopping_if_credit_full&quot;</span><span class="punctuation">:</span> bool <span class="comment">// 是否在信用溢出时无视黑名单，默认为 true</span></span><br><span class="line">    <span class="attr">&quot;only_buy_discount&quot;</span><span class="punctuation">:</span> bool <span class="comment">// 是否只购买折扣物品，只作用于第二轮购买，默认为 false</span></span><br><span class="line">    <span class="attr">&quot;reserve_max_credit&quot;</span><span class="punctuation">:</span> bool <span class="comment">// 是否在信用点低于300时停止购买，只作用于第二轮购买，默认为 false</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Award</code><br>  领取各种奖励</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对应的任务参数</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;enable&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>            <span class="comment">// 是否启用本任务，可选，默认为 true</span></span><br><span class="line">    <span class="attr">&quot;award&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>             <span class="comment">// 领取每日/每周任务奖励，默认为 true</span></span><br><span class="line">    <span class="attr">&quot;mail&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>              <span class="comment">// 领取所有邮件奖励，默认为 false</span></span><br><span class="line">    <span class="attr">&quot;recruit&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>           <span class="comment">// 领取限定池子赠送的每日免费单抽，默认为 false</span></span><br><span class="line">    <span class="attr">&quot;orundum&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>           <span class="comment">// 领取幸运墙的合成玉奖励，默认为 false</span></span><br><span class="line">    <span class="attr">&quot;mining&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>            <span class="comment">// 领取限时开采许可的合成玉奖励，默认为 false</span></span><br><span class="line">    <span class="attr">&quot;specialaccess&quot;</span><span class="punctuation">:</span> bool      <span class="comment">// 领取五周年赠送的月卡奖励，默认为 false</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Roguelike</code><br>  无限刷肉鸽</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;enable&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>         <span class="comment">// 是否启用本任务，可选，默认为 true</span></span><br><span class="line">    <span class="attr">&quot;theme&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span>        <span class="comment">// 肉鸽名，可选，默认 &quot;Phantom&quot;</span></span><br><span class="line">                            <span class="comment">// Phantom - 傀影与猩红血钻</span></span><br><span class="line">                            <span class="comment">// Mizuki  - 水月与深蓝之树</span></span><br><span class="line">                            <span class="comment">// Sami    - 探索者的银凇止境</span></span><br><span class="line">    <span class="attr">&quot;mode&quot;</span><span class="punctuation">:</span> int<span class="punctuation">,</span>            <span class="comment">// 模式，可选项。默认 0</span></span><br><span class="line">                            <span class="comment">// 0 - 刷蜡烛，尽可能稳定地打更多层数</span></span><br><span class="line">                            <span class="comment">// 1 - 刷源石锭，第一层投资完就退出</span></span><br><span class="line">                            <span class="comment">// 2 - 【即将弃用】两者兼顾，投资过后再退出，没有投资就继续往后打</span></span><br><span class="line">                            <span class="comment">// 3 - 开发中...</span></span><br><span class="line">                            <span class="comment">// 4 - 刷开局，到达第三层后直接退出</span></span><br><span class="line">                            <span class="comment">// 5 - 刷坍缩范式，mode为5时有效，通过漏怪、在不期而遇节点选择特定选项等方式加快坍缩值积累，</span></span><br><span class="line">                            <span class="comment">//     若第一个检测到的坍缩范式在expected_collapsal_paradigms列表中则停止任务，否则重开</span></span><br><span class="line">    <span class="attr">&quot;starts_count&quot;</span><span class="punctuation">:</span> int<span class="punctuation">,</span>    <span class="comment">// 开始探索 次数，可选，默认 INT_MAX。达到后自动停止任务</span></span><br><span class="line">    <span class="attr">&quot;investment_enabled&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span> <span class="comment">// 是否投资源石锭，默认开</span></span><br><span class="line">    <span class="attr">&quot;investments_count&quot;</span><span class="punctuation">:</span> int<span class="punctuation">,</span></span><br><span class="line">                            <span class="comment">// 投资源石锭 次数，可选，默认 INT_MAX。达到后自动停止任务</span></span><br><span class="line">    <span class="attr">&quot;stop_when_investment_full&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span></span><br><span class="line">                            <span class="comment">// 投资满了自动停止任务，可选，默认 false</span></span><br><span class="line">    <span class="attr">&quot;squad&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span>        <span class="comment">// 开局分队，可选，例如 &quot;突击战术分队&quot; 等，默认 &quot;指挥分队&quot;</span></span><br><span class="line">    <span class="attr">&quot;roles&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span>        <span class="comment">// 开局职业组，可选，例如 &quot;先手必胜&quot; 等，默认 &quot;取长补短&quot;</span></span><br><span class="line">    <span class="attr">&quot;core_char&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span>    <span class="comment">// 开局干员名，可选，仅支持单个干员**中文名**，无论区服。默认识别练度自动选择</span></span><br><span class="line">    <span class="attr">&quot;start_with_elite_two&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>  <span class="comment">// 是否在刷开局模式下凹开局干员精二直升，可选，默认 false</span></span><br><span class="line">    <span class="attr">&quot;only_start_with_elite_two&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>  <span class="comment">// 是否只凹开局干员精二直升且不进行作战，可选，默认 false，start_with_elite_two为true时有效</span></span><br><span class="line">    <span class="attr">&quot;use_support&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>  <span class="comment">// 开局干员是否为助战干员，可选，默认 false</span></span><br><span class="line">    <span class="attr">&quot;use_nonfriend_support&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>  <span class="comment">// 是否可以是非好友助战干员，可选，默认 false，use_support为true时有效</span></span><br><span class="line">    <span class="attr">&quot;refresh_trader_with_dice&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>  <span class="comment">// 是否用骰子刷新商店购买特殊商品，目前支持水月肉鸽的指路鳞，可选，默认 false</span></span><br><span class="line">    <span class="attr">&quot;use_foldartal&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>                    <span class="comment">// 是否使用密文板，mode为5时默认 false，否则默认 true</span></span><br><span class="line">    <span class="attr">&quot;check_collapsal_paradigms&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>        <span class="comment">// 是否检测获取的坍缩范式，mode为5时默认 true，否则默认 false</span></span><br><span class="line">    <span class="attr">&quot;double_check_collapsal_paradigms&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span> <span class="comment">// 是否执行坍缩范式检测防漏措施，check_collapsal_paradigms为true时有效，</span></span><br><span class="line">                                              <span class="comment">// mode为5时默认 true，否则默认 false</span></span><br><span class="line">    <span class="attr">&quot;expected_collapsal_paradigms&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>         <span class="comment">// 需要刷的坍缩范式，mode为5时有效</span></span><br><span class="line">        string<span class="punctuation">,</span>                               <span class="comment">// 默认 [&quot;目空一些, &quot;睁眼瞎&quot;, &quot;图像损坏&quot;, &quot;一抹黑&quot;]</span></span><br><span class="line">        ...</span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>刷坍缩范式功能具体请参考 <a href="./integrated-strategy-schema.md#%E8%90%A8%E7%B1%B3%E8%82%89%E9%B8%BD%E2%80%94%E2%80%94%E5%9D%8D%E7%BC%A9%E8%8C%83%E5%BC%8F">肉鸽辅助协议</a></p>
+<ul>
+<li><code>Copilot</code><br>  自动抄作业</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;enable&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>             <span class="comment">// 是否启用本任务，可选，默认为 true</span></span><br><span class="line">    <span class="attr">&quot;filename&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span>         <span class="comment">// 作业 JSON 的文件路径，绝对、相对路径均可。不支持运行期设置</span></span><br><span class="line">    <span class="attr">&quot;formation&quot;</span><span class="punctuation">:</span> bool           <span class="comment">// 是否进行 “快捷编队”，可选，默认否。不支持运行期设置</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>作业 JSON 请参考 <a href="./copilot-schema.md">战斗流程协议</a></p>
+<ul>
+<li><code>SSSCopilot</code><br>  自动抄保全作业</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;enable&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span>             <span class="comment">// 是否启用本任务，可选，默认为 true</span></span><br><span class="line">    <span class="attr">&quot;filename&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span>         <span class="comment">// 作业 JSON 的文件路径，绝对、相对路径均可。不支持运行期设置</span></span><br><span class="line">    <span class="attr">&quot;loop_times&quot;</span><span class="punctuation">:</span> int           <span class="comment">// 循环执行次数</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>保全作业 JSON 请参考 <a href="./sss-schema.md">保全派驻协议</a></p>
+<ul>
+<li><code>Depot</code><br>  仓库识别</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对应的任务参数</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;enable&quot;</span><span class="punctuation">:</span> bool          <span class="comment">// 是否启用本任务，可选，默认为 true</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>OperBox</code><br>  干员 box 识别</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对应的任务参数</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;enable&quot;</span><span class="punctuation">:</span> bool          <span class="comment">// 是否启用本任务，可选，默认为 true</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Reclamation</code><br>  生息演算</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;enable&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;theme&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span>            <span class="comment">// 主题，可选项。默认为 1</span></span><br><span class="line">                                <span class="comment">// Fire  - *沙中之火*</span></span><br><span class="line">                                <span class="comment">// Tales - *沙洲遗闻*</span></span><br><span class="line">    <span class="attr">&quot;mode&quot;</span><span class="punctuation">:</span> int<span class="punctuation">,</span>                <span class="comment">// 模式，可选项。默认为 0</span></span><br><span class="line">                                <span class="comment">// 0 - 刷分与建造点，进入战斗直接退出</span></span><br><span class="line">                                <span class="comment">// 1 - 沙中之火：刷赤金，联络员买水后基地锻造；</span></span><br><span class="line">                                <span class="comment">//     沙洲遗闻：自动制造物品并读档刷货币</span></span><br><span class="line">    <span class="attr">&quot;tool_to_craft&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span>    <span class="comment">// 自动制造的物品，可选项，默认为荧光棒</span></span><br><span class="line">                                <span class="comment">// 建议填写子串</span></span><br><span class="line">    <span class="attr">&quot;increment_mode&quot;</span><span class="punctuation">:</span> int<span class="punctuation">,</span>      <span class="comment">// 点击类型，可选项。默认为0</span></span><br><span class="line">                                <span class="comment">// 0 - 连点</span></span><br><span class="line">                                <span class="comment">// 1 - 长按</span></span><br><span class="line">    <span class="attr">&quot;num_craft_batches&quot;</span><span class="punctuation">:</span> int    <span class="comment">// 单次最大制造轮数，可选。默认为 16</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Custom</code><br>  自定义任务</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;enable&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;task_names&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>     <span class="comment">// 执行数组中第一个匹配上的任务（及后续 next 等）</span></span><br><span class="line">                        <span class="comment">// 若想执行多个任务，可多次 append Custom task</span></span><br><span class="line">        string<span class="punctuation">,</span></span><br><span class="line">        ...</span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>SingleStep</code><br>  单步任务（目前仅支持战斗）</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;enable&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span>     <span class="comment">// 目前仅支持 &quot;copilot&quot;</span></span><br><span class="line">    <span class="attr">&quot;subtask&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span>  <span class="comment">// &quot;stage&quot; | &quot;start&quot; | &quot;action&quot;</span></span><br><span class="line">                        <span class="comment">// &quot;stage&quot; 设置关卡名，需要 &quot;details&quot;: &#123; &quot;stage&quot;: &quot;xxxx&quot; &#125;</span></span><br><span class="line">                        <span class="comment">// &quot;start&quot; 开始作战，无 details</span></span><br><span class="line">                        <span class="comment">// &quot;action&quot;: 单步作战操作，details 需为作战协议中的单个 action，</span></span><br><span class="line">                        <span class="comment">//           例如：&quot;details&quot;: &#123; &quot;name&quot;: &quot;史尔特尔&quot;, &quot;location&quot;: [ 4, 5 ], &quot;direction&quot;: &quot;左&quot; &#125;，详情参考 protocol/copilot-schema.md</span></span><br><span class="line">    <span class="attr">&quot;details&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        ...</span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>VideoRecognition</code><br>视频识别，目前仅支持作业（作战）视频</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;enable&quot;</span><span class="punctuation">:</span> bool<span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;filename&quot;</span><span class="punctuation">:</span> string<span class="punctuation">,</span> <span class="comment">// 视频的文件路径，绝对、相对路径均可。不支持运行期设置</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="AsstSetTaskParams"><a href="#AsstSetTaskParams" class="headerlink" title="AsstSetTaskParams"></a><code>AsstSetTaskParams</code></h3><h4 id="接口原型-1"><a href="#接口原型-1" class="headerlink" title="接口原型"></a>接口原型</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> ASSTAPI <span class="title">AsstSetTaskParams</span><span class="params">(AsstHandle handle, AsstTaskId id, <span class="type">const</span> <span class="type">char</span>* params)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="接口说明-1"><a href="#接口说明-1" class="headerlink" title="接口说明"></a>接口说明</h4><p>设置任务参数</p>
+<h4 id="返回值-1"><a href="#返回值-1" class="headerlink" title="返回值"></a>返回值</h4><ul>
+<li><code>bool</code><br>  返回是否设置成功</li>
+</ul>
+<h4 id="参数说明-1"><a href="#参数说明-1" class="headerlink" title="参数说明"></a>参数说明</h4><ul>
+<li><code>AsstHandle handle</code><br>  实例句柄</li>
+<li><code>AsstTaskId task</code><br>  任务 ID, <code>AsstAppendTask</code> 接口的返回值</li>
+<li><code>const char* params</code><br>  任务参数，json string，与 <code>AsstAppendTask</code> 接口相同。<br>  未标注“不支持运行中设置”的字段都支持实时修改；否则若当前任务正在运行，会忽略对应的字段</li>
+</ul>
+<h3 id="AsstSetStaticOption"><a href="#AsstSetStaticOption" class="headerlink" title="AsstSetStaticOption"></a><code>AsstSetStaticOption</code></h3><h4 id="接口原型-2"><a href="#接口原型-2" class="headerlink" title="接口原型"></a>接口原型</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> ASSTAPI <span class="title">AsstSetStaticOption</span><span class="params">(AsstStaticOptionKey key, <span class="type">const</span> <span class="type">char</span>* value)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="接口说明-2"><a href="#接口说明-2" class="headerlink" title="接口说明"></a>接口说明</h4><p>设置进程级参数</p>
+<h4 id="返回值-2"><a href="#返回值-2" class="headerlink" title="返回值"></a>返回值</h4><ul>
+<li><code>bool</code><br>  返回是否设置成功</li>
+</ul>
+<h4 id="参数说明-2"><a href="#参数说明-2" class="headerlink" title="参数说明"></a>参数说明</h4><ul>
+<li><code>AsstStaticOptionKey key</code><br>  键</li>
+<li><code>const char* value</code><br>  值</li>
+</ul>
+<h5 id="键值一览"><a href="#键值一览" class="headerlink" title="键值一览"></a>键值一览</h5><p>暂无</p>
+<h3 id="AsstSetInstanceOption"><a href="#AsstSetInstanceOption" class="headerlink" title="AsstSetInstanceOption"></a><code>AsstSetInstanceOption</code></h3><h4 id="接口原型-3"><a href="#接口原型-3" class="headerlink" title="接口原型"></a>接口原型</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> ASSTAPI <span class="title">AsstSetInstanceOption</span><span class="params">(AsstHandle handle, AsstInstanceOptionKey key, <span class="type">const</span> <span class="type">char</span>* value)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="接口说明-3"><a href="#接口说明-3" class="headerlink" title="接口说明"></a>接口说明</h4><p>设置实例级参数</p>
+<h4 id="返回值-3"><a href="#返回值-3" class="headerlink" title="返回值"></a>返回值</h4><ul>
+<li><code>bool</code><br>  返回是否设置成功</li>
+</ul>
+<h4 id="参数说明-3"><a href="#参数说明-3" class="headerlink" title="参数说明"></a>参数说明</h4><ul>
+<li><code>AsstHandle handle</code><br>  实例句柄</li>
+<li><code>AsstInstanceOptionKey key</code><br>  键</li>
+<li><code>const char* value</code><br>  值</li>
+</ul>
+<h5 id="键值一览-1"><a href="#键值一览-1" class="headerlink" title="键值一览"></a>键值一览</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">InstanceOptionKey</span></span><br><span class="line">&#123;</span><br><span class="line">    Invalid = <span class="number">0</span>,</span><br><span class="line">    <span class="comment">// 已弃用 // MinitouchEnabled = 1,   // 是否启用 minitouch</span></span><br><span class="line">                            <span class="comment">// 开了也不代表就一定能用，有可能设备不支持等</span></span><br><span class="line">                            <span class="comment">// &quot;1&quot; 开，&quot;0&quot; 关</span></span><br><span class="line">    TouchMode = <span class="number">2</span>,          <span class="comment">// 触控模式设置，默认 minitouch</span></span><br><span class="line">                            <span class="comment">// minitouch | maatouch | adb</span></span><br><span class="line">    DeploymentWithPause = <span class="number">3</span>,    <span class="comment">// 是否暂停下干员，同时影响抄作业、肉鸽、保全</span></span><br><span class="line">                                <span class="comment">// &quot;1&quot; | &quot;0&quot;</span></span><br><span class="line">    AdbLiteEnabled = <span class="number">4</span>,     <span class="comment">// 是否使用 AdbLite， &quot;0&quot; | &quot;1&quot;</span></span><br><span class="line">    KillAdbOnExit = <span class="number">5</span>,       <span class="comment">// 退出时是否杀掉 Adb 进程， &quot;0&quot; | &quot;1&quot;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Billy</div><div class="author-info-description">记录学习与折腾</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Billy775326"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，记录学习与折腾</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/10/ArchLinux%20+%20KDE%20%E4%B8%80%E5%91%A8%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93/" title="ArchLinux KDE 一周使用小结">ArchLinux KDE 一周使用小结</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/10/MAAREADME/" title="MAAREADME">MAAREADME</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/10/ReDroid+MAA%EF%BC%9A%E5%9C%A8Linux%E4%B8%8B%E6%B8%B8%E7%8E%A9%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F/" title="ReDroid MAA：在Linux下游玩明日方舟">ReDroid MAA：在Linux下游玩明日方舟</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/10/TigerVNC%20%E9%94%81%E5%B1%8F%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" title="TigerVNC 锁屏问题解决方案">TigerVNC 锁屏问题解决方案</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/10/Ubuntu%20GNOME%20%E6%A1%8C%E9%9D%A2%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE%20TigerVNC%EF%BC%8C%E5%8C%85%E5%90%AB%E6%9C%8D%E5%8A%A1%E8%AE%BE%E7%BD%AE%E3%80%81%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83%E9%80%82%E9%85%8D%E5%92%8C%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE/" title="Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置">Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline"><i class="fas fa-folder-open"></i><span>分类</span></div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tutorial/"><span class="card-category-list-name">Tutorial</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/bi-ji/"><span class="card-category-list-name">bi-ji</span><span class="card-category-list-count">19</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/jiao-cheng/"><span class="card-category-list-name">jiao-cheng</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/za-tan/"><span class="card-category-list-name">za-tan</span><span class="card-category-list-count">1</span></a></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/webserver/" style="font-size: 1.1em; color: #999">webserver</a> <a href="/tags/rust/" style="font-size: 1.5em; color: #99a9bf">rust</a> <a href="/tags/SeverRepair/" style="font-size: 1.1em; color: #999">SeverRepair</a> <a href="/tags/linux/" style="font-size: 1.4em; color: #99a5b6">linux</a> <a href="/tags/ruan-jian/" style="font-size: 1.1em; color: #999">ruan-jian</a> <a href="/tags/qi-ta/" style="font-size: 1.1em; color: #999">qi-ta</a> <a href="/tags/c/" style="font-size: 1.2em; color: #999da3">c</a> <a href="/tags/cao-zuo-xi-tong/" style="font-size: 1.2em; color: #999da3">cao-zuo-xi-tong</a> <a href="/tags/leetcode/" style="font-size: 1.3em; color: #99a1ac">leetcode</a> <a href="/tags/you-xi/" style="font-size: 1.1em; color: #999">you-xi</a> <a href="/tags/suan-fa/" style="font-size: 1.3em; color: #99a1ac">suan-fa</a> <a href="/tags/luo-ke-wang-guo/" style="font-size: 1.1em; color: #999">luo-ke-wang-guo</a> <a href="/tags/yun-wei/" style="font-size: 1.2em; color: #999da3">yun-wei</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/09/">
+            <span class="card-archive-list-date">
+              九月 2026
+            </span>
+            <span class="card-archive-list-count">14</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/04/">
+            <span class="card-archive-list-date">
+              四月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/09/">
+            <span class="card-archive-list-date">
+              九月 2024
+            </span>
+            <span class="card-archive-list-count">26</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/07/">
+            <span class="card-archive-list-date">
+              七月 2024
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">43</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-09-10T07:33:08.502Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Billy</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>

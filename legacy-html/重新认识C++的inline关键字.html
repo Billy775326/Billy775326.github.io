@@ -1,0 +1,339 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Billy 的博客 | Billy 的博客</title><meta name="author" content="Billy"><meta name="copyright" content="Billy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言一些教程和文章里对C++中的inline关键字的说明是这样的：用来建议编译器对被修饰的函数进行内联展开优化。包括我自己也在初学C++的很长一段时间里也是这么认为的，这大概是从C语言转到C++带来的“遗留问题”。而实际上自C++98起，inline关键字的作用就已经从“优先内联”变成了“允许多次定义”。因为内联替换在标准语义中是不可观察的，现代编译器几乎不会参考函数声明中的inline修饰符来决">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Billy 的博客">
+<meta property="og:url" content="https://billy775326.github.io/legacy-html/%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86C++%E7%9A%84inline%E5%85%B3%E9%94%AE%E5%AD%97.html">
+<meta property="og:site_name" content="Billy 的博客">
+<meta property="og:description" content="前言一些教程和文章里对C++中的inline关键字的说明是这样的：用来建议编译器对被修饰的函数进行内联展开优化。包括我自己也在初学C++的很长一段时间里也是这么认为的，这大概是从C语言转到C++带来的“遗留问题”。而实际上自C++98起，inline关键字的作用就已经从“优先内联”变成了“允许多次定义”。因为内联替换在标准语义中是不可观察的，现代编译器几乎不会参考函数声明中的inline修饰符来决">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://billy775326.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2026-09-10T07:30:01.290Z">
+<meta property="article:modified_time" content="2026-09-10T07:30:01.290Z">
+<meta property="article:author" content="Billy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://billy775326.github.io/img/avatar.jpg"><script type="application/ld+json"></script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://billy775326.github.io/legacy-html/%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86C++%E7%9A%84inline%E5%85%B3%E9%94%AE%E5%AD%97.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Billy 的博客',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Billy 的博客</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="page-site-info"><h1 id="site-title"></h1></div></header><main class="layout" id="content-inner"><div id="page"><div class="container" id="article-container"><h1 style="" id="%E5%89%8D%E8%A8%80">前言</h1><p style="">一些教程和文章里对C++中的<code>inline</code>关键字的说明是这样的：用来建议编译器对被修饰的函数进行内联展开优化。包括我自己也在初学C++的很长一段时间里也是这么认为的，这大概是从C语言转到C++带来的“遗留问题”。而实际上自C++98起，<code>inline</code>关键字的作用就已经从“优先内联”变成了“允许多次定义”。因为内联替换在标准语义中是不可观察的，现代编译器几乎不会参考函数声明中的<code>inline</code>修饰符来决定是否内联，编译器拥有对任何非标记为<code>inline</code>的函数进行内联替换的自由，也拥有对任何标记为<code>inline</code>的函数生成函数调用的自由，它自有决断，没有哪个符合标准的主流编译器能保证一定内联或者一定不内联<s>（至少我没见过）</s>。既然如此，那不如让<code>inline</code>关键字在其他地方发光发热好了，于是自C++98起，<code>inline</code>关键字对函数的作用变为“允许多次定义”，自C++11起，增加对命名空间的修饰，自C++17起，增加对变量的修饰。</p><h2 style="" id="inline%E4%BF%AE%E9%A5%B0%E5%87%BD%E6%95%B0">inline修饰函数</h2><p style="">学过C语言的读者都知道，非<code>static</code>的函数定义不要写在头文件中（准确地说是被多个源文件包含的头文件），不然在链接的时候会发生<strong><em>multiple definition</em></strong>错误。而在C++98之后，声明为<code>inline</code>的函数可以被多次定义，只要每个定义都在不同的翻译单元中即可。注意，如果具有外部链接的函数在不同的翻译单元中定义不同，那么程序<mark data-color="#fef9c3" style="background-color: #fef9c3; color: inherit">非良构</mark>。以下示例代码是正确的：</p><pre><code class="language-cpp">// foo.hpp
+#include &lt;iostream&gt;
+
+inline void foo() {
+    std::cout &lt;&lt; "foo()\n";
+}
+
+// bar.cpp
+#include "foo.hpp"
+
+void bar() {
+    foo();
+}
+
+// bar.hpp
+void bar();
+
+// main.cpp
+#include "foo.hpp"
+#include "bar.hpp"
+
+int main() {
+    bar();
+    return 0;
+}</code></pre><h2 style="" id="inline%E4%BF%AE%E9%A5%B0%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4">inline修饰命名空间</h2><p style="">C++11引入了<strong>内联命名空间（inline namespace）</strong>，内联命名空间是在它的<strong><em>原初命名空间定义</em></strong>中使用了可选的关键词<code>inline</code>的命名空间。对于一个内联命名空间，它内部所包含的成员的可见性就像声明在外围命名空间一样，就像<code>inline</code>字面意思上的“展开”。但是与直接声明在外围命名空间中又有所不同，它既将内部成员暴露了出来，又具有命名空间最根本的作用：防止命名冲突。例如在内部内联命名空间内定义了函数<code>void foo();</code>，在外部仍然可以定义<code>void foo();</code>，甚至在另一个同级的内联命名空间中也能定义<code>void foo();</code>。内联命名空间最主要的作用是用于库的版本控制与API演进。来看下面的例子：</p><pre><code class="language-cpp">namespace Lib {
+    inline namespace v2 {
+        void foo() {
+            std::cout &lt;&lt; "v2 foo" &lt;&lt; std::endl;
+        }
+    }
+
+    // 由于上面已经声明过了v2为inline，所以这里的v2也隐式的内联了
+    namespace v2 {
+        void bar() {
+            std::cout &lt;&lt; "v2 bar" &lt;&lt; std::endl;
+        }
+    }
+
+    namespace v1 {
+        void foo() {
+            std::cout &lt;&lt; "v1 foo" &lt;&lt; std::endl;
+        }
+    }
+}
+
+int main() {
+    // 默认调用最新版本v2的API
+    Lib::foo(); // 输出 "v2 foo"
+    Lib::bar(); // 输出 "v2 bar"
+    // 当用户需要继续使用旧版本v1的API时
+    Lib::v1::foo(); // 输出 "v1 foo"
+
+    return 0;
+}</code></pre><p style="">上面的是库版本从<code>v1</code>迭代到<code>v2</code>时，使用内联命名空间进行版本更新，并同时保留旧版本实现的例子。假如未来要升级到<code>v3</code>版本，只需增加一个<code>v3</code>命名空间，并将唯一一个<code>inline</code>关键字移动到<code>v3</code>命名空间的声明即可。</p><p style="">对于上面的例子，可能有的读者会看出来不使用inline，在外围命名空间Lib中使用using namespace v2;也能将内嵌命名空间v2的成员暴露出来，事实上在C++11以前也确实是这么做的，那么使用内联命名空间还有什么好处呢？主要还有以下两点：</p><ul><li><p style="">在进行<a href="https://zh.cppreference.com/w/cpp/language/adl" target="_blank">实参依赖查找（argument-dependent lookup, ADL）</a>时，当一个命名空间被添加到关联命名空间集合时，它的内联命名空间也会一起被添加，且当一个内联命名空间被添加到关联命名空间列表时，它的外围命名空间也会一起被添加。</p></li><li><p style="">内联命名空间的每个成员，都能按照如同它是外围命名空间的成员一样，进行部分特化、显式实例化或显式特化。</p></li></ul><p style="">ADL的意思就是在进行函数调用时，除了在<a href="https://zh.cppreference.com/w/cpp/language/unqualified_lookup" target="_blank">无限定名字查找</a>的作用域和命名空间中进行函数名查找，还会在实参所在的命名空间中进行查找，这允许你在进行函数调用时无需显示指定命名空间，更使得使用在不同命名空间中定义的运算符成为可能。下面的例子是正确的：</p><pre><code class="language-cpp">namespace Lib {
+    struct Bar1 {};
+
+    inline namespace space {
+        void foo1(Bar1);
+
+        struct Bar2 {};
+    }
+
+    void foo2(Bar2);
+}
+
+int main() {
+    Lib::Bar1 bar1;
+    Lib::Bar2 bar2;
+    foo1(bar1); // 无需使用Lib::foo1(bar1);
+    foo2(bar2); // 无需使用Lib::foo2(bar2);
+    
+    return 0;
+}</code></pre><p style="">再来看使用内联命名空间的情况下，用户对内联命名空间中的模板进行特化的例子：</p><pre><code class="language-cpp">namespace Lib {
+    inline namespace space {
+        template&lt;typename T&gt; struct Bar; 
+    }
+
+    template&lt;typename T&gt; void foo(T) {}
+}
+
+struct UserType {};
+namespace Lib {
+    // 模板特化
+    template&lt;&gt; struct Bar&lt;UserType&gt; {};
+}
+
+int main() {
+    Lib::Bar&lt;UserType&gt; bar;
+    foo(bar);
+
+    return 0;
+}</code></pre><h2 style="" id="inline%E4%BF%AE%E9%A5%B0%E5%8F%98%E9%87%8F">inline修饰变量</h2><p style="">在C++17之后对inline的“允许多次定义”扩充到了变量，使得变量也能像inline函数一样在多个翻译单元中被定义，和inline函数一样，也需要保证每个定义在不同的翻译单元中，以及每处定义都必须是相同的。除此之外，inline还允许在类定义中直接初始化静态成员变量。示例如下：</p><pre><code class="language-cpp">// foo.hpp
+struct Bar {
+    inline static int val = 1;
+};
+
+inline bool foo = true;
+
+// main.cpp
+#include "foo.hpp"
+
+int main() {
+    Bar::val = 2;
+    foo = false;
+
+    return 0;
+}</code></pre><h1 style="" id="%E5%8F%82%E9%98%85">参阅</h1><p style="">更多信息，请参阅：</p><p style=""><a href="https://zh.cppreference.com/w/cpp/language/inline" target="_blank">inline 说明符</a> - cppreference.com</p><p style=""><a href="https://zh.cppreference.com/w/cpp/language/namespace" target="_blank">命名空间</a> - cppreference.com</p><p style=""><a href="https://zh.cppreference.com/w/cpp/language/adl" target="_blank">实参依赖查找</a> - cppreference.com</p></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Billy</div><div class="author-info-description">记录学习与折腾</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Billy775326"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，记录学习与折腾</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/10/ArchLinux%20+%20KDE%20%E4%B8%80%E5%91%A8%E4%BD%BF%E7%94%A8%E5%B0%8F%E7%BB%93/" title="ArchLinux KDE 一周使用小结">ArchLinux KDE 一周使用小结</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/10/MAAREADME/" title="MAAREADME">MAAREADME</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/10/ReDroid+MAA%EF%BC%9A%E5%9C%A8Linux%E4%B8%8B%E6%B8%B8%E7%8E%A9%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F/" title="ReDroid MAA：在Linux下游玩明日方舟">ReDroid MAA：在Linux下游玩明日方舟</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/10/TigerVNC%20%E9%94%81%E5%B1%8F%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" title="TigerVNC 锁屏问题解决方案">TigerVNC 锁屏问题解决方案</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/10/Ubuntu%20GNOME%20%E6%A1%8C%E9%9D%A2%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE%20TigerVNC%EF%BC%8C%E5%8C%85%E5%90%AB%E6%9C%8D%E5%8A%A1%E8%AE%BE%E7%BD%AE%E3%80%81%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83%E9%80%82%E9%85%8D%E5%92%8C%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE/" title="Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置">Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline"><i class="fas fa-folder-open"></i><span>分类</span></div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tutorial/"><span class="card-category-list-name">Tutorial</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/bi-ji/"><span class="card-category-list-name">bi-ji</span><span class="card-category-list-count">19</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/jiao-cheng/"><span class="card-category-list-name">jiao-cheng</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/za-tan/"><span class="card-category-list-name">za-tan</span><span class="card-category-list-count">1</span></a></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/webserver/" style="font-size: 1.1em; color: #999">webserver</a> <a href="/tags/rust/" style="font-size: 1.5em; color: #99a9bf">rust</a> <a href="/tags/SeverRepair/" style="font-size: 1.1em; color: #999">SeverRepair</a> <a href="/tags/linux/" style="font-size: 1.4em; color: #99a5b6">linux</a> <a href="/tags/ruan-jian/" style="font-size: 1.1em; color: #999">ruan-jian</a> <a href="/tags/qi-ta/" style="font-size: 1.1em; color: #999">qi-ta</a> <a href="/tags/c/" style="font-size: 1.2em; color: #999da3">c</a> <a href="/tags/cao-zuo-xi-tong/" style="font-size: 1.2em; color: #999da3">cao-zuo-xi-tong</a> <a href="/tags/leetcode/" style="font-size: 1.3em; color: #99a1ac">leetcode</a> <a href="/tags/you-xi/" style="font-size: 1.1em; color: #999">you-xi</a> <a href="/tags/suan-fa/" style="font-size: 1.3em; color: #99a1ac">suan-fa</a> <a href="/tags/luo-ke-wang-guo/" style="font-size: 1.1em; color: #999">luo-ke-wang-guo</a> <a href="/tags/yun-wei/" style="font-size: 1.2em; color: #999da3">yun-wei</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/09/">
+            <span class="card-archive-list-date">
+              九月 2026
+            </span>
+            <span class="card-archive-list-count">14</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/04/">
+            <span class="card-archive-list-date">
+              四月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/09/">
+            <span class="card-archive-list-date">
+              九月 2024
+            </span>
+            <span class="card-archive-list-count">26</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/07/">
+            <span class="card-archive-list-date">
+              七月 2024
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">43</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-09-10T07:33:08.502Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Billy</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>
