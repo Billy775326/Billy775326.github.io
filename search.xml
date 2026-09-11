@@ -2649,11 +2649,6 @@
 <h4 id="8-3-hexo主题配置文件（-themes-next-config-yml），修改local-search的enable为true"><a href="#8-3-hexo主题配置文件（-themes-next-config-yml），修改local-search的enable为true" class="headerlink" title="8.3 hexo主题配置文件（\themes\next_config.yml），修改local_search的enable为true"></a>8.3 hexo主题配置文件（\themes\next_config.yml），修改local_search的enable为true</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Local search</span><br><span class="line"># Dependencies: https://github.com/flashlab/hexo-generator-search</span><br><span class="line">local_search:</span><br><span class="line">    enable: true</span><br><span class="line">    # if auto, trigger search by changing input</span><br><span class="line">    # if manual, trigger search by pressing enter key or search button</span><br><span class="line">    trigger: auto</span><br><span class="line">    # show top n results per article, show all results by setting to -1</span><br><span class="line">    top_n_per_article: 1</span><br></pre></td></tr></table></figure>]]></content>
   </entry>
   <entry>
-    <title>构建自己的服务器项目</title>
-    <url>//blog/2026/09/build-own-server-project/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>操作系统知识梳理</title>
     <url>//blog/2024/09/operating-systems-overview/</url>
     <content><![CDATA[<blockquote>
@@ -3601,5 +3596,10 @@ producerconsumer.insert(item);
       <tags>
         <tag>操作系统</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>构建自己的服务器项目</title>
+    <url>//blog/2026/09/build-own-server-project/</url>
+    <content><![CDATA[]]></content>
   </entry>
 </search>
