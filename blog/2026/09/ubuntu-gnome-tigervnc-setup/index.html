@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置 | Billy 的博客</title><meta name="author" content="Billy"><meta name="copyright" content="Billy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置一、安装 TigerVNC12sudo apt updatesudo apt install tigervnc-standalone-server tigervnc-common -y 二、首次配置1. 设置 VNC 密码（长度需 ≥6 位）1vncpasswd 密码文件会保存在 ~&#x2F;.vn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置">
+<meta property="og:url" content="https://billy775326.github.io/blog/2026/09/ubuntu-gnome-tigervnc-setup/index.html">
+<meta property="og:site_name" content="Billy 的博客">
+<meta property="og:description" content="Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置一、安装 TigerVNC12sudo apt updatesudo apt install tigervnc-standalone-server tigervnc-common -y 二、首次配置1. 设置 VNC 密码（长度需 ≥6 位）1vncpasswd 密码文件会保存在 ~&#x2F;.vn">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://billy775326.github.io/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg">
+<meta property="article:published_time" content="2026-09-10T07:29:21.000Z">
+<meta property="article:modified_time" content="2026-09-10T07:29:21.000Z">
+<meta property="article:author" content="Billy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://billy775326.github.io/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置",
+  "url": "https://billy775326.github.io/blog/2026/09/ubuntu-gnome-tigervnc-setup/",
+  "image": "https://billy775326.github.io/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg",
+  "datePublished": "2026-09-10T07:29:21.000Z",
+  "dateModified": "2026-09-10T07:29:21.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Billy",
+      "url": "https://billy775326.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://billy775326.github.io/blog/2026/09/ubuntu-gnome-tigervnc-setup/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/cards.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">42</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Billy 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-10T07:29:21.000Z" title="更新于 2026-09-10 15:29:21">2026-09-10</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="Ubuntu-GNOME-桌面安装和配置-TigerVNC，包含服务设置、桌面环境适配和防火墙配置"><a href="#Ubuntu-GNOME-桌面安装和配置-TigerVNC，包含服务设置、桌面环境适配和防火墙配置" class="headerlink" title="Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置"></a>Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置</h1><h2 id="一、安装-TigerVNC"><a href="#一、安装-TigerVNC" class="headerlink" title="一、安装 TigerVNC"></a>一、安装 TigerVNC</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install tigervnc-standalone-server tigervnc-common -y</span><br></pre></td></tr></table></figure>
+<h2 id="二、首次配置"><a href="#二、首次配置" class="headerlink" title="二、首次配置"></a>二、首次配置</h2><h3 id="1-设置-VNC-密码（长度需-≥6-位）"><a href="#1-设置-VNC-密码（长度需-≥6-位）" class="headerlink" title="1. 设置 VNC 密码（长度需 ≥6 位）"></a>1. 设置 VNC 密码（长度需 ≥6 位）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vncpasswd</span><br></pre></td></tr></table></figure>
+<p>密码文件会保存在 ~&#x2F;.vnc&#x2F;passwd。</p>
+<h3 id="2-创建-xstartup-配置文件（适配不同桌面环境）"><a href="#2-创建-xstartup-配置文件（适配不同桌面环境）" class="headerlink" title="2. 创建 xstartup 配置文件（适配不同桌面环境）"></a>2. 创建 xstartup 配置文件（适配不同桌面环境）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p ~/.vnc</span><br><span class="line">nano ~/.vnc/xstartup</span><br></pre></td></tr></table></figure>
+<p>根据桌面环境选择配置：</p>
+<h4 id="GNOME-桌面："><a href="#GNOME-桌面：" class="headerlink" title="GNOME 桌面："></a><em><strong>GNOME 桌面：</strong></em></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">export</span> GNOME_SHELL_SESSION_MODE=ubuntu</span><br><span class="line"><span class="built_in">export</span> XDG_CURRENT_DESKTOP=ubuntu:GNOME</span><br><span class="line"><span class="built_in">export</span> XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/etc/xdg</span><br><span class="line">dbus-launch --exit-with-session /usr/bin/gnome-session --session=ubuntu</span><br></pre></td></tr></table></figure>
+<h4 id="XFCE-桌面（轻量级推荐）："><a href="#XFCE-桌面（轻量级推荐）：" class="headerlink" title="XFCE 桌面（轻量级推荐）："></a><em><strong>XFCE 桌面（轻量级推荐）：</strong></em></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">xrdb <span class="variable">$HOME</span>/.Xresources</span><br><span class="line">startxfce4 &amp;</span><br></pre></td></tr></table></figure>
+<h4 id="KDE-Plasma-桌面："><a href="#KDE-Plasma-桌面：" class="headerlink" title="KDE Plasma 桌面："></a><em><strong>KDE Plasma 桌面：</strong></em></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">startplasma-x11 &amp;</span><br></pre></td></tr></table></figure>
+<h3 id="3-赋予执行权限："><a href="#3-赋予执行权限：" class="headerlink" title="3.赋予执行权限："></a>3.赋予执行权限：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> +x ~/.vnc/xstartup</span><br></pre></td></tr></table></figure>
+<h2 id="三、启动-VNC-服务"><a href="#三、启动-VNC-服务" class="headerlink" title="三、启动 VNC 服务"></a>三、启动 VNC 服务</h2><h3 id="临时启动（端口-5901）："><a href="#临时启动（端口-5901）：" class="headerlink" title="临时启动（端口 5901）："></a>临时启动（端口 5901）：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vncserver :1 -geometry 1920x1080 -depth 24 -localhost no</span><br></pre></td></tr></table></figure>
+<ul>
+<li>-localhost no：允许外部连接</li>
+<li>:1 对应端口 5901（:2 → 5902，依此类推）</li>
+</ul>
+<h3 id="查看运行中的实例："><a href="#查看运行中的实例：" class="headerlink" title="查看运行中的实例："></a>查看运行中的实例：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vncserver -list</span><br></pre></td></tr></table></figure>
+<h2 id="四、设置系统服务（开机自启）"><a href="#四、设置系统服务（开机自启）" class="headerlink" title="四、设置系统服务（开机自启）"></a>四、设置系统服务（开机自启）</h2><h3 id="1-创建-systemd-服务文件"><a href="#1-创建-systemd-服务文件" class="headerlink" title="1. 创建 systemd 服务文件"></a>1. 创建 systemd 服务文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/systemd/system/vncserver@.service</span><br></pre></td></tr></table></figure>
+<p><em><strong>粘贴以下内容（注意替换 USER）：</strong></em></p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=Remote desktop service (VNC)</span><br><span class="line"><span class="attr">After</span>=syslog.target network.target</span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">Type</span>=simple</span><br><span class="line"><span class="attr">User</span>=root  <span class="comment"># 改为实际用户名</span></span><br><span class="line"><span class="attr">ExecStart</span>=/usr/bin/vncserver :%i -geometry <span class="number">1920</span>x1080 -depth <span class="number">24</span> -localhost <span class="literal">no</span></span><br><span class="line"><span class="attr">ExecStop</span>=/usr/bin/vncserver -kill :%i</span><br><span class="line"><span class="attr">Restart</span>=<span class="literal">on</span>-failure</span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure>
+<h3 id="2-启用并启动服务"><a href="#2-启用并启动服务" class="headerlink" title="2. 启用并启动服务"></a>2. 启用并启动服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl daemon-reload</span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> vncserver@1  <span class="comment"># 对应 :1 实例</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl start vncserver@1</span><br></pre></td></tr></table></figure>
+<h3 id="3-检查状态"><a href="#3-检查状态" class="headerlink" title="3. 检查状态"></a>3. 检查状态</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl status vncserver@1</span><br></pre></td></tr></table></figure>
+<h2 id="五、防火墙放行"><a href="#五、防火墙放行" class="headerlink" title="五、防火墙放行"></a>五、防火墙放行</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ufw allow 5901/tcp</span><br><span class="line"><span class="built_in">sudo</span> ufw reload</span><br></pre></td></tr></table></figure>
+<h2 id="六、客户端连接"><a href="#六、客户端连接" class="headerlink" title="六、客户端连接"></a>六、客户端连接</h2><blockquote>
+<p>地址：&lt;服务器IP&gt;:5901<br>或者ssh客户端内部连接：localhost:5901</p>
+</blockquote>
+<p><em><strong>客户端工具：</strong></em><br>Windows: <a target="_blank" rel="noopener" href="https://sourceforge.net/projects/tigervnc/files/latest/download">TigerVNC Viewer</a></p>
+<p>Linux&#x2F;macOS:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vncviewer 服务器IP:5901</span><br></pre></td></tr></table></figure>
+<h2 id="七、常见问题解决"><a href="#七、常见问题解决" class="headerlink" title="七、常见问题解决"></a>七、常见问题解决</h2><h3 id="1-连接后黑屏"><a href="#1-连接后黑屏" class="headerlink" title="1. 连接后黑屏"></a>1. 连接后黑屏</h3><ul>
+<li>确保桌面环境已安装：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install ubuntu-desktop  <span class="comment"># GNOME</span></span><br><span class="line">或</span><br><span class="line"><span class="built_in">sudo</span> apt install xfce4          <span class="comment"># XFCE</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>检查日志：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> ~/.vnc/ubuntu:1.<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-修改分辨率"><a href="#2-修改分辨率" class="headerlink" title="2. 修改分辨率"></a>2. 修改分辨率</h3><p>停止服务后重新启动：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vncserver -<span class="built_in">kill</span> :1</span><br><span class="line">vncserver :1 -geometry 1280x720 -depth 24</span><br></pre></td></tr></table></figure>
+<h3 id="3-卸载-TigerVNC"><a href="#3-卸载-TigerVNC" class="headerlink" title="3. 卸载 TigerVNC"></a>3. 卸载 TigerVNC</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt remove --purge tigervnc-*</span><br><span class="line"><span class="built_in">rm</span> -rf ~/.vnc</span><br></pre></td></tr></table></figure>
+<h3 id="附：安全建议"><a href="#附：安全建议" class="headerlink" title="附：安全建议"></a>附：安全建议</h3><h4 id="使用-SSH-隧道加密："><a href="#使用-SSH-隧道加密：" class="headerlink" title="使用 SSH 隧道加密："></a>使用 SSH 隧道加密：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -L 5901:localhost:5901 用户名@服务器IP</span><br></pre></td></tr></table></figure>
+<p>然后连接 localhost:5901。</p>
+<h4 id="限制访问-IP："><a href="#限制访问-IP：" class="headerlink" title="限制访问 IP："></a>限制访问 IP：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ufw allow from 192.168.1.100 to any port 5901</span><br></pre></td></tr></table></figure>
+<p>按照以上步骤，你可以在 Ubuntu 上快速搭建一个支持多用户的 TigerVNC 远程桌面服务。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://billy775326.github.io">Billy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://billy775326.github.io/blog/2026/09/ubuntu-gnome-tigervnc-setup/">https://billy775326.github.io/blog/2026/09/ubuntu-gnome-tigervnc-setup/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://billy775326.github.io" target="_blank">Billy 的博客</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related  no-desc" href="/blog/2026/09/apatch-patch-boot/" title="apatch修补boot"><img class="cover" src="/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">apatch修补boot</div></div></div></a><a class="pagination-related" href="/blog/2026/09/tigervnc-lock-screen-fix/" title="TigerVNC 锁屏问题解决方案"><img class="cover" src="/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">TigerVNC 锁屏问题解决方案</div></div><div class="info-2"><div class="info-item-1">TigerVNC 锁屏问题解决方案问题诊断 根本原因：Linux logind 服务将会话标记为”locked”（常见于休眠&#x2F;锁屏后） 典型表现： VNC 连接后黑屏 认证失败提示   直接解决方案：1loginctl unlock-sessions  # 解锁所有会话   [TOC]  永久性解决方案方案A：禁用自动锁屏（推荐用于服务器）12gsettings set org.gnome.desktop.screensaver lock-enabled falsegsettings set org.gnome.desktop.session idle-delay 0 方案B：配置自动解锁（需要polkit规则）创建规则文件： 1sudo nano /etc/polkit-1/rules.d/85-unlock-vnc.rules 添加内容： 123456polkit.addRule(function(action, subject) &#123;    if (action.id == &quot;org.freedesktop.login1.unlock&quot;...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Billy</div><div class="author-info-description">记录学习与折腾</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">42</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Billy775326"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，记录学习与折腾</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Ubuntu-GNOME-%E6%A1%8C%E9%9D%A2%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE-TigerVNC%EF%BC%8C%E5%8C%85%E5%90%AB%E6%9C%8D%E5%8A%A1%E8%AE%BE%E7%BD%AE%E3%80%81%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83%E9%80%82%E9%85%8D%E5%92%8C%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text">Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%AE%89%E8%A3%85-TigerVNC"><span class="toc-number">1.1.</span> <span class="toc-text">一、安装 TigerVNC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%A6%96%E6%AC%A1%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">二、首次配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%AE%BE%E7%BD%AE-VNC-%E5%AF%86%E7%A0%81%EF%BC%88%E9%95%BF%E5%BA%A6%E9%9C%80-%E2%89%A56-%E4%BD%8D%EF%BC%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">1. 设置 VNC 密码（长度需 ≥6 位）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%88%9B%E5%BB%BA-xstartup-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%88%E9%80%82%E9%85%8D%E4%B8%8D%E5%90%8C%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83%EF%BC%89"><span class="toc-number">1.2.2.</span> <span class="toc-text">2. 创建 xstartup 配置文件（适配不同桌面环境）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#GNOME-%E6%A1%8C%E9%9D%A2%EF%BC%9A"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">GNOME 桌面：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#XFCE-%E6%A1%8C%E9%9D%A2%EF%BC%88%E8%BD%BB%E9%87%8F%E7%BA%A7%E6%8E%A8%E8%8D%90%EF%BC%89%EF%BC%9A"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">XFCE 桌面（轻量级推荐）：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#KDE-Plasma-%E6%A1%8C%E9%9D%A2%EF%BC%9A"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">KDE Plasma 桌面：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%B5%8B%E4%BA%88%E6%89%A7%E8%A1%8C%E6%9D%83%E9%99%90%EF%BC%9A"><span class="toc-number">1.2.3.</span> <span class="toc-text">3.赋予执行权限：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%90%AF%E5%8A%A8-VNC-%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.3.</span> <span class="toc-text">三、启动 VNC 服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%B4%E6%97%B6%E5%90%AF%E5%8A%A8%EF%BC%88%E7%AB%AF%E5%8F%A3-5901%EF%BC%89%EF%BC%9A"><span class="toc-number">1.3.1.</span> <span class="toc-text">临时启动（端口 5901）：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E8%BF%90%E8%A1%8C%E4%B8%AD%E7%9A%84%E5%AE%9E%E4%BE%8B%EF%BC%9A"><span class="toc-number">1.3.2.</span> <span class="toc-text">查看运行中的实例：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%AE%BE%E7%BD%AE%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1%EF%BC%88%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">四、设置系统服务（开机自启）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%9B%E5%BB%BA-systemd-%E6%9C%8D%E5%8A%A1%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.1.</span> <span class="toc-text">1. 创建 systemd 服务文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%90%AF%E7%94%A8%E5%B9%B6%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.4.2.</span> <span class="toc-text">2. 启用并启动服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%A3%80%E6%9F%A5%E7%8A%B6%E6%80%81"><span class="toc-number">1.4.3.</span> <span class="toc-text">3. 检查状态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%98%B2%E7%81%AB%E5%A2%99%E6%94%BE%E8%A1%8C"><span class="toc-number">1.5.</span> <span class="toc-text">五、防火墙放行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5"><span class="toc-number">1.6.</span> <span class="toc-text">六、客户端连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="toc-number">1.7.</span> <span class="toc-text">七、常见问题解决</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%BF%9E%E6%8E%A5%E5%90%8E%E9%BB%91%E5%B1%8F"><span class="toc-number">1.7.1.</span> <span class="toc-text">1. 连接后黑屏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BF%AE%E6%94%B9%E5%88%86%E8%BE%A8%E7%8E%87"><span class="toc-number">1.7.2.</span> <span class="toc-text">2. 修改分辨率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%8D%B8%E8%BD%BD-TigerVNC"><span class="toc-number">1.7.3.</span> <span class="toc-text">3. 卸载 TigerVNC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%84%EF%BC%9A%E5%AE%89%E5%85%A8%E5%BB%BA%E8%AE%AE"><span class="toc-number">1.7.4.</span> <span class="toc-text">附：安全建议</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-SSH-%E9%9A%A7%E9%81%93%E5%8A%A0%E5%AF%86%EF%BC%9A"><span class="toc-number">1.7.4.1.</span> <span class="toc-text">使用 SSH 隧道加密：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%99%90%E5%88%B6%E8%AE%BF%E9%97%AE-IP%EF%BC%9A"><span class="toc-number">1.7.4.2.</span> <span class="toc-text">限制访问 IP：</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/archlinux-kde-one-week-review/" title="ArchLinux KDE 一周使用小结"><img src="/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ArchLinux KDE 一周使用小结"/></a><div class="content"><a class="title" href="/blog/2026/09/archlinux-kde-one-week-review/" title="ArchLinux KDE 一周使用小结">ArchLinux KDE 一周使用小结</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/maa-readme/" title="MAAREADME"><img src="/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MAAREADME"/></a><div class="content"><a class="title" href="/blog/2026/09/maa-readme/" title="MAAREADME">MAAREADME</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/redroid-maa-arknights-on-linux/" title="ReDroid MAA：在Linux下游玩明日方舟"><img src="/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ReDroid MAA：在Linux下游玩明日方舟"/></a><div class="content"><a class="title" href="/blog/2026/09/redroid-maa-arknights-on-linux/" title="ReDroid MAA：在Linux下游玩明日方舟">ReDroid MAA：在Linux下游玩明日方舟</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/tigervnc-lock-screen-fix/" title="TigerVNC 锁屏问题解决方案"><img src="/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TigerVNC 锁屏问题解决方案"/></a><div class="content"><a class="title" href="/blog/2026/09/tigervnc-lock-screen-fix/" title="TigerVNC 锁屏问题解决方案">TigerVNC 锁屏问题解决方案</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/ubuntu-gnome-tigervnc-setup/" title="Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置"><img src="/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置"/></a><div class="content"><a class="title" href="/blog/2026/09/ubuntu-gnome-tigervnc-setup/" title="Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置">Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Billy</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>
