@@ -43,3 +43,5 @@
 - 脚本:e:\tmp\blog_fix7_rollback.py(基线对比式,幂等)
 - **教训(给后续 agent):批量替换嵌套 HTML 时禁止用"若干连续闭合标签"当正则右边界,必须用配平计数或整段基线还原;改完必须做 div 配平/逐字节校验**
 - 侧栏"最新文章"维持各页原始状态,后续如需刷新需先解决主题生成的嵌套差异再单独方案
+- **时间可见文本到秒 + 紧凑(2026-09-29 用户要求"时间部分都要显示到秒,时间格式排紧密点")**:43 篇文章头部「发表于/更新于」可见文字由纯日期升级为 `YYYY-MM-DD HH:MM:SS`(北京时间),42 篇修复;`#post-meta` 分隔符/图标间距收紧(CSS 补丁区 `post-meta compact`)
+- **代码块回退 Butterfly 原生(2026-09-29 用户指示"代码块风格使用butterfly主题的代码块,整个博客主题都要基于butterfly主题")**:删除自定义暗色配色与 `.hl-tools` 工具栏(css/index.css 补丁区 + js/main.js 补丁);原生工具栏由主题 `addHighlightTool` 按 `GLOBAL_CONFIG.highlight`(highlightCopy/highlightLang=true)自动生成;总原则已写入 conventions.md 首节

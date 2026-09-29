@@ -2,6 +2,12 @@
 
 以下约定于 2026-09-29 全站统一生效。改样式/加文章时**必须遵守**,新要求出现时先改本文件再动手。
 
+## 总原则:一切基于 Butterfly 原生(2026-09-29 用户明确要求)
+
+- **整个博客的主题风格以 Butterfly 5.7.0 原生为准**,不引入与主题风格冲突的自制样式
+- 自定义 CSS/JS 仅限下文明确记录的几处(紧凑页脚卡、移动端导航卡高度、meta 紧凑),均为用户点名要求过的
+- 代码块、卡片、按钮等一律用主题原生渲染,先看主题 CSS/JS 已有能力再动手
+
 ## 上一篇/下一篇导航卡模板
 
 ```html
@@ -45,7 +51,8 @@
 
 ## 时间显示
 
-- 所有「发表于 / 更新于」的 title 提示精确到秒:`YYYY-MM-DD HH:MM:SS`(北京时间,由 `datetime` 属性 UTC+8 换算)
+- 文章头部「发表于 / 更新于」**可见文字本身**就要精确到秒:`YYYY-MM-DD HH:MM:SS`(北京时间,由 `datetime` 属性 UTC+8 换算),title 提示同样到秒(2026-09-29 用户要求升级:此前只要求 title 到秒)
+- meta 行排版紧凑:`#post-meta` 分隔符/图标间距已在 CSS 补丁区收紧
 - 侧栏、归档等列表可见文字保持日期简写,完整时间放 title 提示
 
 ## 页脚(全站统一)
@@ -54,15 +61,16 @@
 - 第二行「本站已运行 N 天」由内联 JS 计算,起算日 **2024-07-24**(首篇文章)
 - 改页脚 = 全站批量替换,幂等标记 `class="footer-main"`
 
-## 代码块
+## 代码块(2026-09-29 用户否决自定义版,已回退)
 
-- 全站暗色主题(`#282c34` 底、圆角 8px、等宽字体栈),样式在 `css/index.css` 末尾补丁区块
-- `js/main.js` 末尾补丁为每个 `figure.highlight` 注入工具栏(语言标签 + 复制按钮),幂等(已有 `.hl-tools` 跳过)
+- **一律使用 Butterfly 原生代码块风格**,不要自制配色/工具栏(自定义暗色 `#282c34` + `.hl-tools` 工具栏已被用户否决并删除)
+- 原生工具栏由主题 `js/main.js` 的 `addHighlightTool` 按 `GLOBAL_CONFIG.highlight` 自动生成(`highlightCopy: true`、`highlightLang: true`),页面无需任何额外标记
+- 现有 `figure.highlight` HTML 结构保持原样即可
 
 ## CSS / JS 补丁位置
 
-- 自定义 CSS 只追加在 `css/index.css` 末尾 `2026-09-29 pagination & footer tweaks` 区块,不改主题原有规则
-- 自定义 JS 只追加在 `js/main.js` 末尾 `2026-09-29 自定义补丁` 注释之后,不改主题代码
+- 自定义 CSS 只追加在 `css/index.css` 末尾 `2026-09-29 pagination & footer tweaks` / `post-meta compact` 区块,不改主题原有规则
+- **`js/main.js` 目前没有任何自定义补丁**(主题 JS 保持原样),新增 JS 需求先确认主题没有内建能力
 
 ## 品牌资产(logo / 头像)
 
