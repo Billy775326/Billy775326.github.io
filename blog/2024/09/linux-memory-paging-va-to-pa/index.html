@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Linux内存分页及虚拟地址到物理地址的计算 | Billy 的博客</title><meta name="author" content="Billy"><meta name="copyright" content="Billy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="介绍 Linux 内存分页机制与 MMU 地址转换：虚拟地址如何拆分为页号与页内偏移，并据此计算出对应的物理地址。"><meta name="keywords" content="Linux,操作系统,内存管理,虚拟内存"/>
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux内存分页及虚拟地址到物理地址的计算">
-<meta property="og:url" content="https://billy775326.github.io/blog/2024/09/linux-memory-paging-va-to-pa/index.html">
+<meta property="og:url" content="https://billy775326.github.io/blog/2024/09/linux-memory-paging-va-to-pa/">
 <meta property="og:site_name" content="Billy 的博客">
 <meta property="og:description" content="介绍 Linux 内存分页机制与 MMU 地址转换：虚拟地址如何拆分为页号与页内偏移，并据此计算出对应的物理地址。">
 <meta property="og:locale" content="zh_CN">
@@ -56,7 +56,7 @@
     "内存管理",
     "虚拟内存"
   ]
-}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://billy775326.github.io/blog/2024/09/linux-memory-paging-va-to-pa/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://billy775326.github.io/blog/2024/09/linux-memory-paging-va-to-pa/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
     (() => {
       
     const saveToLocal = {

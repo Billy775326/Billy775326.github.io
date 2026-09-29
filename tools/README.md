@@ -11,6 +11,14 @@ python tools/rebuild_taxonomy.py
 python tools/verify_taxonomy.py
 ```
 
+最近提交的维护回归检查在隔离副本中运行，不修改工作站点：
+
+```bash
+python tools/test_maintenance.py
+```
+
+它检查正文、侧栏最新文章和页脚保持不变，列表日期精度、缩略图、首页 18/18/7 分页、canonical/站点地图一致性，以及分类重建与 SEO 脚本组合的幂等性。完整维护顺序为先 `rebuild_taxonomy.py`，再 `update_footer_seo.py`。
+
 发布前还可以传入调整前的 Git 提交，检查文章正文、标题和日期未被改动：
 
 ```bash

@@ -18,6 +18,13 @@ def main():
         raw=p.read_text(encoding='utf8');s=B(raw,'html.parser')
         if not s.select_one('footer#footer'):continue
         before=raw
+        if p.name=='index.html' and rel.parts[0]!='legacy-html' and not s.select_one('meta[http-equiv="refresh"]'):
+            path=p.parent.relative_to(ROOT).as_posix()
+            canonical=BASE+('/' if path=='.' else '/'+quote(path,safe='/')+'/')
+            raw=re.sub(r'<link\b(?=[^>]*rel=["\']canonical["\'])[^>]*>',
+                       '<link rel="canonical" href="'+canonical+'">',raw)
+            raw=re.sub(r'<meta\b(?=[^>]*property=["\']og:url["\'])[^>]*>',
+                       '<meta property="og:url" content="'+canonical+'">',raw)
         a,b=region(raw,'footer','id','footer');raw=raw[:a]+FOOTER+raw[b:]
         raw=re.sub(r'<script\b[^>]*>.*?</script>',lambda m:'' if 'querySelectorAll("#runday")' in m[0] else m[0],raw,flags=re.S)
         def schema(m):

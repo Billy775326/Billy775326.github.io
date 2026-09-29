@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>TigerVNC 锁屏问题解决方案 | Billy 的博客</title><meta name="author" content="Billy"><meta name="copyright" content="Billy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="TigerVNC 锁屏问题解决方案问题诊断 根本原因：Linux logind 服务将会话标记为”locked”（常见于休眠&#x2F;锁屏后） 典型表现： VNC 连接后黑屏 认证失败提示   直接解决方案：1loginctl unlock-sessions  # 解锁所有会话   [TOC]  永久性解决方案方案A：禁用自动锁屏（推荐用于服务器）12gsettings set org.gnom"><meta name="keywords" content="Linux,VNC,TigerVNC,远程桌面,故障排查"/>
 <meta property="og:type" content="article">
 <meta property="og:title" content="TigerVNC 锁屏问题解决方案">
-<meta property="og:url" content="https://billy775326.github.io/blog/2026/09/tigervnc-lock-screen-fix/index.html">
+<meta property="og:url" content="https://billy775326.github.io/blog/2026/09/tigervnc-lock-screen-fix/">
 <meta property="og:site_name" content="Billy 的博客">
 <meta property="og:description" content="TigerVNC 锁屏问题解决方案问题诊断 根本原因：Linux logind 服务将会话标记为”locked”（常见于休眠&#x2F;锁屏后） 典型表现： VNC 连接后黑屏 认证失败提示   直接解决方案：1loginctl unlock-sessions  # 解锁所有会话   [TOC]  永久性解决方案方案A：禁用自动锁屏（推荐用于服务器）12gsettings set org.gnom">
 <meta property="og:locale" content="zh_CN">
@@ -57,7 +57,7 @@
     "远程桌面",
     "故障排查"
   ]
-}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://billy775326.github.io/blog/2026/09/tigervnc-lock-screen-fix/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://billy775326.github.io/blog/2026/09/tigervnc-lock-screen-fix/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
     (() => {
       
     const saveToLocal = {

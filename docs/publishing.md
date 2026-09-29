@@ -22,7 +22,7 @@
 
 - `archives/` 对应年/月页加条目(没有对应年/月目录就按现有结构新建)
 - `tags/<标签>/`、`categories/<分类>/` 对应页加条目
-- 全站侧栏计数(文章 43→44、相关标签数)+ 各文章页侧栏"最新文章"换成新 5 篇
+- 更新全站文章/标签计数；侧栏“最新文章”保留原结构与内容，未经单独验证不得批量刷新（见侧栏回滚记录）。
 - `search.xml` 增加新文章条目(格式对照现有条目)
 
 ## 4. 分类标签
@@ -42,4 +42,5 @@
 
 - `git diff` 逐文件确认没有误伤
 - 本地 `python -m http.server` 过一遍:新文章页、三张首页、archives、tags/categories、搜索能否搜到
+- 执行 `python tools/update_footer_seo.py`，同步页脚、结构化数据及站点地图；canonical、og:url 与 sitemap 统一使用目录 URL。
 - 确认无误再 push main(推上去立即生效)

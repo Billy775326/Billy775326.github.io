@@ -43,6 +43,14 @@ def main():
         slug=categories[name] if kind=='categories' else config['tag_slugs'].get(name,name)
         return '/'+kind+'/'+quote(slug,safe='')+'/'
     paths=sorted((ROOT/'blog').rglob('index.html'))
+    # Preserve each existing page shell and its already optimized card images.
+    shells={p.relative_to(ROOT).as_posix():p.read_text(encoding='utf8')
+            for kind in ['tags','categories'] for p in (ROOT/kind).rglob('index.html')}
+    card_images={}
+    for raw in shells.values():
+        for a in parse(raw).select('a.article-sort-item-img'):
+            img=a.select_one('img')
+            if img and a.get('href'):card_images.setdefault(a['href'],img.get('src'))
     assert {p.parent.name for p in paths}==set(mapping),'Taxonomy must cover every post exactly once'
     posts=[];by_cat=defaultdict(list);by_tag=defaultdict(list)
     for p in paths:
@@ -51,7 +59,8 @@ def main():
         assert len(m['tags'])==len(set(m['tags']))
         t=s.select_one('.post-meta-date-created')
         im=s.select_one('meta[property="og:image"]')
-        post=dict(m,path=p.relative_to(ROOT).as_posix(),url='/'+p.parent.relative_to(ROOT).as_posix()+'/',title=s.select_one('.post-title').text,date=t['datetime'],display_date=t.text,cover=im['content'] if im else '/img/avatar.jpg')
+        post=dict(m,path=p.relative_to(ROOT).as_posix(),url='/'+p.parent.relative_to(ROOT).as_posix()+'/',title=s.select_one('.post-title').text,date=t['datetime'],display_date=t.text[:10],full_date=t.text,cover=im['content'] if im else '/img/avatar.jpg')
+        post['cover']=card_images.get(post['url']) or post['cover']
         posts.append(post);by_cat[m['category']].append(post)
         for tag in m['tags']:by_tag[tag].append(post)
     posts.sort(key=lambda p:(p['date'],p['url']),reverse=True)
@@ -88,12 +97,15 @@ def main():
     # Templates are theme shells. Regenerate complete taxonomy lists without pagination.
     template=load('tags/Docker/index.html')
     def page_shell(title,url,main_id,main_html):
-        raw=template
+        existing=shells.get(unquote(url).strip('/')+'/index.html')
+        raw=existing if existing and not parse(existing).select_one('meta[http-equiv="refresh"]') else template
+        source_id=next((key for key in ['tag','category','page'] if region(raw,'div','id',key)),None)
+        assert source_id,'Missing taxonomy content container'
         raw=re.sub(r'<title>.*?</title>','<title>'+E(title)+' | Billy 的博客</title>',raw,count=1)
         raw=re.sub(r'<meta\b(?=[^>]*(?:property=[\"\']og:(?:title|url|description)[\"\']|name=[\"\']description[\"\']))[^>]*>','',raw)
         raw=re.sub(r'<link\b(?=[^>]*rel=[\"\']canonical[\"\'])[^>]*>','',raw)
         raw=raw.replace('</head>','<meta property="og:title" content="'+E(title)+'"><meta property="og:url" content="'+BASE+url+'"><meta name="description" content="'+E(title)+'：按主题浏览 Billy 的博客文章。"><link rel="canonical" href="'+BASE+url+'"></head>',1)
-        raw=replace(raw,'div','id','tag','<div id="'+main_id+'">'+main_html+'</div>')
+        raw=replace(raw,'div','id',source_id,'<div id="'+main_id+'">'+main_html+'</div>')
         raw=re.sub(r'(<h1\b[^>]*>).*?(</h1>)',lambda m:m[1]+E(title)+m[2],raw,count=1,flags=re.S)
         raw=replace(raw,'script','id','config-diff','<script id="config-diff">var GLOBAL_CONFIG_SITE = '+json.dumps(dict(title=title,isHighlightShrink=False,isToc=False,pageType='category' if main_id=='category' else 'tag' if main_id=='tag' else 'page'),ensure_ascii=False)+';</script>')
         return shared(raw)

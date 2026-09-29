@@ -27,7 +27,7 @@
 - 正文容器:`id="article-container"`
 - 正文后依次:版权盒 `post-copyright` → 标签 `tag_share` → **上下篇导航 `<nav class="pagination-post" id="pagination">`** → (部分文章有"相关推荐" `relatedPosts`)
 - 侧栏 `aside-content`:作者卡(文章/标签/分类计数)→ 公告 → 目录 → 最新文章 5 篇
-- 页脚 `footer#footer`(全站统一,含运行天数 JS)
+- 页脚 `footer#footer`（全站统一，2023 起版权、简介与导航；运行天数已移除）
 
 ## 首页卡片
 
