@@ -1018,3 +1018,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.addEventListener('shuoshuo:rendered', forPostFn)
 })
+
+/* 2026-09-29 自定义补丁:代码块工具栏(语言标签 + 复制按钮),勿改上方主题代码 */
+;(function () {
+  document.querySelectorAll('figure.highlight').forEach(function (fig) {
+    if (fig.querySelector('.hl-tools')) return
+    var m = fig.className.match(/highlight\s+([\w+-]+)/)
+    var lang = m && m[1] && m[1] !== 'text' ? m[1].toUpperCase() : 'TEXT'
+    var bar = document.createElement('div')
+    bar.className = 'hl-tools'
+    bar.innerHTML = '<span class="hl-lang">' + lang + '</span><button class="hl-copy" type="button"><i class="far fa-copy"></i>复制</button>'
+    fig.insertBefore(bar, fig.firstChild)
+    var btn = bar.querySelector('.hl-copy')
+    btn.addEventListener('click', function () {
+      var pre = fig.querySelector('td.code pre')
+      if (!pre) return
+      var done = function () {
+        btn.innerHTML = '<i class="fas fa-check"></i>已复制'
+        setTimeout(function () { btn.innerHTML = '<i class="far fa-copy"></i>复制' }, 1600)
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(pre.innerText).then(done)
+      } else {
+        var ta = document.createElement('textarea')
+        ta.value = pre.innerText
+        document.body.appendChild(ta)
+        ta.select()
+        document.execCommand('copy')
+        document.body.removeChild(ta)
+        done()
+      }
+    })
+  })
+})()

@@ -15,8 +15,8 @@ tags:
 
 # Debian 多网卡部署 Docker MySQL，为什么只有 eth0 的 IP 能连接？
 
-<!-- 封面：Debian-Docker-MySQL配图/01-cover.png；上传图床后，将下方 COVER_IMAGE_URI 替换为图片 URI。 -->
-![Docker MySQL 多网卡连接排查封面](COVER_IMAGE_URI)
+<!-- 封面：Debian-Docker-MySQL配图/01-cover.png -->
+![Docker MySQL 多网卡连接排查封面](https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663905540_01-cover.png)
 
 在一台 Debian 服务器上配置了多块网卡，每块网卡都有独立公网 IP。MySQL 通过 Docker 部署，发布端口为 `3306`。
 
@@ -28,7 +28,7 @@ tags:
 
 最终通过抓包确认：**请求从 eth1 进入，经过 Docker 转发到 MySQL；MySQL 的回复却从 eth0 发出。**
 
-下面记录排查过程和经过验证的修复方法。文中所有 IP 地址均使用代号：ETH0_IP、ETH1_IP 表示对应网卡的公网地址；ETH0_GATEWAY、ETH1_GATEWAY 表示网关；MYSQL_CONTAINER_IP 表示 MySQL 容器地址；DOCKER_SUBNET_CIDR 表示 Docker 子网及前缀；ETH0_PREFIX、ETH1_PREFIX 表示网卡的子网前缀长度；ALL_IPV4 表示监听所有本机 IPv4 地址的通配地址。命令和输出均为代号化示意，执行前必须将代号替换为实际配置，不能原样复制执行。
+下面记录排查过程和经过验证的修复方法。文中所有 IP 地址均为文档保留地址（RFC 5737），仅作示意：203.0.113.10 是 eth0 公网地址，198.51.100.20 是 eth1 公网地址，203.0.113.1 / 198.51.100.1 是两块网卡的网关，172.20.0.2 是 MySQL 容器地址，0.0.0.0 表示监听所有本机 IPv4 地址。命令和输出均为示意，请替换为你自己的实际配置后再执行。
 
 ## 一、环境与现象
 
@@ -36,36 +36,36 @@ tags:
 
 | 对象 | 地址或配置 |
 |---|---|
-| eth0 | `ETH0_IP/ETH0_PREFIX` |
-| eth0 网关 | `ETH0_GATEWAY` |
-| eth1 | `ETH1_IP/ETH1_PREFIX` |
-| eth1 网关 | `ETH1_GATEWAY` |
+| eth0 | `203.0.113.10/24` |
+| eth0 网关 | `203.0.113.1` |
+| eth1 | `198.51.100.20/24` |
+| eth1 网关 | `198.51.100.1` |
 | Docker 网桥 | `br-cb0d8db03272` |
-| MySQL 容器 IP | `MYSQL_CONTAINER_IP` |
-| Docker 端口映射 | `ALL_IPV4:3306->3306/tcp` |
+| MySQL 容器 IP | `172.20.0.2` |
+| Docker 端口映射 | `0.0.0.0:3306->3306/tcp` |
 
 主路由表默认出口为 eth0：
 
 ```text
-default via ETH0_GATEWAY dev eth0
+default via 203.0.113.1 dev eth0
 ```
 
 同时，服务器已经配置了 eth1 的源地址策略路由：
 
 ```text
-from ETH1_IP lookup 199
+from 198.51.100.20 lookup 199
 ```
 
 路由表 `199` 内容为：
 
 ```text
-default via ETH1_GATEWAY dev eth1
+default via 198.51.100.1 dev eth1
 ```
 
 在 Windows 客户端测试 eth1 的 MySQL 端口：
 
 ```powershell
-Test-NetConnection ETH1_IP -Port 3306
+Test-NetConnection 198.51.100.20 -Port 3306
 ```
 
 结果为：
@@ -85,7 +85,7 @@ docker ps --format 'table {{.Names}}\t{{.Ports}}'
 MySQL 显示：
 
 ```text
-ALL_IPV4:3306->3306/tcp
+0.0.0.0:3306->3306/tcp
 ```
 
 查看宿主机监听：
@@ -97,7 +97,7 @@ ss -lntp
 对应输出：
 
 ```text
-LISTEN 0 4096 ALL_IPV4:3306 ALL_IPV4:* users:(("docker-proxy",...))
+LISTEN 0 4096 0.0.0.0:3306 0.0.0.0:* users:(("docker-proxy",...))
 ```
 
 这说明宿主机的 3306 发布在所有 IPv4 地址上，并没有只绑定 eth0。不过，监听所有地址不代表端到端网络一定可达。[Docker 端口发布文档](https://docs.docker.com/engine/network/port-publishing/)
@@ -116,8 +116,8 @@ sysctl net.ipv4.conf.all.rp_filter \
 
 ## 三、抓包发现：eth1 进，eth0 出
 
-<!-- 插图一：Debian-Docker-MySQL配图/02-wrong-return-path.png；上传图床后，将下方 WRONG_RETURN_PATH_IMAGE_URI 替换为图片 URI。 -->
-![故障路径示意：请求从 eth1 进入，MySQL 回包从 eth0 发出](WRONG_RETURN_PATH_IMAGE_URI)
+<!-- 插图一：Debian-Docker-MySQL配图/02-wrong-return-path.png -->
+![故障路径示意：请求从 eth1 进入，MySQL 回包从 eth0 发出](https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663890788_02-wrong-return-path.png)
 
 *图 1：请求与回复使用了不同的网卡，TCP 握手未完成。箭头表示发送方向，不代表客户端已收到回复。*
 
@@ -125,7 +125,7 @@ sysctl net.ipv4.conf.all.rp_filter \
 
 ```bash
 tcpdump -ni any -nn \
-  'tcp port 3306 and not (src net DOCKER_SUBNET_CIDR and dst net DOCKER_SUBNET_CIDR)'
+  'tcp port 3306 and not (src net 172.20.0.0/16 and dst net 172.20.0.0/16)'
 ```
 
 这里过滤掉了 Docker 子网内部的通信，避免把其他容器访问 MySQL 的正常流量误当成外部测试流量。
@@ -133,23 +133,23 @@ tcpdump -ni any -nn \
 随后，在外部 Windows 客户端重新测试：
 
 ```powershell
-Test-NetConnection ETH1_IP -Port 3306
+Test-NetConnection 198.51.100.20 -Port 3306
 ```
 
 抓包得到的关键过程如下：
 
 ```text
 eth1 In:
-客户端 → ETH1_IP:3306    SYN
+客户端 → 198.51.100.20:3306    SYN
 
 Docker 网桥 Out:
-客户端 → MYSQL_CONTAINER_IP:3306       SYN
+客户端 → 172.20.0.2:3306       SYN
 
 Docker 网桥 In:
-MYSQL_CONTAINER_IP:3306 → 客户端       SYN-ACK
+172.20.0.2:3306 → 客户端       SYN-ACK
 
 eth0 Out:
-ETH1_IP:3306 → 客户端    SYN-ACK
+198.51.100.20:3306 → 客户端    SYN-ACK
 ```
 
 这段输出证明了三件事：
@@ -167,13 +167,13 @@ ETH1_IP:3306 → 客户端    SYN-ACK
 已有规则匹配的是公网源地址：
 
 ```text
-from ETH1_IP lookup 199
+from 198.51.100.20 lookup 199
 ```
 
 但 Docker 容器回复经过宿主机转发时，在选择路由的阶段，源地址仍然是：
 
 ```text
-MYSQL_CONTAINER_IP
+172.20.0.2
 ```
 
 它无法匹配上面的公网源地址规则，于是使用主路由表，从 eth0 出口发送。
@@ -181,7 +181,7 @@ MYSQL_CONTAINER_IP
 之后，连接跟踪对应的反向 NAT 才将源地址恢复成：
 
 ```text
-ETH1_IP
+198.51.100.20
 ```
 
 因此，在物理网卡上抓到的最终数据包表现为：
@@ -194,14 +194,14 @@ eth0 Out，源地址却是 eth1 的公网 IP
 
 ## 五、修复：识别连接的回包，再按标记选路
 
-<!-- 插图二：Debian-Docker-MySQL配图/03-mark-routing-fix.png；上传图床后，将下方 MARK_ROUTING_FIX_IMAGE_URI 替换为图片 URI。 -->
-![修复原理：识别连接的回复方向，设置标记并通过路由表 199 选择 eth1](MARK_ROUTING_FIX_IMAGE_URI)
+<!-- 插图二：Debian-Docker-MySQL配图/03-mark-routing-fix.png -->
+![修复原理：识别连接的回复方向，设置标记并通过路由表 199 选择 eth1](https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663900746_03-mark-routing-fix.png)
 
 *图 2：利用连接跟踪识别回包，在路由选择前打标，使其匹配 eth1 对应的路由表。*
 
 本次采用的办法是：
 
-1. 利用连接跟踪，识别原本访问 `ETH1_IP:3306` 的连接。
+1. 利用连接跟踪，识别原本访问 `198.51.100.20:3306` 的连接。
 2. 只给该连接的回复方向数据包添加标记。
 3. 根据标记，使用已有的路由表 `199`，从 eth1 发出。
 
@@ -223,7 +223,7 @@ iptables -t mangle -I PREROUTING 1 \
   -i br-cb0d8db03272 \
   -p tcp \
   -m conntrack --ctdir REPLY \
-  --ctorigdst ETH1_IP \
+  --ctorigdst 198.51.100.20 \
   --ctorigdstport 3306 \
   -j MARK --set-xmark 0x199/0xffffffff
 ```
@@ -237,7 +237,7 @@ iptables -t mangle -I PREROUTING 1 \
 客户端再次执行：
 
 ```powershell
-Test-NetConnection ETH1_IP -Port 3306
+Test-NetConnection 198.51.100.20 -Port 3306
 ```
 
 结果变为：
@@ -265,7 +265,7 @@ iptables -t mangle -D PREROUTING \
   -i br-cb0d8db03272 \
   -p tcp \
   -m conntrack --ctdir REPLY \
-  --ctorigdst ETH1_IP \
+  --ctorigdst 198.51.100.20 \
   --ctorigdstport 3306 \
   -j MARK --set-xmark 0x199/0xffffffff
 

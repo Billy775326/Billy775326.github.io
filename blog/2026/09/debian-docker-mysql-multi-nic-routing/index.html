@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 
-<html data-theme="light" lang="zh-CN"><head><meta charset="utf-8"/><meta content="IE=edge" http-equiv="X-UA-Compatible"/><meta content="width=device-width, initial-scale=1.0,viewport-fit=cover" name="viewport"/><title>Debian多网卡Docker-MySQL回程路由排查 | Billy 的博客</title><meta content="Billy" name="author"/><meta content="Billy" name="copyright"/><meta content="telephone=no" name="format-detection"/><meta content="#ffffff" name="theme-color"/><meta content="Debian 多网卡环境下，Docker MySQL 只有 eth0 的公网 IP 能连接。通过抓包定位回程出口错误，并使用连接跟踪、MARK 和策略路由修复。" name="description"/>
+<html data-theme="light" lang="zh-CN"><head><meta charset="utf-8"/><meta content="IE=edge" http-equiv="X-UA-Compatible"/><meta content="width=device-width, initial-scale=1.0,viewport-fit=cover" name="viewport"/><title>Debian多网卡Docker-MySQL回程路由排查 | Billy 的博客</title><meta content="Billy" name="author"/><meta content="Billy" name="copyright"/><meta content="telephone=no" name="format-detection"/><meta content="#ffffff" name="theme-color"/><meta content="Debian 多网卡环境下，Docker MySQL 只有 eth0 的公网 IP 能连接。通过抓包定位回程出口错误，并使用连接跟踪、MARK 和策略路由修复。" name="description"/><meta name="keywords" content="Debian,Docker,MySQL,容器网络,策略路由,故障排查"/>
 <meta content="article" property="og:type"/>
 <meta content="Debian多网卡Docker-MySQL回程路由排查" property="og:title"/>
 <meta content="https://billy775326.github.io/blog/2026/09/debian-docker-mysql-multi-nic-routing/" property="og:url"/>
 <meta content="Billy 的博客" property="og:site_name"/>
 <meta content="Debian 多网卡环境下，Docker MySQL 只有 eth0 的公网 IP 能连接。通过抓包定位回程出口错误，并使用连接跟踪、MARK 和策略路由修复。" property="og:description"/>
 <meta content="zh_CN" property="og:locale"/>
-<meta content="https://billy775326.github.io/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg" property="og:image"/>
+<meta content="https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663905540_01-cover.png" property="og:image"/>
 <meta content="2026-09-29T04:00:00.000Z" property="article:published_time"/>
 <meta content="2026-09-29T04:00:00.000Z" property="article:modified_time"/>
 <meta content="Billy" property="article:author"/>
 <meta content="summary" name="twitter:card"/>
-<meta content="https://billy775326.github.io/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg" name="twitter:image"/><script type="application/ld+json">{
+<meta content="https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663905540_01-cover.png" name="twitter:image"/><script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "Debian多网卡Docker-MySQL回程路由排查",
+  "description": "Debian 多网卡环境下，Docker MySQL 只有 eth0 的公网 IP 能连接。通过抓包定位回程出口错误，并使用连接跟踪、MARK 和策略路由修复。",
   "url": "https://billy775326.github.io/blog/2026/09/debian-docker-mysql-multi-nic-routing/",
-  "image": "https://billy775326.github.io/upload/Linux%E7%B3%BB%E7%BB%9F%E6%A0%B9%E5%88%86%E5%8C%BA%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E7%9B%98%EF%BC%9FUOS%20Deepin%E7%B3%BB%E7%BB%9F%E6%A0%B9%E5%88%86%E5%8C%BA%E6%89%A9%E5%AE%B9%E5%A4%A7%E6%B3%95.jpg",
-  "datePublished": "2025-04-17T16:13:51.000Z",
-  "dateModified": "2025-04-17T16:13:51.000Z",
+  "image": "https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663905540_01-cover.png",
+  "datePublished": "2026-09-29T04:00:00.000Z",
+  "dateModified": "2026-09-29T04:00:00.000Z",
   "author": [
     {
       "@type": "Person",
@@ -202,8 +203,8 @@
   isHighlightShrink: false,
   isToc: true,
   pageType: 'post'
-}</script><link href="/css/cards.css" rel="stylesheet"/><meta content="Hexo 8.1.2" name="generator"/><meta property="article:section" content="系统与运维"><meta property="article:tag" content="Debian"><meta property="article:tag" content="Docker"><meta property="article:tag" content="MySQL"><meta property="article:tag" content="容器网络"><meta property="article:tag" content="策略路由"><meta property="article:tag" content="故障排查"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img alt="avatar" onerror="this.onerror=null;this.src='/img/friend_404.gif'" src="/img/avatar.jpg"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">83</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/upload/Linux%E7%B3%BB%E7%BB%9F%E6%A0%B9%E5%88%86%E5%8C%BA%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E7%9B%98%EF%BC%9FUOS%20Deepin%E7%B3%BB%E7%BB%9F%E6%A0%B9%E5%88%86%E5%8C%BA%E6%89%A9%E5%AE%B9%E5%A4%A7%E6%B3%95.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Billy 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">Debian多网卡Docker-MySQL回程路由排查</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Debian多网卡Docker-MySQL回程路由排查</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-29T04:00:00.000Z" title="发表于 2026-09-29 12:00:00（北京时间）">2026-09-29 12:00:00</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-29T04:00:00.000Z" title="更新于 2026-09-29 12:00:00（北京时间）">2026-09-29 12:00:00</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/systems-operations/">系统与运维</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" data-flag-title="" id=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><!-- 封面：Debian-Docker-MySQL配图/01-cover.png；上传图床后，将下方 COVER_IMAGE_URI 替换为图片 URI。 -->
-<!-- 图片待补充：COVER_IMAGE_URI -->
+}</script><link href="/css/cards.css" rel="stylesheet"/><meta content="Hexo 8.1.2" name="generator"/><meta property="article:section" content="系统与运维"><meta property="article:tag" content="Debian"><meta property="article:tag" content="Docker"><meta property="article:tag" content="MySQL"><meta property="article:tag" content="容器网络"><meta property="article:tag" content="策略路由"><meta property="article:tag" content="故障排查"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img alt="avatar" onerror="this.onerror=null;this.src='/img/friend_404.gif'" src="/img/avatar.jpg"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">83</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/upload/Linux%E7%B3%BB%E7%BB%9F%E6%A0%B9%E5%88%86%E5%8C%BA%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E7%9B%98%EF%BC%9FUOS%20Deepin%E7%B3%BB%E7%BB%9F%E6%A0%B9%E5%88%86%E5%8C%BA%E6%89%A9%E5%AE%B9%E5%A4%A7%E6%B3%95.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Billy 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">Debian多网卡Docker-MySQL回程路由排查</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Debian多网卡Docker-MySQL回程路由排查</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-29T04:00:00.000Z" title="发表于 2026-09-29 12:00:00（北京时间）">2026-09-29 12:00:00</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-29T04:00:00.000Z" title="更新于 2026-09-29 12:00:00（北京时间）">2026-09-29 12:00:00</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/systems-operations/">系统与运维</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" data-flag-title="" id=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><!-- 封面：Debian-Docker-MySQL配图/01-cover.png -->
+<!-- 图片待补充：https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663905540_01-cover.png -->
 <p>在一台 Debian 服务器上配置了多块网卡，每块网卡都有独立公网 IP。MySQL 通过 Docker 部署，发布端口为 <code>3306</code>。</p>
 <p>实际使用时发现：</p>
 <ul>
@@ -212,7 +213,7 @@
 <li>已经配置了基于公网源 IP 的策略路由，但问题依然存在。</li>
 </ul>
 <p>最终通过抓包确认：<strong>请求从 eth1 进入，经过 Docker 转发到 MySQL；MySQL 的回复却从 eth0 发出。</strong></p>
-<p>下面记录排查过程和经过验证的修复方法。文中所有 IP 地址均使用代号：ETH0_IP、ETH1_IP 表示对应网卡的公网地址；ETH0_GATEWAY、ETH1_GATEWAY 表示网关；MYSQL_CONTAINER_IP 表示 MySQL 容器地址；DOCKER_SUBNET_CIDR 表示 Docker 子网及前缀；ETH0_PREFIX、ETH1_PREFIX 表示网卡的子网前缀长度；ALL_IPV4 表示监听所有本机 IPv4 地址的通配地址。命令和输出均为代号化示意，执行前必须将代号替换为实际配置，不能原样复制执行。</p>
+<p>下面记录排查过程和经过验证的修复方法。文中所有 IP 地址均为文档保留地址（RFC 5737），仅作示意：203.0.113.10 是 eth0 公网地址，198.51.100.20 是 eth1 公网地址，203.0.113.1 / 198.51.100.1 是两块网卡的网关，172.20.0.2 是 MySQL 容器地址，0.0.0.0 表示监听所有本机 IPv4 地址。命令和输出均为示意，请替换为你自己的实际配置后再执行。</p>
 <h2 id="_1">一、环境与现象</h2>
 <p>以 eth0、eth1 为例：</p>
 <table>
@@ -225,19 +226,19 @@
 <tbody>
 <tr>
 <td>eth0</td>
-<td><code>ETH0_IP/ETH0_PREFIX</code></td>
+<td><code>203.0.113.10/24</code></td>
 </tr>
 <tr>
 <td>eth0 网关</td>
-<td><code>ETH0_GATEWAY</code></td>
+<td><code>203.0.113.1</code></td>
 </tr>
 <tr>
 <td>eth1</td>
-<td><code>ETH1_IP/ETH1_PREFIX</code></td>
+<td><code>198.51.100.20/24</code></td>
 </tr>
 <tr>
 <td>eth1 网关</td>
-<td><code>ETH1_GATEWAY</code></td>
+<td><code>198.51.100.1</code></td>
 </tr>
 <tr>
 <td>Docker 网桥</td>
@@ -245,25 +246,25 @@
 </tr>
 <tr>
 <td>MySQL 容器 IP</td>
-<td><code>MYSQL_CONTAINER_IP</code></td>
+<td><code>172.20.0.2</code></td>
 </tr>
 <tr>
 <td>Docker 端口映射</td>
-<td><code>ALL_IPV4:3306-&gt;3306/tcp</code></td>
+<td><code>0.0.0.0:3306-&gt;3306/tcp</code></td>
 </tr>
 </tbody>
 </table>
 <p>主路由表默认出口为 eth0：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre>default via ETH0_GATEWAY dev eth0
+<figure class="highlight text"><table><tr><td class="code"><pre>default via 203.0.113.1 dev eth0
 </pre></td></tr></table></figure>
 <p>同时，服务器已经配置了 eth1 的源地址策略路由：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre>from ETH1_IP lookup 199
+<figure class="highlight text"><table><tr><td class="code"><pre>from 198.51.100.20 lookup 199
 </pre></td></tr></table></figure>
 <p>路由表 <code>199</code> 内容为：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre>default via ETH1_GATEWAY dev eth1
+<figure class="highlight text"><table><tr><td class="code"><pre>default via 198.51.100.1 dev eth1
 </pre></td></tr></table></figure>
 <p>在 Windows 客户端测试 eth1 的 MySQL 端口：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre>Test-NetConnection ETH1_IP -Port 3306
+<figure class="highlight powershell"><table><tr><td class="code"><pre>Test-NetConnection 198.51.100.20 -Port 3306
 </pre></td></tr></table></figure>
 <p>结果为：</p>
 <figure class="highlight text"><table><tr><td class="code"><pre>TcpTestSucceeded : False
@@ -273,13 +274,13 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre>docker ps --format 'table {{.Names}}\t{{.Ports}}'
 </pre></td></tr></table></figure>
 <p>MySQL 显示：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre>ALL_IPV4:3306-&gt;3306/tcp
+<figure class="highlight text"><table><tr><td class="code"><pre>0.0.0.0:3306-&gt;3306/tcp
 </pre></td></tr></table></figure>
 <p>查看宿主机监听：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre>ss -lntp
 </pre></td></tr></table></figure>
 <p>对应输出：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre>LISTEN 0 4096 ALL_IPV4:3306 ALL_IPV4:* users:(("docker-proxy",...))
+<figure class="highlight text"><table><tr><td class="code"><pre>LISTEN 0 4096 0.0.0.0:3306 0.0.0.0:* users:(("docker-proxy",...))
 </pre></td></tr></table></figure>
 <p>这说明宿主机的 3306 发布在所有 IPv4 地址上，并没有只绑定 eth0。不过，监听所有地址不代表端到端网络一定可达。<a href="https://docs.docker.com/engine/network/port-publishing/">Docker 端口发布文档</a></p>
 <p>接着查看反向路径过滤：</p>
@@ -290,28 +291,28 @@
 <p>本次环境输出均为 <code>0</code>。</p>
 <p>因此，可以排除 eth0、eth1 上的 <code>rp_filter</code> 检查导致丢包。其他环境如果使用严格模式 <code>1</code>，多网卡的非对称路由可能触发丢包，需要单独核查。<a href="https://www.kernel.org/doc/html/next/networking/ip-sysctl.html">Linux 内核文档</a></p>
 <h2 id="eth1-eth0">三、抓包发现：eth1 进，eth0 出</h2>
-<!-- 插图一：Debian-Docker-MySQL配图/02-wrong-return-path.png；上传图床后，将下方 WRONG_RETURN_PATH_IMAGE_URI 替换为图片 URI。 -->
-<!-- 图片待补充：WRONG_RETURN_PATH_IMAGE_URI -->
+<!-- 插图一：Debian-Docker-MySQL配图/02-wrong-return-path.png -->
+<!-- 图片待补充：https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663890788_02-wrong-return-path.png -->
 <p>在服务器执行：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre>tcpdump -ni any -nn \
-  'tcp port 3306 and not (src net DOCKER_SUBNET_CIDR and dst net DOCKER_SUBNET_CIDR)'
+  'tcp port 3306 and not (src net 172.20.0.0/16 and dst net 172.20.0.0/16)'
 </pre></td></tr></table></figure>
 <p>这里过滤掉了 Docker 子网内部的通信，避免把其他容器访问 MySQL 的正常流量误当成外部测试流量。</p>
 <p>随后，在外部 Windows 客户端重新测试：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre>Test-NetConnection ETH1_IP -Port 3306
+<figure class="highlight powershell"><table><tr><td class="code"><pre>Test-NetConnection 198.51.100.20 -Port 3306
 </pre></td></tr></table></figure>
 <p>抓包得到的关键过程如下：</p>
 <figure class="highlight text"><table><tr><td class="code"><pre>eth1 In:
-客户端 → ETH1_IP:3306    SYN
+客户端 → 198.51.100.20:3306    SYN
 
 Docker 网桥 Out:
-客户端 → MYSQL_CONTAINER_IP:3306       SYN
+客户端 → 172.20.0.2:3306       SYN
 
 Docker 网桥 In:
-MYSQL_CONTAINER_IP:3306 → 客户端       SYN-ACK
+172.20.0.2:3306 → 客户端       SYN-ACK
 
 eth0 Out:
-ETH1_IP:3306 → 客户端    SYN-ACK
+198.51.100.20:3306 → 客户端    SYN-ACK
 </pre></td></tr></table></figure>
 <p>这段输出证明了三件事：</p>
 <ol>
@@ -323,25 +324,25 @@ ETH1_IP:3306 → 客户端    SYN-ACK
 <p><strong>回程出口错误已经确定。</strong> 至于回复具体在哪里被丢弃，仅靠服务器侧抓包无法确定；上游网络可能对源地址与出口的对应关系有限制。</p>
 <h2 id="ip">四、为什么已有源 IP 策略路由仍然无效？</h2>
 <p>已有规则匹配的是公网源地址：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre>from ETH1_IP lookup 199
+<figure class="highlight text"><table><tr><td class="code"><pre>from 198.51.100.20 lookup 199
 </pre></td></tr></table></figure>
 <p>但 Docker 容器回复经过宿主机转发时，在选择路由的阶段，源地址仍然是：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre>MYSQL_CONTAINER_IP
+<figure class="highlight text"><table><tr><td class="code"><pre>172.20.0.2
 </pre></td></tr></table></figure>
 <p>它无法匹配上面的公网源地址规则，于是使用主路由表，从 eth0 出口发送。</p>
 <p>之后，连接跟踪对应的反向 NAT 才将源地址恢复成：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre>ETH1_IP
+<figure class="highlight text"><table><tr><td class="code"><pre>198.51.100.20
 </pre></td></tr></table></figure>
 <p>因此，在物理网卡上抓到的最终数据包表现为：</p>
 <figure class="highlight text"><table><tr><td class="code"><pre>eth0 Out，源地址却是 eth1 的公网 IP
 </pre></td></tr></table></figure>
 <p>这也解释了为什么 eth0 能连接：主路由表的默认出口恰好就是 eth0，而其他网卡需要正确的回程选路。</p>
 <h2 id="_3">五、修复：识别连接的回包，再按标记选路</h2>
-<!-- 插图二：Debian-Docker-MySQL配图/03-mark-routing-fix.png；上传图床后，将下方 MARK_ROUTING_FIX_IMAGE_URI 替换为图片 URI。 -->
-<!-- 图片待补充：MARK_ROUTING_FIX_IMAGE_URI -->
+<!-- 插图二：Debian-Docker-MySQL配图/03-mark-routing-fix.png -->
+<!-- 图片待补充：https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663900746_03-mark-routing-fix.png -->
 <p>本次采用的办法是：</p>
 <ol>
-<li>利用连接跟踪，识别原本访问 <code>ETH1_IP:3306</code> 的连接。</li>
+<li>利用连接跟踪，识别原本访问 <code>198.51.100.20:3306</code> 的连接。</li>
 <li>只给该连接的回复方向数据包添加标记。</li>
 <li>根据标记，使用已有的路由表 <code>199</code>，从 eth1 发出。</li>
 </ol>
@@ -356,7 +357,7 @@ ETH1_IP:3306 → 客户端    SYN-ACK
   -i br-cb0d8db03272 \
   -p tcp \
   -m conntrack --ctdir REPLY \
-  --ctorigdst ETH1_IP \
+  --ctorigdst 198.51.100.20 \
   --ctorigdstport 3306 \
   -j MARK --set-xmark 0x199/0xffffffff
 </pre></td></tr></table></figure>
@@ -364,7 +365,7 @@ ETH1_IP:3306 → 客户端    SYN-ACK
 <p>规则只匹配回复方向，进入容器的原始请求不会被这条规则标记。</p>
 <h2 id="_4">六、验证结果</h2>
 <p>客户端再次执行：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre>Test-NetConnection ETH1_IP -Port 3306
+<figure class="highlight powershell"><table><tr><td class="code"><pre>Test-NetConnection 198.51.100.20 -Port 3306
 </pre></td></tr></table></figure>
 <p>结果变为：</p>
 <figure class="highlight text"><table><tr><td class="code"><pre>TcpTestSucceeded : True
@@ -380,7 +381,7 @@ ETH1_IP:3306 → 客户端    SYN-ACK
   -i br-cb0d8db03272 \
   -p tcp \
   -m conntrack --ctdir REPLY \
-  --ctorigdst ETH1_IP \
+  --ctorigdst 198.51.100.20 \
   --ctorigdstport 3306 \
   -j MARK --set-xmark 0x199/0xffffffff
 
@@ -389,4 +390,4 @@ ip rule del priority 10199 \
 </pre></td></tr></table></figure>
 <p>本次验证的是 <strong>eth1 的 MySQL 3306 端口临时修复</strong>，尚未验证其他网卡，也没有完成重启持久化。</p>
 <p>扩展到其他公网 IP 时，需要为各入口配置对应的连接匹配、标记和路由表。持久化时则要同时恢复策略路由和防火墙规则，并确保执行顺序正确、重复执行不会累积规则。另外，Docker 网络重建后网桥名称可能变化，本文规则中的网桥名也需要同步检查。</p>
-<p>这次排查最关键的证据，是抓包中的这一行：<strong>eth1 的公网源地址出现在了 <code>eth0 Out</code> 上。</strong> 端口确实开放、数据库也确实回复了，但回复没有沿着正确的出口返回。</p></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://billy775326.github.io">Billy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://billy775326.github.io/blog/2026/09/debian-docker-mysql-multi-nic-routing/">https://billy775326.github.io/blog/2026/09/debian-docker-mysql-multi-nic-routing/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://billy775326.github.io" target="_blank">Billy 的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Debian/">Debian</a><a class="post-meta__tags" href="/tags/Docker/">Docker</a><a class="post-meta__tags" href="/tags/MySQL/">MySQL</a><a class="post-meta__tags" href="/tags/%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C/">容器网络</a><a class="post-meta__tags" href="/tags/%E7%AD%96%E7%95%A5%E8%B7%AF%E7%94%B1/">策略路由</a><a class="post-meta__tags" href="/tags/%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5/">故障排查</a></div><div class="post-share"><div class="social-share" data-image="/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'" rel="stylesheet"/><script defer="" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js"></script></div></div><nav class="pagination-post" id="pagination" aria-label="文章导航"><a class="pagination-related" href="/blog/2026/09/build-own-server-project/" title="构建自己的服务器项目" aria-label="下一篇：构建自己的服务器项目" rel="next"><img class="cover" src="https://billy775326.github.io/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg" alt="构建自己的服务器项目" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">构建自己的服务器项目</div></div><div class="info-2"><div class="info-item-1">阅读全文：构建自己的服务器项目</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img alt="avatar" onerror="this.onerror=null;this.src='/img/friend_404.gif'" src="/img/avatar.jpg"/></div><div class="author-info-name">Billy</div><div class="author-info-description">记录学习与折腾</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">83</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a href="https://github.com/Billy775326" id="card-info-btn" rel="noopener" target="_blank"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，记录学习与折腾</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#_1"><span class="toc-text">一、环境与现象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#_2"><span class="toc-text">二、先排除监听地址和反向路径过滤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#eth1-eth0"><span class="toc-text">三、抓包发现：eth1 进，eth0 出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ip"><span class="toc-text">四、为什么已有源 IP 策略路由仍然无效？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#_3"><span class="toc-text">五、修复：识别连接的回包，再按标记选路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#_4"><span class="toc-text">六、验证结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#_5"><span class="toc-text">七、回滚与持久化说明</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/debian-docker-mysql-multi-nic-routing/" title="Debian多网卡Docker-MySQL回程路由排查"><img alt="Debian多网卡Docker-MySQL回程路由排查" onerror="this.onerror=null;this.src='/img/404.jpg'" src="/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg"/></a><div class="content"><a class="title" href="/blog/2026/09/debian-docker-mysql-multi-nic-routing/" title="Debian多网卡Docker-MySQL回程路由排查">Debian多网卡Docker-MySQL回程路由排查</a><time datetime="2026-09-29T04:00:00.000Z" title="发表于 2026-09-29">2026-09-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/archlinux-kde-one-week-review/" title="ArchLinux KDE 一周使用小结"><img alt="ArchLinux KDE 一周使用小结" onerror="this.onerror=null;this.src='/img/404.jpg'" src="/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg"/></a><div class="content"><a class="title" href="/blog/2026/09/archlinux-kde-one-week-review/" title="ArchLinux KDE 一周使用小结">ArchLinux KDE 一周使用小结</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/maa-readme/" title="MAAREADME"><img alt="MAAREADME" onerror="this.onerror=null;this.src='/img/404.jpg'" src="/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg"/></a><div class="content"><a class="title" href="/blog/2026/09/maa-readme/" title="MAAREADME">MAAREADME</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/redroid-maa-arknights-on-linux/" title="ReDroid MAA：在Linux下游玩明日方舟"><img alt="ReDroid MAA：在Linux下游玩明日方舟" onerror="this.onerror=null;this.src='/img/404.jpg'" src="/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg"/></a><div class="content"><a class="title" href="/blog/2026/09/redroid-maa-arknights-on-linux/" title="ReDroid MAA：在Linux下游玩明日方舟">ReDroid MAA：在Linux下游玩明日方舟</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/tigervnc-lock-screen-fix/" title="TigerVNC 锁屏问题解决方案"><img alt="TigerVNC 锁屏问题解决方案" onerror="this.onerror=null;this.src='/img/404.jpg'" src="/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg"/></a><div class="content"><a class="title" href="/blog/2026/09/tigervnc-lock-screen-fix/" title="TigerVNC 锁屏问题解决方案">TigerVNC 锁屏问题解决方案</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">© 2025 - 2026 By Billy</span><span class="framework-info"><span>框架 </span><a href="https://hexo.io" rel="noopener" target="_blank">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" rel="noopener" target="_blank">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" title="阅读模式" type="button"><i class="fas fa-book-open"></i></button><button id="darkmode" title="日间和夜间模式切换" type="button"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" title="单栏和双栏切换" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" title="设置" type="button"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" title="目录" type="button"><i class="fas fa-list-ul"></i></button><button id="go-up" title="回到顶部" type="button"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async="" data-pjax="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" hidden="hidden" id="loading-status"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>
+<p>这次排查最关键的证据，是抓包中的这一行：<strong>eth1 的公网源地址出现在了 <code>eth0 Out</code> 上。</strong> 端口确实开放、数据库也确实回复了，但回复没有沿着正确的出口返回。</p></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://billy775326.github.io">Billy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://billy775326.github.io/blog/2026/09/debian-docker-mysql-multi-nic-routing/">https://billy775326.github.io/blog/2026/09/debian-docker-mysql-multi-nic-routing/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://billy775326.github.io" target="_blank">Billy 的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Debian/">Debian</a><a class="post-meta__tags" href="/tags/Docker/">Docker</a><a class="post-meta__tags" href="/tags/MySQL/">MySQL</a><a class="post-meta__tags" href="/tags/%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C/">容器网络</a><a class="post-meta__tags" href="/tags/%E7%AD%96%E7%95%A5%E8%B7%AF%E7%94%B1/">策略路由</a><a class="post-meta__tags" href="/tags/%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5/">故障排查</a></div><div class="post-share"><div class="social-share" data-image="https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663905540_01-cover.png" data-sites="facebook,x,wechat,weibo,qq"></div><link href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'" rel="stylesheet"/><script defer="" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js"></script></div></div><nav class="pagination-post" id="pagination" aria-label="文章导航"><a class="pagination-related" href="/blog/2026/09/build-own-server-project/" title="构建自己的服务器项目" aria-label="下一篇：构建自己的服务器项目" rel="next"><img class="cover" src="/upload/thumbs/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg" alt="构建自己的服务器项目" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></div><div class="info-item-2">构建自己的服务器项目</div></div><div class="info-2"><div class="info-item-1">阅读全文：构建自己的服务器项目</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img alt="avatar" onerror="this.onerror=null;this.src='/img/friend_404.gif'" src="/img/avatar.jpg"/></div><div class="author-info-name">Billy</div><div class="author-info-description">记录学习与折腾</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">83</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a href="https://github.com/Billy775326" id="card-info-btn" rel="noopener" target="_blank"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，记录学习与折腾</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#_1"><span class="toc-text">一、环境与现象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#_2"><span class="toc-text">二、先排除监听地址和反向路径过滤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#eth1-eth0"><span class="toc-text">三、抓包发现：eth1 进，eth0 出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ip"><span class="toc-text">四、为什么已有源 IP 策略路由仍然无效？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#_3"><span class="toc-text">五、修复：识别连接的回包，再按标记选路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#_4"><span class="toc-text">六、验证结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#_5"><span class="toc-text">七、回滚与持久化说明</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/debian-docker-mysql-multi-nic-routing/" title="Debian多网卡Docker-MySQL回程路由排查"><img alt="Debian多网卡Docker-MySQL回程路由排查" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663905540_01-cover.png"/></a><div class="content"><a class="title" href="/blog/2026/09/debian-docker-mysql-multi-nic-routing/" title="Debian多网卡Docker-MySQL回程路由排查">Debian多网卡Docker-MySQL回程路由排查</a><time datetime="2026-09-29T04:00:00.000Z" title="发表于 2026-09-29 12:00:00">2026-09-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/archlinux-kde-one-week-review/" title="ArchLinux KDE 一周使用小结"><img alt="ArchLinux KDE 一周使用小结" onerror="this.onerror=null;this.src='/img/404.jpg'" src="/upload/thumbs/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg"/></a><div class="content"><a class="title" href="/blog/2026/09/archlinux-kde-one-week-review/" title="ArchLinux KDE 一周使用小结">ArchLinux KDE 一周使用小结</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/maa-readme/" title="MAAREADME"><img alt="MAAREADME" onerror="this.onerror=null;this.src='/img/404.jpg'" src="/upload/thumbs/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg"/></a><div class="content"><a class="title" href="/blog/2026/09/maa-readme/" title="MAAREADME">MAAREADME</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/redroid-maa-arknights-on-linux/" title="ReDroid MAA：在Linux下游玩明日方舟"><img alt="ReDroid MAA：在Linux下游玩明日方舟" onerror="this.onerror=null;this.src='/img/404.jpg'" src="/upload/thumbs/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg"/></a><div class="content"><a class="title" href="/blog/2026/09/redroid-maa-arknights-on-linux/" title="ReDroid MAA：在Linux下游玩明日方舟">ReDroid MAA：在Linux下游玩明日方舟</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/tigervnc-lock-screen-fix/" title="TigerVNC 锁屏问题解决方案"><img alt="TigerVNC 锁屏问题解决方案" onerror="this.onerror=null;this.src='/img/404.jpg'" src="/upload/thumbs/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg"/></a><div class="content"><a class="title" href="/blog/2026/09/tigervnc-lock-screen-fix/" title="TigerVNC 锁屏问题解决方案">TigerVNC 锁屏问题解决方案</a><time datetime="2026-09-10T07:29:21.000Z" title="发表于 2026-09-10 15:29:21">2026-09-10</time></div></div></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-main"><span class="copyright">© 2025 - 2026 By Billy</span><span class="framework-info"><span>框架 </span><a href="https://hexo.io" rel="noopener" target="_blank">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" rel="noopener" target="_blank">Butterfly 5.7.0</a><span class="footer-separator">|</span><a href="https://pages.github.com/" rel="noopener" target="_blank">GitHub Pages</a></span></div><div class="footer-sub"><i class="fas fa-pen-nib" aria-hidden="true"></i> 记录学习与折腾<span class="footer-separator">|</span><i class="fas fa-clock" aria-hidden="true"></i> 本站已运行 <span id="runday">--</span> 天</div></div></footer><script>(function(){var s=new Date("2024-07-24T00:00:00").getTime();var d=Math.max(0,Math.floor((Date.now()-s)/864e5));document.querySelectorAll("#runday").forEach(function(e){e.textContent=d});})();</script></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" title="阅读模式" type="button"><i class="fas fa-book-open"></i></button><button id="darkmode" title="日间和夜间模式切换" type="button"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" title="单栏和双栏切换" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" title="设置" type="button"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" title="目录" type="button"><i class="fas fa-list-ul"></i></button><button id="go-up" title="回到顶部" type="button"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async="" data-pjax="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" hidden="hidden" id="loading-status"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>
