@@ -36,3 +36,4 @@
 - **老文章侧栏"最新文章"批量刷新**(用户要求):43 篇文章页 + tags/categories 等共 149 页统一为真实最新 5 篇——MySQL(09-29)→ ArchLinux KDE → MAAREADME → ReDroid MAA → TigerVNC(并列时间戳 2026-09-10 15:29:21 时按用户 MySQL 页侧栏原顺序);时间到秒、封面按约定
 - 脚本:e:\tmp\blog_fix5b.py(幂等,当前判断比对前两篇 href)
 - **品牌资产更换(用户指定)**:`Billy_blog_logo.png` 做网站 logo(生成 64×64 favicon.png + 多尺寸 favicon.ico,替换原 32×32 模糊图);`me.jpg` 做用户头像(替换原 60×58 的 img/avatar.jpg);只改 img/ 二进制,HTML 零改动;约定写入 conventions.md「品牌资产」
+- **封面治理(用户指定"替换成封面,没有封面就使用默认图片")**:清查发现 `Linux系统根分区满了….jpg` 被当作 `云服务器Debian12根分区扩容记录` 的封面(正文并未使用,属构建期乱配)→ 换默认图;MySQL 文章 1 处残留 → 换专属封面;全站 og:image / twitter:image / JSON-LD image / data-image 中凡值为本地千与千寻或该 Linux 图(=无真实封面标记)的文章,统一换成默认外链 `…/1786437586692_千与千寻.jpg`(共 140 处,11 个文件清理残留);有真实封面的文章(redroid 系列外链图等)验证未动;导航卡/侧栏仍用本地缩略图不变
