@@ -32,6 +32,8 @@
 
 ## 图片
 
+- 用户提供图床 URI 后，正文占位注释必须转换为实际 `<img>`（可使用 `<figure>` 与 `<figcaption>`）；仅替换注释中的 URI 不会显示图片。发布前检查 `#article-container img` 的数量及链接。
+
 - **文章没有专属配图时,封面默认用** `https://img.billy12.xyz/file/1786437586692_千与千寻.jpg`(og:image / JSON-LD / 导航卡 / 侧栏直接引用该外链)
 - `<img>`(导航卡/侧栏/相关推荐/首页卡)一律用 `upload/thumbs/` 缩略图
 - og:image / twitter:image / JSON-LD image / 分享 data-image 用原图或文章专属封面

@@ -4,6 +4,11 @@
 
 ## 2026-09-29
 
+### MySQL 图床插图显示修复
+- 用户再次指定三张图床 URI，确认封面已用于文章头部与 SEO 元数据，但正文插图 URI 仍在「图片待补充」HTML 注释中，未实际显示。
+- 将第三节故障路径图、第五节修复原理图改为实际 `figure / img / figcaption`，启用原生懒加载；同步该文章搜索索引及 Downloads Markdown 的图床链接。
+- 检查三张图床链接均可访问；首页分页为 18/18/7，紧凑页脚已存在，沿用既有设置。
+
 ### 全站批量优化(约 150 文件,脚本 e:\tmp\blog_batch.py 系列,临时)
 - 上下篇导航卡全量重写:统一模板(aria-label / rel / loading=lazy / 规范 onerror)+ 方向箭头图标(fa-angle-left/right)+ hover 显示「阅读全文:标题」;卡片标题去 `YYYYMMDD-` 前缀;封面按主题映射缩略图;清退 `full-width` 遗留
 - 封面压缩:新建 `upload/thumbs/`,千与千寻 673KB→43KB;全站 1166 处 `<img>` 换缩略图,og/JSON-LD/data-image 保留原图

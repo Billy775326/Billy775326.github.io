@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
-<entry><title>Debian多网卡Docker-MySQL回程路由排查</title><url>/blog/2026/09/debian-docker-mysql-multi-nic-routing/</url><content><![CDATA[<!-- 封面：Debian-Docker-MySQL配图/01-cover.png；上传图床后，将下方 COVER_IMAGE_URI 替换为图片 URI。 -->
-<!-- 图片待补充：COVER_IMAGE_URI -->
+<entry><title>Debian多网卡Docker-MySQL回程路由排查</title><url>/blog/2026/09/debian-docker-mysql-multi-nic-routing/</url><content><![CDATA[<!-- 封面：Debian-Docker-MySQL配图/01-cover.png；上传图床后，将下方 https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663905540_01-cover.png 替换为图片 URI。 -->
+
 
 <p>在一台 Debian 服务器上配置了多块网卡，每块网卡都有独立公网 IP。MySQL 通过 Docker 部署，发布端口为 <code>3306</code>。</p>
 <p>实际使用时发现：</p>
@@ -89,8 +89,8 @@
 <p>本次环境输出均为 <code>0</code>。</p>
 <p>因此，可以排除 eth0、eth1 上的 <code>rp_filter</code> 检查导致丢包。其他环境如果使用严格模式 <code>1</code>，多网卡的非对称路由可能触发丢包，需要单独核查。<a href="https://www.kernel.org/doc/html/next/networking/ip-sysctl.html">Linux 内核文档</a></p>
 <h2 id="eth1-eth0">三、抓包发现：eth1 进，eth0 出</h2>
-<!-- 插图一：Debian-Docker-MySQL配图/02-wrong-return-path.png；上传图床后，将下方 WRONG_RETURN_PATH_IMAGE_URI 替换为图片 URI。 -->
-<!-- 图片待补充：WRONG_RETURN_PATH_IMAGE_URI -->
+<!-- 插图一：Debian-Docker-MySQL配图/02-wrong-return-path.png；上传图床后，将下方 https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663890788_02-wrong-return-path.png 替换为图片 URI。 -->
+<figure><img src="https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663890788_02-wrong-return-path.png" alt="故障路径：eth1 进入，eth0 返回" loading="lazy" decoding="async"><figcaption>故障路径：eth1 进入，eth0 返回</figcaption></figure>
 
 <p>在服务器执行：</p>
 <pre><code class="language-bash">tcpdump -ni any -nn \
@@ -137,8 +137,8 @@ ETH1_IP:3306 → 客户端    SYN-ACK
 </code></pre>
 <p>这也解释了为什么 eth0 能连接：主路由表的默认出口恰好就是 eth0，而其他网卡需要正确的回程选路。</p>
 <h2 id="_3">五、修复：识别连接的回包，再按标记选路</h2>
-<!-- 插图二：Debian-Docker-MySQL配图/03-mark-routing-fix.png；上传图床后，将下方 MARK_ROUTING_FIX_IMAGE_URI 替换为图片 URI。 -->
-<!-- 图片待补充：MARK_ROUTING_FIX_IMAGE_URI -->
+<!-- 插图二：Debian-Docker-MySQL配图/03-mark-routing-fix.png；上传图床后，将下方 https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663900746_03-mark-routing-fix.png 替换为图片 URI。 -->
+<figure><img src="https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663900746_03-mark-routing-fix.png" alt="修复原理：识别回包，按标记选路" loading="lazy" decoding="async"><figcaption>修复原理：识别回包，按标记选路</figcaption></figure>
 
 <p>本次采用的办法是：</p>
 <ol>
