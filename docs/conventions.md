@@ -86,4 +86,10 @@
 
 ## 移动端
 
+## 关于页面
+
+- `/about/` 使用 Butterfly 原生普通页面结构，介绍作者、内容方向、文章导航和 GitHub 入口；不编造身份、联系方式或经历。
+- 桌面导航、手机侧栏导航及页脚提供“关于”入口，页面加入站点地图并使用 AboutPage 结构化数据，不计入文章数。
+- `python tools/add_about_page.py` 维护关于页与顶部/手机导航，随后运行 `python tools/update_footer_seo.py` 同步页脚与站点地图。
+
 - <768px:导航卡高 120px(桌面 150px)、双卡竖排;页脚两行居中
