@@ -190,7 +190,7 @@ ip rule del priority 10199 \
 </code></pre>
 <p>本次验证的是 <strong>eth1 的 MySQL 3306 端口临时修复</strong>，尚未验证其他网卡，也没有完成重启持久化。</p>
 <p>扩展到其他公网 IP 时，需要为各入口配置对应的连接匹配、标记和路由表。持久化时则要同时恢复策略路由和防火墙规则，并确保执行顺序正确、重复执行不会累积规则。另外，Docker 网络重建后网桥名称可能变化，本文规则中的网桥名也需要同步检查。</p>
-<p>这次排查最关键的证据，是抓包中的这一行：<strong>eth1 的公网源地址出现在了 <code>eth0 Out</code> 上。</strong> 端口确实开放、数据库也确实回复了，但回复没有沿着正确的出口返回。</p>]]></content></entry>
+<p>这次排查最关键的证据，是抓包中的这一行：<strong>eth1 的公网源地址出现在了 <code>eth0 Out</code> 上。</strong> 端口确实开放、数据库也确实回复了，但回复没有沿着正确的出口返回。</p>]]></content><categories><category>系统与运维</category></categories><tags><tag>Debian</tag><tag>Docker</tag><tag>MySQL</tag><tag>容器网络</tag><tag>策略路由</tag><tag>故障排查</tag></tags></entry>
 
   <entry>
     <title>1Panel面板容器无法使用localhost、127.0.0.1配置链接的问题说明及解决办法</title>
@@ -214,14 +214,7 @@ ip rule del priority 10199 \
 <p>复制容器名称并在你的网站配置文件host处填写替换localhost、127.0.0.1：</p>
 <p><a href="http://23.224.239.232:40027/i/2024/08/17/66c0bd740391b.png"><img src="http://23.224.239.232:40027/i/2024/08/17/66c0bd740391b.png" alt="1723907441483.png"></a></p>
 <p>配置容器名称后再次连接数据库，你会发现后续重启容器和服务器都不需要重新填写配置信息。redis和其他数据库或服务也是如此配置，使用容器名称进行连接。</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>系统与运维</category></categories><tags><tag>1Panel</tag><tag>Docker</tag><tag>MySQL</tag><tag>容器网络</tag><tag>故障排查</tag></tags></entry>
   <entry>
     <title>20240320-配置GitHub-SSH默认使用443端口</title>
     <url>//blog/2024/09/github-ssh-port-443/</url>
@@ -243,15 +236,7 @@ ip rule del priority 10199 \
 
 <p>或拉取仓库：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone git@github.com:UserName/RepoName.git</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-        <tag>运维</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>软件与工具</category></categories><tags><tag>Git</tag><tag>GitHub</tag><tag>SSH</tag><tag>网络配置</tag></tags></entry>
   <entry>
     <title>20240326-Typora激活教程</title>
     <url>//blog/2024/09/typora-activation/</url>
@@ -277,14 +262,7 @@ ip rule del priority 10199 \
 
 <h2 id="7-激活"><a href="#7-激活" class="headerlink" title="7.激活"></a>7.激活</h2><p><strong>具体过程略过</strong></p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://github.com/hazukieq/Yporaject/blob/master/README.md">TYpora 最新版激发教程</a></p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>软件</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>软件与工具</category></categories><tags><tag>Typora</tag><tag>Markdown</tag><tag>编辑器</tag></tags></entry>
   <entry>
     <title>20240327-LeetCode-15.三数之和</title>
     <url>//blog/2024/09/leetcode-15-3sum/</url>
@@ -307,15 +285,7 @@ ip rule del priority 10199 \
 </ul>
 <h2 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h2><p>总体思路是参考<strong>1.两数之和</strong>，三数之和的话，只需选定一个数假定为<code>A</code>，那么就转化为两数之和问题了，要求解的另外两个数假定为<code>B</code>和<code>C</code>，满足<code>B+C=-A</code>，即两数之和问题。</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">threeSum</span>(vector&lt;<span class="type">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; ret; <span class="comment">// 保存结果三元组</span></span><br><span class="line">        <span class="type">int</span> len = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line">        <span class="keyword">if</span> (nums[<span class="number">0</span>] &gt; <span class="number">0</span> || nums[len<span class="number">-1</span>] &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> ret; <span class="comment">// 过滤一下不可能凑出三数之和条件的情况</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; ++i) &#123; <span class="comment">// nums[i]即为选定的第一个数，那么剩下满足条件的两个数就是两数之和问题</span></span><br><span class="line">            <span class="keyword">if</span> (i &gt; <span class="number">0</span> &amp;&amp; nums[i] == nums[i<span class="number">-1</span>]) &#123;</span><br><span class="line">                <span class="keyword">continue</span>; <span class="comment">// 如果和上一轮循环判断的数相同则没必要再判断一次了，跳过直到遇到不同的数</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">int</span> li = i + <span class="number">1</span>, ri = len - <span class="number">1</span>; <span class="comment">// 定义双指针，左指针从左往右，右指针从右往左</span></span><br><span class="line">            <span class="type">int</span> target = -nums[i]; <span class="comment">// nums[i]是选定的数，那么剩下两数之和则为-nums[i]</span></span><br><span class="line">            <span class="keyword">while</span> (li &lt; ri) &#123; <span class="comment">// 左指针必须在右指针左边</span></span><br><span class="line">                <span class="keyword">while</span> (nums[li] + nums[ri] &lt; target &amp;&amp; li &lt; ri) ++li; <span class="comment">// 如果此时左右指针指向的两数之和比目标和小，说明应该增大其中某个数，即左指针右移</span></span><br><span class="line">                <span class="keyword">if</span> (li &gt;= ri) <span class="keyword">break</span>; <span class="comment">// 当左右指针相遇了，说明不存在满足两数之和为target的两个数</span></span><br><span class="line">                <span class="keyword">while</span> (nums[li] + nums[ri] &gt; target &amp;&amp; li &lt; ri) --ri; <span class="comment">// 如果此时左右指针指向的两数之和比目标和大，说明应该减小其中某个数，即右指针左移</span></span><br><span class="line">                <span class="keyword">if</span> (li &gt;= ri) <span class="keyword">break</span>; <span class="comment">// 当左右指针相遇了，说明不存在满足两数之和为target的两个数</span></span><br><span class="line">                <span class="keyword">if</span> (nums[li] + nums[ri] == target) &#123; <span class="comment">// 当找到两个数满足两数之和条件时</span></span><br><span class="line">                    ret.<span class="built_in">push_back</span>(&#123;nums[i], nums[li], nums[ri]&#125;); <span class="comment">// 与第一选定数合并即为满足三数之和的三元组，加入结果集合中</span></span><br><span class="line">                    <span class="keyword">while</span> (nums[li++] == nums[li] &amp;&amp; li &lt; ri); <span class="comment">// 如果和上一轮循环判断的数相同则没必要再判断一次了，跳过直到遇到不同的数</span></span><br><span class="line">                    <span class="keyword">if</span> (li &gt;= ri) <span class="keyword">break</span>; <span class="comment">// 当左右指针相遇了，说明所有可能的二元组都遍历完了</span></span><br><span class="line">                    <span class="keyword">while</span> (nums[ri--] == nums[ri] &amp;&amp; li &lt; ri); <span class="comment">// 如果和上一轮循环判断的数相同则没必要再判断一次了，跳过直到遇到不同的数</span></span><br><span class="line">                    <span class="keyword">if</span> (li &gt;= ri) <span class="keyword">break</span>; <span class="comment">// 当左右指针相遇了，说明所有可能的二元组都遍历完了</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-        <tag>LeetCode</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>算法与数据结构</category></categories><tags><tag>LeetCode</tag><tag>数组</tag><tag>双指针</tag><tag>排序</tag></tags></entry>
   <entry>
     <title>20240328-Debian12根分区扩容记录</title>
     <url>//blog/2024/09/debian12-root-partition-resize/</url>
@@ -373,39 +343,17 @@ ip rule del priority 10199 \
 <h2 id="11-可能遇到的问题-解决方法"><a href="#11-可能遇到的问题-解决方法" class="headerlink" title="11.可能遇到的问题&amp;解决方法"></a>11.可能遇到的问题&amp;解决方法</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">root@xxx:~# pvcreate /dev/vdb</span><br><span class="line">  Can&#x27;t initialize physical volume &quot;/dev/vdb&quot; of volume group &quot;vg_root&quot; without -ff</span><br><span class="line">  /dev/vdb: physical volume not initialized.</span><br><span class="line">root@xxx:~# pvs</span><br><span class="line">  WARNING: Couldn&#x27;t find device with uuid BUVBX6-jfV5-cwDm-WVcM-YJdv-6oP7-peBjUu.</span><br><span class="line">  WARNING: VG vg_root is missing PV BUVBX6-jfV5-cwDm-WVcM-YJdv-6oP7-peBjUu (last written to /dev/vda1).</span><br><span class="line">  PV         VG      Fmt  Attr PSize   PFree</span><br><span class="line">  /dev/vdb   vg_root lvm2 a--  &lt;30.00g    0 </span><br><span class="line">  [unknown]  vg_root lvm2 a-m   19.04g    0 </span><br><span class="line">root@xxx:~# lvs</span><br><span class="line">  WARNING: Couldn&#x27;t find device with uuid BUVBX6-jfV5-cwDm-WVcM-YJdv-6oP7-peBjUu.</span><br><span class="line">  WARNING: VG vg_root is missing PV BUVBX6-jfV5-cwDm-WVcM-YJdv-6oP7-peBjUu (last written to /dev/vda1).</span><br><span class="line">  LV      VG      Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert</span><br><span class="line">  lv_root vg_root -wi-----p- &lt;49.04g                                                    </span><br><span class="line">root@xxx:~# vgs</span><br><span class="line">  WARNING: Couldn&#x27;t find device with uuid BUVBX6-jfV5-cwDm-WVcM-YJdv-6oP7-peBjUu.</span><br><span class="line">  WARNING: VG vg_root is missing PV BUVBX6-jfV5-cwDm-WVcM-YJdv-6oP7-peBjUu (last written to /dev/vda1).</span><br><span class="line">  VG      #PV #LV #SN Attr   VSize   VFree</span><br><span class="line">  vg_root   2   1   0 wz-pn- &lt;49.04g    0 </span><br><span class="line">root@xxx:~# df -Th</span><br><span class="line">Filesystem     Type      Size  Used Avail Use% Mounted on</span><br><span class="line">udev           devtmpfs  3.8G     0  3.8G   0% /dev</span><br><span class="line">tmpfs          tmpfs     775M  500K  775M   1% /run</span><br><span class="line">/dev/vda1      ext4       19G  1.1G   17G   7% /</span><br><span class="line">tmpfs          tmpfs     3.8G     0  3.8G   0% /dev/shm</span><br><span class="line">tmpfs          tmpfs     5.0M     0  5.0M   0% /run/lock</span><br><span class="line">tmpfs          tmpfs     775M     0  775M   0% /run/user/0</span><br></pre></td></tr></table></figure>
 
 <p>解决方式：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 确保当前根目录处于vda上</span><br><span class="line"># 删除以上损坏的卷和卷组</span><br><span class="line">vgchange -an vg_root # 禁用此卷组</span><br><span class="line">vgreduce --removemissing vg_root # 删除卷组中的已丢失的卷</span><br><span class="line">lvremove /dev/vg_root # 删除此卷组上的逻辑卷</span><br><span class="line">vgremove vg_root # 删除此卷组</span><br><span class="line">pvremove [--force --force] /dev/vdb # [强制]删除此物理卷（添加两个--force选项来强制删除）</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-        <tag>运维</tag>
-      </tags>
-  </entry>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 确保当前根目录处于vda上</span><br><span class="line"># 删除以上损坏的卷和卷组</span><br><span class="line">vgchange -an vg_root # 禁用此卷组</span><br><span class="line">vgreduce --removemissing vg_root # 删除卷组中的已丢失的卷</span><br><span class="line">lvremove /dev/vg_root # 删除此卷组上的逻辑卷</span><br><span class="line">vgremove vg_root # 删除此卷组</span><br><span class="line">pvremove [--force --force] /dev/vdb # [强制]删除此物理卷（添加两个--force选项来强制删除）</span><br></pre></td></tr></table></figure>]]></content><categories><category>系统与运维</category></categories><tags><tag>Linux</tag><tag>Debian</tag><tag>磁盘扩容</tag><tag>LVM</tag></tags></entry>
   <entry>
     <title>20240408-Rust-01-猜数字游戏</title>
     <url>//blog/2024/09/rust-01-guessing-game/</url>
     <content><![CDATA[<h1 id="猜数字游戏"><a href="#猜数字游戏" class="headerlink" title="猜数字游戏"></a>猜数字游戏</h1><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> rand::Rng;</span><br><span class="line"><span class="keyword">use</span> std::cmp::Ordering;</span><br><span class="line"><span class="keyword">use</span> std::io;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The main function of the program.</span></span><br><span class="line"><span class="comment"> * It starts the game by printing a welcome message, generating a secret number, and then entering a loop where it prompts the user to guess the number.</span></span><br><span class="line"><span class="comment"> * It continues to loop until the user guesses the correct number.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;Guess the number!&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Generates a secret number between 1 and 100 (inclusive) using the `rand::thread_rng().gen_range(1..101)` function.</span></span><br><span class="line"><span class="comment">     * This number will be the target that the user will try to guess.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">secret_number</span> = rand::<span class="title function_ invoke__">thread_rng</span>().<span class="title function_ invoke__">gen_range</span>(<span class="number">1</span>..<span class="number">101</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The main game loop. It will continue to run until the user guesses the correct number.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">loop</span> &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;Enter your guess: &quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Reads a line of input from the user.</span></span><br><span class="line"><span class="comment">         * If the input cannot be read, the program will panic with the message &quot;Failed to read line&quot;.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">guess</span> = <span class="type">String</span>::<span class="title function_ invoke__">new</span>();</span><br><span class="line">        io::<span class="title function_ invoke__">stdin</span>()</span><br><span class="line">            .<span class="title function_ invoke__">read_line</span>(&amp;<span class="keyword">mut</span> guess)</span><br><span class="line">            .<span class="title function_ invoke__">expect</span>(<span class="string">&quot;Failed to read line&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Parses the user&#x27;s input into a u32 integer.</span></span><br><span class="line"><span class="comment">         * If the input cannot be parsed, the program will skip the current iteration of the loop and continue to the next one.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">guess</span>: <span class="type">u32</span> = <span class="keyword">match</span> guess.<span class="title function_ invoke__">trim</span>().<span class="title function_ invoke__">parse</span>() &#123;</span><br><span class="line">            <span class="title function_ invoke__">Ok</span>(num) =&gt; num,</span><br><span class="line">            <span class="title function_ invoke__">Err</span>(_) =&gt; <span class="keyword">continue</span>,</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;You guessed: &#123;&#125;&quot;</span>, guess);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Compares the user&#x27;s guess with the secret number.</span></span><br><span class="line"><span class="comment">         * If the guess is less than the secret number, it prints &quot;Too small!&quot;.</span></span><br><span class="line"><span class="comment">         * If the guess is greater than the secret number, it prints &quot;Too big!&quot;.</span></span><br><span class="line"><span class="comment">         * If the guess is equal to the secret number, it prints &quot;You got it!&quot; and breaks out of the loop.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">match</span> guess.<span class="title function_ invoke__">cmp</span>(&amp;secret_number) &#123;</span><br><span class="line">            Ordering::Less =&gt; <span class="built_in">println!</span>(<span class="string">&quot;Too small!&quot;</span>),</span><br><span class="line">            Ordering::Greater =&gt; <span class="built_in">println!</span>(<span class="string">&quot;Too big!&quot;</span>),</span><br><span class="line">            Ordering::Equal =&gt; &#123;</span><br><span class="line">                <span class="built_in">println!</span>(<span class="string">&quot;You got it!&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>Rust</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>编程开发</category></categories><tags><tag>Rust</tag><tag>语言入门</tag><tag>项目实践</tag></tags></entry>
   <entry>
     <title>20240409-Rust-02-变量与可变性</title>
     <url>//blog/2024/09/rust-02-variables-and-mutability/</url>
     <content><![CDATA[<h1 id="变量与可变性"><a href="#变量与可变性" class="headerlink" title="变量与可变性"></a>变量与可变性</h1><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#![allow(unused)]</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="comment">// 变量默认是不可变的，如要声明可变变量，应使用mut关键字</span></span><br><span class="line">    <span class="comment">// let x = 5;</span></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">x</span> = <span class="number">5</span>;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The value of x is &#123;&#125;&quot;</span>, x); <span class="comment">// 5</span></span><br><span class="line">    x = <span class="number">6</span>;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The value of x is &#123;&#125;&quot;</span>, x); <span class="comment">// 6</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 常量，命名约定是全部字母大写，并以下划线分隔单词</span></span><br><span class="line">    <span class="comment">// 在声明的作用域内，常量在程序运行的整个过程中都有效</span></span><br><span class="line">    <span class="keyword">const</span> THREE_HOURS_IN_SECONDS: <span class="type">u32</span> = <span class="number">60</span> * <span class="number">60</span> * <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遮蔽(shadow)，可以通过使用相同的变量名并重复使用 let 关键字来遮蔽之前的变量</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">x</span> = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">x</span> = x + <span class="number">1</span>;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="variable">x</span> = x * <span class="number">2</span>;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;The value of x in the inner scope is: &#123;&#125;&quot;</span>, x); <span class="comment">// 12</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The value of x is: &#123;&#125;&quot;</span>, x); <span class="comment">// 6</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遮蔽也可以改变变量的类型</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">spaces</span> = <span class="string">&quot;   &quot;</span>;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">spaces</span> = spaces.<span class="title function_ invoke__">len</span>();</span><br><span class="line">    <span class="comment">// 而 mut 不行</span></span><br><span class="line">    <span class="comment">// let mut spaces = &quot;   &quot;;</span></span><br><span class="line">    <span class="comment">// spaces = spaces.len();</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>Rust</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>编程开发</category></categories><tags><tag>Rust</tag><tag>语言基础</tag><tag>变量与可变性</tag></tags></entry>
   <entry>
     <title>20240409-Rust-03-数据类型</title>
     <url>//blog/2024/09/rust-03-data-types/</url>
@@ -593,28 +541,14 @@ ip rule del priority 10199 \
 
 <p>该程序在索引操作中使用无效值时导致<strong>运行时</strong>（<em>runtime</em>）错误。程序退出并显示错误消息，未执行后面的 <code>println!</code> 语句。当你尝试使用索引访问元素时，Rust 将检查你指定的索引是否小于数组长度。如果索引大于或等于数组长度，Rust 会出现 <code>panic</code>。这种检查必须在运行时进行，尤其是在这种情况下，因为编译器可能无法知道用户之后运行代码时将输入什么值。</p>
 <p>这是 Rust 在实践中安全原则的第一个例子。在很多低级语言中，并不进行这种检查，而且在你使用不正确的索引时，可以访问无效的内存。Rust 通过立即退出来的方式防止这种错误，而不是允许内存访问并继续运行程序。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>Rust</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>编程开发</category></categories><tags><tag>Rust</tag><tag>语言基础</tag><tag>数据类型</tag></tags></entry>
   <entry>
     <title>20240410-Rust-00-前言</title>
     <url>//blog/2024/09/rust-00-introduction/</url>
     <content><![CDATA[<blockquote>
 <p>你说得对，但是Rust 是由 Mozilla 自主研发的一款全新零开销抽象编程语言。语言采用一种被称作「RAII」 的资源管理机制，在这里，退出作用域的对象将触发「drop」方法，进而被销毀。你将扮演一位名为「Rustacean」的神秘角色，在编码过程中邂逅形状各异、形式独特的生命周期们，和它们一起击败编译错误，找回失去的内存安全——同时，逐步发掘「servo」的真相。</p>
 </blockquote>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>Rust</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>编程开发</category></categories><tags><tag>Rust</tag><tag>语言入门</tag></tags></entry>
   <entry>
     <title>20240410-Rust-04-语句与表达式与函数</title>
     <url>//blog/2024/09/rust-04-statements-expressions-functions/</url>
@@ -675,14 +609,7 @@ ip rule del priority 10199 \
 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">cargo run</span></span><br><span class="line">   Compiling functions v0.1.0 (file:///projects/functions)</span><br><span class="line">error[E0308]: mismatched types</span><br><span class="line"><span class="meta prompt_"> --&gt; </span><span class="language-bash">src/main.rs:7:24</span></span><br><span class="line">  |</span><br><span class="line">7 | fn plus_one(x: i32) -&gt; i32 &#123;</span><br><span class="line">  |    --------            ^^^ expected `i32`, found `()`</span><br><span class="line">  |    |</span><br><span class="line">  |    implicitly returns `()` as its body has no tail or `return` expression</span><br><span class="line">8 |     x + 1;</span><br><span class="line">  |          - help: consider removing this semicolon</span><br><span class="line"></span><br><span class="line">For more information about this error, try `rustc --explain E0308`.</span><br><span class="line">error: could not compile `functions` due to previous error</span><br></pre></td></tr></table></figure>
 
 <p>主要的错误信息 “mismatched types”（类型不匹配）揭示了这段代码的核心问题。函数 <code>plus_one</code> 的定义说明它要返回一个 <code>i32</code> 类型的值，不过语句并不会返回值，此值由单位类型 <code>()</code> 表示，表示不返回值。因为不返回值与函数定义相矛盾，从而出现一个错误。在输出中，Rust 提供了一条信息，可能有助于纠正这个错误：它建议删除分号，这将修复错误。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>Rust</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>编程开发</category></categories><tags><tag>Rust</tag><tag>语言基础</tag><tag>函数与表达式</tag></tags></entry>
   <entry>
     <title>20240410-Rust-05-控制流</title>
     <url>//blog/2024/09/rust-05-control-flow/</url>
@@ -757,14 +684,7 @@ ip rule del priority 10199 \
 <h3 id="if-let"><a href="#if-let" class="headerlink" title="if let"></a><code>if let</code></h3><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">some_option_value</span>: <span class="type">Option</span>&lt;<span class="type">u32</span>&gt; = <span class="title function_ invoke__">Some</span>(<span class="number">3</span>);</span><br><span class="line">    <span class="comment">// 这种写法可能有点违背直觉，但是=在这里代表模式匹配而不是赋值，Some(3)是要匹配的值</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> <span class="variable">Some</span>(<span class="number">3</span>) = some_option_value &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;匹配到数字3！&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;没有匹配到数字3！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="while-let"><a href="#while-let" class="headerlink" title="while let"></a><code>while let</code></h3><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">some_numbers</span> = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].<span class="title function_ invoke__">into_iter</span>();</span><br><span class="line">    <span class="comment">// 同上 if let</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">let</span> <span class="variable">Some</span>(num) = some_numbers.<span class="title function_ invoke__">next</span>() &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;获得数字：&#123;&#125;&quot;</span>, num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>Rust</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>编程开发</category></categories><tags><tag>Rust</tag><tag>语言基础</tag><tag>控制流</tag></tags></entry>
   <entry>
     <title>20240411-Rust-06-所有权</title>
     <url>//blog/2024/09/rust-06-ownership/</url>
@@ -903,14 +823,7 @@ ip rule del priority 10199 \
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">string</span> = <span class="string">&quot;hello&quot;</span>.<span class="title function_ invoke__">to_string</span>();</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 注意，这是个表达式，其所有权也被转移到某个临时变量了</span></span><br><span class="line">    string;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// string 不可用了</span></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">string</span> = <span class="string">&quot;hello&quot;</span>.<span class="title function_ invoke__">to_string</span>();</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// _是占位符，此处赋值会被忽略，所以并没有发生所有权转移</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">_</span> = string;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// string 仍然可用</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>Rust</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>编程开发</category></categories><tags><tag>Rust</tag><tag>所有权</tag><tag>内存管理</tag></tags></entry>
   <entry>
     <title>20240411-Rust-07-引用与借用</title>
     <url>//blog/2024/09/rust-07-references-and-borrowing/</url>
@@ -1006,14 +919,7 @@ ip rule del priority 10199 \
 <li>引用必须总是有效的。</li>
 </ul>
 <p>接下来，我们来看看另一种不同类型的引用：slice。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>Rust</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>编程开发</category></categories><tags><tag>Rust</tag><tag>引用与借用</tag><tag>内存管理</tag></tags></entry>
   <entry>
     <title>20240411-Rust-08-切片</title>
     <url>//blog/2024/09/rust-08-slices/</url>
@@ -1109,14 +1015,7 @@ ip rule del priority 10199 \
 
 <p>这个 slice 的类型是 <code>&amp;[i32]</code>。它跟字符串 slice 的工作方式一样，通过存储第一个集合元素的引用和一个集合总长度。你可以对其他所有集合使用这类 slice。第 8 章讲到 vector 时会详细讨论这些集合。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch04-03-slices.html#%E6%80%BB%E7%BB%93">总结</a></h2><p>所有权、借用和 slice 这些概念让 Rust 程序在编译时确保内存安全。Rust 语言提供了跟其他系统编程语言相同的方式来控制你使用的内存，但拥有数据所有者在离开作用域后自动清除其数据的功能意味着你无须额外编写和调试相关的控制代码。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>Rust</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>编程开发</category></categories><tags><tag>Rust</tag><tag>切片</tag><tag>引用与借用</tag></tags></entry>
   <entry>
     <title>20240413-Rust-09-结构体</title>
     <url>//blog/2024/09/rust-09-structs/</url>
@@ -1192,14 +1091,7 @@ ip rule del priority 10199 \
 
 <p>在这个例子中，<code>TestConfig</code> 类单元结构体用于创建和传递测试配置，即使它实际上不包含任何数据。这种方法可以用于在测试代码中传递配置标记，而无需关心具体的配置数据。</p>
 <p>总之，类单元结构体在Rust中是一种用于表示没有数据只有类型的结构体。它们在作为标记、实现特质等方面提供了简洁而强大的用途。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>Rust</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>编程开发</category></categories><tags><tag>Rust</tag><tag>结构体</tag><tag>数据类型</tag></tags></entry>
   <entry>
     <title>20240414-C++-Concepts</title>
     <url>//blog/2024/09/cpp-concepts/</url>
@@ -1226,14 +1118,7 @@ ip rule del priority 10199 \
 
 <p>在上面的代码中，<code>Addable</code>概念要求任何使用该概念的类型必须支持加法操作，并且结果可以转换为该类型。</p>
 <p>总的来说，概念使得模板代码的编写和使用变得更加直观和安全，丰富了C++的类型系统，提高了模板编程的整体体验。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>编程开发</category></categories><tags><tag>C++</tag><tag>C++20</tag><tag>模板编程</tag></tags></entry>
   <entry>
     <title>20240627-WebServer-0</title>
     <url>//blog/2024/09/webserver-0-introduction/</url>
@@ -1283,15 +1168,7 @@ ip rule del priority 10199 \
 <li><strong>CPU密集型优化</strong>：对于CPU密集型任务，可以通过优化算法、使用更高效的代码实现、利用多线程或分布式计算等方式来提高CPU的利用率。</li>
 </ul>
 <p>在实际开发中，Web服务器往往同时包含IO密集型和CPU密集型任务。因此，设计时需要综合考虑，合理分配资源，使用适当的技术和架构来平衡性能和资源消耗。例如，可以使用线程池来处理CPU密集型任务，而使用协程或异步IO来处理IO密集型任务，以达到最佳的性能表现。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>WebServer</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>编程开发</category></categories><tags><tag>C++</tag><tag>WebServer</tag><tag>并发编程</tag><tag>线程池</tag><tag>协程</tag></tags></entry>
   <entry>
     <title>ArchLinux KDE 一周使用小结</title>
     <url>//blog/2026/09/archlinux-kde-one-week-review/</url>
@@ -1332,20 +1209,12 @@ ip rule del priority 10199 \
 <h3 id="Android-模拟器"><a href="#Android-模拟器" class="headerlink" title="Android 模拟器"></a>Android 模拟器</h3><p>因为有在电脑上抄明日方舟作业的需求，而且我没有其他安卓机器无法 scrcpy，所以 Android 模拟器也是很有必要的。Linux 上的安卓模拟器方案主要就是 Anbox系（比如容器化了的版本reDroid）和虚拟机。</p>
 <p>经过多次尝试，我都没办法让 virtualbox、qemu-android-x86 和 reDroid 调用 RTX 2080 的显卡加速，但是 VMWare 却可以。总之在给 Android-X86 打了 vmware 的驱动之后，我在上面流畅地运行了明日方舟。</p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>感谢 AUR 和 V 社，让 Linux 生态如此丰富，我现在认为 Arch 已经完全可以成为我日常使用的系统了。总之希望系统不要滚炸然后一直用下去吧！</p>
-]]></content>
-  </entry>
+]]></content><categories><category>系统与运维</category></categories><tags><tag>Linux</tag><tag>Arch Linux</tag><tag>KDE</tag><tag>桌面环境</tag></tags></entry>
   <entry>
     <title>BMP图片格式</title>
     <url>//blog/2024/09/bmp-image-format/</url>
     <content><![CDATA[<p><img src="https://s2.loli.net/2024/09/20/hmtQkegKV2XfE45.png" alt="bmp.png"></p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>其他</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>编程开发</category></categories><tags><tag>图像格式</tag><tag>BMP</tag></tags></entry>
   <entry>
     <title>LeetCode-189.轮转数组</title>
     <url>//blog/2024/09/leetcode-189-rotate-array/</url>
@@ -1378,16 +1247,7 @@ ip rule del priority 10199 \
 <p>修正：有时候这样子不一定每个元素都能遍历到，比如输入<code>nums = [-1,-100,3,99], k = 2</code>时，那么应该再做处理，每当遍历又回到起点时，就把起点再往后挪一个，并对遍历元素数进行计数，这样就能保证每个元素都转到了。</p>
 </blockquote>
 <h4 id="代码：-2"><a href="#代码：-2" class="headerlink" title="代码："></a>代码：</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">rotate</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> len = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len &amp;&amp; count &lt; len; i++) &#123; <span class="comment">// 起点每次往后挪1位，直到count计数到所有元素都遍历过了</span></span><br><span class="line">        	<span class="type">int</span> index = i; <span class="comment">// 从起点开始转</span></span><br><span class="line">        	<span class="type">int</span> current_value = nums[i]; <span class="comment">// 从起点开始转</span></span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                <span class="type">int</span> next = (index + k) % len; <span class="comment">// 下次该从这里转了</span></span><br><span class="line">                <span class="built_in">swap</span>(current_value, nums[next]); <span class="comment">// 把当前的元素current_value转到next位置去，并把原来next位置上的元素保存到current_value下次转</span></span><br><span class="line">                index = next;</span><br><span class="line">                count++;</span><br><span class="line">            &#125; <span class="keyword">while</span> (index != i); <span class="comment">// 当index == i时表示又转回起点了，那么此时如果遍历完了就结束，否则把起点+1再继续遍历</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-        <tag>LeetCode</tag>
-        <tag>C++</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>算法与数据结构</category></categories><tags><tag>LeetCode</tag><tag>数组</tag><tag>原地算法</tag></tags></entry>
   <entry>
     <title>LeetCode-80.删除有序数组中的重复项II</title>
     <url>//blog/2024/09/leetcode-80-remove-duplicates-ii/</url>
@@ -1422,15 +1282,7 @@ ip rule del priority 10199 \
 
 <p>最后拓展一下，按照上面的思路，那么如果是要求重复不超过<code>k</code>次，那么就应该是这样：</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">removeDuplicates</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> index = <span class="number">0</span>; <span class="comment">// 和上面的slow，index是一样的</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> num : nums) &#123;</span><br><span class="line">            <span class="keyword">if</span> (index &lt; k || nums[index - k] != num) &#123; <span class="comment">// 只有重复不超过k次的元素才能留下来，超过的部分就跳过</span></span><br><span class="line">                nums[index++] = num; </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> index;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-        <tag>LeetCode</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>算法与数据结构</category></categories><tags><tag>LeetCode</tag><tag>数组</tag><tag>双指针</tag><tag>原地算法</tag></tags></entry>
   <entry>
     <title>Linux内存分页及虚拟地址到物理地址的计算</title>
     <url>//blog/2024/09/linux-memory-paging-va-to-pa/</url>
@@ -1438,15 +1290,7 @@ ip rule del priority 10199 \
 <li>MMU(内存管理单元): MMU的主要作用是地址的转换，将虚拟地址转换为物理地址。不连续的物理地址也可以映射为连续的虚拟地址。</li>
 <li>待续。。。</li>
 </ul>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-        <tag>操作系统</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>系统与运维</category></categories><tags><tag>Linux</tag><tag>操作系统</tag><tag>内存管理</tag><tag>虚拟内存</tag></tags></entry>
   <entry>
     <title>Linux内核态赋予进程root权限</title>
     <url>//blog/2024/09/linux-kernel-root-privilege/</url>
@@ -1500,14 +1344,7 @@ ip rule del priority 10199 \
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">kuid_t</span>		uid;		<span class="comment">/* real UID of the task */</span></span><br><span class="line"><span class="type">kgid_t</span>		gid;		<span class="comment">/* real GID of the task */</span></span><br><span class="line"><span class="type">kuid_t</span>		suid;		<span class="comment">/* saved UID of the task */</span></span><br><span class="line"><span class="type">kgid_t</span>		sgid;		<span class="comment">/* saved GID of the task */</span></span><br><span class="line"><span class="type">kuid_t</span>		euid;		<span class="comment">/* effective UID of the task */</span></span><br><span class="line"><span class="type">kgid_t</span>		egid;		<span class="comment">/* effective GID of the task */</span></span><br><span class="line"><span class="type">kuid_t</span>		fsuid;		<span class="comment">/* UID for VFS ops */</span></span><br><span class="line"><span class="type">kgid_t</span>		fsgid;		<span class="comment">/* GID for VFS ops */</span></span><br></pre></td></tr></table></figure>
 
 <p>至此，就已经将一个进程提权至<code>root</code>了。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>系统与运维</category></categories><tags><tag>Linux</tag><tag>操作系统</tag><tag>内核</tag><tag>权限管理</tag></tags></entry>
   <entry>
     <title>MAAREADME</title>
     <url>//blog/2026/09/maa-readme/</url>
@@ -1652,8 +1489,7 @@ ip rule del priority 10199 \
 <h2 id="广告"><a href="#广告" class="headerlink" title="广告"></a>广告</h2><p>用户交流 QQ 群：<a href="https://ota.maa.plus/MaaAssistantArknights/api/qqgroup/index.html">MAA 使用 &amp; 粥游交流 QQ 群</a><br>用户交流 TG 群：<a href="https://t.me/+Mgc2Zngr-hs3ZjU1">Telegram 群</a><br>自动战斗 JSON 作业分享：<a href="https://prts.plus/">prts.plus</a> 或 <a href="http://抄作业.com/">抄作业.com</a><br>Bilibili 直播间：<a href="https://live.bilibili.com/2808861">直播间</a> 每晚直播敲代码，近期很长一段时间应该都是在写本软件~  </p>
 <p>技术群（舟无关、禁水）：<a href="https://jq.qq.com/?_wv=1027&k=ypbzXcA2">内卷地狱！(QQ 群)</a><br>开发者群：<a href="https://jq.qq.com/?_wv=1027&k=JM9oCk3C">QQ 群</a>  </p>
 <p>如果觉得软件对你有帮助，帮忙点个 Star 吧！~（网页最上方右上角的小星星），这就是对我们最大的支持了！</p>
-]]></content>
-  </entry>
+]]></content><categories><category>游戏与实践</category></categories><tags><tag>MAA</tag><tag>明日方舟</tag><tag>游戏自动化</tag></tags></entry>
   <entry>
     <title>Markdown Editor</title>
     <url>//blog/2024/07/markdown-editor/</url>
@@ -1920,11 +1756,7 @@ ip rule del priority 10199 \
 <h3 id="绘制流程图-Flowchart"><a href="#绘制流程图-Flowchart" class="headerlink" title="绘制流程图 Flowchart"></a>绘制流程图 Flowchart</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">st=&gt;start: 用户登陆</span><br><span class="line">op=&gt;operation: 登陆操作</span><br><span class="line">cond=&gt;condition: 登陆成功 Yes or No?</span><br><span class="line">e=&gt;end: 进入后台</span><br><span class="line"></span><br><span class="line">st-&gt;op-&gt;cond</span><br><span class="line">cond(yes)-&gt;e</span><br><span class="line">cond(no)-&gt;op</span><br></pre></td></tr></table></figure>
 <h3 id="绘制序列图-Sequence-Diagram"><a href="#绘制序列图-Sequence-Diagram" class="headerlink" title="绘制序列图 Sequence Diagram"></a>绘制序列图 Sequence Diagram</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Andrew-&gt;China: Says Hello </span><br><span class="line">Note right of China: China thinks\nabout it </span><br><span class="line">China--&gt;Andrew: How are you? </span><br><span class="line">Andrew-&gt;&gt;China: I am good thanks!</span><br></pre></td></tr></table></figure>
 
-<h3 id="End"><a href="#End" class="headerlink" title="End"></a>End</h3>]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-  </entry>
+<h3 id="End"><a href="#End" class="headerlink" title="End"></a>End</h3>]]></content><categories><category>软件与工具</category></categories><tags><tag>Markdown</tag><tag>Editor.md</tag><tag>编辑器</tag></tags></entry>
   <entry>
     <title>ROCO乐园宠获取方式一览</title>
     <url>//blog/2024/09/roco-park-pets-guide/</url>
@@ -1967,15 +1799,7 @@ ip rule del priority 10199 \
 <li>童梦迪莫：<br>获得方式：收集10只乐园专属宠物</li>
 </ul>
 <p>仙踪宝儿：<br>获得方式：与100只宠物达成友好关系</p>
-]]></content>
-      <categories>
-        <category>杂谈</category>
-      </categories>
-      <tags>
-        <tag>洛克王国</tag>
-        <tag>游戏</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>游戏与实践</category></categories><tags><tag>洛克王国</tag><tag>游戏攻略</tag></tags></entry>
   <entry>
     <title>ReDroid MAA：在Linux下游玩明日方舟</title>
     <url>//blog/2026/09/redroid-maa-arknights-on-linux/</url>
@@ -2126,8 +1950,7 @@ ip rule del priority 10199 \
 <p>配置好后只需要一行命令就可以执行脚本了</p>
 <p>至此，我们终于可以愉快的挂机了，再也不用担心体力被浪费了（雾</p>
 <p>由于ReDroid是基于Dokcer的，这也意味着可以将其配置到服务器上，就可以实现24小时自动挂机了。不过，要想流畅的运行方舟，最好还是有4G以上的内存，目前我的服务器还没有这么大的内存，之后有机会再尝试吧。</p>
-]]></content>
-  </entry>
+]]></content><categories><category>游戏与实践</category></categories><tags><tag>ReDroid</tag><tag>Docker</tag><tag>MAA</tag><tag>明日方舟</tag><tag>云手机</tag></tags></entry>
   <entry>
     <title>TigerVNC 锁屏问题解决方案</title>
     <url>//blog/2026/09/tigervnc-lock-screen-fix/</url>
@@ -2187,8 +2010,7 @@ ip rule del priority 10199 \
 </tr>
 </tbody></table>
 <p>检查最近锁屏记录：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">journalctl -u systemd-logind --since <span class="string">&quot;1 hour ago&quot;</span></span><br></pre></td></tr></table></figure>]]></content>
-  </entry>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">journalctl -u systemd-logind --since <span class="string">&quot;1 hour ago&quot;</span></span><br></pre></td></tr></table></figure>]]></content><categories><category>系统与运维</category></categories><tags><tag>Linux</tag><tag>VNC</tag><tag>TigerVNC</tag><tag>远程桌面</tag><tag>故障排查</tag></tags></entry>
   <entry>
     <title>Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置</title>
     <url>//blog/2026/09/ubuntu-gnome-tigervnc-setup/</url>
@@ -2234,20 +2056,17 @@ ip rule del priority 10199 \
 <p>然后连接 localhost:5901。</p>
 <h4 id="限制访问-IP："><a href="#限制访问-IP：" class="headerlink" title="限制访问 IP："></a>限制访问 IP：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ufw allow from 192.168.1.100 to any port 5901</span><br></pre></td></tr></table></figure>
 <p>按照以上步骤，你可以在 Ubuntu 上快速搭建一个支持多用户的 TigerVNC 远程桌面服务。</p>
-]]></content>
-  </entry>
+]]></content><categories><category>系统与运维</category></categories><tags><tag>Ubuntu</tag><tag>GNOME</tag><tag>VNC</tag><tag>TigerVNC</tag><tag>远程桌面</tag></tags></entry>
   <entry>
     <title>apatch修补boot</title>
     <url>//blog/2026/09/apatch-patch-boot/</url>
-    <content><![CDATA[]]></content>
-  </entry>
+    <content><![CDATA[]]></content><categories><category>软件与工具</category></categories><tags><tag>Android</tag><tag>APatch</tag></tags></entry>
   <entry>
     <title>ffmpeg直播推流</title>
     <url>//blog/2026/09/ffmpeg-live-streaming/</url>
     <content><![CDATA[<p>安装 ffmpeg<br>ffmpeg -v
  </p>
-]]></content>
-  </entry>
+]]></content><categories><category>软件与工具</category></categories><tags><tag>FFmpeg</tag><tag>直播推流</tag></tags></entry>
   <entry>
     <title>linuxQQ安装后双击启动无响应,提示追踪与中断点陷阱 (核心已转储)</title>
     <url>//blog/2026/09/linuxqq-wont-start-core-dump/</url>
@@ -2303,8 +2122,7 @@ ip rule del priority 10199 \
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> sysctl kernel.unprivileged_userns_clone=1</span><br></pre></td></tr></table></figure>
 <p>验证是否修复</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 检查 QQ 进程</span></span><br><span class="line">ps aux | grep -i qq | grep -v grep</span><br><span class="line"><span class="comment"># 应显示普通用户权限</span></span><br></pre></td></tr></table></figure>
-]]></content>
-  </entry>
+]]></content><categories><category>软件与工具</category></categories><tags><tag>Linux</tag><tag>QQ</tag><tag>Electron</tag><tag>故障排查</tag></tags></entry>
   <entry>
     <title>ubuntu20.04 update to 22.04</title>
     <url>//blog/2024/07/ubuntu-20-04-to-22-04-upgrade/</url>
@@ -2333,11 +2151,7 @@ ip rule del priority 10199 \
 <p>更新包信息并升级系统：</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get update</span><br><span class="line"><span class="built_in">sudo</span> apt-get upgrade</span><br><span class="line"><span class="built_in">sudo</span> apt-get dist-upgrade</span><br></pre></td></tr></table></figure>
 <p>完成这些步骤后，系统应该能够顺利升级到更新的版本。如果在任何一步遇到错误，请提供详细的错误信息以便进一步诊断。</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-  </entry>
+]]></content><categories><category>系统与运维</category></categories><tags><tag>Linux</tag><tag>Ubuntu</tag><tag>系统升级</tag></tags></entry>
   <entry>
     <title>vnc viwer reading</title>
     <url>//blog/2026/09/vnc-viewer-notes/</url>
@@ -2353,8 +2167,7 @@ ip rule del priority 10199 \
 安装完VNC Viewer后，输入你的服务器的IP地址和显示号（例如，192.168.1.2:1），然后输入你之前设置的密码。
 注意：别忘了在服务器防火墙中开放VNC服务器所使用的端口（默认为5900+显示号）。例如，如果你的显示号为1，那么你需要开放5901端口。
 </code></pre>
-]]></content>
-  </entry>
+]]></content><categories><category>系统与运维</category></categories><tags><tag>Ubuntu</tag><tag>VNC</tag><tag>LXDE</tag><tag>远程桌面</tag></tags></entry>
   <entry>
     <title>云服务器Debian12根分区扩容记录</title>
     <url>//blog/2025/04/cloud-debian12-root-resize/</url>
@@ -2462,16 +2275,7 @@ ip rule del priority 10199 \
     visibility: visible;
     opacity: 1;
 }
-</style>]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>服务器运维</tag>
-        <tag>Debian</tag>
-        <tag>扩容</tag>
-      </tags>
-  </entry>
+</style>]]></content><categories><category>系统与运维</category></categories><tags><tag>Linux</tag><tag>Debian</tag><tag>磁盘扩容</tag><tag>LVM</tag></tags></entry>
   <entry>
     <title>使用 redroid 玩耍 Arknights</title>
     <url>//blog/2026/09/redroid-arknights/</url>
@@ -2532,8 +2336,7 @@ ip rule del priority 10199 \
 <p>顺便一提，如果跑日服比较卡顿的话，可以将 <code>/opt/maa/resource/config.json</code> 复制到 <code>/opt/maa/resource/global/YoStarJP/resource/config.json</code>，然后编辑其中的 <code>taskDelay</code> 属性，让 MAA 操作的慢一点，这样可以减少 MAA 识别失败的几率。</p>
 <p>Good Luck &amp; Have Fun!</p>
 <h2 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h2><p>少女祈祷中…</p>
-]]></content>
-  </entry>
+]]></content><categories><category>游戏与实践</category></categories><tags><tag>ReDroid</tag><tag>Docker</tag><tag>Android</tag><tag>MAA</tag><tag>明日方舟</tag></tags></entry>
   <entry>
     <title>在Linux用ReDroid玩FGO</title>
     <url>//blog/2026/09/redroid-fgo-on-linux/</url>
@@ -2740,13 +2543,11 @@ ip rule del priority 10199 \
 <li><a href="https://github.com/remote-android/redroid-doc/issues/282">redroid nVidia GPU support #282</a></li>
 <li><a href="https://groups.google.com/g/android-rpi/c/xb2fwTQbUYw">Install GApps Manually - Google Groups</a></li>
 </ul>
-]]></content>
-  </entry>
+]]></content><categories><category>游戏与实践</category></categories><tags><tag>ReDroid</tag><tag>Docker</tag><tag>Android</tag><tag>FGO</tag><tag>云手机</tag></tags></entry>
   <entry>
     <title>安装office办公三件套</title>
     <url>//blog/2026/09/install-office-suite/</url>
-    <content><![CDATA[<h3 id="白嫖office办公三件套"><a href="#白嫖office办公三件套" class="headerlink" title="白嫖office办公三件套"></a>白嫖office办公三件套</h3>]]></content>
-  </entry>
+    <content><![CDATA[<h3 id="白嫖office办公三件套"><a href="#白嫖office办公三件套" class="headerlink" title="白嫖office办公三件套"></a>白嫖office办公三件套</h3>]]></content><categories><category>软件与工具</category></categories><tags><tag>Office</tag><tag>办公软件</tag></tags></entry>
   <entry>
     <title>安装x11vnc远程桌面</title>
     <url>//blog/2024/09/install-x11vnc-remote-desktop/</url>
@@ -2783,14 +2584,7 @@ ip rule del priority 10199 \
 <h3 id="2-成功登录系统"><a href="#2-成功登录系统" class="headerlink" title="2.成功登录系统"></a>2.成功登录系统</h3><p>无其他错误，重新加载 systemd 守护进程并重启 x11vnc 服务即可</p>
 <h4 id="重新加载-systemd-守护进程：-1"><a href="#重新加载-systemd-守护进程：-1" class="headerlink" title="重新加载 systemd 守护进程："></a><strong>重新加载 systemd 守护进程</strong>：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl daemon-reload</span><br></pre></td></tr></table></figure>
 
-<h4 id="启用并启动-x11vnc-服务：-1"><a href="#启用并启动-x11vnc-服务：-1" class="headerlink" title="启用并启动 x11vnc 服务："></a><strong>启用并启动 x11vnc 服务</strong>：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> x11vnc.service</span><br><span class="line"><span class="built_in">sudo</span> systemctl start x11vnc.service</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
+<h4 id="启用并启动-x11vnc-服务：-1"><a href="#启用并启动-x11vnc-服务：-1" class="headerlink" title="启用并启动 x11vnc 服务："></a><strong>启用并启动 x11vnc 服务</strong>：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> x11vnc.service</span><br><span class="line"><span class="built_in">sudo</span> systemctl start x11vnc.service</span><br></pre></td></tr></table></figure>]]></content><categories><category>系统与运维</category></categories><tags><tag>Linux</tag><tag>VNC</tag><tag>x11vnc</tag><tag>远程桌面</tag></tags></entry>
   <entry>
     <title>搭建博客 (Hexo github butterfly主题)</title>
     <url>//blog/2026/09/build-blog-hexo-butterfly/</url>
@@ -2838,8 +2632,7 @@ ip rule del priority 10199 \
 <p>npm install hexo-generator-searchdb –save</p>
 </blockquote>
 <h4 id="8-2-全局配置文件-config-yml，新增"><a href="#8-2-全局配置文件-config-yml，新增" class="headerlink" title="8.2 全局配置文件_config.yml，新增"></a>8.2 全局配置文件_config.yml，新增</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">    path: search.xml</span><br><span class="line">    field: post</span><br><span class="line">    format: html</span><br><span class="line">    limit: 10000</span><br></pre></td></tr></table></figure>
-<h4 id="8-3-hexo主题配置文件（-themes-next-config-yml），修改local-search的enable为true"><a href="#8-3-hexo主题配置文件（-themes-next-config-yml），修改local-search的enable为true" class="headerlink" title="8.3 hexo主题配置文件（\themes\next_config.yml），修改local_search的enable为true"></a>8.3 hexo主题配置文件（\themes\next_config.yml），修改local_search的enable为true</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Local search</span><br><span class="line"># Dependencies: https://github.com/flashlab/hexo-generator-search</span><br><span class="line">local_search:</span><br><span class="line">    enable: true</span><br><span class="line">    # if auto, trigger search by changing input</span><br><span class="line">    # if manual, trigger search by pressing enter key or search button</span><br><span class="line">    trigger: auto</span><br><span class="line">    # show top n results per article, show all results by setting to -1</span><br><span class="line">    top_n_per_article: 1</span><br></pre></td></tr></table></figure>]]></content>
-  </entry>
+<h4 id="8-3-hexo主题配置文件（-themes-next-config-yml），修改local-search的enable为true"><a href="#8-3-hexo主题配置文件（-themes-next-config-yml），修改local-search的enable为true" class="headerlink" title="8.3 hexo主题配置文件（\themes\next_config.yml），修改local_search的enable为true"></a>8.3 hexo主题配置文件（\themes\next_config.yml），修改local_search的enable为true</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Local search</span><br><span class="line"># Dependencies: https://github.com/flashlab/hexo-generator-search</span><br><span class="line">local_search:</span><br><span class="line">    enable: true</span><br><span class="line">    # if auto, trigger search by changing input</span><br><span class="line">    # if manual, trigger search by pressing enter key or search button</span><br><span class="line">    trigger: auto</span><br><span class="line">    # show top n results per article, show all results by setting to -1</span><br><span class="line">    top_n_per_article: 1</span><br></pre></td></tr></table></figure>]]></content><categories><category>软件与工具</category></categories><tags><tag>Hexo</tag><tag>GitHub Pages</tag><tag>Butterfly</tag><tag>博客搭建</tag></tags></entry>
   <entry>
     <title>操作系统知识梳理</title>
     <url>//blog/2024/09/operating-systems-overview/</url>
@@ -3781,17 +3574,9 @@ producerconsumer.insert(item);
 <p>4、循环缓冲</p>
 <p>5、缓冲池</p>
 <p>由系统中共用的缓冲区组成。这些缓冲区可以分为：空缓冲队列、装满输入数据的缓冲队列、装满输出数据的缓冲队列</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>操作系统</tag>
-      </tags>
-  </entry>
+]]></content><categories><category>系统与运维</category></categories><tags><tag>操作系统</tag><tag>进程管理</tag><tag>内存管理</tag><tag>文件系统</tag></tags></entry>
   <entry>
     <title>构建自己的服务器项目</title>
     <url>//blog/2026/09/build-own-server-project/</url>
-    <content><![CDATA[]]></content>
-  </entry>
+    <content><![CDATA[]]></content><categories><category>编程开发</category></categories><tags><tag>服务端开发</tag><tag>项目实践</tag></tags></entry>
 </search>

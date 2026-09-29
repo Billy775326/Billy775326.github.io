@@ -3,13 +3,14 @@ title: Debian多网卡Docker-MySQL回程路由排查
 date: 2026-09-29 12:00:00
 slug: debian-docker-mysql-multi-nic-routing
 categories:
-  - 教程
+  - 系统与运维
 tags:
   - Debian
   - Docker
   - MySQL
-  - 服务器运维
+  - 容器网络
   - 策略路由
+  - 故障排查
 ---
 
 # Debian 多网卡部署 Docker MySQL，为什么只有 eth0 的 IP 能连接？
