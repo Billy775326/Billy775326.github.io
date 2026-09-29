@@ -7896,3 +7896,8 @@ blockquote.pullquote.right {
 .hl-tools .hl-lang { text-transform: uppercase; letter-spacing: .08em; font-weight: 600; }
 .hl-tools .hl-copy { display: -webkit-inline-box; display: -ms-inline-flexbox; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; background: none; border: none; color: #9da5b4; font-size: 1em; padding: 0; -webkit-transition: color .2s; transition: color .2s; }
 .hl-tools .hl-copy:hover { color: #fff; }
+
+/* 2026-09-29 post-meta compact (visible seconds make the line long) */
+#post-meta .post-meta-separator { margin: 0 3px; }
+#post-meta .post-meta-label { margin: 0 1px 0 0; }
+#post-meta .post-meta-icon { margin-right: 2px; }
