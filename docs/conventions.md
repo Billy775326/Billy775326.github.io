@@ -64,6 +64,12 @@
 - 自定义 CSS 只追加在 `css/index.css` 末尾 `2026-09-29 pagination & footer tweaks` 区块,不改主题原有规则
 - 自定义 JS 只追加在 `js/main.js` 末尾 `2026-09-29 自定义补丁` 注释之后,不改主题代码
 
+## 品牌资产(logo / 头像)
+
+- 网站 logo 源文件:`upload/Billy_blog_logo.png`(335×335),由它生成 `img/favicon.png`(64×64)与 `img/favicon.ico`(16/32/48 多尺寸)
+- 用户头像源文件:`upload/me.jpg`,直接作为 `img/avatar.jpg` 使用
+- 换 logo/头像 = 重新生成上述 img/ 目标文件即可,**不需要改任何 HTML**(全站引用 /img/ 固定路径)
+
 ## 移动端
 
 - <768px:导航卡高 120px(桌面 150px)、双卡竖排;页脚两行居中

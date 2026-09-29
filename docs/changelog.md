@@ -35,3 +35,4 @@
 - MySQL 文章封面/插图确认换为 img.billy12.xyz 外链;清除已过时的"上传图床后替换 URI"注释(HTML+md)
 - **老文章侧栏"最新文章"批量刷新**(用户要求):43 篇文章页 + tags/categories 等共 149 页统一为真实最新 5 篇——MySQL(09-29)→ ArchLinux KDE → MAAREADME → ReDroid MAA → TigerVNC(并列时间戳 2026-09-10 15:29:21 时按用户 MySQL 页侧栏原顺序);时间到秒、封面按约定
 - 脚本:e:\tmp\blog_fix5b.py(幂等,当前判断比对前两篇 href)
+- **品牌资产更换(用户指定)**:`Billy_blog_logo.png` 做网站 logo(生成 64×64 favicon.png + 多尺寸 favicon.ico,替换原 32×32 模糊图);`me.jpg` 做用户头像(替换原 60×58 的 img/avatar.jpg);只改 img/ 二进制,HTML 零改动;约定写入 conventions.md「品牌资产」
