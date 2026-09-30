@@ -149,3 +149,4 @@
 - 教训:路径过滤要用 os.path.relpath 的首段判断,绝对路径首段是盘符,排除目录会全部失效;API 返回 src 已含完整链接时勿再拼 BASE(会域名翻倍)
 - **MySQL 文章页清理(用户问"有什么问题")**:①删除 3 条指向本地配图目录的遗留注释(封面/插图一/插图二,图床迁移后已无用);②导航卡方向纠正——「构建自己的服务器项目」发布于 09-10 早于本文(09-29),从「下一篇」位置改到「上一篇」(rel=prev + 左箭头),本文为最新文章故下一篇留空(单卡 flex 自动撑满)
 - **绑定自定义域名 iowill.com(用户指示"CNAME 到 iowill.com")**:仓库根新建 CNAME;全站 1311 处 `billy775326.github.io` → `iowill.com`(canonical/og:url/JSON-LD url/sitemap.xml/robots.txt/legacy-html,含 tools/ 三个维护脚本的 BASE 常量,防止下次维护打回旧域名);github.io 旧链接由 GitHub Pages 自动 301 到新域名。DNS 侧需用户自行配置:A 记录 `@` → 185.199.108.153/109/110/111(或 Cloudflare 顶点 CNAME 摊平)+ CNAME `www` → `billy775326.github.io`,并到仓库 Settings → Pages 填 iowill.com、开 HTTPS
+- iowill.com DNS 已由用户在 Cloudflare 配好(@ 4 条 A → GitHub Pages IP、www CNAME → billy775326.github.io,均橙色代理);线上核验:iowill.com 200 出站、www 与 github.io 均 301 跳转,域名绑定生效
