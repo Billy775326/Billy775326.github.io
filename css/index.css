@@ -7927,3 +7927,9 @@ blockquote.pullquote.right {
   [data-theme='dark'] #page-header.nav-fixed > #nav,
   [data-theme='dark'] #page-header.not-top-img > #nav { background: rgba(18, 20, 25, .72); }
 }
+
+/* Subtle Butterfly page backdrop; retain native dark surfaces. */
+body {
+  background: linear-gradient(120deg, rgba(73, 177, 245, .045), rgba(147, 112, 219, .035)), #f7f9fc;
+}
+[data-theme='dark'] body { background: var(--global-bg); }
