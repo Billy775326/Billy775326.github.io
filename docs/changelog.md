@@ -136,3 +136,14 @@
 - 侧栏"最新文章"维持各页原始状态,后续如需刷新需先解决主题生成的嵌套差异再单独方案
 - **时间可见文本到秒 + 紧凑(2026-09-29 用户要求"时间部分都要显示到秒,时间格式排紧密点")**:43 篇文章头部「发表于/更新于」可见文字由纯日期升级为 `YYYY-MM-DD HH:MM:SS`(北京时间),42 篇修复;`#post-meta` 分隔符/图标间距收紧(CSS 补丁区 `post-meta compact`)
 - **代码块回退 Butterfly 原生(2026-09-29 用户指示"代码块风格使用butterfly主题的代码块,整个博客主题都要基于butterfly主题")**:删除自定义暗色配色与 `.hl-tools` 工具栏(css/index.css 补丁区 + js/main.js 补丁);原生工具栏由主题 `addHighlightTool` 按 `GLOBAL_CONFIG.highlight`(highlightCopy/highlightLang=true)自动生成;总原则已写入 conventions.md 首节
+
+## 2026-09-30
+
+### 缩略图迁移图床(用户指示"使用图床啊" + 上传规则)
+- **规则(用户指定)**:封面/正文图上传到 `<文章分类>/<文章标题>/`,缩略图到 `<文章分类>/<文章标题>/thumbs/`;命名 `cover`/`body`(多插图 body1/body2 递增);全站默认封面缩略图单独放 `默认封面/thumbs/cover.jpg`
+- 图床 = img.billy12.xyz(CloudFlare ImgBed/cfbed),API 文档 https://cfbed.sanyue.de/api/;Token 由用户提供,存 `e:/tmp/bed_token.txt`,**严禁入库**
+- 本次上传 5 张缩略图(1Panel/Focal-Fossa/ROCO/TigerVNC/千与千寻;`Linux系统根分区满了` 0 引用成孤儿,未上传),图床把目录名空格转下划线
+- 全站替换 `/upload/thumbs/…` → 图床 URL:正文 149 页 1038 处 + legacy-html 12 页 48 处(legacy-html 同被 GitHub Pages 托管,一并替换防挂图);残留验证 0
+- **删除本地 `upload/thumbs/` 目录**(git rm);此后图片一律走图床,仓库不放图片文件
+- 新增 `scripts/` 目录(图床专用脚本,与 tools/ 站点维护脚本分开):`thumb_bed_plan.py`(扫描归属生成上传计划)、`bed_upload_thumbs.py`(上传,默认 dry-run,--go 执行,--check 列库)、`bed_replace_refs.py`(引用替换,默认 dry-run);token/计划/映射均在 e:/tmp(BED_STATE 可改),仓库内只有代码
+- 教训:路径过滤要用 os.path.relpath 的首段判断,绝对路径首段是盘符,排除目录会全部失效;API 返回 src 已含完整链接时勿再拼 BASE(会域名翻倍)

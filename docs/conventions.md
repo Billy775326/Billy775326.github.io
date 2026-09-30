@@ -44,10 +44,14 @@
 - 用户提供图床 URI 后，正文占位注释必须转换为实际 `<img>`（可使用 `<figure>` 与 `<figcaption>`）；仅替换注释中的 URI 不会显示图片。发布前检查 `#article-container img` 的数量及链接。
 
 - **文章没有专属配图时,封面默认用** `https://img.billy12.xyz/file/1786437586692_千与千寻.jpg`(og:image / JSON-LD / 导航卡 / 侧栏直接引用该外链)
-- `<img>`(导航卡/侧栏/相关推荐/首页卡)一律用 `upload/thumbs/` 缩略图
-- og:image / twitter:image / JSON-LD image / 分享 data-image 用原图或文章专属封面
-- 新增封面:现有图压缩,PIL `thumbnail ≤1000px`、JPEG q80,存 `upload/thumbs/<原名>.jpg`;若原图已 ≤100KB 且 ≤800px 宽可直接引用
-- `upload/` 中文文件名,HTML 引用需百分号编码;外链图床 URI 原样使用
+- **图片一律存图床 img.billy12.xyz(CloudFlare ImgBed,即 cfbed),仓库不放图片文件**(2026-09-30 用户指示"使用图床";本地 `upload/thumbs/` 已删除):
+  - 封面/正文图:`<分类>/<文章标题>/cover.<ext>`、`<分类>/<文章标题>/body<N>.<ext>`(多张插图 body1/body2 递增)
+  - 缩略图:`<分类>/<文章标题>/thumbs/cover.<ext>` 或 `thumbs/body<N>.<ext>`(先 PIL 压缩 ≤1000px、JPEG q80 再传)
+  - 全站默认封面缩略图(不属于单篇文章):`默认封面/thumbs/cover.jpg`
+  - 图床会把目录名中的空格转为下划线;中文目录可用,HTML 引用原样写中文 URL(浏览器自动百分号编码)
+- `<img>`(导航卡/侧栏/相关推荐/首页卡)用 thumbs 缩略图;og:image / twitter:image / JSON-LD image / data-image 用原图或文章专属封面
+- 上传/替换用仓库 `scripts/`(图床专用,与 tools/ 站点维护脚本分开):`thumb_bed_plan.py`(归属分析)→ `bed_upload_thumbs.py --go`(上传;API token 放 `e:/tmp/bed_token.txt`,**严禁提交入库**)→ `bed_replace_refs.py --go`(全站替换引用并验证残留=0);均默认 dry-run
+- cfbed API 文档:https://cfbed.sanyue.de/api/ (上传 POST /upload,Bearer 认证,uploadFolder/uploadNameType=origin/returnFormat=full)
 
 ## IP 与敏感信息(写技术文必读)
 
