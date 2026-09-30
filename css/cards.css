@@ -98,6 +98,22 @@
   }
 }
 
-/* Keep full publication timestamps together; categories may wrap below. */
-#recent-posts .post-meta-date { display: inline-block; white-space: nowrap; }
-#recent-posts .article-meta-wrap { line-height: 1.7; }
+/* Compact single-line publication date and category. */
+#recent-posts .recent-post-item > .recent-post-info > .article-meta-wrap {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 3px;
+  min-width: 0;
+  font-size: 11px;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+#recent-posts .post-meta-date { display: inline-flex; align-items: center; flex-shrink: 0; }
+#recent-posts .article-meta__categories { display: inline-flex; align-items: center; gap: 3px; min-width: 0; }
+#recent-posts .recent-post-item > .recent-post-info > .article-meta-wrap i { margin: 0 3px 0 0; flex-shrink: 0; }
+#recent-posts .recent-post-item > .recent-post-info > .article-meta-wrap .article-meta-separator { margin: 0; }
+#recent-posts .article-meta__categories a { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media screen and (max-width: 1200px) and (min-width: 901px) {
+  #recent-posts .recent-post-item div.recent-post-info.recent-post-info { padding-left: 22px; padding-right: 22px; }
+}
