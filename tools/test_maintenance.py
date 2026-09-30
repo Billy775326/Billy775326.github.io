@@ -17,6 +17,10 @@ with tempfile.TemporaryDirectory(prefix='blog-maintenance-') as temp:
     run('rebuild_taxonomy.py');run('update_footer_seo.py');run('verify_taxonomy.py')
     for rel,old in before.items():
         new=B((root/rel).read_text(encoding='utf8'),'html.parser')
+        info=new.select_one('.card-webinfo')
+        if info:
+            assert info.select_one('.item-count').text.strip()==str(len(json.loads((root/'content/taxonomy.json').read_text(encoding='utf8'))['posts']))
+            assert info.select_one('[data-lastpushdate]')['data-lastpushdate']==json.loads((root/'content/site-info.json').read_text(encoding='utf8'))['updated_at']
         for selector in ['#article-container','.post-title','#post-info .post-meta-date','.card-recent-post','#footer']:
             assert str(old.select_one(selector))==str(new.select_one(selector)),(rel,selector)
         if rel.parts[0] in ['tags','categories'] and old.select_one('.article-sort'):

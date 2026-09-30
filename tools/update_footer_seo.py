@@ -12,12 +12,21 @@ AUTHOR={'@type':'Person','@id':BASE+'/#author','name':'Billy','url':BASE+'/','sa
 
 def main():
     entries={};changed=0
+    article_count=len(json.loads((ROOT/"content/taxonomy.json").read_text(encoding="utf8"))["posts"])
+    updated_at=json.loads((ROOT/"content/site-info.json").read_text(encoding="utf8"))["updated_at"]
     for p in ROOT.rglob('*.html'):
         rel=p.relative_to(ROOT)
         if rel.parts[0] in ['upload','docs']:continue
         raw=p.read_text(encoding='utf8');s=B(raw,'html.parser')
         if not s.select_one('footer#footer'):continue
         before=raw
+        bounds=region(raw,'div','class','card-webinfo')
+        if bounds:
+            start,end=bounds
+            info=raw[start:end]
+            info=re.sub(r'(<div class="item-name">文章数目\s*:</div>\s*<div class="item-count">)\d+',lambda m:m[1]+str(article_count),info)
+            info=re.sub(r'data-lastpushdate="[^"]*"','data-lastpushdate="'+updated_at+'"',info,flags=re.I)
+            raw=raw[:start]+info+raw[end:]
         if p.name=='index.html' and rel.parts[0]!='legacy-html' and not s.select_one('meta[http-equiv="refresh"]'):
             path=p.parent.relative_to(ROOT).as_posix()
             canonical=BASE+('/' if path=='.' else '/'+quote(path,safe='/')+'/')
