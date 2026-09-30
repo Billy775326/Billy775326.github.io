@@ -68,7 +68,7 @@
 
 ## 页脚(全站统一)
 
-- 2026-09-29 最新要求：页脚契合 Butterfly 原生主题，采用 `footer-other / copyright / framework-info / footer_custom_text` 居中堆叠结构；不使用左右分栏品牌区或双层分隔卡。版权起始年份为 **2023**，保留简短介绍及文字导航。移除基于首篇文章日期计算的「本站已运行」天数。
+- 2026-09-29 最新要求：页脚契合 Butterfly 原生主题，采用 `footer-other / copyright / framework-info / footer_custom_text` 居中堆叠结构；不使用左右分栏品牌区或双层分隔卡。版权起始年份为 **2023**。2026-09-30 调整为版权与框架合并一行、图标导航一行，删除重复介绍；小屏允许自然换行。移除基于首篇文章日期计算的「本站已运行」天数。
 - 页脚导航提供归档、分类、标签、站点地图、作者 GitHub；语义化 `footer/nav`、键盘焦点、移动端换行，保留 Butterfly 深浅色变量。
 - SEO/GEO 基础维护：`python tools/update_footer_seo.py` 更新页脚、真实作者/文章 JSON-LD、sitemap.xml 和 robots.txt。站点地图不收录跳转页、历史独立页或维护文档；不伪造 lastmod，不添加隐藏关键词或承诺 AI 引用。
 
