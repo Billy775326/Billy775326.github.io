@@ -97,3 +97,7 @@
     margin: 0;
   }
 }
+
+/* Keep full publication timestamps together; categories may wrap below. */
+#recent-posts .post-meta-date { display: inline-block; white-space: nowrap; }
+#recent-posts .article-meta-wrap { line-height: 1.7; }

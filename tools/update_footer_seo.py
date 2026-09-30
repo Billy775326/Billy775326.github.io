@@ -1,6 +1,6 @@
 """Apply shared compact footer and factual structured data; generate sitemap."""
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime,timezone,timedelta
 from urllib.parse import quote
 import json,re,xml.etree.ElementTree as ET
 from bs4 import BeautifulSoup as B
@@ -20,6 +20,32 @@ def main():
         raw=p.read_text(encoding='utf8');s=B(raw,'html.parser')
         if not s.select_one('footer#footer'):continue
         before=raw
+        # Card timestamps use the machine-readable instant in China Standard Time.
+        card_times=s.select('.recent-post-item time[datetime], .aside-list-item time[datetime], .article-sort-item time[datetime]')
+        replacements={}
+        for t in card_times:
+            value=t['datetime']
+            instant=datetime.fromisoformat(value.replace('Z','+00:00'))
+            if instant.tzinfo is None:
+                instant=instant.replace(tzinfo=timezone(timedelta(hours=8)))
+            replacements[value]=instant.astimezone(timezone(timedelta(hours=8))).strftime('%Y/%m/%d %H:%M:%S')
+        def card_time(match):
+            attrs=match[1]
+            value=re.search(r'datetime=["\']([^"\']+)',attrs)
+            if value and value[1] in replacements:
+                return '<time'+attrs+'>'+replacements[value[1]]+'</time>'
+            return match[0]
+        # Restrict updates to card regions; article metadata remains untouched.
+        for tag,cls in [('div','recent-post-item'),('div','aside-list-item'),('div','article-sort-item')]:
+            cursor=0
+            while True:
+                bounds=region(raw[cursor:],tag,'class',cls)
+                if not bounds:break
+                start,end=cursor+bounds[0],cursor+bounds[1]
+                block=re.sub(r'<time(\b[^>]*)>.*?</time>',card_time,raw[start:end],flags=re.S)
+                raw=raw[:start]+block+raw[end:]
+                cursor=start+len(block)
+
         bounds=region(raw,'div','class','card-webinfo')
         if bounds:
             start,end=bounds

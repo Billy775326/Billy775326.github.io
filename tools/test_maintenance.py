@@ -27,7 +27,7 @@ with tempfile.TemporaryDirectory(prefix='blog-maintenance-') as temp:
             old_images={a['href']:a.img['src'] for a in old.select('a.article-sort-item-img')}
             new_images={a['href']:a.img['src'] for a in new.select('a.article-sort-item-img')}
             assert old_images==new_images,(rel,'thumbnails')
-            assert all(re.fullmatch(r'\d{4}-\d{2}-\d{2}',t.text) for t in new.select('.article-sort time'))
+            assert all(re.fullmatch(r'\d{4}/\d{2}/\d{2} \d{2}:\d{2}:\d{2}',t.text) for t in new.select('.article-sort time'))
     urls=[]
     for name,expected in [('index.html',18),('page/2/index.html',18),('page/3/index.html',7)]:
         s=B((root/name).read_text(encoding='utf8'),'html.parser');cards=s.select('.recent-post-item a.article-title')
