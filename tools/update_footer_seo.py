@@ -43,6 +43,7 @@ def main():
                 if not bounds:break
                 start,end=cursor+bounds[0],cursor+bounds[1]
                 block=re.sub(r'<time(\b[^>]*)>.*?</time>',card_time,raw[start:end],flags=re.S)
+                block=re.sub(r'<span\b[^>]*class=["\']article-meta-label["\'][^>]*>\s*发表于\s*</span>', '', block)
                 raw=raw[:start]+block+raw[end:]
                 cursor=start+len(block)
 
