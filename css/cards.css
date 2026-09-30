@@ -16,14 +16,14 @@
   height: auto;
   border-radius: 12px;
   overflow: hidden;
-  outline: 1px solid rgba(7, 17, 27, 0.14);
+  outline: 1px solid rgba(7, 17, 27, 0.06);
   outline-offset: -1px;
   box-shadow: var(--card-shadow);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 [data-theme="dark"] #recent-posts div.recent-post-item.recent-post-item {
-  outline-color: rgba(255, 255, 255, 0.18);
+  outline-color: rgba(255, 255, 255, 0.08);
 }
 
 #recent-posts div.recent-post-item.recent-post-item:hover {
