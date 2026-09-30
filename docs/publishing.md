@@ -2,6 +2,24 @@
 
 本仓库是 Hexo + Butterfly 的静态构建产物，没有 Hexo 源工程。Markdown 是源稿记录，**新增 Markdown 不会生成页面**。以下命令均在仓库根目录执行；先阅读 [conventions.md](conventions.md)，再检查工作区，保留不属于本次发布的修改和未跟踪文件。
 
+## 配套脚本与使用说明
+
+脚本已随仓库上传，完整安装、命令示例、参数、输出及排错见 [维护脚本使用说明](../tools/README.md)。
+
+- [分类标签重建脚本](../tools/rebuild_taxonomy.py)
+- [页脚、网站资讯与 SEO 同步脚本](../tools/update_footer_seo.py)
+- [分类与数据校验脚本](../tools/verify_taxonomy.py)
+- [隔离回归检查脚本](../tools/test_maintenance.py)
+- [Python 依赖清单](../tools/requirements.txt)
+
+请克隆或下载完整仓库；脚本依赖仓库数据及彼此的模块，不能只下载单个 .py。安装依赖：
+
+```powershell
+python -m pip install -r tools/requirements.txt
+```
+
+完成以下手工准备后，再按第 5 节顺序运行。脚本在本地运行，上传到 GitHub Pages 不会自动执行。
+
 ## 1. 发布前准备
 
 - 确定标题、稳定且唯一的 slug、摘要、封面、发布时间和修改时间。文章 URL 为 `/blog/YYYY/MM/<slug>/`，年月与发布时间对应。
