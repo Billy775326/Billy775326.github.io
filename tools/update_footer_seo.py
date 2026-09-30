@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup as B
 from rebuild_taxonomy import ROOT,region
 from update_recent_posts import update_recent_posts
 
-BASE='https://billy775326.github.io'
+BASE='https://iowill.com'
 FOOTER='''<footer id="footer" aria-label="网站页脚"><div class="footer-other"><div class="footer-credits"><span class="copyright">© 2023–2026 By <a href="/">Billy</a></span><span class="framework-info">由 <a href="https://hexo.io" rel="noopener" target="_blank">Hexo</a> 驱动<span class="footer-separator" aria-hidden="true">·</span><a href="https://github.com/jerryc127/hexo-theme-butterfly" rel="noopener" target="_blank">Butterfly</a> 主题</span></div><div class="footer_custom_text"><nav aria-label="页脚导航"><a href="/about/"><i class="fas fa-user" aria-hidden="true"></i>关于</a><a href="/archives/"><i class="fas fa-archive" aria-hidden="true"></i>归档</a><a href="/categories/"><i class="fas fa-folder-open" aria-hidden="true"></i>分类</a><a href="/tags/"><i class="fas fa-tags" aria-hidden="true"></i>标签</a><a href="/sitemap.xml"><i class="fas fa-sitemap" aria-hidden="true"></i>站点地图</a><a href="https://github.com/Billy775326" rel="me noopener" target="_blank"><i class="fab fa-github" aria-hidden="true"></i>GitHub</a></nav></div></div></footer>'''
 AUTHOR={'@type':'Person','@id':BASE+'/#author','name':'Billy','url':BASE+'/','sameAs':['https://github.com/Billy775326']}
 

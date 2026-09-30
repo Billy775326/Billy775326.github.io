@@ -1,16 +1,16 @@
 <!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Billy 的博客 | Billy 的博客</title><meta name="author" content="Billy"><meta name="copyright" content="Billy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前期准备一个Keil工程根据主机平台和目标平台选择并安装交叉编译工具链，目标平台为ARM的直接官网下载：Arm GNU 工具链下载 – Arm Developer。如本文选择安装CMake、Ninja(非必须，因为MinGW支持Unix make)、CLion(或VSCode等其他支持CMake工程的IDE)创建CMake工程可以直接将原工程复制一份，或者新建一份并将源文件按照Keil分组(其实爱">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Billy 的博客">
-<meta property="og:url" content="https://billy775326.github.io/legacy-html/%E5%B0%86Keil%E5%B7%A5%E7%A8%8B%E7%A7%BB%E6%A4%8D%E4%B8%BACMake%E5%B7%A5%E7%A8%8B.html">
+<meta property="og:url" content="https://iowill.com/legacy-html/%E5%B0%86Keil%E5%B7%A5%E7%A8%8B%E7%A7%BB%E6%A4%8D%E4%B8%BACMake%E5%B7%A5%E7%A8%8B.html">
 <meta property="og:site_name" content="Billy 的博客">
 <meta property="og:description" content="前期准备一个Keil工程根据主机平台和目标平台选择并安装交叉编译工具链，目标平台为ARM的直接官网下载：Arm GNU 工具链下载 – Arm Developer。如本文选择安装CMake、Ninja(非必须，因为MinGW支持Unix make)、CLion(或VSCode等其他支持CMake工程的IDE)创建CMake工程可以直接将原工程复制一份，或者新建一份并将源文件按照Keil分组(其实爱">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://billy775326.github.io/img/avatar.jpg">
+<meta property="og:image" content="https://iowill.com/img/avatar.jpg">
 <meta property="article:published_time" content="2026-09-10T07:30:01.290Z">
 <meta property="article:modified_time" content="2026-09-10T07:30:01.290Z">
 <meta property="article:author" content="Billy">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://billy775326.github.io/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://billy775326.github.io/legacy-html/%E5%B0%86Keil%E5%B7%A5%E7%A8%8B%E7%A7%BB%E6%A4%8D%E4%B8%BACMake%E5%B7%A5%E7%A8%8B.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+<meta name="twitter:image" content="https://iowill.com/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://iowill.com/legacy-html/%E5%B0%86Keil%E5%B7%A5%E7%A8%8B%E7%A7%BB%E6%A4%8D%E4%B8%BACMake%E5%B7%A5%E7%A8%8B.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
     (() => {
       
     const saveToLocal = {

@@ -38,7 +38,7 @@ with tempfile.TemporaryDirectory(prefix='blog-maintenance-') as temp:
     assert len(set(urls))==43
     ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
     for node in ET.parse(root/'sitemap.xml').findall('s:url/s:loc',ns):
-        suffix=node.text.removeprefix('https://billy775326.github.io/');p=root/unquote(suffix)/'index.html'
+        suffix=node.text.removeprefix('https://iowill.com/');p=root/unquote(suffix)/'index.html'
         s=B(p.read_text(encoding='utf8'),'html.parser');assert s.select_one('link[rel=canonical]')['href']==node.text
     hashes={p:hashlib.sha256(p.read_bytes()).hexdigest() for p in root.rglob('*') if p.is_file() and '__pycache__' not in p.parts}
     run('rebuild_taxonomy.py');run('update_footer_seo.py')

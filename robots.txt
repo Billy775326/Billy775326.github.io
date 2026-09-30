@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://billy775326.github.io/sitemap.xml
+Sitemap: https://iowill.com/sitemap.xml

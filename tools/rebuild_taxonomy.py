@@ -11,7 +11,7 @@ import json, re
 from bs4 import BeautifulSoup as BS
 
 ROOT = Path(__file__).resolve().parents[1]
-BASE = 'https://billy775326.github.io'
+BASE = 'https://iowill.com'
 E = lambda x: escape(str(x), quote=True)
 
 def parse(raw): return BS(raw, 'html.parser')
