@@ -14,6 +14,10 @@
 | `upload/` | 图床,中文文件名,HTML 引用时百分号编码 |
 | `upload/thumbs/` | 压缩缩略图(2026-09-29 建);`<img>` 一律用它,SEO 元数据用原图,见 conventions.md |
 | `content/posts/<slug>.md` | 文章 Markdown 源稿,front matter 含 title/date/categories/tags |
+| `content/site-info.json` | 网站真实更新时间 updated_at，发布时手动更新，由共享维护脚本同步 |
+| `css/cards.css` | 首页/分页卡片布局、尺寸、圆角及日期样式 |
+| `tools/update_footer_seo.py` | 全站页脚、网站资讯、卡片时间、结构化关联及站点地图同步 |
+| `tools/test_maintenance.py` | 隔离副本回归检查；新增文章时同步数量及分页预期 |
 | `content/taxonomy.json` | 分类→slug、标签→slug 的唯一登记处 |
 | `content/分类与标签清单.md` | 逐篇分类标签清单(人读) |
 | `tools/` | 分类标签维护脚本 `rebuild_taxonomy.py` / `verify_taxonomy.py`,说明见 `tools/README.md` |
@@ -27,8 +31,8 @@
 - 正文容器:`id="article-container"`
 - 正文后依次:版权盒 `post-copyright` → 标签 `tag_share` → **上下篇导航 `<nav class="pagination-post" id="pagination">`** → (部分文章有"相关推荐" `relatedPosts`)
 - 侧栏 `aside-content`:作者卡(文章/标签/分类计数)→ 公告 → 目录 → 最新文章 5 篇
-- 页脚 `footer#footer`（全站统一，2023 起版权、简介与导航；运行天数已移除）
+- 页脚 `footer#footer`（全站统一，2023 起版权、框架信息与图标导航；运行天数已移除）
 
 ## 首页卡片
 
-`<div class="recent-post-items">` 内每篇一张 `<div class="recent-post-item">` 大卡(封面+标题+摘要+日期+分类),按时间倒序,页与页之间时间序必须连续。
+`<div class="recent-post-items">` 内每篇一张 `<div class="recent-post-item">` 大卡(封面+标题+日期+分类，摘要当前由 CSS 隐藏),按时间倒序,页与页之间时间序必须连续。
