@@ -2,11 +2,11 @@
 
 | 路径 | 说明 |
 |---|---|
-| `blog/YYYY/MM/<slug>/index.html` | 43 篇文章正文页(目录年月与发文时间对应) |
+| `blog/YYYY/MM/<slug>/index.html` | 44 篇文章正文页(目录年月与发文时间对应) |
 | `index.html` + `page/2/`、`page/3/` | 首页与分页,每页 18 张文章卡,都在 `<div class="recent-post-items">` 容器内 |
 | `archives/` | 按年/月归档页(`archives/index.html` 总档 + 年/月子目录) |
 | `categories/<slug>/` | 5 个分类页:编程开发 programming、算法与数据结构 algorithms、系统与运维 systems-operations、软件与工具 software-tools、游戏与实践 gaming |
-| `tags/<slug>/` | 标签页(83 个;文章页侧栏只显示频次前 20,全部在 `/tags/`) |
+| `tags/<slug>/` | 标签页(88 个;文章页侧栏只显示频次前 20,全部在 `/tags/`) |
 | `search.xml` | 本地搜索索引,**发文必须登记**,否则搜不到 |
 | `css/index.css` | Butterfly 主题样式;自定义补丁只追加在文件末尾 `2026-09-29 pagination & footer tweaks` 区块 |
 | `js/main.js`、`js/utils.js` | 主题 JS(每页加载) |

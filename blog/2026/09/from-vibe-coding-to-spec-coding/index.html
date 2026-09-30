@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html data-theme="light" lang="zh-CN"><head><meta charset="utf-8"/><meta content="IE=edge" http-equiv="X-UA-Compatible"/><meta content="width=device-width, initial-scale=1.0,viewport-fit=cover" name="viewport"/><title>从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳 | Billy 的博客</title><meta content="Billy" name="author"/><meta content="Billy" name="copyright"/><meta content="telephone=no" name="format-detection"/><meta content="#ffffff" name="theme-color"/><meta content="从博客卡片、分页和发布同步的实际问题出发，理解 Vibe Coding 与规范驱动开发的区别，用轻量 Spec 把需求、实现和验收连接起来。" name="description"/><meta content="Debian,Docker,MySQL,容器网络,策略路由,故障排查" name="keywords"/>
+<meta content="article" property="og:type"/>
+<meta content="从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳" property="og:title"/>
+<meta property="og:url" content="https://iowill.com/blog/2026/09/from-vibe-coding-to-spec-coding/">
+<meta content="Billy 的博客" property="og:site_name"/>
+<meta content="从博客卡片、分页和发布同步的实际问题出发，理解 Vibe Coding 与规范驱动开发的区别，用轻量 Spec 把需求、实现和验收连接起来。" property="og:description"/>
+<meta content="zh_CN" property="og:locale"/>
+<meta content="https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/cover(1).png" property="og:image"/>
+<meta content="2026-09-30T10:12:30+00:00" property="article:published_time"/>
+<meta content="2026-09-30T10:12:30+00:00" property="article:modified_time"/>
+<meta content="Billy" property="article:author"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/cover(1).png" name="twitter:image"/><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳",
+  "description": "从博客卡片、分页和发布同步的实际问题出发，理解 Vibe Coding 与规范驱动开发的区别，用轻量 Spec 把需求、实现和验收连接起来。",
+  "url": "https://iowill.com/blog/2026/09/from-vibe-coding-to-spec-coding/",
+  "image": "https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/cover(1).png",
+  "datePublished": "2026-09-30T10:12:30+00:00",
+  "dateModified": "2026-09-30T10:12:30+00:00",
+  "author": {
+    "@type": "Person",
+    "@id": "https://iowill.com/#author",
+    "name": "Billy",
+    "url": "https://iowill.com/",
+    "sameAs": [
+      "https://github.com/Billy775326"
+    ]
+  },
+  "@id": "https://iowill.com/blog/2026/09/from-vibe-coding-to-spec-coding/#article",
+  "inLanguage": "zh-CN",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://iowill.com/blog/2026/09/from-vibe-coding-to-spec-coding/"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://iowill.com/#website",
+    "name": "Billy 的博客",
+    "url": "https://iowill.com/"
+  },
+  "publisher": {
+    "@type": "Person",
+    "@id": "https://iowill.com/#author",
+    "name": "Billy",
+    "url": "https://iowill.com/",
+    "sameAs": [
+      "https://github.com/Billy775326"
+    ]
+  },
+  "articleSection": "编程开发",
+  "keywords": [
+    "AI 编程",
+    "Vibe Coding",
+    "Spec Coding",
+    "需求分析",
+    "软件工程"
+  ]
+}</script><link href="/img/favicon.png" rel="shortcut icon"/><link rel="canonical" href="https://iowill.com/blog/2026/09/from-vibe-coding-to-spec-coding/"><link href="//cdn.jsdelivr.net" rel="preconnect"/><link href="//busuanzi.ibruce.info" rel="preconnect"/><link href="/css/index.css?v=5.7.0" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css" rel="stylesheet"/><script>
+    (() => {
+
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+
+
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+
+
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+
+
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {"title": "从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳", "isHighlightShrink": false, "isToc": true, "pageType": "post"};</script><link href="/css/cards.css" rel="stylesheet"/><meta content="Hexo 8.1.2" name="generator"/><meta property="article:section" content="编程开发"><meta property="article:tag" content="AI 编程"><meta property="article:tag" content="Vibe Coding"><meta property="article:tag" content="Spec Coding"><meta property="article:tag" content="需求分析"><meta property="article:tag" content="软件工程"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img alt="avatar" onerror="this.onerror=null;this.src='/img/friend_404.gif'" src="/img/avatar.jpg"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">44</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">88</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style='background-image: url("https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/cover(1).png");'><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Billy 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-30T10:12:30+00:00" title="2026-09-30 18:12:30">2026-09-30 18:12:30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-30T10:12:30+00:00" title="2026-09-30 18:12:30">2026-09-30 18:12:30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/programming/">编程开发</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" data-flag-title="" id=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p><img alt="从对话式探索走向规范驱动开发的主题封面" loading="lazy" src="https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/cover(1).png"/></p>
+<p>“帮我把文章卡片改得好看一点。”</p>
+<p>AI 很快更新一版：圆角更大，封面比例统一，标题可以显示两行，页面背景也有了一层渐变。</p>
+<p>但卡片太高，日期和分类挤到两行，侧栏为了和文章列表对齐被拉出了空白。于是回滚再补一句新要求。</p>
+<p>这类过程很适合讨论 AI 编程中的一个变化：当生成代码变得越来越容易，我们需要更认真地管理“到底要改成什么”和“怎样证明已经改对”。</p>
+<p>本文把 <strong>Spec Coding</strong> 用作“围绕明确规范进行 AI 辅助开发”的简称，对应通常所说的 <strong>Spec-Driven Development，规范驱动开发</strong>。它不是一个所有工具都严格统一使用的产品名称。</p>
+<h2 id="section-1">1. Vibe Coding 的吸引力：先把想法做出来</h2>
+<p>在本文的讨论范围内，Vibe Coding 指一种偏向对话和即时反馈的开发方式：描述想法，让 AI 生成实现，运行看看，再根据结果继续调整。这里讨论的是工作方式，不把所有使用 AI 写代码的行为都归入这个词。</p>
+<p>它适合解决“我还不知道想要什么，但想先看到一个版本”的问题。</p>
+<p>例如，准备做一个个人博客，你可能暂时无法回答卡片的精确尺寸、页面的信息密度或导航的交互细节。先做一个能打开的页面，比对着空白文档讨论两小时更容易形成判断。</p>
+<p>这个阶段可以允许尝试，也可以接受推翻。原型的价值，是帮助人发现真实需求。</p>
+<p>问题出在：原型不断叠加功能之后，开发方式却没有变化。</p>
+<p>“加一个分类”“更新时间”“改一下侧栏”逐渐变成会影响多个页面、数据文件和维护脚本的操作。如果仍然只看当前页面是否顺眼，很容易漏掉别的地方。</p>
+<h2 id="section-2">2. 为什么越改越乱？要求散落在对话里</h2>
+<p>以静态博客为例，发布一篇文章不只是生成一个 HTML 文件。</p>
+<p>首页卡片要增加，超过页容量的文章要后移；归档要登记，搜索索引要补条目；分类和标签要同步，侧栏统计和最新文章也要更新。</p>
+<p>这些要求如果只存在于聊天记录中，会出现三个问题。</p>
+<p><strong>第一，最新要求与旧要求混在一起。</strong></p>
+<p>上一轮说“侧栏底部和文章对齐”，下一轮又说“取消对齐，恢复原布局”。如果旧约定仍然留在文档里，后续维护可能把已经撤销的方案重新做回来。</p>
+<p><strong>第二，视觉结果掩盖了数据问题。</strong></p>
+<p>首页能够正常打开，不代表搜索能找到新文章；卡片看起来正常，也不代表网站文章数已经从 43 更新成 44。</p>
+<p><strong>第三，实现和完成标准由同一个模糊描述决定。</strong></p>
+<p>如果要求只是“优化一下”，AI 可以通过自己选定的标准宣告完成。代码可能符合它的理解，却没有符合你的预期。</p>
+<p>把这些问题全部归结为“提示词不够长”，并不准确。真正需要补充的是：可定位的需求、明确的范围，以及能独立检查的完成条件。</p>
+<h2 id="section-3">3. Spec Coding 把哪些事情提前了？</h2>
+<p><img alt="Vibe Coding 的迭代探索与 Spec Coding 的规范、实现、验证流程对比" loading="lazy" src="https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/body1.png"/></p>
+<p><em>两种工作方式可以衔接：先探索需求，再明确规范和验收条件。</em></p>
+<p>一份有用的 Spec，至少能回答四个问题：</p>
+<ol>
+<li>谁在什么场景下遇到了什么问题？</li>
+<li>本次需要出现什么行为？</li>
+<li>哪些限制必须满足，哪些内容不在本次范围内？</li>
+<li>用什么证据判断已经完成？</li>
+</ol>
+<p>GitHub 的 Spec Kit 将需求描述、澄清、技术计划、任务拆解和实现验证组织成显式流程；其文档也强调在需求阶段先说明要做什么及原因，再处理技术方案。<a href="https://github.github.com/spec-kit/quickstart.html">GitHub Spec Kit 官方指南</a></p>
+<p>这给我们的启发是：把“目标是什么”与“准备怎样实现”分开。下面的文件划分是本文建议的轻量实践，不要求安装特定工具。</p>
+<table>
+<thead>
+<tr>
+<th>材料</th>
+<th>回答的问题</th>
+<th>博客示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Spec</td>
+<td>最终应该有什么行为？</td>
+<td>每页最多 18 篇，发布后文章无重复遗漏</td>
+</tr>
+<tr>
+<td>Plan</td>
+<td>如何实现？</td>
+<td>按时间排序，依次生成分页并更新链接</td>
+</tr>
+<tr>
+<td>Tasks</td>
+<td>分成哪些可执行步骤？</td>
+<td>登记文章、更新分页、同步搜索、校验</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>实际做成了什么？</td>
+<td>数量检查、链接检查、浏览器截图和部署结果</td>
+</tr>
+</tbody>
+</table>
+<p>这里最容易忽略的是最后一项。任务清单打满勾，不代表测试真的运行过；测试通过，也不代表页面已经在线上部署成功。</p>
+<h2 id="section-4">4. 把“卡片排紧一点”写成一份小 Spec</h2>
+<p>不必一开始就建立复杂流程。一个具体的小功能，可以从这样的说明开始：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/><span class="line">7</span><br/><span class="line">8</span><br/><span class="line">9</span><br/><span class="line">10</span><br/><span class="line">11</span><br/><span class="line">12</span><br/><span class="line">13</span><br/><span class="line">14</span><br/><span class="line">15</span><br/><span class="line">16</span><br/><span class="line">17</span><br/><span class="line">18</span><br/><span class="line">19</span><br/><span class="line">20</span><br/><span class="line">21</span><br/><span class="line">22</span><br/><span class="line">23</span><br/><span class="line">24</span><br/><span class="line">25</span><br/><span class="line">26</span><br/></pre></td><td class="code"><pre><span class="line"># 文章卡片时间与分类单行显示</span><br/><span class="line"></span><br/><span class="line">## 问题</span><br/><span class="line">首页部分卡片的日期和分类换行，导致信息区不整齐。</span><br/><span class="line"></span><br/><span class="line">## 范围</span><br/><span class="line">首页及其分页的文章卡片。</span><br/><span class="line">不调整文章正文中的发布时间，不改变每页文章数量。</span><br/><span class="line"></span><br/><span class="line">## 预期行为</span><br/><span class="line">- 日期格式为 YYYY/MM/DD HH:mm:ss，使用北京时间。</span><br/><span class="line">- 日期与分类在同一行。</span><br/><span class="line">- 完整时间不截断，分类仍然可以点击。</span><br/><span class="line">- 空间确实不足时，分类名称允许省略号截断。</span><br/><span class="line">- 卡片只出现一个分类图标。</span><br/><span class="line"></span><br/><span class="line">## 约束</span><br/><span class="line">- 保留现有主题、配色和圆角。</span><br/><span class="line">- 不通过横向溢出页面来强行放下一行。</span><br/><span class="line">- 不修改原始 datetime，不编造时间。</span><br/><span class="line"></span><br/><span class="line">## 验收</span><br/><span class="line">- 在 360px、768px、1024px、1440px 宽度检查布局。</span><br/><span class="line">- 覆盖最长分类名和完整时间组合。</span><br/><span class="line">- 浅色、深色模式均可读，分类链接可访问。</span><br/><span class="line">- 首页分页链接和文章总数与修改前一致。</span><br/></pre></td></tr></table></figure>
+<p>这份 Spec 没有规定必须使用 Flex 还是 Grid，也没有提前指定每一处 CSS。它给实现留出空间，同时结果写清楚。</p>
+<p>上面的视口宽度是示例验收范围，不是宣称这些页面已经完成了对应测试。需要亲自记录实际验证情况。</p>
+<p>如果这些条件无法同时满足，应当暴露冲突。例如，为了完整显示最长分类，字号是否会小到难以阅读？这时需要调整规则，而不是把文字缩得越来越小后宣告成功。</p>
+<h2 id="section-5">5. 再进一步：把发布文章变成可验证流程</h2>
+<p>视觉调整可以用轻量 Spec。涉及多个数据源的发布操作，更适合补上明确的不变量。</p>
+<p>下面仍然以静态博客为例，假设每页 18 篇，发布前共有 43 篇。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/><span class="line">7</span><br/><span class="line">8</span><br/><span class="line">9</span><br/><span class="line">10</span><br/><span class="line">11</span><br/><span class="line">12</span><br/><span class="line">13</span><br/><span class="line">14</span><br/><span class="line">15</span><br/><span class="line">16</span><br/><span class="line">17</span><br/><span class="line">18</span><br/><span class="line">19</span><br/><span class="line">20</span><br/><span class="line">21</span><br/><span class="line">22</span><br/></pre></td><td class="code"><pre><span class="line"># 发布新文章</span><br/><span class="line"></span><br/><span class="line">## 输入</span><br/><span class="line">- 已审核的正文、标题、摘要和封面</span><br/><span class="line">- 唯一 slug</span><br/><span class="line">- 含时区的发布时间</span><br/><span class="line">- 一个分类及若干标签</span><br/><span class="line"></span><br/><span class="line">## 完成条件</span><br/><span class="line">- 文章页面、分类登记、搜索索引均包含新文章。</span><br/><span class="line">- 发布后总数为 44：首页分页分布为 18/18/8。</span><br/><span class="line">- 各分页按发布时间倒序，无重复、无遗漏。</span><br/><span class="line">- 总归档及对应年月归档包含新文章。</span><br/><span class="line">- 作者卡与网站资讯显示相同的文章总数。</span><br/><span class="line">- 最新文章按发布时间选取最近 5 篇。</span><br/><span class="line">- sitemap 包含新文章的规范 URL。</span><br/><span class="line">- 原有文章正文没有意外改动。</span><br/><span class="line"></span><br/><span class="line">## 异常处理</span><br/><span class="line">- slug 重复：停止写入，报告冲突。</span><br/><span class="line">- 搜索条目缺失或重复：校验失败，不标记为发布完成。</span><br/><span class="line">- 部署未完成：报告已推送、待部署，不宣称已经上线。</span><br/></pre></td></tr></table></figure>
+<p>这个例子里的 44 和 18/18/8 是针对一次发布的具体预期。长期维护的检查应尽量从真实文章集合推导总数，再独立验证分页中实际出现的链接；不要每次靠手动修改一串散落的常量。</p>
+<p>同时，测试不能只比较两个都由同一个错误变量生成的数字。否则源数据少了一篇，两边仍然可能相等。可以交叉检查文章文件、登记表、搜索索引和分页链接集合，并明确哪个集合应当包含哪些文章。</p>
+<h2 id="section-6">6. 一个适合个人项目的工作循环</h2>
+<p><img alt="规范、计划、实现、验证及反馈修订组成的开发循环" loading="lazy" src="https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/body2.png"/></p>
+<p><em>SPEC：规范；PLAN：计划；BUILD：实现；VERIFY：验证；REFINE：反馈修订。</em></p>
+<p>我更倾向于把流程控制在六步，而不是要求每次改颜色都写一套长文档。</p>
+<h3 id="section-7">先调查现状</h3>
+<p>让 AI 阅读相关代码、文档和已有检查，确认当前行为与问题位置。已有项目尤其要注意：仓库里有没有源工程？哪些文件是生成结果？哪个脚本会覆盖当前修改？</p>
+<p>不了解这些边界，写出来的 Spec 可能建立在错误前提上。</p>
+<h3 id="section-8">写下本次目标和验收</h3>
+<p>复杂功能可以单独建立 <code>spec.md</code>；小修改在任务说明中写几条就够了。区分已经确定的要求、暂定假设与尚未回答的问题。</p>
+<h3 id="section-9">选择最小可行方案</h3>
+<p>检查主题原有能力和现有脚本，再决定是否增加代码。方案应说明主要改动点和影响范围，避免为了一个小效果引入新的框架。</p>
+<h3 id="section-10">按小块实现</h3>
+<p>优先完成一条能验证的路径，再扩展到全站。批量 HTML 修改尤其要先确认替换边界，不能因为一个正则在单页有效，就认定所有页面都安全。</p>
+<h3 id="section-11">按验收条件收集证据</h3>
+<p>数据问题用数量、集合和链接检查；视觉问题用实际浏览器；部署问题看部署结果和线上页面。没有运行的检查要明确标记，不能用“应该没问题”替代证据。</p>
+<h3 id="section-12">同步最终规范</h3>
+<p>实现过程中发现更合适的规则，应当更新 Spec。已经取消的方案移到变更记录中，现行规范只保留当前有效要求。</p>
+<p>在博客项目里，<code>docs</code> 可以保存长期约定，功能 Spec 保存一次改动的边界，变更记录解释为什么变更。三者职责不同，避免把所有历史对话原样堆在同一个文件里。</p>
+<h2 id="section-13">7. Spec 也会出问题</h2>
+<p>规范不会自动让 AI 变得可靠。写得不好，它只是把模糊需求换成了更正式的排版。</p>
+<p>常见问题包括：</p>
+<ul>
+<li><strong>不可验证：</strong> “更高级”“性能更好”“体验更流畅”，没有场景和可判断的结果。</li>
+<li><strong>过早限定实现：</strong> 还没确认问题，就要求换框架、重写模块或引入新服务。</li>
+<li><strong>只覆盖正常路径：</strong> 没考虑空数据、重复输入、错误时间、失败部署和既有数据兼容。</li>
+<li><strong>规范与代码脱节：</strong> 功能已经变了，文档还保留旧行为。</li>
+<li><strong>测试复述实现：</strong> AI 按错误理解写代码，再按同样的理解写测试，两者一致但都不符合真实需求。</li>
+</ul>
+<p>应对方式不是继续增加文档长度，而是使用具体案例、边界输入和独立审查。对于权限、数据迁移或外部副作用，尤其需要核对失败时会发生什么，以及如何恢复。</p>
+<h2 id="section-14">8. 什么时候用哪一种方式？</h2>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>建议做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>探索一个尚未成形的想法</td>
+<td>快速原型，尽早看结果，允许推翻</td>
+</tr>
+<tr>
+<td>改一处文案或局部样式</td>
+<td>几条目标与验收即可，不必写完整方案文档</td>
+</tr>
+<tr>
+<td>改动多个页面或数据文件</td>
+<td>轻量 Spec、影响范围与自动检查一起做</td>
+</tr>
+<tr>
+<td>长期维护、多人协作的功能</td>
+<td>持续维护规范、接口约定及回归证据</td>
+</tr>
+<tr>
+<td>涉及权限、数据迁移或重要业务</td>
+<td>明确失败行为、审查责任与恢复方案</td>
+</tr>
+</tbody>
+</table>
+<p>探索与规范可以连续发生。先用原型发现需求，再把已经确认的行为固定下来，后续实现围绕这些行为展开。</p>
+<p>也不必把 Spec Coding 等同于某一个工具。GitHub Spec Kit 和 Kiro 都提供了围绕规范组织 AI 开发的能力，但个人项目可以先从仓库中的 Markdown 和现有测试开始。工具值得关注的地方，是它能否帮助需求、任务与实现保持一致。<a href="https://kiro.dev/docs/specs/">Kiro Specs 官方文档</a></p>
+<h2 id="section-15">9. 可以直接使用的任务提示词</h2>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/><span class="line">7</span><br/><span class="line">8</span><br/><span class="line">9</span><br/><span class="line">10</span><br/><span class="line">11</span><br/><span class="line">12</span><br/></pre></td><td class="code"><pre><span class="line">请先阅读相关代码和项目约定，概括当前行为及本次问题。</span><br/><span class="line"></span><br/><span class="line">基于以下目标整理一份轻量 Spec，包含：</span><br/><span class="line">用户场景、范围、非目标、约束、异常情况和验收条件。</span><br/><span class="line">已有明确答案的事项直接使用；只列出会影响实现的未知问题。</span><br/><span class="line"></span><br/><span class="line">然后提出最小可行实施方案，指出需要同步的数据和文件。</span><br/><span class="line">实现过程中如果需求与现状冲突，说明冲突并更新方案。</span><br/><span class="line"></span><br/><span class="line">完成后逐项给出验证结果：</span><br/><span class="line">哪些检查实际运行、结果如何、哪些尚未验证。</span><br/><span class="line">最后同步现行规范，避免保留已经撤销的要求。</span><br/></pre></td></tr></table></figure>
+<p>这段提示词只是起点。真正有价值的部分，是你为当前任务填入的场景、边界和判断标准。</p>
+<p>AI 可以很快写出一个看起来可用的版本。让它在几周之后仍然容易修改、能够验证、不会反复踩同一个坑，需要把需求和证据也放进开发过程里。</p>
+<p>从 Vibe Coding 到 Spec Coding，值得保留的是探索的速度，值得补上的，是对“完成”更清楚的定义。</p>
+<h2 id="section-16">参考资料</h2>
+<ul>
+<li><a href="https://github.com/github/spec-kit">GitHub Spec Kit</a>：开源规范驱动开发工具包。</li>
+<li><a href="https://github.github.com/spec-kit/quickstart.html">Spec Kit 官方快速开始</a>：需求、计划、任务与验证流程。</li>
+<li><a href="https://kiro.dev/docs/specs/">Kiro Specs 官方文档</a>：围绕规范组织开发的工具实践。</li>
+</ul>
+<p>本文中的博客 Spec、验收样例和工作流程建议为结合静态博客维护场景整理的示例，并非上述工具的默认配置。工具命令与支持能力可能变化，实际使用以官方文档为准。</p></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://billy775326.github.io">Billy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://billy775326.github.io/blog/2026/09/from-vibe-coding-to-spec-coding/">https://billy775326.github.io/blog/2026/09/from-vibe-coding-to-spec-coding/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://billy775326.github.io" target="_blank">Billy 的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI%20%E7%BC%96%E7%A8%8B/">AI 编程</a><a class="post-meta__tags" href="/tags/Vibe%20Coding/">Vibe Coding</a><a class="post-meta__tags" href="/tags/Spec%20Coding/">Spec Coding</a><a class="post-meta__tags" href="/tags/%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90/">需求分析</a><a class="post-meta__tags" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/">软件工程</a></div><div class="post-share"><div class="social-share" data-image="https://img.billy12.xyz/file/系统与运维/从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳/1790663905540_01-cover.png" data-sites="facebook,x,wechat,weibo,qq"></div><link href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'" rel="stylesheet"/><script defer="" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js"></script></div></div><nav aria-label="文章导航" class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2026/09/debian-docker-mysql-multi-nic-routing/" rel="prev" title="Debian多网卡Docker-MySQL回程路由排查"><img alt="Debian多网卡Docker-MySQL回程路由排查" class="cover" loading="lazy" src="https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663905540_01-cover.png"/><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Debian多网卡Docker-MySQL回程路由排查</div></div><div class="info-2">阅读全文：Debian多网卡Docker-MySQL回程路由排查</div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img alt="avatar" onerror="this.onerror=null;this.src='/img/friend_404.gif'" src="/img/avatar.jpg"/></div><div class="author-info-name">Billy</div><div class="author-info-description">记录学习与折腾</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">44</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">88</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a href="https://github.com/Billy775326" id="card-info-btn" rel="noopener" target="_blank"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，记录学习与折腾</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/from-vibe-coding-to-spec-coding/" title="从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳"><img src="https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/thumbs/cover.jpg" alt="从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="content"><a class="title" href="/blog/2026/09/from-vibe-coding-to-spec-coding/" title="从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳">从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳</a><time datetime="2026-09-30T10:12:30+00:00" title="2026/09/30 18:12:30">2026/09/30 18:12:30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/debian-docker-mysql-multi-nic-routing/" title="Debian多网卡Docker-MySQL回程路由排查"><img src="https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663905540_01-cover.png" alt="Debian多网卡Docker-MySQL回程路由排查" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="content"><a class="title" href="/blog/2026/09/debian-docker-mysql-multi-nic-routing/" title="Debian多网卡Docker-MySQL回程路由排查">Debian多网卡Docker-MySQL回程路由排查</a><time datetime="2026-09-29T04:00:00.000Z" title="2026/09/29 12:00:00">2026/09/29 12:00:00</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/archlinux-kde-one-week-review/" title="ArchLinux KDE 一周使用小结"><img src="https://img.billy12.xyz/file/默认封面/thumbs/cover.jpg" alt="ArchLinux KDE 一周使用小结" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="content"><a class="title" href="/blog/2026/09/archlinux-kde-one-week-review/" title="ArchLinux KDE 一周使用小结">ArchLinux KDE 一周使用小结</a><time datetime="2026-09-10T07:29:21.000Z" title="2026/09/10 15:29:21">2026/09/10 15:29:21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/maa-readme/" title="MAAREADME"><img src="https://img.billy12.xyz/file/默认封面/thumbs/cover.jpg" alt="MAAREADME" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="content"><a class="title" href="/blog/2026/09/maa-readme/" title="MAAREADME">MAAREADME</a><time datetime="2026-09-10T07:29:21.000Z" title="2026/09/10 15:29:21">2026/09/10 15:29:21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/redroid-maa-arknights-on-linux/" title="ReDroid MAA：在Linux下游玩明日方舟"><img src="https://img.billy12.xyz/file/默认封面/thumbs/cover.jpg" alt="ReDroid MAA：在Linux下游玩明日方舟" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="content"><a class="title" href="/blog/2026/09/redroid-maa-arknights-on-linux/" title="ReDroid MAA：在Linux下游玩明日方舟">ReDroid MAA：在Linux下游玩明日方舟</a><time datetime="2026-09-10T07:29:21.000Z" title="2026/09/10 15:29:21">2026/09/10 15:29:21</time></div></div></div></div></div></div></main><footer id="footer" aria-label="网站页脚"><div class="footer-other"><div class="footer-credits"><span class="copyright">© 2023–2026 By <a href="/">Billy</a></span><span class="framework-info">由 <a href="https://hexo.io" rel="noopener" target="_blank">Hexo</a> 驱动<span class="footer-separator" aria-hidden="true">·</span><a href="https://github.com/jerryc127/hexo-theme-butterfly" rel="noopener" target="_blank">Butterfly</a> 主题</span></div><div class="footer_custom_text"><nav aria-label="页脚导航"><a href="/about/"><i class="fas fa-user" aria-hidden="true"></i>关于</a><a href="/archives/"><i class="fas fa-archive" aria-hidden="true"></i>归档</a><a href="/categories/"><i class="fas fa-folder-open" aria-hidden="true"></i>分类</a><a href="/tags/"><i class="fas fa-tags" aria-hidden="true"></i>标签</a><a href="/sitemap.xml"><i class="fas fa-sitemap" aria-hidden="true"></i>站点地图</a><a href="https://github.com/Billy775326" rel="me noopener" target="_blank"><i class="fab fa-github" aria-hidden="true"></i>GitHub</a></nav></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" title="阅读模式" type="button"><i class="fas fa-book-open"></i></button><button id="darkmode" title="日间和夜间模式切换" type="button"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" title="单栏和双栏切换" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" title="设置" type="button"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" title="目录" type="button"><i class="fas fa-list-ul"></i></button><button id="go-up" title="回到顶部" type="button"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async="" data-pjax="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" hidden="hidden" id="loading-status"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>

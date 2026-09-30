@@ -29,13 +29,13 @@ with tempfile.TemporaryDirectory(prefix='blog-maintenance-') as temp:
             assert old_images==new_images,(rel,'thumbnails')
             assert all(re.fullmatch(r'\d{4}/\d{2}/\d{2} \d{2}:\d{2}:\d{2}',t.text) for t in new.select('.article-sort time'))
     urls=[]
-    for name,expected in [('index.html',18),('page/2/index.html',18),('page/3/index.html',7)]:
+    for name,expected in [('index.html',18),('page/2/index.html',18),('page/3/index.html',8)]:
         s=B((root/name).read_text(encoding='utf8'),'html.parser');cards=s.select('.recent-post-item a.article-title')
         assert len(cards)==expected;urls.extend(a['href'] for a in cards)
         for meta in s.select('.recent-post-item .article-meta-wrap'):
             assert len(meta.select('.fa-inbox'))==1,(name,'duplicate category icon')
             assert len(meta.select('.article-meta__categories a'))==1,(name,'category link')
-    assert len(set(urls))==43
+    assert len(set(urls))==44
     ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
     for node in ET.parse(root/'sitemap.xml').findall('s:url/s:loc',ns):
         suffix=node.text.removeprefix('https://iowill.com/');p=root/unquote(suffix)/'index.html'
@@ -43,4 +43,4 @@ with tempfile.TemporaryDirectory(prefix='blog-maintenance-') as temp:
     hashes={p:hashlib.sha256(p.read_bytes()).hexdigest() for p in root.rglob('*') if p.is_file() and '__pycache__' not in p.parts}
     run('rebuild_taxonomy.py');run('update_footer_seo.py')
     assert all(hashlib.sha256(p.read_bytes()).hexdigest()==v for p,v in hashes.items()),'Pipeline is not idempotent'
-print('PASS: isolated pipeline; article/sidebar/footer preservation; thumbnails, date precision, 18/18/7 pagination, canonical/sitemap consistency, idempotence.')
+print('PASS: isolated pipeline; article/sidebar/footer preservation; thumbnails, date precision, 18/18/8 pagination, canonical/sitemap consistency, idempotence.')
