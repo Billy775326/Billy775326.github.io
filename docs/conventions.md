@@ -102,3 +102,5 @@
 - `python tools/add_about_page.py` 维护关于页与顶部/手机导航，随后运行 `python tools/update_footer_seo.py` 同步页脚与站点地图。
 
 - <768px:导航卡高 120px(桌面 150px)、双卡竖排;页脚两行居中
+
+- 2026-09-30：用户撤回两行标题、淡彩背景等六项视觉调整；保持此前布局。首页卡片分类重建须清理仅含图标/分隔线的旧 `span.article-meta`，保证每张卡片一个分类图标。

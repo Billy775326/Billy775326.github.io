@@ -146,6 +146,10 @@ def main():
             meta=s.select_one('.article-meta-wrap')
             if not meta:return block
             for n in meta.select('.article-meta__categories'):n.decompose()
+            # Legacy category wrappers may retain only a separator and icon.
+            for n in meta.select('span.article-meta'):
+                if n.select_one('.fa-inbox') and not n.select_one('a, time') and not n.get_text(strip=True).strip('| '):
+                    n.decompose()
             meta.append(parse('<span class="article-meta__categories"><span class="article-meta-separator"> | </span><i class="fas fa-inbox"></i> <a href="'+link('categories',post['category'])+'">'+E(post['category'])+'</a></span>').span)
             return replace(block,'div','class','article-meta-wrap',str(meta))
         # Match each card using balanced divs, preserving summaries and layout.

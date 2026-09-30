@@ -28,6 +28,9 @@ with tempfile.TemporaryDirectory(prefix='blog-maintenance-') as temp:
     for name,expected in [('index.html',18),('page/2/index.html',18),('page/3/index.html',7)]:
         s=B((root/name).read_text(encoding='utf8'),'html.parser');cards=s.select('.recent-post-item a.article-title')
         assert len(cards)==expected;urls.extend(a['href'] for a in cards)
+        for meta in s.select('.recent-post-item .article-meta-wrap'):
+            assert len(meta.select('.fa-inbox'))==1,(name,'duplicate category icon')
+            assert len(meta.select('.article-meta__categories a'))==1,(name,'category link')
     assert len(set(urls))==43
     ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
     for node in ET.parse(root/'sitemap.xml').findall('s:url/s:loc',ns):
