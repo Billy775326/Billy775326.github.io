@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   width: 32.3%;
-  margin: 0 1% 20px;
+  margin: 0 1% 20px 0;
   height: 320px;
   border-radius: 60px;
   overflow: hidden;
@@ -96,4 +96,34 @@
   #recent-posts .recent-post-items {
     margin: 0;
   }
+}
+
+/* Share a desktop row so the final article row and site info end together. */
+@media screen and (min-width: 901px) {
+  html:not(.hide-aside) .layout:not(.hide-aside):has(> #recent-posts) {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: 15px;
+    align-items: stretch;
+  }
+  html:not(.hide-aside) .layout:not(.hide-aside) > #recent-posts { display: contents; }
+  .layout > #recent-posts > .recent-post-items {
+    grid-column: 1; grid-row: 1;
+    align-content: space-between;
+    row-gap: 20px;
+  }
+  .layout > #recent-posts .recent-post-item.recent-post-item { margin-bottom: 0; }
+  .layout > #recent-posts > #pagination { grid-column: 1; grid-row: 2; }
+  html:not(.hide-aside) .layout:not(.hide-aside):has(> #recent-posts) > #aside-content {
+    grid-column: 2; grid-row: 1;
+    width: 100%; padding: 0;
+    display: flex; flex-direction: column;
+    align-self: stretch;
+  }
+  .layout:has(> #recent-posts) #aside-content > .sticky_layout {
+    position: static; display: flex; flex-direction: column; flex: 1;
+  }
+  .layout:has(> #recent-posts) #aside-content .card-webinfo { margin-top: auto; }
+  .layout:has(> #recent-posts) #aside-content .card-archives { margin-bottom: 20px; }
 }
