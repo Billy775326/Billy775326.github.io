@@ -3579,4 +3579,242 @@ producerconsumer.insert(item);
     <title>构建自己的服务器项目</title>
     <url>//blog/2026/09/build-own-server-project/</url>
     <content><![CDATA[]]></content><categories><category>编程开发</category></categories><tags><tag>服务端开发</tag><tag>项目实践</tag></tags></entry>
-<entry><title>从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳</title><url>/blog/2026/09/from-vibe-coding-to-spec-coding/</url><content><![CDATA[]]></content><categories><category>编程开发</category></categories><tags><tag>AI 编程</tag><tag>Vibe Coding</tag><tag>Spec Coding</tag><tag>需求分析</tag><tag>软件工程</tag></tags></entry></search>
+<entry><title>从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳</title><url>/blog/2026/09/from-vibe-coding-to-spec-coding/</url><content><![CDATA[]]></content><categories><category>编程开发</category></categories><tags><tag>AI 编程</tag><tag>Vibe Coding</tag><tag>Spec Coding</tag><tag>需求分析</tag><tag>软件工程</tag></tags></entry><entry><title>Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务</title><url>/blog/2026/10/docker-webdav-file-sharing/</url><content><![CDATA[<p><img alt="Docker WebDAV 文件共享服务" src="https://img.billy12.xyz/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/cover.png" /></p>
+<p>如果只是想把服务器上的一个目录提供给电脑、手机和备份工具使用，可以先试试 WebDAV。它在 HTTP 上增加了目录、文件操作等能力；客户端是否支持挂载、锁定和大文件传输，要看具体实现。</p>
+<p>这里使用 hacdias/webdav，配合 Docker Compose 管理配置和数据目录。先让服务只在宿主机上可访问，验证读写正常；需要给其他设备使用时，再开启服务自带的 TLS。整个方案只运行一个 WebDAV 容器，不需要管理面板或反向代理。</p>
+<p>本文命令面向安装了 Docker Engine 和 Compose 插件的 Linux 主机，以普通 bridge 网络为例。域名 <code>dav.example.com</code> 是示例，公网访问时替换为自己的域名。以下响应码是验证预期，不是某台服务器的实测日志。</p>
+<h2>先分清三个路径和两个监听地址</h2>
+<p><img alt="Docker 容器的端口入口、配置挂载和数据挂载" src="https://img.billy12.xyz/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/body1.png" /></p>
+<p>配置文件在宿主机上保存，容器读取它；上传文件则写到单独的数据目录。容器更新后，仍然挂载同一份目录。</p>
+<table>
+<thead>
+<tr>
+<th>宿主机位置</th>
+<th>容器内位置</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/opt/webdav/config/</code></td>
+<td><code>/config/</code></td>
+<td>服务配置，只读挂载</td>
+</tr>
+<tr>
+<td><code>/opt/webdav/data/</code></td>
+<td><code>/data/</code></td>
+<td>用户文件，可读写</td>
+</tr>
+<tr>
+<td><code>/opt/webdav/certs/</code></td>
+<td><code>/certs/</code></td>
+<td>开启 HTTPS 时使用的证书，只读挂载</td>
+</tr>
+</tbody>
+</table>
+<p>地址也有两层：配置中的 <code>0.0.0.0</code> 是应用在容器内的监听地址；Compose 中的 <code>127.0.0.1:6065:6065</code> 则把宿主机入口限制在回环地址。它们并不矛盾。Docker 的端口发布规则决定外部怎样进入容器，不能把容器自己的 <code>127.0.0.1</code> 当作宿主机地址。<a href="https://docs.docker.com/engine/network/port-publishing/">Docker 端口发布说明</a></p>
+<p>建议使用受维护的 Docker 版本。Docker 官方特别说明，28.0.0 之前的版本存在同一二层网络设备可能访问回环发布端口的历史问题；不要只凭映射字符串就认定旧版本完全隔离。</p>
+<h2>准备配置与数据目录</h2>
+<p>以下命令需要有创建 <code>/opt/webdav</code> 目录和执行 Docker 的权限。先确认工具可用：</p>
+<pre><code class="language-bash">docker version
+docker compose version
+mkdir -p /opt/webdav/config /opt/webdav/data /opt/webdav/certs
+cd /opt/webdav
+</code></pre>
+<p>创建 <code>/opt/webdav/config/config.yml</code>：</p>
+<pre><code class="language-yaml">address: 0.0.0.0
+port: 6065
+tls: false
+directory: /data
+permissions: R
+behindProxy: false
+
+users:
+  - username: demo
+    password: &quot;REPLACE_WITH_A_UNIQUE_PASSWORD&quot;
+    permissions: CRUD
+</code></pre>
+<p>先把密码占位文字换成专用的长随机密码，再启动服务。配置文件里的 <code>R</code> 是默认只读，<code>demo</code> 用户单独获得创建、读取、更新、删除权限。不要删掉 <code>users</code> 后误以为仍然需要登录。</p>
+<p>服务也支持 bcrypt 格式的密码和按用户设置目录；字段含义及密码生成方式可以对照 <a href="https://github.com/hacdias/webdav#configuration">hacdias/webdav 官方配置</a>。使用哈希能减少明文密码落盘，但不能代替 HTTPS。</p>
+<pre><code class="language-bash">chmod 600 /opt/webdav/config/config.yml
+</code></pre>
+<p>如果后续给容器指定了非 root 用户，需要同时调整文件的属主和权限，让该用户能读取配置、写入数据目录。不要用 <code>chmod -R 777</code> 来跳过权限问题。</p>
+<h2>用 Docker Compose 启动</h2>
+<p>保存为 <code>/opt/webdav/compose.yml</code>：</p>
+<pre><code class="language-yaml">services:
+  webdav:
+    image: ghcr.io/hacdias/webdav:latest
+    restart: unless-stopped
+    command: [&quot;-c&quot;, &quot;/config/config.yml&quot;]
+    ports:
+      - &quot;127.0.0.1:6065:6065&quot;
+    volumes:
+      - ./config:/config:ro
+      - ./data:/data
+    logging:
+      driver: json-file
+      options:
+        max-size: &quot;10m&quot;
+        max-file: &quot;3&quot;
+</code></pre>
+<p>这里用 <code>latest</code> 方便首次尝试。准备长期运行时，应先确认一个可用版本，再把镜像固定到该版本标签或摘要，避免以后拉取时悄悄更换版本。</p>
+<pre><code class="language-bash">cd /opt/webdav
+docker compose config --quiet
+docker compose pull
+docker compose up -d
+docker compose ps
+docker compose logs --tail=50 webdav
+</code></pre>
+<p><code>config --quiet</code> 只检查 Compose 文件，不验证 WebDAV 的 YAML 是否正确。容器反复重启时，先看日志里的配置解析、文件读取和端口错误。</p>
+<h2>用 curl 验证列目录、上传和下载</h2>
+<p>以下命令在 Docker 宿主机执行。<code>-u demo</code> 会让 curl 交互式询问密码；没有把密码直接放进命令行。<a href="https://curl.se/docs/manpage.html">curl 参数说明</a></p>
+<p>先查看目录：</p>
+<pre><code class="language-bash">curl -i -u demo -X PROPFIND \
+  -H &quot;Depth: 1&quot; \
+  http://127.0.0.1:6065/
+</code></pre>
+<p>正常情况下应看到 <code>207 Multi-Status</code> 和 XML。<code>-i</code> 用于显示响应头；只把正文管道给 <code>head</code>，不能据此确认 HTTP 状态码。207 代表多状态响应，操作是否全部成功还要看 XML 中各项状态。</p>
+<p>再创建独立测试目录，避免碰到已有文件：</p>
+<pre><code class="language-bash">probe=&quot;webdav-check-$(date +%Y%m%d%H%M%S)&quot;
+curl -i -u demo -X MKCOL &quot;http://127.0.0.1:6065/$probe/&quot;
+printf 'hello webdav\n' &gt; /tmp/webdav-probe.txt
+curl -i -u demo -T /tmp/webdav-probe.txt \
+  &quot;http://127.0.0.1:6065/$probe/probe.txt&quot;
+curl --fail --silent --show-error -u demo \
+  &quot;http://127.0.0.1:6065/$probe/probe.txt&quot;
+</code></pre>
+<p>新建目录和新文件通常返回 201；覆盖已有文件可能返回 204。下载内容应为 <code>hello webdav</code>。也可以在宿主机的数据目录里确认文件是否实际写入。</p>
+<p>文件能上传，不代表客户端的复制和重命名就一定正常。继续在同一终端里验证这两个操作：</p>
+<pre><code class="language-bash">curl -i -u demo -X COPY \
+  -H &quot;Destination: http://127.0.0.1:6065/$probe/copy.txt&quot; \
+  -H &quot;Overwrite: F&quot; \
+  &quot;http://127.0.0.1:6065/$probe/probe.txt&quot;
+
+curl -i -u demo -X MOVE \
+  -H &quot;Destination: http://127.0.0.1:6065/$probe/renamed.txt&quot; \
+  -H &quot;Overwrite: F&quot; \
+  &quot;http://127.0.0.1:6065/$probe/copy.txt&quot;
+</code></pre>
+<p><code>Destination</code> 与请求使用相同的地址和端口；<code>Overwrite: F</code> 避免覆盖已有目标。本方案直接连接服务，不需要套用反代场景中的请求头重写配置。</p>
+<h2>让其他设备通过 HTTPS 连接</h2>
+<p>上面的端口只在服务器本机开放，手机连不上是预期行为。若要在公网使用，先准备指向服务器的域名，以及覆盖该域名、被客户端信任的证书。</p>
+<p>将证书链和私钥分别放到：</p>
+<pre><code class="language-text">/opt/webdav/certs/fullchain.pem
+/opt/webdav/certs/privkey.pem
+</code></pre>
+<p>这一步假设你已经取得有效证书；容器不会因为填了域名就自动签发或续期。复制证书时注意来源是否为符号链接，最终应确保挂载目录内能直接读取完整文件。</p>
+<p>在 <code>config/config.yml</code> 中把 TLS 设置改为：</p>
+<pre><code class="language-yaml">tls: true
+cert: /certs/fullchain.pem
+key: /certs/privkey.pem
+</code></pre>
+<p>其他配置保持不变，容器内端口仍然是 6065。然后把 Compose 的 <code>ports</code> 和 <code>volumes</code> 分别替换为以下内容，注意是替换，不要保留两个同名 YAML 键：</p>
+<pre><code class="language-yaml">    ports:
+      - &quot;443:6065&quot;
+    volumes:
+      - ./config:/config:ro
+      - ./data:/data
+      - ./certs:/certs:ro
+</code></pre>
+<p>先确认宿主机 443 没有被其他程序占用，配置好相应的入站访问规则，再应用修改：</p>
+<pre><code class="language-bash">cd /opt/webdav
+docker compose config --quiet
+docker compose up -d --force-recreate
+docker compose logs --tail=50 webdav
+curl -i -u demo -X PROPFIND -H &quot;Depth: 0&quot; https://dav.example.com/
+</code></pre>
+<p>TLS 由 WebDAV 服务自己处理。请用域名访问，直接换成 IP 可能导致证书名称校验失败；不要通过长期添加 <code>-k</code> 掩盖问题。若域名同时配置了 AAAA 记录，也要验证 IPv6 路径，避免部分设备连接到错误地址。</p>
+<p>然后在另一台设备上，把前面的测试地址换成 <code>https://dav.example.com</code>，重新检查上传、下载、COPY 和 MOVE。服务端本机能连通，并不代表外部的 DNS、防火墙和证书都正确。</p>
+<p>证书更新后执行 <code>docker compose restart webdav</code> 重新加载，并检查实际返回的证书。证书获取和续期属于独立维护事项。</p>
+<h2>客户端连接时填什么</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>协议</td>
+<td>WebDAV / HTTPS</td>
+</tr>
+<tr>
+<td>地址</td>
+<td><code>https://dav.example.com/</code></td>
+</tr>
+<tr>
+<td>用户名</td>
+<td><code>demo</code> 或你自己的账号</td>
+</tr>
+<tr>
+<td>密码</td>
+<td>配置中对应账号的密码</td>
+</tr>
+</tbody>
+</table>
+<p>macOS 可以在 Finder 的“连接服务器”中输入 HTTPS 地址；移动端需要使用支持 WebDAV 的文件管理应用。Windows 的资源管理器连接依赖 WebClient 等组件和系统策略，不能把所有版本都当成相同行为。遇到问题时，先用 curl 区分服务故障和客户端兼容性。</p>
+<p>备份任务可以使用 rclone。运行 <code>rclone config</code>，创建名为 <code>webdav</code> 的远端，类型选 WebDAV，填写 URL、用户名和密码，通用服务商选项使用 <code>other</code>。配置好以后先执行只读检查：</p>
+<pre><code class="language-bash">rclone lsd webdav:
+rclone copy ./photos webdav:photos --dry-run
+</code></pre>
+<p>确认目标无误后，再去掉 <code>--dry-run</code>。这里使用 <code>copy</code>，不使用会按源目录状态删除目标文件的 <code>sync</code>。客户端字段以 <a href="https://rclone.org/webdav/">rclone WebDAV 文档</a> 为准。</p>
+<h2>连接失败或不能写入，从哪里查</h2>
+<table>
+<thead>
+<tr>
+<th>表现</th>
+<th>先检查什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>容器启动后立刻退出</td>
+<td>YAML 缩进、配置挂载路径、证书读取权限</td>
+</tr>
+<tr>
+<td>本机连接被拒绝或重置</td>
+<td>容器状态、日志、应用是否监听 <code>0.0.0.0:6065</code>、发布端口是否正确</td>
+</tr>
+<tr>
+<td>本机能访问，其他设备不能</td>
+<td>是否仍绑定宿主机回环、DNS、端口放行、IPv4/IPv6 路径</td>
+</tr>
+<tr>
+<td>返回 401</td>
+<td>用户名密码、客户端保存的旧凭据、是否读取了预期配置</td>
+</tr>
+<tr>
+<td>能读取但不能上传</td>
+<td>账号 C/U 权限、宿主机目录写权限、磁盘剩余空间</td>
+</tr>
+<tr>
+<td>COPY/MOVE 失败</td>
+<td>Destination 的主机和端口、目标父目录、账号权限、目标是否已存在</td>
+</tr>
+<tr>
+<td>HTTPS 校验失败</td>
+<td>域名与证书匹配、有效期、完整证书链、客户端时间</td>
+</tr>
+</tbody>
+</table>
+<p>容器内只监听 <code>127.0.0.1</code> 时，监听的是容器自己的回环；普通 bridge 模式下，发布端口流量进入容器网卡，不会因此到达该监听地址。修改为 <code>0.0.0.0</code> 后，仍然要通过宿主机端口绑定决定开放范围。</p>
+<p>改了 WebDAV 配置后执行 <code>docker compose restart webdav</code>；改了端口或挂载等 Compose 设置，则执行 <code>docker compose up -d</code> 重新应用。若仍有疑问，可通过 <code>docker inspect</code> 核对实际挂载和端口，而不是只看文件中的预期设置。</p>
+<h2>更新容器之前，先确认数据在哪</h2>
+<p>上传目录通过 bind mount 保存到宿主机。删除并重建容器通常不会删除这份目录，但直接删除宿主机数据、错误覆盖文件或磁盘故障仍会造成损失。持久化不等于备份。<a href="https://docs.docker.com/engine/storage/bind-mounts/">Docker bind mount 说明</a></p>
+<p>更新前记录当前镜像标签或摘要，并备份配置和数据；需要一致性备份时，暂停写入或停服务后再备份。确认新版本兼容后再执行：</p>
+<pre><code class="language-bash">cd /opt/webdav
+docker compose pull
+docker compose up -d
+</code></pre>
+<p>更新后重新跑一遍读写验证。只读账号可以设为 <code>R</code>；不授予删除权限能减少部分误操作，但有更新权限的账号仍可能覆盖文件，不能当作防勒索备份策略。</p>
+<p>部署完成的标准很具体：客户端能验证证书、登录、列目录和读写文件；数据确实落在宿主机预期目录；重建容器后文件仍在。把这几项验证清楚，比只看到容器状态为 Running 更有用。</p>
+<h2>参考资料</h2>
+<ul>
+<li><a href="https://github.com/hacdias/webdav">hacdias/webdav 项目与配置</a></li>
+<li><a href="https://docs.docker.com/engine/network/port-publishing/">Docker 端口发布</a></li>
+<li><a href="https://docs.docker.com/engine/storage/bind-mounts/">Docker bind mounts</a></li>
+<li><a href="https://curl.se/docs/manpage.html">curl 参数说明</a></li>
+<li><a href="https://rclone.org/webdav/">rclone WebDAV</a></li>
+</ul>]]></content><categories><category>系统与运维</category></categories><tags><tag>WebDAV</tag><tag>Docker</tag><tag>Docker Compose</tag><tag>自托管</tag><tag>文件共享</tag></tags></entry>
+</search>

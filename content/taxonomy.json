@@ -401,6 +401,16 @@
         "需求分析",
         "软件工程"
       ]
+    },
+    "docker-webdav-file-sharing": {
+      "category": "系统与运维",
+      "tags": [
+        "WebDAV",
+        "Docker",
+        "Docker Compose",
+        "自托管",
+        "文件共享"
+      ]
     }
   }
 }

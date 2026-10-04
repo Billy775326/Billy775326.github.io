@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+
+<html data-theme="light" lang="zh-CN"><head><meta charset="utf-8"/><meta content="IE=edge" http-equiv="X-UA-Compatible"/><meta content="width=device-width, initial-scale=1.0,viewport-fit=cover" name="viewport"/><title>Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务 | Billy 的博客</title><meta content="Billy" name="author"/><meta content="Billy" name="copyright"/><meta content="telephone=no" name="format-detection"/><meta content="#ffffff" name="theme-color"/><meta content="使用 Docker Compose 部署 hacdias/webdav，从目录挂载、账号权限和本机读写验证开始，再配置服务自带的 HTTPS。附上传下载、复制改名命令，以及连接失败、无法写入和证书错误的排查方法。" name="description"/><meta content="WebDAV,Docker,Docker Compose,自托管,文件共享" name="keywords"/>
+<meta content="article" property="og:type"/>
+<meta content="Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务" property="og:title"/>
+<meta property="og:url" content="https://iowill.com/blog/2026/10/docker-webdav-file-sharing/">
+<meta content="Billy 的博客" property="og:site_name"/>
+<meta content="使用 Docker Compose 部署 hacdias/webdav，从目录挂载、账号权限和本机读写验证开始，再配置服务自带的 HTTPS。附上传下载、复制改名命令，以及连接失败、无法写入和证书错误的排查方法。" property="og:description"/>
+<meta content="zh_CN" property="og:locale"/>
+<meta content="https://img.billy12.xyz/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/cover.png" property="og:image"/>
+<meta content="2026-10-04T10:07:52+00:00" property="article:published_time"/>
+<meta content="2026-10-04T10:07:52+00:00" property="article:modified_time"/>
+<meta content="Billy" property="article:author"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://img.billy12.xyz/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/cover.png" name="twitter:image"/><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务",
+  "description": "使用 Docker Compose 部署 hacdias/webdav，从目录挂载、账号权限和本机读写验证开始，再配置服务自带的 HTTPS。附上传下载、复制改名命令，以及连接失败、无法写入和证书错误的排查方法。",
+  "url": "https://iowill.com/blog/2026/10/docker-webdav-file-sharing/",
+  "image": "https://img.billy12.xyz/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/cover.png",
+  "datePublished": "2026-10-04T10:07:52+00:00",
+  "dateModified": "2026-10-04T10:07:52+00:00",
+  "author": {
+    "@type": "Person",
+    "@id": "https://iowill.com/#author",
+    "name": "Billy",
+    "url": "https://iowill.com/",
+    "sameAs": [
+      "https://github.com/Billy775326"
+    ]
+  },
+  "@id": "https://iowill.com/blog/2026/10/docker-webdav-file-sharing/#article",
+  "inLanguage": "zh-CN",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://iowill.com/blog/2026/10/docker-webdav-file-sharing/"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://iowill.com/#website",
+    "name": "Billy 的博客",
+    "url": "https://iowill.com/"
+  },
+  "publisher": {
+    "@type": "Person",
+    "@id": "https://iowill.com/#author",
+    "name": "Billy",
+    "url": "https://iowill.com/",
+    "sameAs": [
+      "https://github.com/Billy775326"
+    ]
+  },
+  "articleSection": "系统与运维",
+  "keywords": [
+    "WebDAV",
+    "Docker",
+    "Docker Compose",
+    "自托管",
+    "文件共享"
+  ]
+}</script><link href="/img/favicon.png" rel="shortcut icon"/><link rel="canonical" href="https://iowill.com/blog/2026/10/docker-webdav-file-sharing/"><link href="//cdn.jsdelivr.net" rel="preconnect"/><link href="//busuanzi.ibruce.info" rel="preconnect"/><link href="/css/index.css?v=5.7.0" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css" rel="stylesheet"/><script>
+    (() => {
+
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+
+
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+
+
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+
+
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {"title": "Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务", "isHighlightShrink": false, "isToc": true, "pageType": "post"};</script><link href="/css/cards.css" rel="stylesheet"/><meta content="Hexo 8.1.2" name="generator"/><meta property="article:section" content="系统与运维"><meta property="article:tag" content="WebDAV"><meta property="article:tag" content="Docker"><meta property="article:tag" content="Docker Compose"><meta property="article:tag" content="自托管"><meta property="article:tag" content="文件共享"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img alt="avatar" onerror="this.onerror=null;this.src='/img/friend_404.gif'" src="/img/avatar.jpg"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">92</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style='background-image: url("https://img.billy12.xyz/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/cover.png")'><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Billy 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-04T10:07:52+00:00" title="2026-10-04 18:07:52">2026-10-04 18:07:52</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-04T10:07:52+00:00" title="2026-10-04 18:07:52">2026-10-04 18:07:52</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/systems-operations/">系统与运维</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" data-flag-title="" id=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p><img alt="Docker WebDAV 文件共享服务" decoding="async" loading="lazy" src="https://img.billy12.xyz/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/cover.png"/></p>
+<p>如果只是想把服务器上的一个目录提供给电脑、手机和备份工具使用，可以先试试 WebDAV。它在 HTTP 上增加了目录、文件操作等能力；客户端是否支持挂载、锁定和大文件传输，要看具体实现。</p>
+<p>这里使用 hacdias/webdav，配合 Docker Compose 管理配置和数据目录。先让服务只在宿主机上可访问，验证读写正常；需要给其他设备使用时，再开启服务自带的 TLS。整个方案只运行一个 WebDAV 容器，不需要管理面板或反向代理。</p>
+<p>本文命令面向安装了 Docker Engine 和 Compose 插件的 Linux 主机，以普通 bridge 网络为例。域名 <code>dav.example.com</code> 是示例，公网访问时替换为自己的域名。以下响应码是验证预期，不是某台服务器的实测日志。</p>
+<h2 id="section-1">先分清三个路径和两个监听地址</h2>
+<p><img alt="Docker 容器的端口入口、配置挂载和数据挂载" decoding="async" loading="lazy" src="https://img.billy12.xyz/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/body1.png"/></p>
+<p>配置文件在宿主机上保存，容器读取它；上传文件则写到单独的数据目录。容器更新后，仍然挂载同一份目录。</p>
+<table>
+<thead>
+<tr>
+<th>宿主机位置</th>
+<th>容器内位置</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/opt/webdav/config/</code></td>
+<td><code>/config/</code></td>
+<td>服务配置，只读挂载</td>
+</tr>
+<tr>
+<td><code>/opt/webdav/data/</code></td>
+<td><code>/data/</code></td>
+<td>用户文件，可读写</td>
+</tr>
+<tr>
+<td><code>/opt/webdav/certs/</code></td>
+<td><code>/certs/</code></td>
+<td>开启 HTTPS 时使用的证书，只读挂载</td>
+</tr>
+</tbody>
+</table>
+<p>地址也有两层：配置中的 <code>0.0.0.0</code> 是应用在容器内的监听地址；Compose 中的 <code>127.0.0.1:6065:6065</code> 则把宿主机入口限制在回环地址。它们并不矛盾。Docker 的端口发布规则决定外部怎样进入容器，不能把容器自己的 <code>127.0.0.1</code> 当作宿主机地址。<a href="https://docs.docker.com/engine/network/port-publishing/">Docker 端口发布说明</a></p>
+<p>建议使用受维护的 Docker 版本。Docker 官方特别说明，28.0.0 之前的版本存在同一二层网络设备可能访问回环发布端口的历史问题；不要只凭映射字符串就认定旧版本完全隔离。</p>
+<h2 id="section-2">准备配置与数据目录</h2>
+<p>以下命令需要有创建 <code>/opt/webdav</code> 目录和执行 Docker 的权限。先确认工具可用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span></pre></td><td class="code"><pre><span class="line">docker version</span>
+<span class="line">docker compose version</span>
+<span class="line">mkdir -p /opt/webdav/config /opt/webdav/data /opt/webdav/certs</span>
+<span class="line">cd /opt/webdav</span></pre></td></tr></table></figure>
+<p>创建 <code>/opt/webdav/config/config.yml</code>：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span></pre></td><td class="code"><pre><span class="line">address: 0.0.0.0</span>
+<span class="line">port: 6065</span>
+<span class="line">tls: false</span>
+<span class="line">directory: /data</span>
+<span class="line">permissions: R</span>
+<span class="line">behindProxy: false</span>
+<span class="line"></span>
+<span class="line">users:</span>
+<span class="line">  - username: demo</span>
+<span class="line">    password: "REPLACE_WITH_A_UNIQUE_PASSWORD"</span>
+<span class="line">    permissions: CRUD</span></pre></td></tr></table></figure>
+<p>先把密码占位文字换成专用的长随机密码，再启动服务。配置文件里的 <code>R</code> 是默认只读，<code>demo</code> 用户单独获得创建、读取、更新、删除权限。不要删掉 <code>users</code> 后误以为仍然需要登录。</p>
+<p>服务也支持 bcrypt 格式的密码和按用户设置目录；字段含义及密码生成方式可以对照 <a href="https://github.com/hacdias/webdav#configuration">hacdias/webdav 官方配置</a>。使用哈希能减少明文密码落盘，但不能代替 HTTPS。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">chmod 600 /opt/webdav/config/config.yml</span></pre></td></tr></table></figure>
+<p>如果后续给容器指定了非 root 用户，需要同时调整文件的属主和权限，让该用户能读取配置、写入数据目录。不要用 <code>chmod -R 777</code> 来跳过权限问题。</p>
+<h2 id="section-3">用 Docker Compose 启动</h2>
+<p>保存为 <code>/opt/webdav/compose.yml</code>：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span></pre></td><td class="code"><pre><span class="line">services:</span>
+<span class="line">  webdav:</span>
+<span class="line">    image: ghcr.io/hacdias/webdav:latest</span>
+<span class="line">    restart: unless-stopped</span>
+<span class="line">    command: ["-c", "/config/config.yml"]</span>
+<span class="line">    ports:</span>
+<span class="line">      - "127.0.0.1:6065:6065"</span>
+<span class="line">    volumes:</span>
+<span class="line">      - ./config:/config:ro</span>
+<span class="line">      - ./data:/data</span>
+<span class="line">    logging:</span>
+<span class="line">      driver: json-file</span>
+<span class="line">      options:</span>
+<span class="line">        max-size: "10m"</span>
+<span class="line">        max-file: "3"</span></pre></td></tr></table></figure>
+<p>这里用 <code>latest</code> 方便首次尝试。准备长期运行时，应先确认一个可用版本，再把镜像固定到该版本标签或摘要，避免以后拉取时悄悄更换版本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span></pre></td><td class="code"><pre><span class="line">cd /opt/webdav</span>
+<span class="line">docker compose config --quiet</span>
+<span class="line">docker compose pull</span>
+<span class="line">docker compose up -d</span>
+<span class="line">docker compose ps</span>
+<span class="line">docker compose logs --tail=50 webdav</span></pre></td></tr></table></figure>
+<p><code>config --quiet</code> 只检查 Compose 文件，不验证 WebDAV 的 YAML 是否正确。容器反复重启时，先看日志里的配置解析、文件读取和端口错误。</p>
+<h2 id="section-4">用 curl 验证列目录、上传和下载</h2>
+<p>以下命令在 Docker 宿主机执行。<code>-u demo</code> 会让 curl 交互式询问密码；没有把密码直接放进命令行。<a href="https://curl.se/docs/manpage.html">curl 参数说明</a></p>
+<p>先查看目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span></pre></td><td class="code"><pre><span class="line">curl -i -u demo -X PROPFIND \</span>
+<span class="line">  -H "Depth: 1" \</span>
+<span class="line">  http://127.0.0.1:6065/</span></pre></td></tr></table></figure>
+<p>正常情况下应看到 <code>207 Multi-Status</code> 和 XML。<code>-i</code> 用于显示响应头；只把正文管道给 <code>head</code>，不能据此确认 HTTP 状态码。207 代表多状态响应，操作是否全部成功还要看 XML 中各项状态。</p>
+<p>再创建独立测试目录，避免碰到已有文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span></pre></td><td class="code"><pre><span class="line">probe="webdav-check-$(date +%Y%m%d%H%M%S)"</span>
+<span class="line">curl -i -u demo -X MKCOL "http://127.0.0.1:6065/$probe/"</span>
+<span class="line">printf 'hello webdav\n' &gt; /tmp/webdav-probe.txt</span>
+<span class="line">curl -i -u demo -T /tmp/webdav-probe.txt \</span>
+<span class="line">  "http://127.0.0.1:6065/$probe/probe.txt"</span>
+<span class="line">curl --fail --silent --show-error -u demo \</span>
+<span class="line">  "http://127.0.0.1:6065/$probe/probe.txt"</span></pre></td></tr></table></figure>
+<p>新建目录和新文件通常返回 201；覆盖已有文件可能返回 204。下载内容应为 <code>hello webdav</code>。也可以在宿主机的数据目录里确认文件是否实际写入。</p>
+<p>文件能上传，不代表客户端的复制和重命名就一定正常。继续在同一终端里验证这两个操作：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span></pre></td><td class="code"><pre><span class="line">curl -i -u demo -X COPY \</span>
+<span class="line">  -H "Destination: http://127.0.0.1:6065/$probe/copy.txt" \</span>
+<span class="line">  -H "Overwrite: F" \</span>
+<span class="line">  "http://127.0.0.1:6065/$probe/probe.txt"</span>
+<span class="line"></span>
+<span class="line">curl -i -u demo -X MOVE \</span>
+<span class="line">  -H "Destination: http://127.0.0.1:6065/$probe/renamed.txt" \</span>
+<span class="line">  -H "Overwrite: F" \</span>
+<span class="line">  "http://127.0.0.1:6065/$probe/copy.txt"</span></pre></td></tr></table></figure>
+<p><code>Destination</code> 与请求使用相同的地址和端口；<code>Overwrite: F</code> 避免覆盖已有目标。本方案直接连接服务，不需要套用反代场景中的请求头重写配置。</p>
+<h2 id="section-5">让其他设备通过 HTTPS 连接</h2>
+<p>上面的端口只在服务器本机开放，手机连不上是预期行为。若要在公网使用，先准备指向服务器的域名，以及覆盖该域名、被客户端信任的证书。</p>
+<p>将证书链和私钥分别放到：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span></pre></td><td class="code"><pre><span class="line">/opt/webdav/certs/fullchain.pem</span>
+<span class="line">/opt/webdav/certs/privkey.pem</span></pre></td></tr></table></figure>
+<p>这一步假设你已经取得有效证书；容器不会因为填了域名就自动签发或续期。复制证书时注意来源是否为符号链接，最终应确保挂载目录内能直接读取完整文件。</p>
+<p>在 <code>config/config.yml</code> 中把 TLS 设置改为：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span></pre></td><td class="code"><pre><span class="line">tls: true</span>
+<span class="line">cert: /certs/fullchain.pem</span>
+<span class="line">key: /certs/privkey.pem</span></pre></td></tr></table></figure>
+<p>其他配置保持不变，容器内端口仍然是 6065。然后把 Compose 的 <code>ports</code> 和 <code>volumes</code> 分别替换为以下内容，注意是替换，不要保留两个同名 YAML 键：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span></pre></td><td class="code"><pre><span class="line">    ports:</span>
+<span class="line">      - "443:6065"</span>
+<span class="line">    volumes:</span>
+<span class="line">      - ./config:/config:ro</span>
+<span class="line">      - ./data:/data</span>
+<span class="line">      - ./certs:/certs:ro</span></pre></td></tr></table></figure>
+<p>先确认宿主机 443 没有被其他程序占用，配置好相应的入站访问规则，再应用修改：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span></pre></td><td class="code"><pre><span class="line">cd /opt/webdav</span>
+<span class="line">docker compose config --quiet</span>
+<span class="line">docker compose up -d --force-recreate</span>
+<span class="line">docker compose logs --tail=50 webdav</span>
+<span class="line">curl -i -u demo -X PROPFIND -H "Depth: 0" https://dav.example.com/</span></pre></td></tr></table></figure>
+<p>TLS 由 WebDAV 服务自己处理。请用域名访问，直接换成 IP 可能导致证书名称校验失败；不要通过长期添加 <code>-k</code> 掩盖问题。若域名同时配置了 AAAA 记录，也要验证 IPv6 路径，避免部分设备连接到错误地址。</p>
+<p>然后在另一台设备上，把前面的测试地址换成 <code>https://dav.example.com</code>，重新检查上传、下载、COPY 和 MOVE。服务端本机能连通，并不代表外部的 DNS、防火墙和证书都正确。</p>
+<p>证书更新后执行 <code>docker compose restart webdav</code> 重新加载，并检查实际返回的证书。证书获取和续期属于独立维护事项。</p>
+<h2 id="section-6">客户端连接时填什么</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>协议</td>
+<td>WebDAV / HTTPS</td>
+</tr>
+<tr>
+<td>地址</td>
+<td><code>https://dav.example.com/</code></td>
+</tr>
+<tr>
+<td>用户名</td>
+<td><code>demo</code> 或你自己的账号</td>
+</tr>
+<tr>
+<td>密码</td>
+<td>配置中对应账号的密码</td>
+</tr>
+</tbody>
+</table>
+<p>macOS 可以在 Finder 的“连接服务器”中输入 HTTPS 地址；移动端需要使用支持 WebDAV 的文件管理应用。Windows 的资源管理器连接依赖 WebClient 等组件和系统策略，不能把所有版本都当成相同行为。遇到问题时，先用 curl 区分服务故障和客户端兼容性。</p>
+<p>备份任务可以使用 rclone。运行 <code>rclone config</code>，创建名为 <code>webdav</code> 的远端，类型选 WebDAV，填写 URL、用户名和密码，通用服务商选项使用 <code>other</code>。配置好以后先执行只读检查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span></pre></td><td class="code"><pre><span class="line">rclone lsd webdav:</span>
+<span class="line">rclone copy ./photos webdav:photos --dry-run</span></pre></td></tr></table></figure>
+<p>确认目标无误后，再去掉 <code>--dry-run</code>。这里使用 <code>copy</code>，不使用会按源目录状态删除目标文件的 <code>sync</code>。客户端字段以 <a href="https://rclone.org/webdav/">rclone WebDAV 文档</a> 为准。</p>
+<h2 id="section-7">连接失败或不能写入，从哪里查</h2>
+<table>
+<thead>
+<tr>
+<th>表现</th>
+<th>先检查什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>容器启动后立刻退出</td>
+<td>YAML 缩进、配置挂载路径、证书读取权限</td>
+</tr>
+<tr>
+<td>本机连接被拒绝或重置</td>
+<td>容器状态、日志、应用是否监听 <code>0.0.0.0:6065</code>、发布端口是否正确</td>
+</tr>
+<tr>
+<td>本机能访问，其他设备不能</td>
+<td>是否仍绑定宿主机回环、DNS、端口放行、IPv4/IPv6 路径</td>
+</tr>
+<tr>
+<td>返回 401</td>
+<td>用户名密码、客户端保存的旧凭据、是否读取了预期配置</td>
+</tr>
+<tr>
+<td>能读取但不能上传</td>
+<td>账号 C/U 权限、宿主机目录写权限、磁盘剩余空间</td>
+</tr>
+<tr>
+<td>COPY/MOVE 失败</td>
+<td>Destination 的主机和端口、目标父目录、账号权限、目标是否已存在</td>
+</tr>
+<tr>
+<td>HTTPS 校验失败</td>
+<td>域名与证书匹配、有效期、完整证书链、客户端时间</td>
+</tr>
+</tbody>
+</table>
+<p>容器内只监听 <code>127.0.0.1</code> 时，监听的是容器自己的回环；普通 bridge 模式下，发布端口流量进入容器网卡，不会因此到达该监听地址。修改为 <code>0.0.0.0</code> 后，仍然要通过宿主机端口绑定决定开放范围。</p>
+<p>改了 WebDAV 配置后执行 <code>docker compose restart webdav</code>；改了端口或挂载等 Compose 设置，则执行 <code>docker compose up -d</code> 重新应用。若仍有疑问，可通过 <code>docker inspect</code> 核对实际挂载和端口，而不是只看文件中的预期设置。</p>
+<h2 id="section-8">更新容器之前，先确认数据在哪</h2>
+<p>上传目录通过 bind mount 保存到宿主机。删除并重建容器通常不会删除这份目录，但直接删除宿主机数据、错误覆盖文件或磁盘故障仍会造成损失。持久化不等于备份。<a href="https://docs.docker.com/engine/storage/bind-mounts/">Docker bind mount 说明</a></p>
+<p>更新前记录当前镜像标签或摘要，并备份配置和数据；需要一致性备份时，暂停写入或停服务后再备份。确认新版本兼容后再执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span></pre></td><td class="code"><pre><span class="line">cd /opt/webdav</span>
+<span class="line">docker compose pull</span>
+<span class="line">docker compose up -d</span></pre></td></tr></table></figure>
+<p>更新后重新跑一遍读写验证。只读账号可以设为 <code>R</code>；不授予删除权限能减少部分误操作，但有更新权限的账号仍可能覆盖文件，不能当作防勒索备份策略。</p>
+<p>部署完成的标准很具体：客户端能验证证书、登录、列目录和读写文件；数据确实落在宿主机预期目录；重建容器后文件仍在。把这几项验证清楚，比只看到容器状态为 Running 更有用。</p>
+<h2 id="section-9">参考资料</h2>
+<ul>
+<li><a href="https://github.com/hacdias/webdav">hacdias/webdav 项目与配置</a></li>
+<li><a href="https://docs.docker.com/engine/network/port-publishing/">Docker 端口发布</a></li>
+<li><a href="https://docs.docker.com/engine/storage/bind-mounts/">Docker bind mounts</a></li>
+<li><a href="https://curl.se/docs/manpage.html">curl 参数说明</a></li>
+<li><a href="https://rclone.org/webdav/">rclone WebDAV</a></li>
+</ul></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://iowill.com/">Billy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://iowill.com/blog/2026/10/docker-webdav-file-sharing/">https://iowill.com/blog/2026/10/docker-webdav-file-sharing/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://iowill.com/" target="_blank">Billy 的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/WebDAV/">WebDAV</a><a class="post-meta__tags" href="/tags/Docker/">Docker</a><a class="post-meta__tags" href="/tags/Docker%20Compose/">Docker Compose</a><a class="post-meta__tags" href="/tags/%E8%87%AA%E6%89%98%E7%AE%A1/">自托管</a><a class="post-meta__tags" href="/tags/%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB/">文件共享</a></div><div class="post-share"><div class="social-share" data-image="https://img.billy12.xyz/file/系统与运维/从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳/1790663905540_01-cover.png" data-sites="facebook,x,wechat,weibo,qq"></div><link href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'" rel="stylesheet"/><script defer="" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js"></script></div></div><nav aria-label="文章导航" class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2026/09/from-vibe-coding-to-spec-coding/" rel="prev" title="从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳"><img alt="从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳" class="cover" loading="lazy" src="https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/cover(1).png"/><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳</div></div><div class="info-2">阅读全文：从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳</div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img alt="avatar" onerror="this.onerror=null;this.src='/img/friend_404.gif'" src="/img/avatar.jpg"/></div><div class="author-info-name">Billy</div><div class="author-info-description">记录学习与折腾</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">92</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a href="https://github.com/Billy775326" id="card-info-btn" rel="noopener" target="_blank"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，记录学习与折腾</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#section-1"><span class="toc-text">先分清三个路径和两个监听地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#section-2"><span class="toc-text">准备配置与数据目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#section-3"><span class="toc-text">用 Docker Compose 启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#section-4"><span class="toc-text">用 curl 验证列目录、上传和下载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#section-5"><span class="toc-text">让其他设备通过 HTTPS 连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#section-6"><span class="toc-text">客户端连接时填什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#section-7"><span class="toc-text">连接失败或不能写入，从哪里查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#section-8"><span class="toc-text">更新容器之前，先确认数据在哪</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#section-9"><span class="toc-text">参考资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/docker-webdav-file-sharing/" title="Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务"><img src="https://img.billy12.xyz/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/thumbs/cover.jpg" alt="Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="content"><a class="title" href="/blog/2026/10/docker-webdav-file-sharing/" title="Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务">Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务</a><time datetime="2026-10-04T10:07:52+00:00" title="2026/10/04 18:07:52">2026/10/04 18:07:52</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/from-vibe-coding-to-spec-coding/" title="从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳"><img src="https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/thumbs/cover.jpg" alt="从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="content"><a class="title" href="/blog/2026/09/from-vibe-coding-to-spec-coding/" title="从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳">从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳</a><time datetime="2026-09-30T10:12:30+00:00" title="2026/09/30 18:12:30">2026/09/30 18:12:30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/debian-docker-mysql-multi-nic-routing/" title="Debian多网卡Docker-MySQL回程路由排查"><img src="https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663905540_01-cover.png" alt="Debian多网卡Docker-MySQL回程路由排查" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="content"><a class="title" href="/blog/2026/09/debian-docker-mysql-multi-nic-routing/" title="Debian多网卡Docker-MySQL回程路由排查">Debian多网卡Docker-MySQL回程路由排查</a><time datetime="2026-09-29T04:00:00.000Z" title="2026/09/29 12:00:00">2026/09/29 12:00:00</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/archlinux-kde-one-week-review/" title="ArchLinux KDE 一周使用小结"><img src="https://img.billy12.xyz/file/默认封面/thumbs/cover.jpg" alt="ArchLinux KDE 一周使用小结" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="content"><a class="title" href="/blog/2026/09/archlinux-kde-one-week-review/" title="ArchLinux KDE 一周使用小结">ArchLinux KDE 一周使用小结</a><time datetime="2026-09-10T07:29:21.000Z" title="2026/09/10 15:29:21">2026/09/10 15:29:21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/maa-readme/" title="MAAREADME"><img src="https://img.billy12.xyz/file/默认封面/thumbs/cover.jpg" alt="MAAREADME" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="content"><a class="title" href="/blog/2026/09/maa-readme/" title="MAAREADME">MAAREADME</a><time datetime="2026-09-10T07:29:21.000Z" title="2026/09/10 15:29:21">2026/09/10 15:29:21</time></div></div></div></div></div></div></main><footer id="footer" aria-label="网站页脚"><div class="footer-other"><div class="footer-credits"><span class="copyright">© 2023–2026 By <a href="/">Billy</a></span><span class="framework-info">由 <a href="https://hexo.io" rel="noopener" target="_blank">Hexo</a> 驱动<span class="footer-separator" aria-hidden="true">·</span><a href="https://github.com/jerryc127/hexo-theme-butterfly" rel="noopener" target="_blank">Butterfly</a> 主题</span></div><div class="footer_custom_text"><nav aria-label="页脚导航"><a href="/about/"><i class="fas fa-user" aria-hidden="true"></i>关于</a><a href="/archives/"><i class="fas fa-archive" aria-hidden="true"></i>归档</a><a href="/categories/"><i class="fas fa-folder-open" aria-hidden="true"></i>分类</a><a href="/tags/"><i class="fas fa-tags" aria-hidden="true"></i>标签</a><a href="/sitemap.xml"><i class="fas fa-sitemap" aria-hidden="true"></i>站点地图</a><a href="https://github.com/Billy775326" rel="me noopener" target="_blank"><i class="fab fa-github" aria-hidden="true"></i>GitHub</a></nav></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" title="阅读模式" type="button"><i class="fas fa-book-open"></i></button><button id="darkmode" title="日间和夜间模式切换" type="button"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" title="单栏和双栏切换" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" title="设置" type="button"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" title="目录" type="button"><i class="fas fa-list-ul"></i></button><button id="go-up" title="回到顶部" type="button"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async="" data-pjax="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" hidden="hidden" id="loading-status"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>
