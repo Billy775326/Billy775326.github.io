@@ -254,7 +254,7 @@ class LocalSearch {
   }
 }
 
-window.addEventListener('load', () => {
+const initializeLocalSearch = () => {
   // Search
   const { path, top_n_per_article, unescape, languages, pagination } = GLOBAL_CONFIG.localSearch
   const enablePagination = pagination && pagination.enable
@@ -564,4 +564,11 @@ window.addEventListener('load', () => {
     localSearch.highlightSearchWords(document.getElementById('article-container'))
     searchClickFn()
   })
-})
+}
+
+// Search must not wait for images or third-party analytics to finish loading.
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeLocalSearch, { once: true })
+} else {
+  initializeLocalSearch()
+}

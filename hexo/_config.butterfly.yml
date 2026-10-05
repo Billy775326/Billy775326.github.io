@@ -496,4 +496,5 @@ CDN:
   third_party_provider: jsdelivr
   version: true
   custom_format: null
-  option: null
+  option:
+    local_search: /js/search/local-search.js?v=20261005-domready

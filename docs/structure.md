@@ -23,3 +23,5 @@
 | `tools/`、`content/` | 迁移前维护方式的历史参考，不再驱动构建 |
 
 当前 45 篇文章、5 分类、92 标签；总数以后以 Hexo 构建模型为准。
+
+主题 JavaScript 只维护 `hexo/themes/butterfly/source/js/`；不要在 `hexo/source/js/` 放同路径副本，避免被主题生成器覆盖。
