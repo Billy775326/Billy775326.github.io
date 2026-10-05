@@ -1,0 +1,31 @@
+---
+title: "20240320-配置GitHub-SSH默认使用443端口"
+date: "2024-09-20T12:46:06.000Z"
+updated: "2024-09-20T12:46:06.000Z"
+permalink: "blog/2024/09/github-ssh-port-443/"
+slug: "github-ssh-port-443"
+categories: ["软件与工具"]
+tags: ["Git", "GitHub", "SSH", "网络配置"]
+description: "Hi UserName! You’ve successfully authenticated, but GitHub does not provide shell access."
+cover: "https://img.billy12.xyz/file/1786437586692_千与千寻.jpg"
+thumbnail: "https://img.billy12.xyz/file/默认封面/thumbs/cover.jpg"
+disableNunjucks: true
+migration_order: 30
+legacy_html: true
+comments: false
+related_nav: [{"url": "/blog/2024/09/leetcode-15-3sum/", "rel": "prev", "title": "20240327-LeetCode-15.三数之和"}, {"url": "/blog/2024/09/linux-memory-paging-va-to-pa/", "rel": "next", "title": "Linux内存分页及虚拟地址到物理地址的计算"}]
+---
+<h1 id="配置GitHub-SSH默认使用443端口"><a class="headerlink" href="#配置GitHub-SSH默认使用443端口" title="配置GitHub SSH默认使用443端口"></a>配置GitHub SSH默认使用443端口</h1><h2 id="1-测试443端口是否可用"><a class="headerlink" href="#1-测试443端口是否可用" title="1.测试443端口是否可用"></a>1.测试443端口是否可用</h2><p>首先测试一下使用443端口进行GitHub SSH连接：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">ssh -T -p 443 git@ssh.github.com</span><br/></pre></td></tr></table></figure>
+<p>如果一切正常，那么你应该得到如下输出：</p>
+<blockquote>
+<p>Hi UserName! You’ve successfully authenticated, but GitHub does not provide shell access.</p>
+</blockquote>
+<h2 id="2-配置SSH使用443端口"><a class="headerlink" href="#2-配置SSH使用443端口" title="2.配置SSH使用443端口"></a>2.配置SSH使用443端口</h2><p><strong>SSH客户端配置文件</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">全局配置文件：/etc/ssh/ssh_config</span></span><br/><span class="line"><span class="meta prompt_"># </span><span class="language-bash">用户配置文件：~/.ssh/config <span class="comment"># 如果不存在则创建</span></span></span><br/></pre></td></tr></table></figure>
+<p>在你的SSH客户端配置文件中增加以下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/></pre></td><td class="code"><pre><span class="line">Host github.com</span><br/><span class="line">  Hostname ssh.github.com</span><br/><span class="line">  Port 443</span><br/><span class="line">  User git</span><br/></pre></td></tr></table></figure>
+<p>再次测试是否有效：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br/></pre></td></tr></table></figure>
+<p>或拉取仓库：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">git clone git@github.com:UserName/RepoName.git</span><br/></pre></td></tr></table></figure>

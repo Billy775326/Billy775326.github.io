@@ -1,0 +1,6 @@
+hexo/node_modules/
+hexo/public/
+hexo/db.json
+hexo/.cache/
+**/__pycache__/
+*.log

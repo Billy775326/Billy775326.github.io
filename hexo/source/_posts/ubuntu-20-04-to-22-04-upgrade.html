@@ -1,0 +1,42 @@
+---
+title: "ubuntu20.04 update to 22.04"
+date: "2024-07-31T08:37:46.000Z"
+updated: "2024-07-31T08:37:46.000Z"
+permalink: "blog/2024/07/ubuntu-20-04-to-22-04-upgrade/"
+slug: "ubuntu-20-04-to-22-04-upgrade"
+categories: ["系统与运维"]
+tags: ["Linux", "Ubuntu", "系统升级"]
+description: "你现在使用的 Ubuntu 20.04.6 LTS 已经是最新的长期支持版本（LTS）。要升级到更高的版本（如 Ubuntu 22.04 LTS），需要确保系统配置允许这种升级。以下是步骤： Ĵ"
+cover: "https://iowill.com/upload/Focal-Fossa-wallpaper.jpg"
+thumbnail: "/upload/Focal-Fossa-wallpaper.jpg"
+disableNunjucks: true
+migration_order: 43
+legacy_html: true
+comments: false
+related_nav: [{"url": "/blog/2024/09/install-x11vnc-remote-desktop/", "rel": "prev", "title": "安装x11vnc远程桌面"}, {"url": "/blog/2024/07/markdown-editor/", "rel": "next", "title": "Markdown Editor"}]
+---
+<p>你现在使用的 Ubuntu 20.04.6 LTS 已经是最新的长期支持版本（LTS）。要升级到更高的版本（如 Ubuntu 22.04 LTS），需要确保系统配置允许这种升级。以下是步骤：</p>
+<p>确保系统配置正确<br/>更新所有包：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get update &amp;&amp; <span class="built_in">sudo</span> apt-get upgrade</span><br/></pre></td></tr></table></figure>
+<p>编辑升级配置：<br/>确保 /etc/update-manager/release-upgrades 文件中 Prompt 设置为 lts 或 normal。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/update-manager/release-upgrades</span><br/></pre></td></tr></table></figure>
+<p>确保文件包含以下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">Prompt=lts</span><br/></pre></td></tr></table></figure>
+<p>运行升级命令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> do-release-upgrade</span><br/></pre></td></tr></table></figure>
+<p>如果还是无法升级，可以尝试以下步骤<br/>清理缓存并修复包依赖：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get clean</span><br/><span class="line"><span class="built_in">sudo</span> apt-get autoclean</span><br/><span class="line"><span class="built_in">sudo</span> apt-get autoremove</span><br/><span class="line"><span class="built_in">sudo</span> apt-get update</span><br/><span class="line"><span class="built_in">sudo</span> apt-get dist-upgrade</span><br/></pre></td></tr></table></figure>
+<p>尝试强制升级：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> do-release-upgrade -d</span><br/></pre></td></tr></table></figure>
+<p>检查是否存在阻止升级的问题<br/>检查 PPA 源：<br/>升级前，可能需要禁用所有第三方 PPA 源：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">mv</span> /etc/apt/sources.list.d /etc/apt/sources.list.d.bak</span><br/></pre></td></tr></table></figure>
+<p>运行升级命令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> do-release-upgrade</span><br/></pre></td></tr></table></figure>
+<p>如果仍然无法升级，请确认以下几点<br/>检查网络连接是否正常。<br/>确保 Ubuntu 存储库可以访问。<br/>尝试手动编辑源列表以指向更高版本的存储库。<br/>手动编辑源列表<br/>备份当前源列表：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> /etc/apt/sources.list /etc/apt/sources.list.bak</span><br/></pre></td></tr></table></figure>
+<p>编辑源列表：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/apt/sources.list</span><br/></pre></td></tr></table></figure>
+<p>将所有 focal 改为 jammy（假设要升级到 22.04），然后保存并退出。</p>
+<p>更新包信息并升级系统：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get update</span><br/><span class="line"><span class="built_in">sudo</span> apt-get upgrade</span><br/><span class="line"><span class="built_in">sudo</span> apt-get dist-upgrade</span><br/></pre></td></tr></table></figure>
+<p>完成这些步骤后，系统应该能够顺利升级到更新的版本。如果在任何一步遇到错误，请提供详细的错误信息以便进一步诊断。</p>

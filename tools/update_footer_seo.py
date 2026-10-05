@@ -1,5 +1,7 @@
 """Apply shared compact footer and factual structured data; generate sitemap."""
 from pathlib import Path
+if (Path(__file__).resolve().parents[1] / 'hexo/_config.yml').exists():
+    raise SystemExit('Hexo source migration is active. Use npm --prefix hexo run build / release; see docs/publishing.md.')
 from datetime import datetime,timezone,timedelta
 from urllib.parse import quote
 import json,re,xml.etree.ElementTree as ET

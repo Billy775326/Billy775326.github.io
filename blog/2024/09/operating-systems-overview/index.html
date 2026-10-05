@@ -1,64 +1,23 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>操作系统知识梳理 | Billy 的博客</title><meta name="author" content="Billy"><meta name="copyright" content="Billy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="耗时20天，终于学完啦，顺便写了1.4w字的笔记，坚持互联网开源精神，分享出来 操作系统 1.1_1 操作系统的概念、功能和目标 作为用户和计算机硬件之间的接口 提供的功能 命令接口（联机命令接口|脱机命令接口） 程序接口 GUI（图形用户界面win|ios|andrio） 目标 方便用户使用 1."><meta name="keywords" content="操作系统,进程管理,内存管理,文件系统"/>
-<meta property="og:type" content="article">
-<meta property="og:title" content="操作系统知识梳理">
-<meta property="og:url" content="https://iowill.com/blog/2024/09/operating-systems-overview/">
-<meta property="og:site_name" content="Billy 的博客">
-<meta property="og:description" content="耗时20天，终于学完啦，顺便写了1.4w字的笔记，坚持互联网开源精神，分享出来 操作系统 1.1_1 操作系统的概念、功能和目标 作为用户和计算机硬件之间的接口 提供的功能 命令接口（联机命令接口|脱机命令接口） 程序接口 GUI（图形用户界面win|ios|andrio） 目标 方便用户使用 1.">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img.billy12.xyz/file/1786437586692_千与千寻.jpg">
-<meta property="article:published_time" content="2024-09-20T12:26:14.000Z">
-<meta property="article:modified_time" content="2024-09-20T12:26:14.000Z">
-<meta property="article:author" content="Billy">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img.billy12.xyz/file/1786437586692_千与千寻.jpg"><script type="application/ld+json">{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "操作系统知识梳理",
-  "description": "耗时20天，终于学完啦，顺便写了1.4w字的笔记，坚持互联网开源精神，分享出来 操作系统 1.1_1 操作系统的概念、功能和目标 作为用户和计算机硬件之间的接口 提供的功能 命令接口（联机命令接口|脱机命令接口） 程序接口 GUI（图形用户界面win|ios|andrio） 目标 方便用户使用 1.",
-  "url": "https://iowill.com/blog/2024/09/operating-systems-overview/",
-  "image": "https://img.billy12.xyz/file/1786437586692_千与千寻.jpg",
-  "datePublished": "2024-09-20T12:26:14.000Z",
-  "dateModified": "2024-09-20T12:26:14.000Z",
-  "author": {
-    "@type": "Person",
-    "@id": "https://iowill.com/#author",
-    "name": "Billy",
-    "url": "https://iowill.com/",
-    "sameAs": [
-      "https://github.com/Billy775326"
-    ]
-  },
-  "@id": "https://iowill.com/blog/2024/09/operating-systems-overview/#article",
-  "inLanguage": "zh-CN",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://iowill.com/blog/2024/09/operating-systems-overview/"
-  },
-  "isPartOf": {
-    "@type": "WebSite",
-    "@id": "https://iowill.com/#website",
-    "name": "Billy 的博客",
-    "url": "https://iowill.com/"
-  },
-  "publisher": {
-    "@type": "Person",
-    "@id": "https://iowill.com/#author",
-    "name": "Billy",
-    "url": "https://iowill.com/",
-    "sameAs": [
-      "https://github.com/Billy775326"
-    ]
-  },
-  "articleSection": "系统与运维",
-  "keywords": [
-    "操作系统",
-    "进程管理",
-    "内存管理",
-    "文件系统"
-  ]
-}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://iowill.com/blog/2024/09/operating-systems-overview/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+<!DOCTYPE html>
+<html data-theme="light" lang="zh-CN"><head><meta charset="utf-8"/><meta content="IE=edge" http-equiv="X-UA-Compatible"/><meta content="width=device-width, initial-scale=1.0,viewport-fit=cover" name="viewport"/><title>操作系统知识梳理 | Billy 的博客</title><meta content="Billy" name="author"/><meta content="Billy" name="copyright"/><meta content="telephone=no" name="format-detection"/><meta content="#ffffff" name="theme-color"/><meta content="耗时20天，终于学完啦，顺便写了1.4w字的笔记，坚持互联网开源精神，分享出来 操作系统 1.1_1 操作系统的概念、功能和目标 作为用户和计算机硬件之间的接口 提供的功能 命令接口（联机命令接口|脱机命令接口） 程序接口 GUI（图形用户界面win|ios|andrio） 目标 方便用户使用 1." name="description"/>
+<meta content="article" property="og:type"/>
+<meta content="操作系统知识梳理" property="og:title"/>
+<meta content="https://iowill.com/blog/2024/09/operating-systems-overview/" property="og:url"/>
+<meta content="Billy 的博客" property="og:site_name"/>
+<meta content="耗时20天，终于学完啦，顺便写了1.4w字的笔记，坚持互联网开源精神，分享出来 操作系统 1.1_1 操作系统的概念、功能和目标 作为用户和计算机硬件之间的接口 提供的功能 命令接口（联机命令接口|脱机命令接口） 程序接口 GUI（图形用户界面win|ios|andrio） 目标 方便用户使用 1." property="og:description"/>
+<meta content="zh_CN" property="og:locale"/>
+<meta content="https://img.billy12.xyz/file/1786437586692_%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg" property="og:image"/>
+<meta content="2024-09-20T12:26:14.000Z" property="article:published_time"/>
+<meta content="2024-09-20T12:26:14.000Z" property="article:modified_time"/>
+<meta content="Billy" property="article:author"/>
+<meta content="内存管理" property="article:tag"/>
+<meta content="操作系统" property="article:tag"/>
+<meta content="文件系统" property="article:tag"/>
+<meta content="进程管理" property="article:tag"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://img.billy12.xyz/file/1786437586692_%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg" name="twitter:image"/><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "操作系统知识梳理", "url": "https://iowill.com/blog/2024/09/operating-systems-overview/", "image": "https://img.billy12.xyz/file/1786437586692_千与千寻.jpg", "datePublished": "2024-09-20T12:26:14.000Z", "dateModified": "2024-09-20T12:26:14.000Z", "author": {"@type": "Person", "@id": "https://iowill.com/#author", "name": "Billy", "url": "https://iowill.com/", "sameAs": ["https://github.com/Billy775326"]}, "@id": "https://iowill.com/blog/2024/09/operating-systems-overview/#article", "description": "耗时20天，终于学完啦，顺便写了1.4w字的笔记，坚持互联网开源精神，分享出来 操作系统 1.1_1 操作系统的概念、功能和目标 作为用户和计算机硬件之间的接口 提供的功能 命令接口（联机命令接口|脱机命令接口） 程序接口 GUI（图形用户界面win|ios|andrio） 目标 方便用户使用 1.", "publisher": {"@type": "Person", "@id": "https://iowill.com/#author", "name": "Billy", "url": "https://iowill.com/", "sameAs": ["https://github.com/Billy775326"]}, "inLanguage": "zh-CN", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://iowill.com/blog/2024/09/operating-systems-overview/"}, "isPartOf": {"@type": "WebSite", "@id": "https://iowill.com/#website"}, "articleSection": "系统与运维", "keywords": ["内存管理", "操作系统", "文件系统", "进程管理"]}</script><link href="/img/favicon.png" rel="shortcut icon"/><link href="https://iowill.com/blog/2024/09/operating-systems-overview/" rel="canonical"/><link href="//cdn.jsdelivr.net" rel="preconnect"/><link href="//busuanzi.ibruce.info" rel="preconnect"/><link href="/css/index.css?v=5.7.0" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css" rel="stylesheet"/><script>
     (() => {
-      
+
     const saveToLocal = {
       set: (key, value, ttl) => {
         const data = { value }
@@ -150,8 +109,8 @@
         parent.globalFn = globalFn
       }
     }
-  
-      
+
+
       const metaThemeColor = document.querySelector('meta[name="theme-color"]')
       const activateDarkMode = () => {
         document.documentElement.dataset.theme = 'dark'
@@ -170,25 +129,25 @@
       btf.activateLightMode = activateLightMode
 
       const theme = saveToLocal.get('theme')
-    
+
           theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
-        
-      
+
+
       const asideStatus = saveToLocal.get('aside-status')
       if (asideStatus !== undefined) {
         document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
       }
-    
-      
+
+
     const detectApple = () => {
       if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
         document.documentElement.classList.add('apple')
       }
     }
     detectApple()
-  
+
     })()
-  </script><script>const GLOBAL_CONFIG = {
+</script><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
   localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
@@ -231,32 +190,32 @@
   isHighlightShrink: false,
   isToc: false,
   pageType: 'post'
-}</script><link rel="stylesheet" href="/css/cards.css"><meta name="generator" content="Hexo 8.1.2"><meta property="article:section" content="系统与运维"><meta property="article:tag" content="操作系统"><meta property="article:tag" content="进程管理"><meta property="article:tag" content="内存管理"><meta property="article:tag" content="文件系统"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">92</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/upload/%E5%8D%83%E4%B8%8E%E5%8D%83%E5%AF%BB.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Billy 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">操作系统知识梳理</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">操作系统知识梳理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-09-20T12:26:14.000Z" title="发表于 2024-09-20 20:26:14">2024-09-20 20:26:14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-20T12:26:14.000Z" title="更新于 2024-09-20 20:26:14">2024-09-20 20:26:14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/systems-operations/">系统与运维</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" data-flag-title="" id=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><blockquote>
+}</script><link href="/css/site-preserved.css" rel="stylesheet"/><link href="/css/cards.css" rel="stylesheet"/><meta content="Hexo 8.1.2" name="generator"/><meta content="内存管理,操作系统,文件系统,进程管理" name="keywords"/></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img alt="avatar" onerror="this.onerror=null;this.src='/img/friend_404.gif'" src="/img/avatar.jpg"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">92</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://img.billy12.xyz/file/1786437586692_千与千寻.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Billy 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">操作系统知识梳理</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">操作系统知识梳理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-09-20T12:26:14.000Z" title="2024-09-20 20:26:14">2024-09-20 20:26:14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-20T12:26:14.000Z" title="2024-09-20 20:26:14">2024-09-20 20:26:14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/systems-operations/">系统与运维</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">13.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>41分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" data-flag-title="" id=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><blockquote>
 <p>耗时20天，终于学完啦，顺便写了1.4w字的笔记，坚持互联网开源精神，分享出来</p>
 </blockquote>
 <p>操作系统</p>
 <p>1.1_1 操作系统的概念、功能和目标</p>
 <p>作为用户和计算机硬件之间的接口</p>
-<p>提供的功能<br>命令接口（联机命令接口|脱机命令接口）<br>程序接口<br>GUI（图形用户界面win|ios|andrio）<br>目标<br>方便用户使用</p>
+<p>提供的功能<br/>命令接口（联机命令接口|脱机命令接口）<br/>程序接口<br/>GUI（图形用户界面win|ios|andrio）<br/>目标<br/>方便用户使用</p>
 <p>1.1_2 操作系统的特征</p>
 <p>并发|并行</p>
 <p>并发：多个事件交替发生（宏观同时发生、微观交替进行）</p>
 <p>并行：多个事件同时发生</p>
 <p>共享</p>
 <p>两种资源共享方式</p>
-<p>互斥共享方式：一个时间段内只允许一个进程访问该资源<br>同时共享方式：允许一个时间段内由多个进程“同时”对它们进行访问<br>虚拟</p>
+<p>互斥共享方式：一个时间段内只允许一个进程访问该资源<br/>同时共享方式：允许一个时间段内由多个进程“同时”对它们进行访问<br/>虚拟</p>
 <p>概念：把一个物理上的实体变为若干个逻辑上的对应物</p>
-<p>空分复用计数<br>时分复用计数<br>异步</p>
+<p>空分复用计数<br/>时分复用计数<br/>异步</p>
 <p>概念：在多道程序环境下，允许多个程序并发执行，但由于资源有限，进程的执行不是一贯到底的，而是走走停停的，以不可预知的速度向前推进。只有系统拥有并发性，才有可能导致异步性。</p>
 <p>1.1_3 操作系统的发展与分类</p>
 <p>OS的发展与分类</p>
-<p>手工操作阶段<br>纸带机（用户独占全机、人机速度矛盾）<br>批处理阶段——dan’dao<br>单道批处理系统（外围机——磁带）<br>多道批处理系统（操作系统开始出现）<br>分时操作系统<br>轮流处理作业<br>不能处理紧急任务<br>实时操作系统<br>优先处理紧急任务<br>硬实时系统：必须在严格的时间内完成处理<br>软实时系统：可以偶尔犯错<br>网络操作系统<br>分布式操作系统<br>个人计算机操作系统<br>1.1_4 操作系统的运行机制与体系结构</p>
+<p>手工操作阶段<br/>纸带机（用户独占全机、人机速度矛盾）<br/>批处理阶段——dan’dao<br/>单道批处理系统（外围机——磁带）<br/>多道批处理系统（操作系统开始出现）<br/>分时操作系统<br/>轮流处理作业<br/>不能处理紧急任务<br/>实时操作系统<br/>优先处理紧急任务<br/>硬实时系统：必须在严格的时间内完成处理<br/>软实时系统：可以偶尔犯错<br/>网络操作系统<br/>分布式操作系统<br/>个人计算机操作系统<br/>1.1_4 操作系统的运行机制与体系结构</p>
 <p>OS的运行机制和体系结构</p>
-<p>运行机制<br>两种指令<br>特权指令<br>非特权指令<br>两种处理器状态<br>核心态（root）<br>用户态<br>两种程序<br>内核程序(运行在核心态 )<br>应用程序<br>操作系统内核<br>时钟管理（实现计时功能）<br>中断处理<br>原语（程序运行具有原子性，不可中断）<br>对系统资源进行管理的功能<br>进程管理<br>存储器管理<br>设备管理<br>操作系统的体系结构<br>大内核（将操作系统的主要功能模块都作为系统内核，运行在核心态）<br>微内核（只把最基本的功能保留在内核）<br>1.1_5 中断和异常</p>
-<p>中断机制的诞生<br>操作系统介入，开展管理工作<br>“用户态—&gt;核心态”是通过中断实现的。并且中断是唯一途径<br>中断的概念和作用<br>中断的分类<br>内中断（异常）<br>陷阱（trap）<br>故障（fault）<br>中止（abort）<br>外中断 （CPU外部）<br>外中断的处理过程<br>1.1_6 系统调用</p>
+<p>运行机制<br/>两种指令<br/>特权指令<br/>非特权指令<br/>两种处理器状态<br/>核心态（root）<br/>用户态<br/>两种程序<br/>内核程序(运行在核心态 )<br/>应用程序<br/>操作系统内核<br/>时钟管理（实现计时功能）<br/>中断处理<br/>原语（程序运行具有原子性，不可中断）<br/>对系统资源进行管理的功能<br/>进程管理<br/>存储器管理<br/>设备管理<br/>操作系统的体系结构<br/>大内核（将操作系统的主要功能模块都作为系统内核，运行在核心态）<br/>微内核（只把最基本的功能保留在内核）<br/>1.1_5 中断和异常</p>
+<p>中断机制的诞生<br/>操作系统介入，开展管理工作<br/>“用户态—&gt;核心态”是通过中断实现的。并且中断是唯一途径<br/>中断的概念和作用<br/>中断的分类<br/>内中断（异常）<br/>陷阱（trap）<br/>故障（fault）<br/>中止（abort）<br/>外中断 （CPU外部）<br/>外中断的处理过程<br/>1.1_6 系统调用</p>
 <p>概念：应用程序通过系统调用请求操作系统的服务。保证系统的稳定性和安全性。</p>
 <p>系统调用和库函数的区别：</p>
-<p>系统调用是操作系统向上层提供的接口<br>有的库函数是对系统调用的进一步封装<br>当今编写的应用程序大多是通过高级语言提供的库函数间接地进行系统调用<br>2.1_1 进程的定义、组成、组织方式、特征</p>
+<p>系统调用是操作系统向上层提供的接口<br/>有的库函数是对系统调用的进一步封装<br/>当今编写的应用程序大多是通过高级语言提供的库函数间接地进行系统调用<br/>2.1_1 进程的定义、组成、组织方式、特征</p>
 <p>定义：</p>
 <p>组成：PCB（进程存在唯一的标志），程序段，数据段</p>
 <p>组织方式：链接方式，指针指向不同的队列；索引方式，索引表</p>
@@ -284,7 +243,7 @@
 <p>原语做的事情：</p>
 <p>1、更新PCD中的信息</p>
 <p>2、将PCD插入合适的队列</p>
-<p>3、分配&#x2F;回收资源</p>
+<p>3、分配/回收资源</p>
 <p>进程控制相关的原语：</p>
 <p>1、进程的创建：</p>
 <p>创建原语：申请空白PCB、为新进程分配所需资源、初始化PCB、将PCB插入就绪队列</p>
@@ -320,12 +279,12 @@
 <p>并发性：各线程间也能并发，提升了并发度</p>
 <p>系统开销：可以只在进程中切换，减小了CPU切换环境的系统开销</p>
 <p>1、线程有哪些重要的属性</p>
-<p>线程是处理机调度的基本单位<br>多CPU计算机中，各个线程可占用不同的CPU<br>每个线程都有一个线程ID、线程控制块（TCB）<br>线程也有就绪、阻塞、运行三种基本状态<br>线程几乎不拥有系统资源<br>同一进程的不同线程间共享进程的资源<br>由于共享内存地址空间，统一进程中的线程间通信甚至无需系统干预<br>同一进程中的线程切换，不会引起进程切换<br>不同进程中的线程切换，会引起进程切换<br>切换同进程内的线程，系统开销很小<br>切换进程，系统开销较大<br>2、线程的实现方式</p>
+<p>线程是处理机调度的基本单位<br/>多CPU计算机中，各个线程可占用不同的CPU<br/>每个线程都有一个线程ID、线程控制块（TCB）<br/>线程也有就绪、阻塞、运行三种基本状态<br/>线程几乎不拥有系统资源<br/>同一进程的不同线程间共享进程的资源<br/>由于共享内存地址空间，统一进程中的线程间通信甚至无需系统干预<br/>同一进程中的线程切换，不会引起进程切换<br/>不同进程中的线程切换，会引起进程切换<br/>切换同进程内的线程，系统开销很小<br/>切换进程，系统开销较大<br/>2、线程的实现方式</p>
 <p>用户级线程（ULT）：</p>
 <p>由应用管理，从用户的视角看能看到的线程</p>
 <p>内核级线程（KLT）：</p>
 <p>由操作系统管理，从操作系统内核视角看能看到的线程</p>
-<p>n个ULT可以映射到m个KLT上（n&gt;&#x3D;m）</p>
+<p>n个ULT可以映射到m个KLT上（n&gt;=m）</p>
 <p>内核级线程才是处理机分配的单位</p>
 <p>3、多线程模型</p>
 <p>多对一模型</p>
@@ -337,7 +296,7 @@
 <p>优点：并发能力很强</p>
 <p>缺点：占用成本高，开销大</p>
 <p>多对多模型</p>
-<p>n个ULT映射到m个KLT上（n&gt;&#x3D;m）</p>
+<p>n个ULT映射到m个KLT上（n&gt;=m）</p>
 <p>中和以上两种优缺点</p>
 <p>2.2_1 处理机调度的概念、层次</p>
 <p>基本概念</p>
@@ -356,20 +315,20 @@
 <p>2.2_2 进程调度的时机、切换与过程调度方式</p>
 <p>1、时机</p>
 <p>什么时候需要进程调度？</p>
-<p>主动放弃（进程正常终止、运行过程中发生异常而终止、进程主动请求阻塞）<br>被动放弃（分给进程的时间片用完、有更紧急的事需要处理、有更高优先级的进程进入就绪队列）<br>什么时候不能进行进程调度？</p>
-<p>在处理中断的过程中<br>在操作系统内核程序临界区中<br>临界资源：一个时段段内各进程互斥地访问临界资源<br>临界区：访问临界资源的那段代码<br>内核程序临界区会访问就绪队列，导致其上锁<br>在原子操作过程中（原语）<br>2、切换与过程</p>
+<p>主动放弃（进程正常终止、运行过程中发生异常而终止、进程主动请求阻塞）<br/>被动放弃（分给进程的时间片用完、有更紧急的事需要处理、有更高优先级的进程进入就绪队列）<br/>什么时候不能进行进程调度？</p>
+<p>在处理中断的过程中<br/>在操作系统内核程序临界区中<br/>临界资源：一个时段段内各进程互斥地访问临界资源<br/>临界区：访问临界资源的那段代码<br/>内核程序临界区会访问就绪队列，导致其上锁<br/>在原子操作过程中（原语）<br/>2、切换与过程</p>
 <p>“狭义的调度”与“进程切换”的区别</p>
-<p>狭义：选择一个进程<br>广义：狭义+进程切换<br>进程切换的过程需要做什么？</p>
-<p>对原来运行进程各种数据的保存<br>对新的进程各种数据的恢复<br>3、方式</p>
+<p>狭义：选择一个进程<br/>广义：狭义+进程切换<br/>进程切换的过程需要做什么？</p>
+<p>对原来运行进程各种数据的保存<br/>对新的进程各种数据的恢复<br/>3、方式</p>
 <p>非剥夺调度方式（非抢占式）</p>
-<p>只允许进程主动放弃处理机<br>剥夺调度方式（抢占式）</p>
-<p>进程被动放弃，可以优先处理紧急任务，适合分时操作系统、实时操作系统<br>2.2_3 调度算法的评价指标</p>
+<p>只允许进程主动放弃处理机<br/>剥夺调度方式（抢占式）</p>
+<p>进程被动放弃，可以优先处理紧急任务，适合分时操作系统、实时操作系统<br/>2.2_3 调度算法的评价指标</p>
 <p>1、CPU利用率</p>
-<p>CPU利用率&#x3D;CPU忙碌的时间&#x2F;总时间</p>
+<p>CPU利用率=CPU忙碌的时间/总时间</p>
 <p>2、系统吞吐量</p>
-<p>&#x3D;总共完成了多少道作业&#x2F;总共画了多少时间</p>
+<p>=总共完成了多少道作业/总共画了多少时间</p>
 <p>3、周转时间</p>
-<p>周转时间（提交作业到完成作业花费的时间）、平均周转时间（各作业周转时间之和&#x2F;作业数）<br>带权周转时间（作业周转时间&#x2F;作业实际运行的时间）、平均带权周转时间（各作业带权周转时间&#x2F;作业数）<br>4、等待时间</p>
+<p>周转时间（提交作业到完成作业花费的时间）、平均周转时间（各作业周转时间之和/作业数）<br/>带权周转时间（作业周转时间/作业实际运行的时间）、平均带权周转时间（各作业带权周转时间/作业数）<br/>4、等待时间</p>
 <p>进程或作业等待处理机状态时间的和</p>
 <p>进程：等待被服务的时间之和</p>
 <p>作业：建立后的等待时间+作业在外存后备队列中等待的时间</p>
@@ -387,13 +346,13 @@
 <p>非抢占式（SJF）：选最短需要时间的作业先进入运行态</p>
 <p>抢占式（SRTN）：有新作业进入就绪队列或有作业完成了，考察队列中的最小需要时间的作业</p>
 <p>在所有进程都几乎同时到达时，采用SJP调度算法的平均等待时间、平均周转时间最少</p>
-<p>若无红色前提，抢占式的短作业&#x2F;进程的平均时间最少</p>
+<p>若无红色前提，抢占式的短作业/进程的平均时间最少</p>
 <p>优点：“最短的”平均等待时间，平均周转时间</p>
 <p>缺点：对短作业有利，对长作业不利，可能产生饥饿现象</p>
 <p>3、高响应比优先（HRRN）</p>
-<p>要综合考虑作业&#x2F;进程的等待时间和要求服务的时间</p>
-<p>在每次调度时先计算各个作业&#x2F;进程的响应比，选择响应比最高的作业&#x2F;进程为其服务</p>
-<p>响应比&#x3D;（等待时间+要求服务时间）&#x2F;要求服务时间</p>
+<p>要综合考虑作业/进程的等待时间和要求服务的时间</p>
+<p>在每次调度时先计算各个作业/进程的响应比，选择响应比最高的作业/进程为其服务</p>
+<p>响应比=（等待时间+要求服务时间）/要求服务时间</p>
 <p>非抢占式</p>
 <p>进程主动放弃CPU时，需要该算法选取就绪队列的作业</p>
 <p>不会饥饿</p>
@@ -408,12 +367,12 @@
 <p>不会饥饿</p>
 <p>2、优先级调度算法</p>
 <p>算法思想：根据任务的紧急程度来决定处理顺序</p>
-<p>算法规则：每个进程&#x2F;作业有各自的优先级，调度时选择优先级最高的作业&#x2F;进程</p>
-<p>适用：作业&#x2F;进程&#x2F;IO</p>
-<p>抢占式&#x2F;不可抢占均有</p>
+<p>算法规则：每个进程/作业有各自的优先级，调度时选择优先级最高的作业/进程</p>
+<p>适用：作业/进程/IO</p>
+<p>抢占式/不可抢占均有</p>
 <p>静态优先级：不变</p>
 <p>动态优先级：可以变</p>
-<p>通常：系统进程优先级高于用户进程，前台进程优先级高于后台进程，操作系统更偏好I&#x2F;O进程</p>
+<p>通常：系统进程优先级高于用户进程，前台进程优先级高于后台进程，操作系统更偏好I/O进程</p>
 <p>可以从追求公平、提升资源利用率等角度考虑改变优先级</p>
 <p>可能会饥饿</p>
 <p>3、多级反馈队列调度算法</p>
@@ -429,10 +388,10 @@
 <p>把一个时间段内只允许一个进程使用的资源称为临界资源。</p>
 <p>对临界资源的互斥访问，可以在逻辑上分为四个部分：</p>
 <p>do{</p>
-<p>  entry section;  &#x2F;&#x2F;进入区  对访问的资源检查或进行上锁</p>
-<p>  critical section; &#x2F;&#x2F;临界区(段) 访问临界资源的那部分代码</p>
-<p>  exit section;   &#x2F;&#x2F;退出区  负责解锁</p>
-<p>  remainder section; &#x2F;&#x2F;剩余区  其它处理</p>
+<p>  entry section;  //进入区  对访问的资源检查或进行上锁</p>
+<p>  critical section; //临界区(段) 访问临界资源的那部分代码</p>
+<p>  exit section;   //退出区  负责解锁</p>
+<p>  remainder section; //剩余区  其它处理</p>
 <p>} while(true)</p>
 <p>1、空闲让进。 空的可以直接进去</p>
 <p>2、忙则等待。 繁忙不能进去</p>
@@ -441,69 +400,69 @@
 <p>2.3_2 进程互斥的软件实现方法</p>
 <p>1、单标志法</p>
 <p>两个进程在访问完临界区后会把使用临界区的权限教给另一个进程。也就是说每个进程进入临界区的权限只能被另一个进程赋予</p>
-<p>int turn &#x3D;0;</p>
-<p>&#x2F;&#x2F;p0进程</p>
-<p>while(turn!&#x3D;0);</p>
+<p>int turn =0;</p>
+<p>//p0进程</p>
+<p>while(turn!=0);</p>
 <p>critical section;</p>
-<p>turn &#x3D; 1;</p>
+<p>turn = 1;</p>
 <p>remainder section;</p>
-<p>&#x2F;&#x2F;p1进程</p>
-<p>while(turn!&#x3D;1);</p>
+<p>//p1进程</p>
+<p>while(turn!=1);</p>
 <p>critical section;</p>
-<p>turn &#x3D; 0;</p>
+<p>turn = 0;</p>
 <p>remainder section;</p>
 <p>可以实现互斥</p>
 <p>存在的问题：p1要访问的话，必须p0先访问，违背：空闲让进原则</p>
 <p>2、双标志先检查 </p>
 <p>算法思想:设置一个bool数组flag[]来标记自己是否想要进入临界区的意愿</p>
-<p>bool flag[2]&#x3D;{false,false};</p>
-<p>&#x2F;&#x2F;p1进程</p>
+<p>bool flag[2]={false,false};</p>
+<p>//p1进程</p>
 <p>while(flag[1]);</p>
-<p>flag[0]&#x3D;true;</p>
+<p>flag[0]=true;</p>
 <p>critical section;</p>
-<p>flag[0]&#x3D;false;</p>
+<p>flag[0]=false;</p>
 <p>remainder section;</p>
-<p>&#x2F;&#x2F;p2进程</p>
+<p>//p2进程</p>
 <p>while(flag[0]);</p>
-<p>flag[0]&#x3D;true;</p>
+<p>flag[0]=true;</p>
 <p>critical section;</p>
-<p>flag[1]&#x3D;false;</p>
+<p>flag[1]=false;</p>
 <p>remainder section;</p>
 <p>主要问题：由于进程是并发进行的，可能会违背忙则等待的原则</p>
 <p>3、双标志后检查</p>
 <p>算法思想:设置一个bool数组flag[]来标记自己是否想要进入临界区的意愿,不过是先上锁后检查</p>
-<p>bool flag[2]&#x3D;{false,false};</p>
-<p>&#x2F;&#x2F;p1进程</p>
-<p>flag[0]&#x3D;true;</p>
+<p>bool flag[2]={false,false};</p>
+<p>//p1进程</p>
+<p>flag[0]=true;</p>
 <p>while(flag[1]);</p>
 <p>critical section;</p>
-<p>flag[0]&#x3D;false;</p>
+<p>flag[0]=false;</p>
 <p>remainder section;</p>
-<p>&#x2F;&#x2F;p2进程</p>
-<p>flag[0]&#x3D;true;</p>
+<p>//p2进程</p>
+<p>flag[0]=true;</p>
 <p>while(flag[0]);</p>
 <p>critical section;</p>
-<p>flag[1]&#x3D;false;</p>
+<p>flag[1]=false;</p>
 <p>remainder section;</p>
 <p>主要问题：由于进程是并发进行的，可能会两个同时上锁，都进不去，违反空闲让进和有限等待原则</p>
 <p>会饥饿</p>
 <p>4、Peterson 算法</p>
 <p>主动让对方先使用处理器</p>
-<p>bool flag[2]&#x3D;{false,false};</p>
-<p>int turn&#x3D;0;</p>
-<p>&#x2F;&#x2F;p1进程</p>
-<p>flag[0]&#x3D;true;</p>
-<p>turn&#x3D;1;</p>
-<p>while(flag[1]&amp;&amp;turn&#x3D;&#x3D;1);</p>
+<p>bool flag[2]={false,false};</p>
+<p>int turn=0;</p>
+<p>//p1进程</p>
+<p>flag[0]=true;</p>
+<p>turn=1;</p>
+<p>while(flag[1]&amp;&amp;turn==1);</p>
 <p>critical section;</p>
-<p>flag[0]&#x3D;false;</p>
+<p>flag[0]=false;</p>
 <p>remainder section;</p>
-<p>&#x2F;&#x2F;p2进程</p>
-<p>flag[1]&#x3D;true;</p>
-<p>turn&#x3D;0;</p>
-<p>while(flag[0]&amp;&amp;turn&#x3D;&#x3D;0);</p>
+<p>//p2进程</p>
+<p>flag[1]=true;</p>
+<p>turn=0;</p>
+<p>while(flag[0]&amp;&amp;turn==0);</p>
 <p>critical section;</p>
-<p>flag[1]&#x3D;false;</p>
+<p>flag[1]=false;</p>
 <p>remainder section;</p>
 <p>遵循空闲让进、忙则等待、有限等待三个原则</p>
 <p>但是未遵循让权等待的原则</p>
@@ -519,37 +478,37 @@
 <p>TSL是用硬件实现的，上锁、检查一气呵成</p>
 <p>不满足让权等待，会盲等</p>
 <p>C语言描述逻辑：</p>
-<p>&#x2F;&#x2F;true表示已经上锁</p>
+<p>//true表示已经上锁</p>
 <p>bool TestAndSet(bool *lock){</p>
 <p>  bool old;</p>
-<p>  old&#x3D;*lock;</p>
-<p>  *lock&#x3D;true;</p>
+<p>  old=*lock;</p>
+<p>  *lock=true;</p>
 <p>  return old;</p>
 <p>}</p>
 <p>​</p>
-<p>&#x2F;&#x2F;以下是使用TSL指令实现互斥的算法逻辑</p>
-<p>while(TestAndSet (&amp;lock));&#x2F;&#x2F;上锁并检查</p>
+<p>//以下是使用TSL指令实现互斥的算法逻辑</p>
+<p>while(TestAndSet (&amp;lock));//上锁并检查</p>
 <p>临界区代码段</p>
-<p>lock&#x3D;false; &#x2F;&#x2F;解锁</p>
+<p>lock=false; //解锁</p>
 <p>​</p>
 <p>3、Swap指令</p>
 <p>别称：Exchange指令、XCHG指令</p>
 <p>Swap指令是用硬件实现的</p>
-<p>&#x2F;&#x2F;true表示已经上锁</p>
+<p>//true表示已经上锁</p>
 <p>void Swap(bool *a,bool *b){</p>
 <p>  bool temp;</p>
-<p>  temp&#x3D;*a;</p>
-<p>  *a&#x3D;*b;</p>
-<p>  *b&#x3D;temp;</p>
+<p>  temp=*a;</p>
+<p>  *a=*b;</p>
+<p>  *b=temp;</p>
 <p>}</p>
 <p>​</p>
-<p>&#x2F;&#x2F;以下是使用Swap指令实现互斥的算法逻辑</p>
-<p>bool old&#x3D;true;</p>
-<p>while(old&#x3D;true)</p>
+<p>//以下是使用Swap指令实现互斥的算法逻辑</p>
+<p>bool old=true;</p>
+<p>while(old=true)</p>
 <p>  Swap(&amp;lock,&amp;old);</p>
 <p>临界区代码段</p>
-<p>lock&#x3D;false; &#x2F;&#x2F;解锁</p>
-<p>&#x2F;&#x2F;剩余代码段</p>
+<p>lock=false; //解锁</p>
+<p>//剩余代码段</p>
 <p>简单</p>
 <p>适用多处理机</p>
 <p>不能让权等待</p>
@@ -559,24 +518,24 @@
 <p>一对原语：wait（S）原语和signal（S）原语，分别简称P（S）、V（S）</p>
 <p>1、整形信号量</p>
 <p>用一个整数表示系统资源的变量，用来表示系统中某种资源的数量</p>
-<p>int S&#x3D;1;</p>
-<p>void wait(int S){ &#x2F;&#x2F;wait原语，相当于：进入区</p>
-<p>  while(S&lt;&#x3D;0); &#x2F;&#x2F;如果资源数不够，就意志循环等待</p>
-<p>  S&#x3D;S-1;    &#x2F;&#x2F;如果资源数够，则占用一个资源</p>
+<p>int S=1;</p>
+<p>void wait(int S){ //wait原语，相当于：进入区</p>
+<p>  while(S&lt;=0); //如果资源数不够，就意志循环等待</p>
+<p>  S=S-1;    //如果资源数够，则占用一个资源</p>
 <p>}</p>
 <p>​</p>
-<p>void signal(int S){&#x2F;&#x2F;signal原语，相当于“退出区”</p>
-<p>  S&#x3D;S+1;    &#x2F;&#x2F;使用完资源后，在退出区释放资源</p>
+<p>void signal(int S){//signal原语，相当于“退出区”</p>
+<p>  S=S+1;    //使用完资源后，在退出区释放资源</p>
 <p>}</p>
 <p>可能会出现盲等</p>
 <p>2、记录型信号量</p>
 <p>记录型数据结构表示的信号量</p>
-<p>&#x2F;&#x2F;记录型信号量的定义</p>
+<p>//记录型信号量的定义</p>
 <p>typedef struct{</p>
 <p>  int value;</p>
 <p>  struct process *L;</p>
 <p>} semaphore;</p>
-<p>&#x2F;&#x2F;某进程需要使用资源时，通过wait原语申请</p>
+<p>//某进程需要使用资源时，通过wait原语申请</p>
 <p>void wait (semaphore S){</p>
 <p>  S.value–;</p>
 <p>  if(S.value&lt;0){</p>
@@ -584,10 +543,10 @@
 </code></pre>
 <p> }</p>
 <p>}</p>
-<p>&#x2F;&#x2F;进程使用完资源后，通过signal原语释放</p>
+<p>//进程使用完资源后，通过signal原语释放</p>
 <p>void signal (semaphore S){</p>
 <p>  S.value++;</p>
-<p>  if(S.valie&lt;&#x3D;0){</p>
+<p>  if(S.valie&lt;=0){</p>
 <pre><code>wakeup(S.L);
 </code></pre>
 <p> }</p>
@@ -626,10 +585,10 @@
 <p>2、只允许一个写者往文件中写信息</p>
 <p>3、任一写者在完成写操作之前不允许其他读者或写者工作</p>
 <p>4、写者执行写操作前，应让已有的读者和写者全部退出</p>
-<p>semaphore rw&#x3D;1;&#x2F;&#x2F;用于实现对文件的互斥访问。表示当前是否有进程在访问共享文件</p>
-<p>int count&#x3D;0;&#x2F;&#x2F;记录当前有几个读进程在访问文件</p>
-<p>semaphore mutex&#x3D;1;&#x2F;&#x2F;用于保证对count变量的互斥访问</p>
-<p>semaphore w&#x3D;1; &#x2F;&#x2F;用于实现“写优先”</p>
+<p>semaphore rw=1;//用于实现对文件的互斥访问。表示当前是否有进程在访问共享文件</p>
+<p>int count=0;//记录当前有几个读进程在访问文件</p>
+<p>semaphore mutex=1;//用于保证对count变量的互斥访问</p>
+<p>semaphore w=1; //用于实现“写优先”</p>
 <p>writer(){</p>
 <p>  while(1){</p>
 <pre><code>P（w）;
@@ -648,7 +607,7 @@ V（rw);//写之后“解锁”
 <p>  while(1){</p>
 <pre><code>P(w);
 </code></pre>
-<p>   P(mutex); &#x2F;&#x2F;各读进程互斥访问count</p>
+<p>   P(mutex); //各读进程互斥访问count</p>
 <pre><code>if(count==0) 
 
   P(rw); //第一个读进程的读进程数+1
@@ -680,9 +639,9 @@ V(mutex);
 <p>1、可以对哲学家进程施加一些限制条件，比如最多允许四个哲学家同时进餐，这样可以保证至少有一个哲学家是可以拿到左右两只筷子的。</p>
 <p>2、要求奇数号哲学家先拿左边的筷子，然后再拿右边的筷子，而偶数号哲学家刚好相反。用这种方法可以保证如果相邻的两个奇偶号哲学家都想吃饭，那么只会有其中一个可以拿起第一只筷子，另一个会直接阻塞。这就避免了占有一只后再等待另一只的情况。</p>
 <p>3、仅当一个哲学家左右两只筷子都可用时才允许他抓起筷子。</p>
-<p>semaphore chopstick[5]&#x3D;{1,1,1,1,1};</p>
-<p>semaphore mutex &#x3D; 1; &#x2F;&#x2F;互斥地取筷子</p>
-<p>Pi(){     &#x2F;&#x2F;i号哲学家的进程</p>
+<p>semaphore chopstick[5]={1,1,1,1,1};</p>
+<p>semaphore mutex = 1; //互斥地取筷子</p>
+<p>Pi(){     //i号哲学家的进程</p>
 <p>  while(1){</p>
 <pre><code>P(mutex);
 
@@ -707,12 +666,12 @@ V(chopstick[(i+1)%5]);
 <p>PV操作容易出错、困难</p>
 <p>2、管程的定义和基本特征</p>
 <p>定义：</p>
-<p>局部于管程的共享数据结构说明<br>对该数据结构进程操作的一组过程<br>对局部于管程的共享数据设置初始值的语句<br>管程有一个名字<br>基本特征：</p>
-<p>局部于管程数据结构只能被局部于管程的过程所访问<br>一个进程只有通过调用管程内的过程才能进入管程访问共享数据<br>每次仅允许一个进程在管程内执行某个内部过程<br>心得：相当于C++的类，管程是数据放在private中，函数放在public中</p>
+<p>局部于管程的共享数据结构说明<br/>对该数据结构进程操作的一组过程<br/>对局部于管程的共享数据设置初始值的语句<br/>管程有一个名字<br/>基本特征：</p>
+<p>局部于管程数据结构只能被局部于管程的过程所访问<br/>一个进程只有通过调用管程内的过程才能进入管程访问共享数据<br/>每次仅允许一个进程在管程内执行某个内部过程<br/>心得：相当于C++的类，管程是数据放在private中，函数放在public中</p>
 <p>拓展1：用管程解决生产者消费者问题</p>
 <p>monitor producerconsumer</p>
 <p>  condition full,empty;</p>
-<p>  int count &#x3D; 0;</p>
+<p>  int count = 0;</p>
 <p>  void insert(Item item){</p>
 <pre><code>if(count == N)
 
@@ -743,7 +702,7 @@ return remove_item();
 <p> }</p>
 <p>  end monitor;</p>
 <p>​</p>
-<p>&#x2F;&#x2F;使用</p>
+<p>//使用</p>
 <p>producer(){</p>
 <p>  while(1){</p>
 <pre><code>item = 生产一个产品;
@@ -777,14 +736,14 @@ producerconsumer.insert(item);
 <p>定义：某进程执行过程中一直跳不出某个循环的现象。</p>
 <p>区别：死循环是程序员的问题</p>
 <p>3、死锁产生的必要条件</p>
-<p>互斥条件：多个进程争夺资源发生死锁<br>不剥夺条件：进程获得的资源不能由其它进程强行抢夺<br>请求和保持条件：某个进程有了资源，还在请求资源<br>循环等待条件：存在资源的循环等待链<br>4、什么时候会发生死锁</p>
-<p>对系统资源的竞争<br>进程推进顺序非法<br>信号量的使用不当也会造成死锁<br>5、死锁的处理策略</p>
-<p>预防死锁<br>避免死锁<br>死锁的检测和解除<br>2.4_2 死锁的处理策略——预防死锁</p>
+<p>互斥条件：多个进程争夺资源发生死锁<br/>不剥夺条件：进程获得的资源不能由其它进程强行抢夺<br/>请求和保持条件：某个进程有了资源，还在请求资源<br/>循环等待条件：存在资源的循环等待链<br/>4、什么时候会发生死锁</p>
+<p>对系统资源的竞争<br/>进程推进顺序非法<br/>信号量的使用不当也会造成死锁<br/>5、死锁的处理策略</p>
+<p>预防死锁<br/>避免死锁<br/>死锁的检测和解除<br/>2.4_2 死锁的处理策略——预防死锁</p>
 <p>1、不允许死锁发生</p>
-<p>静态策略：预防死锁<br>破坏互斥条件（有些不能破坏）<br> 把互斥的资源改造为共享资源<br>破坏不剥夺条件（复杂，造成之前工作失效，降低系统开销，会全部放弃、导致饥饿）<br> 方案1：当请求得不到满足的时候，立即释放手里的资源<br> 方案2：由系统介入，强行帮助剥夺<br>破坏请求和保持条件（资源利用率极低，可能会导致某些进程饥饿）<br> 采用静态分配方法，一次性全部申请，如果申请不到，不要允许<br>破坏循环等待条件（不方便增加新的设备，实际使用与递增顺序不一致，会导致资源的浪费，必须按规定次序申请资源）<br> 顺序资源分配法：对资源编号，进程按编号递增顺序请求资源<br>动态检测：避免死锁<br>2、允许死锁发生</p>
-<p>死锁的检测和解除<br>2.4_3 死锁的处理策略——避免死锁</p>
+<p>静态策略：预防死锁<br/>破坏互斥条件（有些不能破坏）<br/> 把互斥的资源改造为共享资源<br/>破坏不剥夺条件（复杂，造成之前工作失效，降低系统开销，会全部放弃、导致饥饿）<br/> 方案1：当请求得不到满足的时候，立即释放手里的资源<br/> 方案2：由系统介入，强行帮助剥夺<br/>破坏请求和保持条件（资源利用率极低，可能会导致某些进程饥饿）<br/> 采用静态分配方法，一次性全部申请，如果申请不到，不要允许<br/>破坏循环等待条件（不方便增加新的设备，实际使用与递增顺序不一致，会导致资源的浪费，必须按规定次序申请资源）<br/> 顺序资源分配法：对资源编号，进程按编号递增顺序请求资源<br/>动态检测：避免死锁<br/>2、允许死锁发生</p>
+<p>死锁的检测和解除<br/>2.4_3 死锁的处理策略——避免死锁</p>
 <p>动态检测：避免死锁</p>
-<p>什么是安全序列<br>进行后面的某些情况，不会使系统发生死锁<br>什么是系统的不安全状态，与死锁有何联系<br>如果系统处于安全状态，就一定不会发生死锁。如果系统进入不安全状态，就可能发生死锁（处于不安全状态未必就是发生了死锁，但发生死锁时一定时在不安全状态）<br>如何避免系统进入不安全状态——银行家算法<br>初始分配完成后，优先全部分配给最少的，并且拿回资源<br>		步骤：</p>
+<p>什么是安全序列<br/>进行后面的某些情况，不会使系统发生死锁<br/>什么是系统的不安全状态，与死锁有何联系<br/>如果系统处于安全状态，就一定不会发生死锁。如果系统进入不安全状态，就可能发生死锁（处于不安全状态未必就是发生了死锁，但发生死锁时一定时在不安全状态）<br/>如何避免系统进入不安全状态——银行家算法<br/>初始分配完成后，优先全部分配给最少的，并且拿回资源<br/>		步骤：</p>
 <pre><code>		1、检查此次申请是否超过了之前声明的最大需求数
 
 		2、检查此时系统剩余的可用资源是否还能满足这次请求
@@ -818,7 +777,7 @@ producerconsumer.insert(item);
 <p>3、地址转换</p>
 <p>逻辑地址和物理地址转换</p>
 <p>4、存储保护</p>
-<p>设置上下限寄存器<br>采用重定位寄存器（基址寄存器）和界地址寄存器（限长寄存器）<br>3.1_3 覆盖与交换</p>
+<p>设置上下限寄存器<br/>采用重定位寄存器（基址寄存器）和界地址寄存器（限长寄存器）<br/>3.1_3 覆盖与交换</p>
 <p>内存空间的扩充</p>
 <p>覆盖技术：将程序分为多个段，内存分为”固定区“和”覆盖区“，需要常驻的放在”固定区“，调入后就不再调出，不常用的段放在”覆盖区“，需要用到时调入内存，用不到时掉出内存</p>
 <p>交换技术：内存空间紧张时，系统将内存中某些进程暂时换出外存，把外存中某些已具备运行条件的进程换入内存（PCB会常驻内存，不会被患处）</p>
@@ -847,7 +806,7 @@ producerconsumer.insert(item);
 <p>连续分配：为用户进程分配连续的内存空间</p>
 <p>非连续分配：为用户进程分配分散的内存空间</p>
 <p>将内存分为大小相等的小分区“页框”，将用户的进程空间也分为大小相等的一个个区域，以页框的基本单位分配给每个进程片</p>
-<p>分页管理：物理地址&#x3D;页面的其实位置+偏移量</p>
+<p>分页管理：物理地址=页面的其实位置+偏移量</p>
 <p>计算机中用2的整数倍表示页面的大小</p>
 <p>页表：存放页号和块号的对应关系</p>
 <p>3.1_7 基本地址变换机构</p>
@@ -905,12 +864,12 @@ producerconsumer.insert(item);
 <p>一次性：作业必须全部装入内存后才能开始运行，并发性下降</p>
 <p>驻留性：一旦作业被装入内存，就会一直驻留在内存</p>
 <p>2、局部性原理</p>
-<p>时间局部性<br>空间局部性<br>高速缓存技术<br>3、虚拟内存的定义和特征</p>
+<p>时间局部性<br/>空间局部性<br/>高速缓存技术<br/>3、虚拟内存的定义和特征</p>
 <p>虚拟内存最大容量是计算机地址结构确定的</p>
-<p>虚拟内存的实际容量&#x3D;min(内存和外存容量之和，CPU寻址范围)</p>
+<p>虚拟内存的实际容量=min(内存和外存容量之和，CPU寻址范围)</p>
 <p>eg：某计算机地址结构为32位，按字节编址，内存大小为512MB，外存大小为2DB.</p>
-<p>则虚拟内存的最大容量为 2^32B&#x3D;4GB</p>
-<p>虚拟内存的实际容量&#x3D;min(2^32B,512MB+2GB)&#x3D;2GB+512MB </p>
+<p>则虚拟内存的最大容量为 2^32B=4GB</p>
+<p>虚拟内存的实际容量=min(2^32B,512MB+2GB)=2GB+512MB </p>
 <p>多次性：无需在作业运行时一次性全部装入内存，而是允许被分成多次调用内存</p>
 <p>对换性：在作业运行时无需一直常驻内存，而是允许在作业运行过程中，将作业换入换出</p>
 <p>虚拟性：从逻辑上扩充了内存的容量，使用户看到的内存容量，远大于实际的容量</p>
@@ -941,7 +900,7 @@ producerconsumer.insert(item);
 <p>1、驻留集</p>
 <p>指请求分页存储管理中给进程分配的物理块的集合</p>
 <p>2、页面分配、置换策略</p>
-<p>固定分配局部替换：驻留集大小不可改变<br>可变分配全局替换：可以将操作系统保留的空闲物理块分配给缺页进程<br>可变分配局部替换：只能选进程自己的物理块置换<br>3、调入页面的时机</p>
+<p>固定分配局部替换：驻留集大小不可改变<br/>可变分配全局替换：可以将操作系统保留的空闲物理块分配给缺页进程<br/>可变分配局部替换：只能选进程自己的物理块置换<br/>3、调入页面的时机</p>
 <p>预调页策略：一次调用若干个相邻页面，运行前调入</p>
 <p>请求调页策略：运行时缺页再调入</p>
 <p>4、从何处调页</p>
@@ -966,28 +925,28 @@ producerconsumer.insert(item);
 <p>按照是否与关键字顺序有关，可以分为串结构和顺序结构</p>
 <p>链式：无法随机存取</p>
 <p>顺序存储：</p>
-<p>可变长：无法随机存取<br>定长：可以随机存取，采用串结构，无法快速找到关键字；采用顺序结构，可以快速查找关键字<br>索引文件：索引表本身是定长的顺序文件</p>
+<p>可变长：无法随机存取<br/>定长：可以随机存取，采用串结构，无法快速找到关键字；采用顺序结构，可以快速查找关键字<br/>索引文件：索引表本身是定长的顺序文件</p>
 <p>索引顺序文件：多级索引表嵌套查找</p>
 <p>4.1_3 文件目录</p>
 <p>1、文件控制块（FCB）</p>
 <p>搜索、创建文件、删除文件、显示目录、修改目录</p>
 <p>2、目录结构</p>
-<p>单级目录结构<br>两级目录结构<br>		主文件目录（MFD）+用户文件目录（UFD）</p>
-<p>多级目录结构（树形目录结构）<br>		当代操作系统采用方法、不便于文件共享</p>
-<p>无环图目录结构<br>可以共享<br>3、索引节点（对文件控制块</p>
+<p>单级目录结构<br/>两级目录结构<br/>		主文件目录（MFD）+用户文件目录（UFD）</p>
+<p>多级目录结构（树形目录结构）<br/>		当代操作系统采用方法、不便于文件共享</p>
+<p>无环图目录结构<br/>可以共享<br/>3、索引节点（对文件控制块</p>
 <p>压缩文件名和信息</p>
 <p>4.1_4 文件的物理结构（文件分配方式）</p>
 <p>1、对非空闲磁盘块的管理</p>
 <p>连续分配：连续分配方式要求每个文件在磁盘上占有一组连续的块，对文件的拓展不方便，有很多磁盘碎片</p>
 <p>链接分配</p>
-<p>隐式分配：采用链接分配方式的文件，只支持顺序访问，不支持随机访问，方便拓展<br>显示分配：文件分配表显式记录下一块物理块的位置，方便拓展，支持随机访问，文件表会占内存空间<br>4.1_4 文件的物理结构（文件分配方式）</p>
+<p>隐式分配：采用链接分配方式的文件，只支持顺序访问，不支持随机访问，方便拓展<br/>显示分配：文件分配表显式记录下一块物理块的位置，方便拓展，支持随机访问，文件表会占内存空间<br/>4.1_4 文件的物理结构（文件分配方式）</p>
 <p>索引分配</p>
 <p>索引分配允许文件离散地分配在各个磁盘块中，系统会为每个文件建立一张索引表，索引表记录了文件的各个逻辑块对应的物理块</p>
 <p>支持随机访问</p>
-<p>链接方案<br>多层索引<br>混合索引<br>4.1_5 文件存储空间管理</p>
+<p>链接方案<br/>多层索引<br/>混合索引<br/>4.1_5 文件存储空间管理</p>
 <p>1、存储空间的划分与初始化</p>
-<p>文件卷（逻辑卷）的概念<br>目录区与文件区<br>2、几种管理方法</p>
-<p>空闲表法：首位置+长度，回收时注意修改<br>空闲链表法（空闲盘块链、空闲盘区链）<br>位示图法<br>成组链接法：文件卷的目录区中专门用一个磁盘块作为超级块，当系统启动时需要将超级内存块读入内存。并且保证内存与外存中的超级块数据一致。<br>4.1_6 文件的基本操作</p>
+<p>文件卷（逻辑卷）的概念<br/>目录区与文件区<br/>2、几种管理方法</p>
+<p>空闲表法：首位置+长度，回收时注意修改<br/>空闲链表法（空闲盘块链、空闲盘区链）<br/>位示图法<br/>成组链接法：文件卷的目录区中专门用一个磁盘块作为超级块，当系统启动时需要将超级内存块读入内存。并且保证内存与外存中的超级块数据一致。<br/>4.1_6 文件的基本操作</p>
 <p>创建文件（create）</p>
 <p>1、在外存中找到文件所需的空间</p>
 <p>2、创建该文件对应的目录项</p>
@@ -1010,11 +969,11 @@ producerconsumer.insert(item);
 <p>1、口令保护</p>
 <p>2、加密保护</p>
 <p>保密性强，不需要在系统中存储“密码”</p>
-<p>编码&#x2F;译码，需要花费一定时间</p>
+<p>编码/译码，需要花费一定时间</p>
 <p>3、访问控制</p>
 <p>在每个文件的FCB中增加一个访问控制表（ACL），该表记录了各个用户可以对该文件执行哪些操作</p>
 <p>4.1_9 文件系统的层次结构</p>
-<p>用户&#x2F;应用接口</p>
+<p>用户/应用接口</p>
 <p>用户接口</p>
 <p>文件目录系统</p>
 <p>存取控制模块</p>
@@ -1032,12 +991,12 @@ producerconsumer.insert(item);
 <p>4.2_2 磁盘调度算法</p>
 <pre><code>1、一次磁盘读/写操作需要的时间
 </code></pre>
-<p>寻找时间Ts&#x3D;s+m*n<br>延迟时间Tr&#x3D;1&#x2F;(2r)<br>传输时间Tt&#x3D;b&#x2F;(rN)<br>2、磁盘调度算法</p>
-<p>先来先服务（FCFS）<br>最短寻找时间优先（SSTF）<br>		优先处理最近的磁道，可能会产生饥饿现象</p>
-<p>扫描算法（SCAN）<br>		只有磁头移动到最外侧磁道的时候才能往内移动，移动到最内侧磁道的时候才能往外移动</p>
+<p>寻找时间Ts=s+m*n<br/>延迟时间Tr=1/(2r)<br/>传输时间Tt=b/(rN)<br/>2、磁盘调度算法</p>
+<p>先来先服务（FCFS）<br/>最短寻找时间优先（SSTF）<br/>		优先处理最近的磁道，可能会产生饥饿现象</p>
+<p>扫描算法（SCAN）<br/>		只有磁头移动到最外侧磁道的时候才能往内移动，移动到最内侧磁道的时候才能往外移动</p>
 <pre><code>	LOOK，如果在磁头移动方向上已经没有别的请求，就可以立即改变磁头移动方向
 </code></pre>
-<p>循环扫描算法（C-SCAN）<br>返回时直接快速移动至起始端而不处理任何请求</p>
+<p>循环扫描算法（C-SCAN）<br/>返回时直接快速移动至起始端而不处理任何请求</p>
 <pre><code>C-LOOK，如果在磁头移动方向上已经没有别的请求，就可以立即改变磁头移动方向
 </code></pre>
 <p>4.2_3 减小磁盘延迟时间的方法</p>
@@ -1047,17 +1006,17 @@ producerconsumer.insert(item);
 <p>采用交替编号策略</p>
 <p>柱面号在盘面号之前，可以减少磁头移动消耗的时间</p>
 <p>错位命名</p>
-<p>3、传输时间：读&#x2F;写 数据花费的时间</p>
+<p>3、传输时间：读/写 数据花费的时间</p>
 <p>4.2_4 磁盘的管理</p>
 <p>1、磁盘初始化</p>
-<p>低级格式化&#x2F;物理分区</p>
+<p>低级格式化/物理分区</p>
 <p>2、引导块</p>
 <p>ROM不可修改，ROM中只存放很小的“自举装入程序”</p>
 <p>3、坏块的管理</p>
 <p>在FAT表上标明（坏块对操作系统不透明）</p>
 <p>5.1_1 I-O设备的概念和分类</p>
 <p>1、什么是I-O设备</p>
-<p>输入&#x2F;输出</p>
+<p>输入/输出</p>
 <p>2、按使用特性分类</p>
 <p>人机交互的外部设备</p>
 <p>存储设备</p>
@@ -1081,7 +1040,7 @@ producerconsumer.insert(item);
 <p>寄存器独立编制</p>
 <p>5.1_3 I-O控制方式</p>
 <p>1、程序直接控制方式</p>
-<p>轮询：完成一次读&#x2F;写操作的流程</p>
+<p>轮询：完成一次读/写操作的流程</p>
 <p>CPU干预频繁</p>
 <p>每次读写一个字</p>
 <p>实现简单</p>
@@ -1098,7 +1057,7 @@ producerconsumer.insert(item);
 <p>DR：数据寄存器</p>
 <p>MAR：内存地址寄存器</p>
 <p>DC：剩余读写字节数</p>
-<p>CR：命令&#x2F;状态寄存器</p>
+<p>CR：命令/状态寄存器</p>
 <p>4、通道控制方式</p>
 <p>弱鸡版cpu</p>
 <p>通道程序：任务清单</p>
@@ -1108,7 +1067,7 @@ producerconsumer.insert(item);
 <p>1、用户层软件</p>
 <p>实现与用户交互的接口，向上提供方便易用的库函数</p>
 <p>2、设备独立性软件（设备无关性软件）</p>
-<p>向上层提供统一的调用接口（read&#x2F;write）</p>
+<p>向上层提供统一的调用接口（read/write）</p>
 <p>设备的保护</p>
 <p>差错处理</p>
 <p>设备的分配与回收</p>
@@ -1131,10 +1090,10 @@ producerconsumer.insert(item);
 <p>5、硬件</p>
 <p>5.1_6 假脱机技术</p>
 <p>1、什么是脱机技术，脱机技术可以解决什么问题</p>
-<p>脱离主机的控制进行输入&#x2F;输出控制</p>
+<p>脱离主机的控制进行输入/输出控制</p>
 <p>SPPOLing系统：必须要有多道程序并发进行</p>
 <p>2、假脱机技术的实现原理</p>
-<p>输入井和输出井<br>输入进程和输出进程<br>输入缓冲区和输出缓冲区<br>3、共享打印机的原理分析</p>
+<p>输入井和输出井<br/>输入进程和输出进程<br/>输入缓冲区和输出缓冲区<br/>3、共享打印机的原理分析</p>
 <p>5.1_7 设备的分配与回收</p>
 <p>1、设备分配时应考虑的因素</p>
 <p>设备的固有属性：独占设备、共享设备、虚拟设备</p>
@@ -1162,11 +1121,11 @@ producerconsumer.insert(item);
 <p>提高CPU与IO设备之间的并行性</p>
 <p>2、单缓冲</p>
 <p>在内存中分配一块缓冲区</p>
-<p>处理一块时间&#x3D;max（C,T)+M</p>
+<p>处理一块时间=max（C,T)+M</p>
 <p>3、双缓冲</p>
 <p>在内存中分配两块缓冲区</p>
 <p>max(T,C+M)</p>
 <p>4、循环缓冲</p>
 <p>5、缓冲池</p>
 <p>由系统中共用的缓冲区组成。这些缓冲区可以分为：空缓冲队列、装满输入数据的缓冲队列、装满输出数据的缓冲队列</p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://iowill.com">Billy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://iowill.com/blog/2024/09/operating-systems-overview/">https://iowill.com/blog/2024/09/operating-systems-overview/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://iowill.com" target="_blank">Billy 的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><a class="post-meta__tags" href="/tags/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">进程管理</a><a class="post-meta__tags" href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">内存管理</a><a class="post-meta__tags" href="/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">文件系统</a></div><div class="post-share"><div class="social-share" data-image="https://img.billy12.xyz/file/1786437586692_千与千寻.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination" aria-label="文章导航"><a class="pagination-related" href="/blog/2024/09/typora-activation/" title="20240326-Typora激活教程" aria-label="上一篇：20240326-Typora激活教程" rel="prev"><img class="cover" src="/upload/Typora%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B.png" alt="20240326-Typora激活教程" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'"><div class="info"><div class="info-1"><div class="info-item-1"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>上一篇</div><div class="info-item-2">Typora激活教程</div></div><div class="info-2"><div class="info-item-1">阅读全文：20240326-Typora激活教程</div></div></div></a><a class="pagination-related" href="/blog/2024/09/roco-park-pets-guide/" title="ROCO乐园宠获取方式一览" aria-label="下一篇：ROCO乐园宠获取方式一览" rel="next"><img class="cover" src="https://img.billy12.xyz/file/游戏与实践/ROCO乐园宠获取方式一览/thumbs/cover.jpg" alt="ROCO乐园宠获取方式一览" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></div><div class="info-item-2">ROCO乐园宠获取方式一览</div></div><div class="info-2"><div class="info-item-1">阅读全文：ROCO乐园宠获取方式一览</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/blog/2024/09/linux-memory-paging-va-to-pa/" title="Linux内存分页及虚拟地址到物理地址的计算"><img class="cover" src="https://img.billy12.xyz/file/默认封面/thumbs/cover.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-20</div><div class="info-item-2">Linux内存分页及虚拟地址到物理地址的计算</div></div><div class="info-2"><div class="info-item-1">前言 MMU(内存管理单元): MMU的主要作用是地址的转换，将虚拟地址转换为物理地址。不连续的物理地址也可以映射为连续的虚拟地址。 待续。。。  </div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Billy</div><div class="author-info-description">记录学习与折腾</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">92</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Billy775326"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，记录学习与折腾</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/docker-webdav-file-sharing/" title="Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务"><img src="https://img.billy12.xyz/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/thumbs/cover.jpg" alt="Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="content"><a class="title" href="/blog/2026/10/docker-webdav-file-sharing/" title="Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务">Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务</a><time datetime="2026-10-04T10:07:52+00:00" title="2026/10/04 18:07:52">2026/10/04 18:07:52</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/from-vibe-coding-to-spec-coding/" title="从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳"><img src="https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/thumbs/cover.jpg" alt="从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="content"><a class="title" href="/blog/2026/09/from-vibe-coding-to-spec-coding/" title="从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳">从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳</a><time datetime="2026-09-30T10:12:30+00:00" title="2026/09/30 18:12:30">2026/09/30 18:12:30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/debian-docker-mysql-multi-nic-routing/" title="Debian多网卡Docker-MySQL回程路由排查"><img src="https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663905540_01-cover.png" alt="Debian多网卡Docker-MySQL回程路由排查" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="content"><a class="title" href="/blog/2026/09/debian-docker-mysql-multi-nic-routing/" title="Debian多网卡Docker-MySQL回程路由排查">Debian多网卡Docker-MySQL回程路由排查</a><time datetime="2026-09-29T04:00:00.000Z" title="2026/09/29 12:00:00">2026/09/29 12:00:00</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/archlinux-kde-one-week-review/" title="ArchLinux KDE 一周使用小结"><img src="https://img.billy12.xyz/file/默认封面/thumbs/cover.jpg" alt="ArchLinux KDE 一周使用小结" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="content"><a class="title" href="/blog/2026/09/archlinux-kde-one-week-review/" title="ArchLinux KDE 一周使用小结">ArchLinux KDE 一周使用小结</a><time datetime="2026-09-10T07:29:21.000Z" title="2026/09/10 15:29:21">2026/09/10 15:29:21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/maa-readme/" title="MAAREADME"><img src="https://img.billy12.xyz/file/默认封面/thumbs/cover.jpg" alt="MAAREADME" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'"></a><div class="content"><a class="title" href="/blog/2026/09/maa-readme/" title="MAAREADME">MAAREADME</a><time datetime="2026-09-10T07:29:21.000Z" title="2026/09/10 15:29:21">2026/09/10 15:29:21</time></div></div></div></div></div></div></main><footer id="footer" aria-label="网站页脚"><div class="footer-other"><div class="footer-credits"><span class="copyright">© 2023–2026 By <a href="/">Billy</a></span><span class="framework-info">由 <a href="https://hexo.io" rel="noopener" target="_blank">Hexo</a> 驱动<span class="footer-separator" aria-hidden="true">·</span><a href="https://github.com/jerryc127/hexo-theme-butterfly" rel="noopener" target="_blank">Butterfly</a> 主题</span></div><div class="footer_custom_text"><nav aria-label="页脚导航"><a href="/about/"><i class="fas fa-user" aria-hidden="true"></i>关于</a><a href="/archives/"><i class="fas fa-archive" aria-hidden="true"></i>归档</a><a href="/categories/"><i class="fas fa-folder-open" aria-hidden="true"></i>分类</a><a href="/tags/"><i class="fas fa-tags" aria-hidden="true"></i>标签</a><a href="/sitemap.xml"><i class="fas fa-sitemap" aria-hidden="true"></i>站点地图</a><a href="https://github.com/Billy775326" rel="me noopener" target="_blank"><i class="fab fa-github" aria-hidden="true"></i>GitHub</a></nav></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://iowill.com/">Billy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://iowill.com/blog/2024/09/operating-systems-overview/">https://iowill.com/blog/2024/09/operating-systems-overview/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://iowill.com" target="_blank">Billy 的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">内存管理</a><a class="post-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><a class="post-meta__tags" href="/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">文件系统</a><a class="post-meta__tags" href="/tags/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">进程管理</a></div></div><nav aria-label="文章导航" class="pagination-post" id="pagination"><a aria-label="上一篇：20240326-Typora激活教程" class="pagination-related" href="/blog/2024/09/typora-activation/" rel="prev" title="20240326-Typora激活教程"><img alt="20240326-Typora激活教程" class="cover" loading="lazy" src="https://img.billy12.xyz/file/默认封面/thumbs/cover.jpg"/><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">20240326-Typora激活教程</div></div><div class="info-2">阅读全文：20240326-Typora激活教程</div></div></a><a aria-label="下一篇：ROCO乐园宠获取方式一览" class="pagination-related" href="/blog/2024/09/roco-park-pets-guide/" rel="next" title="ROCO乐园宠获取方式一览"><img alt="ROCO乐园宠获取方式一览" class="cover" loading="lazy" src="https://img.billy12.xyz/file/默认封面/thumbs/cover.jpg"/><div class="info"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">ROCO乐园宠获取方式一览</div></div><div class="info-2">阅读全文：ROCO乐园宠获取方式一览</div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img alt="avatar" onerror="this.onerror=null;this.src='/img/friend_404.gif'" src="/img/avatar.jpg"/></div><div class="author-info-name">Billy</div><div class="author-info-description">记录学习与折腾</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">92</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a href="https://github.com/Billy775326" id="card-info-btn"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，记录学习与折腾</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/docker-webdav-file-sharing/" title="Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务"><img alt="Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.billy12.xyz/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/10/docker-webdav-file-sharing/" title="Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务">Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务</a><time datetime="2026-10-04T10:07:52.000Z" title="2026/10/04 18:07:52">2026/10/04 18:07:52</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/from-vibe-coding-to-spec-coding/" title="从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳"><img alt="从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/09/from-vibe-coding-to-spec-coding/" title="从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳">从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳</a><time datetime="2026-09-30T10:12:30.000Z" title="2026/09/30 18:12:30">2026/09/30 18:12:30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/debian-docker-mysql-multi-nic-routing/" title="Debian多网卡Docker-MySQL回程路由排查"><img alt="Debian多网卡Docker-MySQL回程路由排查" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663905540_01-cover.png"/></a><div class="content"><a class="title" href="/blog/2026/09/debian-docker-mysql-multi-nic-routing/" title="Debian多网卡Docker-MySQL回程路由排查">Debian多网卡Docker-MySQL回程路由排查</a><time datetime="2026-09-29T04:00:00.000Z" title="2026/09/29 12:00:00">2026/09/29 12:00:00</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/archlinux-kde-one-week-review/" title="ArchLinux KDE 一周使用小结"><img alt="ArchLinux KDE 一周使用小结" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.billy12.xyz/file/默认封面/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/09/archlinux-kde-one-week-review/" title="ArchLinux KDE 一周使用小结">ArchLinux KDE 一周使用小结</a><time datetime="2026-09-10T07:29:21.000Z" title="2026/09/10 15:29:21">2026/09/10 15:29:21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/maa-readme/" title="MAAREADME"><img alt="MAAREADME" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.billy12.xyz/file/默认封面/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/09/maa-readme/" title="MAAREADME">MAAREADME</a><time datetime="2026-09-10T07:29:21.000Z" title="2026/09/10 15:29:21">2026/09/10 15:29:21</time></div></div></div></div></div></div></main><footer aria-label="网站页脚" id="footer"><div class="footer-other"><div class="footer-credits"><span class="copyright">© 2023–2026 By <a href="/">Billy</a></span><span class="framework-info">由 <a href="https://hexo.io" rel="noopener" target="_blank">Hexo</a> 驱动<span aria-hidden="true" class="footer-separator">·</span><a href="https://github.com/jerryc127/hexo-theme-butterfly" rel="noopener" target="_blank">Butterfly</a> 主题</span></div><div class="footer_custom_text"><nav aria-label="页脚导航"><a href="/about/"><i aria-hidden="true" class="fas fa-user"></i>关于</a><a href="/archives/"><i aria-hidden="true" class="fas fa-archive"></i>归档</a><a href="/categories/"><i aria-hidden="true" class="fas fa-folder-open"></i>分类</a><a href="/tags/"><i aria-hidden="true" class="fas fa-tags"></i>标签</a><a href="/sitemap.xml"><i aria-hidden="true" class="fas fa-sitemap"></i>站点地图</a><a href="https://github.com/Billy775326" rel="me noopener" target="_blank"><i aria-hidden="true" class="fab fa-github"></i>GitHub</a></nav></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" title="阅读模式" type="button"><i class="fas fa-book-open"></i></button><button id="darkmode" title="日间和夜间模式切换" type="button"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" title="单栏和双栏切换" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" title="设置" type="button"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" title="回到顶部" type="button"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async="" data-pjax="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" hidden="hidden" id="loading-status"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>

@@ -1,15 +1,5 @@
-# CLAUDE.md
+# 维护入口
 
-本仓库是 Hexo + Butterfly 构建产物的**纯静态博客**(GitHub Pages):仓库内没有 Hexo 源工程,禁止引入构建流程;一切改动直接编辑静态 HTML/CSS/JS,推 `main` 即上线,没有预览环境。
+先读 docs/README.md。用户已于 2026-10-05 授权迁移为 Hexo 源工程，旧“禁止构建、直接编辑 HTML”规则废止。
 
-**开始任何改动前,先读 [docs/README.md](docs/README.md)**,按任务再读:
-
-- 发新文章 / 首页分页(18 篇/页链式后移)→ `docs/publishing.md`
-- 导航卡模板 / 图片缩略图 / IP 文档地址 / TDK / 页脚 / 代码块约定 → `docs/conventions.md`
-- 目录结构 → `docs/structure.md`
-- 分类标签 → `tools/README.md`
-
-两条铁律:
-
-1. **对话中用户提出的新要求/偏好/否决,执行完必须回写 `docs/changelog.md` 和(如是长期约定)`docs/conventions.md`**——docs 是约定的唯一事实来源。
-2. 批量修改用 Python + 正则,脚本必须幂等,改完 `git diff` 校验;git 提交**不加** AI 署名(Co-Authored-By 等)。
+只编辑 hexo/ 源文件，用 npm --prefix hexo run release 生成根目录发布内容，验证并备份后才能推送。不要运行迁移前 tools 静态批处理；不要提交 node_modules、public、缓存、令牌或未授权的其他文件。新约定当天回写 docs/conventions.md 和 docs/changelog.md。

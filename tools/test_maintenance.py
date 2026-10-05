@@ -1,5 +1,7 @@
 """Run the maintenance pipeline in an isolated copy, preserving the live files."""
 from pathlib import Path
+if (Path(__file__).resolve().parents[1] / 'hexo/_config.yml').exists():
+    raise SystemExit('Hexo source migration is active. Use npm --prefix hexo run build / release; see docs/publishing.md.')
 import hashlib,json,re,shutil,subprocess,sys,tempfile
 from urllib.parse import unquote
 import xml.etree.ElementTree as ET

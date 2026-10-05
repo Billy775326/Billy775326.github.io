@@ -1,21 +1,20 @@
 # Billy 的博客
 
-[billy775326.github.io](https://billy775326.github.io) — 记录学习与折腾。43 篇文章 / 5 分类 / 83 标签。
+[https://iowill.com](https://iowill.com) — 记录编程、系统运维与工具实践。
 
-Hexo 8.1.2 + Butterfly 5.7.0 生成的**静态站**,托管于 GitHub Pages,推 `main` 即发布。仓库内无 Hexo 源工程,维护方式是直接编辑静态 HTML(批量改动用脚本)。
+已恢复 Hexo 8.1.2 + Butterfly 5.7.0 源工程，45 篇文章、5 分类、92 标签。源文件在 `hexo/`，根目录为 GitHub Pages 发布产物。
 
-## 维护入口
+```powershell
+npm --prefix hexo ci
+python -m pip install -r hexo/requirements.txt
+npm --prefix hexo run preview
+npm --prefix hexo run release
+```
 
-| 要做什么 | 看哪里 |
-|---|---|
-| 发新文章 / 首页分页 | [docs/publishing.md](docs/publishing.md)(18 篇/页链式后移检查单) |
-| 模板 / 图片 / IP / SEO / 页脚约定 | [docs/conventions.md](docs/conventions.md) |
-| 目录结构 | [docs/structure.md](docs/structure.md) |
-| 分类标签 | [tools/README.md](tools/README.md)(数据在 `content/taxonomy.json`) |
-| 历史变更与要求记录 | [docs/changelog.md](docs/changelog.md) |
+release 自带备份及校验，不自动提交/推送。文章、首页、归档、搜索、字数和阅读时间由构建同步。
 
-**AI 助手请先读 [docs/README.md](docs/README.md)**(硬约束 + 索引 + docs 自身维护规则)。
+- [源工程与插件](hexo/README.md)
+- [发布与回滚](docs/publishing.md)
+- [站点维护约定](docs/README.md)
 
-## 目录速览
-
-`blog/` 文章 · `index.html`+`page/` 首页分页(18 篇/页)· `archives/` 归档 · `tags/` `categories/` · `search.xml` 本地搜索 · `css/` `js/` 主题(自定义补丁在文件末尾)· `upload/` 图床(`thumbs/` 压缩缩略图)· `content/` 分类标签登记与 md 源稿 · `tools/` 维护脚本 · `legacy-html/` 历史页面 · `docs/` 面向 AI 的站点说明
+不要直接修改生成后的 HTML。AI 助手先阅读 docs/README.md。

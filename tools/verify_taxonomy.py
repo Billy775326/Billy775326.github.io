@@ -1,6 +1,8 @@
 """Validate taxonomy coverage, counts, URLs and optional baseline body preservation."""
 from collections import defaultdict
 from pathlib import Path
+if (Path(__file__).resolve().parents[1] / 'hexo/_config.yml').exists():
+    raise SystemExit('Hexo source migration is active. Use npm --prefix hexo run build / release; see docs/publishing.md.')
 from urllib.parse import unquote
 from bs4 import BeautifulSoup as BS
 import json, subprocess, sys, xml.etree.ElementTree as ET

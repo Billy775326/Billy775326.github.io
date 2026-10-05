@@ -1,34 +1,25 @@
-# docs — 面向 AI 助手的站点说明
+# 站点维护说明
 
-> 本目录性质类似"记忆文件":供任何 AI 助手(Claude Code / Cursor / 其他 agent)在改动本仓库前快速理解约束与流程。人类读者看仓库根 `README.md` 即可。
+## 当前架构（2026-10-05 起）
 
-## 硬约束(先读这个)
+用户已授权恢复 Hexo 源工程并迁移发布流程。本条取代此前“禁止引入构建、直接维护 HTML”的旧限制。
 
-1. 本仓库是 Hexo 8.1.2 + Butterfly 5.7.0 **构建产物的静态站**,仓库内**没有 Hexo 源工程**。不要尝试 `hexo generate`、不要引入构建流程——一切改动直接编辑静态 HTML/CSS/JS。
-2. 推送到 GitHub `main` 分支后由 GitHub Pages 部署，必须等待部署完成并核对线上；仓库没有本地 Hexo 构建流程。
-3. 全站 UTF-8、LF 行尾。批量修改使用配平节点边界，避免用正则跨越嵌套 div；脚本必须**幂等**(重复执行不产生二次变化),改完用 `git diff` 校验结构与数量。
-4. `legacy-html/` 是历史独立页面,不计入 45 篇文章,仅同步页脚/导航等全局元素;`tools/__pycache__/` 忽略不提交。
-5. 本目录(`docs/`)会随 Pages 公开可访问,不要在里面写任何敏感信息(IP、密钥、服务器细节)。
+- `hexo/` 是唯一可编辑源工程：Hexo 8.1.2 + Butterfly 5.7.0。
+- 根目录 HTML/CSS/JS 是 GitHub Pages 发布产物，不直接修改。`main` 推送后仍由 Pages 发布，不改变现有域名 iowill.com。
+- `hexo/source/_posts/` 为文章源文件。45 篇历史文章保留为带 front matter 的 HTML，保留正文、代码、图片、锚点与永久链接；新文章使用 Markdown。
+- 分类标签以文章 front matter 为准，slug 映射在 `hexo/_config.yml`。根 `content/` 仅保留迁移前记录，不再作为生成输入。
+- `npm --prefix hexo run build`：生成、兼容处理、校验。`npm --prefix hexo run release`：再次构建校验、备份后更新根发布目录，不自动提交或推送。
+- 每页固定 18 篇，当前 45 篇 / 5 分类 / 92 标签、18/18/9。数字由构建产生，不手工维护文章列表。
+- 不运行旧 `tools/` 静态批处理：它们不适用于含源工程的目录，已加防误用提示。
+- 文章正文的修改时间只在内容实际修改时更新；网站维护时间修改 `hexo/source/_data/site.json`。
+- 图片备份仍放 `upload/文章名/`，前端引用图床。令牌、密码、服务器真实 IP 不入库。
 
 ## 文档索引
 
-- [structure.md](structure.md) — 目录结构与关键文件
-- [publishing.md](publishing.md) — 发布新文章的完整流程、手动/自动数据同步矩阵、18 篇分页及测试基线注意事项
-- [conventions.md](conventions.md) — 导航卡模板、图片/缩略图、IP 约定、SEO(TDK)、页脚、代码块的既定约定
-- [changelog.md](changelog.md) — 变更与要求记录(逐日累积)
+- [publishing.md](publishing.md)：新文章、预览、发布和回滚。
+- [structure.md](structure.md)：源工程及构建产物。
+- [conventions.md](conventions.md)：外观、图片和 SEO 约定，按最新日期优先。
+- [changelog.md](changelog.md)：历史变更。
+- [../hexo/README.md](../hexo/README.md)：环境、插件及迁移说明。
 
-## 本目录自身的维护规则(必读)
-
-**对话中用户提出的任何新要求、偏好或否决,执行完成后必须当天回写:**
-
-1. 新约定/模板/规则 → 写入 [conventions.md](conventions.md) 对应小节
-2. 当天做了什么、用户说了什么 → 追加到 [changelog.md](changelog.md)(日期 + 要点 + 涉及文件)
-3. docs 改动随站点代码一起提交,不单独拖延
-
-不记录 = 下次会话/下一个 AI 丢失上下文。这是 docs 存在的全部意义。
-
-## 站点概况
-
-- 45 篇文章(2024-07 起)、5 个分类、92 个标签;首页每页 18 篇,当前 3 页(18/18/9)
-- 分类标签唯一登记处:`content/taxonomy.json`,维护脚本见 `tools/README.md`
-- 上下篇导航按**主题相邻**优先安排,不严格等于时间序
+用户新要求完成后，继续当天更新约定和变更记录。全站 UTF-8 / LF；不得提交 node_modules、public、临时文件和凭据。

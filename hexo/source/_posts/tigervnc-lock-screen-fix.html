@@ -1,0 +1,74 @@
+---
+title: "TigerVNC 锁屏问题解决方案"
+date: "2026-09-10T07:29:21.000Z"
+updated: "2026-09-10T07:29:21.000Z"
+permalink: "blog/2026/09/tigervnc-lock-screen-fix/"
+slug: "tigervnc-lock-screen-fix"
+categories: ["系统与运维"]
+tags: ["Linux", "VNC", "TigerVNC", "远程桌面", "故障排查"]
+description: "TigerVNC 锁屏问题解决方案问题诊断 根本原因：Linux logind 服务将会话标记为”locked”（常见于休眠/锁屏后） 典型表现： VNC 连接后黑屏 认证失败提示   直接解决方案：1loginctl unlock-sessions  # 解锁所有会话   [TOC]  永久性解决方案方案A：禁用自动锁屏（推荐用于服务器）12gsettings set org.gnom"
+cover: "https://img.billy12.xyz/file/1786437586692_千与千寻.jpg"
+thumbnail: "https://img.billy12.xyz/file/默认封面/thumbs/cover.jpg"
+disableNunjucks: true
+migration_order: 6
+legacy_html: true
+comments: false
+related_nav: [{"url": "/blog/2026/09/ubuntu-gnome-tigervnc-setup/", "rel": "prev", "title": "Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置"}, {"url": "/blog/2026/09/redroid-maa-arknights-on-linux/", "rel": "next", "title": "ReDroid MAA：在Linux下游玩明日方舟"}]
+---
+<h1 id="TigerVNC-锁屏问题解决方案"><a class="headerlink" href="#TigerVNC-锁屏问题解决方案" title="TigerVNC 锁屏问题解决方案"></a>TigerVNC 锁屏问题解决方案</h1><h2 id="问题诊断"><a class="headerlink" href="#问题诊断" title="问题诊断"></a>问题诊断</h2><ul>
+<li><strong>根本原因</strong>：Linux <code>logind</code> 服务将会话标记为”locked”（常见于休眠/锁屏后）</li>
+<li><strong>典型表现</strong>：<ul>
+<li>VNC 连接后黑屏</li>
+<li>认证失败提示</li>
+</ul>
+</li>
+<li><strong>直接解决方案</strong>：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">loginctl unlock-sessions  <span class="comment"># 解锁所有会话</span></span><br/></pre></td></tr></table></figure></li>
+</ul>
+<hr/>
+<p>[TOC]</p>
+<hr/>
+<h2 id="永久性解决方案"><a class="headerlink" href="#永久性解决方案" title="永久性解决方案"></a>永久性解决方案</h2><h3 id="方案A：禁用自动锁屏（推荐用于服务器）"><a class="headerlink" href="#方案A：禁用自动锁屏（推荐用于服务器）" title="方案A：禁用自动锁屏（推荐用于服务器）"></a>方案A：禁用自动锁屏（推荐用于服务器）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/></pre></td><td class="code"><pre><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.screensaver lock-enabled <span class="literal">false</span></span><br/><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.session idle-delay 0</span><br/></pre></td></tr></table></figure>
+<h3 id="方案B：配置自动解锁（需要polkit规则）"><a class="headerlink" href="#方案B：配置自动解锁（需要polkit规则）" title="方案B：配置自动解锁（需要polkit规则）"></a>方案B：配置自动解锁（需要polkit规则）</h3><p>创建规则文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/polkit-1/rules.d/85-unlock-vnc.rules</span><br/></pre></td></tr></table></figure>
+<p>添加内容：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/></pre></td><td class="code"><pre><span class="line">polkit.<span class="title function_">addRule</span>(<span class="keyword">function</span>(<span class="params">action, subject</span>) {</span><br/><span class="line">    <span class="keyword">if</span> (action.<span class="property">id</span> == <span class="string">"org.freedesktop.login1.unlock"</span> &amp;&amp; </span><br/><span class="line">        subject.<span class="title function_">isInGroup</span>(<span class="string">"vncusers"</span>)) {</span><br/><span class="line">        <span class="keyword">return</span> polkit.<span class="property">Result</span>.<span class="property">YES</span>;</span><br/><span class="line">    }</span><br/><span class="line">});</span><br/></pre></td></tr></table></figure>
+<h3 id="方案C：系统级会话保持"><a class="headerlink" href="#方案C：系统级会话保持" title="方案C：系统级会话保持"></a>方案C：系统级会话保持</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/systemd/logind.conf</span><br/></pre></td></tr></table></figure>
+<p>修改关键参数：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/></pre></td><td class="code"><pre><span class="line"><span class="attr">IdleAction</span>=ignore</span><br/><span class="line"><span class="attr">HandleLidSwitch</span>=ignore</span><br/></pre></td></tr></table></figure>
+<h2 id="系统状态验证"><a class="headerlink" href="#系统状态验证" title="系统状态验证"></a>系统状态验证</h2><p>检查会话状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">loginctl list-sessions</span><br/></pre></td></tr></table></figure>
+<p>预期输出示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/></pre></td><td class="code"><pre><span class="line">SESSION  UID USER   SEAT  TTY     STATE</span><br/><span class="line">    1 1000 user1  seat0 tty2    active  # 确保状态非locked</span><br/></pre></td></tr></table></figure>
+<p>实时监控命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">journalctl -f -u systemd-logind | grep -E <span class="string">'SessionLock|SessionUnlock'</span></span><br/></pre></td></tr></table></figure>
+<h2 id="VNC服务优化配置"><a class="headerlink" href="#VNC服务优化配置" title="VNC服务优化配置"></a>VNC服务优化配置</h2><p>修改xstartup脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">nano ~/.vnc/xstartup</span><br/></pre></td></tr></table></figure>
+<p>添加以下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br/><span class="line"><span class="comment"># 禁用GNOME自动锁屏</span></span><br/><span class="line">gsettings <span class="built_in">set</span> org.gnome.desktop.screensaver lock-enabled <span class="literal">false</span></span><br/><span class="line"><span class="built_in">exec</span> gnome-session</span><br/></pre></td></tr></table></figure>
+<p><strong>关键命令速查表</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">场景</th>
+<th align="center">命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">解锁指定会话</td>
+<td align="center">loginctl unlock-session <session_id></session_id></td>
+</tr>
+<tr>
+<td align="left">解锁所有会话</td>
+<td align="center">loginctl unlock-sessions</td>
+</tr>
+<tr>
+<td align="left">查看锁定状态</td>
+<td align="center">loginctl show-session <id></id></td>
+</tr>
+<tr>
+<td align="left">禁用休眠功能</td>
+<td align="center">systemctl mask sleep.target suspend.target</td>
+</tr>
+</tbody></table>
+<p>检查最近锁屏记录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">journalctl -u systemd-logind --since <span class="string">"1 hour ago"</span></span><br/></pre></td></tr></table></figure>

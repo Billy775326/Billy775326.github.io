@@ -1,0 +1,416 @@
+{
+  "categories": {
+    "编程开发": "programming",
+    "算法与数据结构": "algorithms",
+    "系统与运维": "systems-operations",
+    "软件与工具": "software-tools",
+    "游戏与实践": "gaming"
+  },
+  "tag_slugs": {
+    "Linux": "linux",
+    "C++": "cpp",
+    "C++20": "cpp20",
+    "Arch Linux": "arch-linux",
+    "GitHub Pages": "github-pages",
+    "Editor.md": "editor-md"
+  },
+  "legacy_tag_redirects": {
+    "C": "/tags/cpp/",
+    "运维": "/categories/systems-operations/",
+    "服务器运维": "/categories/systems-operations/",
+    "扩容": "/tags/%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9/",
+    "软件": "/categories/software-tools/",
+    "其他": "/tags/",
+    "算法": "/categories/algorithms/",
+    "游戏": "/categories/gaming/"
+  },
+  "posts": {
+    "bmp-image-format": {
+      "category": "编程开发",
+      "tags": [
+        "图像格式",
+        "BMP"
+      ]
+    },
+    "cpp-concepts": {
+      "category": "编程开发",
+      "tags": [
+        "C++",
+        "C++20",
+        "模板编程"
+      ]
+    },
+    "webserver-0-introduction": {
+      "category": "编程开发",
+      "tags": [
+        "C++",
+        "WebServer",
+        "并发编程",
+        "线程池",
+        "协程"
+      ]
+    },
+    "build-own-server-project": {
+      "category": "编程开发",
+      "tags": [
+        "服务端开发",
+        "项目实践"
+      ]
+    },
+    "rust-00-introduction": {
+      "category": "编程开发",
+      "tags": [
+        "Rust",
+        "语言入门"
+      ]
+    },
+    "rust-01-guessing-game": {
+      "category": "编程开发",
+      "tags": [
+        "Rust",
+        "语言入门",
+        "项目实践"
+      ]
+    },
+    "rust-02-variables-and-mutability": {
+      "category": "编程开发",
+      "tags": [
+        "Rust",
+        "语言基础",
+        "变量与可变性"
+      ]
+    },
+    "rust-03-data-types": {
+      "category": "编程开发",
+      "tags": [
+        "Rust",
+        "语言基础",
+        "数据类型"
+      ]
+    },
+    "rust-04-statements-expressions-functions": {
+      "category": "编程开发",
+      "tags": [
+        "Rust",
+        "语言基础",
+        "函数与表达式"
+      ]
+    },
+    "rust-05-control-flow": {
+      "category": "编程开发",
+      "tags": [
+        "Rust",
+        "语言基础",
+        "控制流"
+      ]
+    },
+    "rust-06-ownership": {
+      "category": "编程开发",
+      "tags": [
+        "Rust",
+        "所有权",
+        "内存管理"
+      ]
+    },
+    "rust-07-references-and-borrowing": {
+      "category": "编程开发",
+      "tags": [
+        "Rust",
+        "引用与借用",
+        "内存管理"
+      ]
+    },
+    "rust-08-slices": {
+      "category": "编程开发",
+      "tags": [
+        "Rust",
+        "切片",
+        "引用与借用"
+      ]
+    },
+    "rust-09-structs": {
+      "category": "编程开发",
+      "tags": [
+        "Rust",
+        "结构体",
+        "数据类型"
+      ]
+    },
+    "leetcode-15-3sum": {
+      "category": "算法与数据结构",
+      "tags": [
+        "LeetCode",
+        "数组",
+        "双指针",
+        "排序"
+      ]
+    },
+    "leetcode-189-rotate-array": {
+      "category": "算法与数据结构",
+      "tags": [
+        "LeetCode",
+        "数组",
+        "原地算法"
+      ]
+    },
+    "leetcode-80-remove-duplicates-ii": {
+      "category": "算法与数据结构",
+      "tags": [
+        "LeetCode",
+        "数组",
+        "双指针",
+        "原地算法"
+      ]
+    },
+    "ubuntu-20-04-to-22-04-upgrade": {
+      "category": "系统与运维",
+      "tags": [
+        "Linux",
+        "Ubuntu",
+        "系统升级"
+      ]
+    },
+    "1panel-container-localhost-connection-fix": {
+      "category": "系统与运维",
+      "tags": [
+        "1Panel",
+        "Docker",
+        "MySQL",
+        "容器网络",
+        "故障排查"
+      ]
+    },
+    "debian12-root-partition-resize": {
+      "category": "系统与运维",
+      "tags": [
+        "Linux",
+        "Debian",
+        "磁盘扩容",
+        "LVM"
+      ]
+    },
+    "cloud-debian12-root-resize": {
+      "category": "系统与运维",
+      "tags": [
+        "Linux",
+        "Debian",
+        "磁盘扩容",
+        "LVM"
+      ]
+    },
+    "install-x11vnc-remote-desktop": {
+      "category": "系统与运维",
+      "tags": [
+        "Linux",
+        "VNC",
+        "x11vnc",
+        "远程桌面"
+      ]
+    },
+    "linux-kernel-root-privilege": {
+      "category": "系统与运维",
+      "tags": [
+        "Linux",
+        "操作系统",
+        "内核",
+        "权限管理"
+      ]
+    },
+    "linux-memory-paging-va-to-pa": {
+      "category": "系统与运维",
+      "tags": [
+        "Linux",
+        "操作系统",
+        "内存管理",
+        "虚拟内存"
+      ]
+    },
+    "operating-systems-overview": {
+      "category": "系统与运维",
+      "tags": [
+        "操作系统",
+        "进程管理",
+        "内存管理",
+        "文件系统"
+      ]
+    },
+    "archlinux-kde-one-week-review": {
+      "category": "系统与运维",
+      "tags": [
+        "Linux",
+        "Arch Linux",
+        "KDE",
+        "桌面环境"
+      ]
+    },
+    "debian-docker-mysql-multi-nic-routing": {
+      "category": "系统与运维",
+      "tags": [
+        "Debian",
+        "Docker",
+        "MySQL",
+        "容器网络",
+        "策略路由",
+        "故障排查"
+      ]
+    },
+    "tigervnc-lock-screen-fix": {
+      "category": "系统与运维",
+      "tags": [
+        "Linux",
+        "VNC",
+        "TigerVNC",
+        "远程桌面",
+        "故障排查"
+      ]
+    },
+    "ubuntu-gnome-tigervnc-setup": {
+      "category": "系统与运维",
+      "tags": [
+        "Ubuntu",
+        "GNOME",
+        "VNC",
+        "TigerVNC",
+        "远程桌面"
+      ]
+    },
+    "vnc-viewer-notes": {
+      "category": "系统与运维",
+      "tags": [
+        "Ubuntu",
+        "VNC",
+        "LXDE",
+        "远程桌面"
+      ]
+    },
+    "markdown-editor": {
+      "category": "软件与工具",
+      "tags": [
+        "Markdown",
+        "Editor.md",
+        "编辑器"
+      ]
+    },
+    "github-ssh-port-443": {
+      "category": "软件与工具",
+      "tags": [
+        "Git",
+        "GitHub",
+        "SSH",
+        "网络配置"
+      ]
+    },
+    "typora-activation": {
+      "category": "软件与工具",
+      "tags": [
+        "Typora",
+        "Markdown",
+        "编辑器"
+      ]
+    },
+    "apatch-patch-boot": {
+      "category": "软件与工具",
+      "tags": [
+        "Android",
+        "APatch"
+      ]
+    },
+    "build-blog-hexo-butterfly": {
+      "category": "软件与工具",
+      "tags": [
+        "Hexo",
+        "GitHub Pages",
+        "Butterfly",
+        "博客搭建"
+      ]
+    },
+    "ffmpeg-live-streaming": {
+      "category": "软件与工具",
+      "tags": [
+        "FFmpeg",
+        "直播推流"
+      ]
+    },
+    "install-office-suite": {
+      "category": "软件与工具",
+      "tags": [
+        "Office",
+        "办公软件"
+      ]
+    },
+    "linuxqq-wont-start-core-dump": {
+      "category": "软件与工具",
+      "tags": [
+        "Linux",
+        "QQ",
+        "Electron",
+        "故障排查"
+      ]
+    },
+    "roco-park-pets-guide": {
+      "category": "游戏与实践",
+      "tags": [
+        "洛克王国",
+        "游戏攻略"
+      ]
+    },
+    "maa-readme": {
+      "category": "游戏与实践",
+      "tags": [
+        "MAA",
+        "明日方舟",
+        "游戏自动化"
+      ]
+    },
+    "redroid-arknights": {
+      "category": "游戏与实践",
+      "tags": [
+        "ReDroid",
+        "Docker",
+        "Android",
+        "MAA",
+        "明日方舟"
+      ]
+    },
+    "redroid-fgo-on-linux": {
+      "category": "游戏与实践",
+      "tags": [
+        "ReDroid",
+        "Docker",
+        "Android",
+        "FGO",
+        "云手机"
+      ]
+    },
+    "redroid-maa-arknights-on-linux": {
+      "category": "游戏与实践",
+      "tags": [
+        "ReDroid",
+        "Docker",
+        "MAA",
+        "明日方舟",
+        "云手机"
+      ]
+    },
+    "from-vibe-coding-to-spec-coding": {
+      "category": "编程开发",
+      "tags": [
+        "AI 编程",
+        "Vibe Coding",
+        "Spec Coding",
+        "需求分析",
+        "软件工程"
+      ]
+    },
+    "docker-webdav-file-sharing": {
+      "category": "系统与运维",
+      "tags": [
+        "WebDAV",
+        "Docker",
+        "Docker Compose",
+        "自托管",
+        "文件共享"
+      ]
+    }
+  }
+}

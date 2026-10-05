@@ -1,38 +1,25 @@
 # 目录结构
 
-| 路径 | 说明 |
+| 路径 | 用途 |
 |---|---|
-| `blog/YYYY/MM/<slug>/index.html` | 45 篇文章正文页(目录年月与发文时间对应) |
-| `index.html` + `page/2/`、`page/3/` | 首页与分页,每页 18 张文章卡,都在 `<div class="recent-post-items">` 容器内 |
-| `archives/` | 按年/月归档页(`archives/index.html` 总档 + 年/月子目录) |
-| `categories/<slug>/` | 5 个分类页:编程开发 programming、算法与数据结构 algorithms、系统与运维 systems-operations、软件与工具 software-tools、游戏与实践 gaming |
-| `tags/<slug>/` | 标签页(92 个;文章页侧栏只显示频次前 20,全部在 `/tags/`) |
-| `search.xml` | 本地搜索索引,**发文必须登记**,否则搜不到 |
-| `css/index.css` | Butterfly 主题样式;自定义补丁只追加在文件末尾 `2026-09-29 pagination & footer tweaks` 区块 |
-| `js/main.js`、`js/utils.js` | 主题 JS(每页加载) |
-| `img/` | 站点固定图:avatar.jpg、404.jpg、favicon、friend_404.gif(onerror 兜底图) |
-| `upload/` | 图床,中文文件名,HTML 引用时百分号编码 |
-| `upload/thumbs/` | 压缩缩略图(2026-09-29 建);`<img>` 一律用它,SEO 元数据用原图,见 conventions.md |
-| `content/posts/<slug>.md` | 文章 Markdown 源稿,front matter 含 title/date/categories/tags |
-| `content/site-info.json` | 网站真实更新时间 updated_at，发布时手动更新，由共享维护脚本同步 |
-| `css/cards.css` | 首页/分页卡片布局、尺寸、圆角及日期样式 |
-| `tools/update_footer_seo.py` | 全站页脚、网站资讯、卡片时间、结构化关联及站点地图同步 |
-| `tools/test_maintenance.py` | 隔离副本回归检查；新增文章时同步数量及分页预期 |
-| `content/taxonomy.json` | 分类→slug、标签→slug 的唯一登记处 |
-| `content/分类与标签清单.md` | 逐篇分类标签清单(人读) |
-| `tools/` | 分类标签维护脚本 `rebuild_taxonomy.py` / `verify_taxonomy.py`,说明见 `tools/README.md` |
-| `legacy-html/` | 历史独立页面,不计入文章数,仅同步全局元素 |
+| `hexo/_config.yml` | 站点、永久链接、18 篇分页、分类标签 slug、插件配置 |
+| `hexo/_config.butterfly.yml` | Butterfly 导航、搜索、字数、阅读时间等 |
+| `hexo/source/_posts/` | 文章唯一编辑入口；历史 HTML，新文 Markdown |
+| `hexo/source/about/` | 关于页源文件 |
+| `hexo/source/css/site-preserved.css` | 迁移保留的原 CSS 与现有自定义补丁 |
+| `hexo/source/css/cards.css` | 首页卡片定制样式 |
+| `hexo/source/_data/site.json` | 网站维护时间 |
+| `hexo/themes/butterfly/` | 本地可维护主题，5.7.0，保留许可证 |
+| `hexo/scripts/site-data.js` | 保留标签 slug，导出构建模型供校验 |
+| `hexo/bin/finalize.py` | 现站格式、缩略图、页脚、导航、SEO 兼容处理 |
+| `hexo/bin/verify.py` | 发布前数据与链接校验 |
+| `hexo/bin/release.py` | 备份及同步已校验产物；不提交/推送 |
+| `hexo/migration/` | 迁移正文基线、旧跳转与原 Markdown 参考 |
+| `hexo/package-lock.json` | 锁定插件与依赖版本，用 npm ci 安装 |
+| `hexo/public/` | 本地预览产物，忽略入库 |
+| 根 `blog/`、`index.html`、`page/`、`archives/` 等 | 自动生成的 Pages 发布内容，不手改 |
+| `upload/` | 用户授权的图片备份；前端用图床 |
+| `scripts/` | 现有图床工具，凭据不得入库 |
+| `tools/`、`content/` | 迁移前维护方式的历史参考，不再驱动构建 |
 
-## 文章页内部结构(Butterfly)
-
-单行压缩 HTML,关键锚点:
-
-- `<head>`:title → meta description/keywords → og:* → JSON-LD(BlogPosting)→ canonical
-- 正文容器:`id="article-container"`
-- 正文后依次:版权盒 `post-copyright` → 标签 `tag_share` → **上下篇导航 `<nav class="pagination-post" id="pagination">`** → (部分文章有"相关推荐" `relatedPosts`)
-- 侧栏 `aside-content`:作者卡(文章/标签/分类计数)→ 公告 → 目录 → 最新文章 5 篇
-- 页脚 `footer#footer`（全站统一，2023 起版权、框架信息与图标导航；运行天数已移除）
-
-## 首页卡片
-
-`<div class="recent-post-items">` 内每篇一张 `<div class="recent-post-item">` 大卡(封面+标题+日期+分类，摘要当前由 CSS 隐藏),按时间倒序,页与页之间时间序必须连续。
+当前 45 篇文章、5 分类、92 标签；总数以后以 Hexo 构建模型为准。

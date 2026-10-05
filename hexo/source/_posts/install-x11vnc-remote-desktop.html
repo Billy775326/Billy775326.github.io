@@ -1,0 +1,40 @@
+---
+title: "安装x11vnc远程桌面"
+date: "2024-09-20T12:15:42.000Z"
+updated: "2024-09-20T12:15:42.000Z"
+permalink: "blog/2024/09/install-x11vnc-remote-desktop/"
+slug: "install-x11vnc-remote-desktop"
+categories: ["系统与运维"]
+tags: ["Linux", "VNC", "x11vnc", "远程桌面"]
+description: "打开终端并输入以下命令以安装x11vnc： sudo apt-get install x11vnc 安装完成后，输入以下命令以生成密码文件： sudo x11vnc -storepasswd /etc/x11vnc.pass 该命令将提示您输入密码，然后将密码保存在/etc/x11vnc.pas"
+cover: "https://img.billy12.xyz/file/linux/%E5%AE%89%E8%A3%85x11vnc%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/1786462821432_cover_x11vnc.png"
+thumbnail: "https://img.billy12.xyz/file/linux/安装x11vnc远程桌面/1786462821432_cover_x11vnc.png"
+disableNunjucks: true
+migration_order: 42
+legacy_html: true
+comments: false
+related_nav: [{"url": "/blog/2024/09/1panel-container-localhost-connection-fix/", "rel": "prev", "title": "1Panel面板容器无法使用localhost、127.0.0.1配置链接的问题说明及解决办法"}, {"url": "/blog/2024/07/ubuntu-20-04-to-22-04-upgrade/", "rel": "next", "title": "ubuntu20.04 update to 22.04"}]
+---
+<h2 id="打开终端并输入以下命令以安装x11vnc："><a class="headerlink" href="#打开终端并输入以下命令以安装x11vnc：" title="打开终端并输入以下命令以安装x11vnc："></a>打开终端并输入以下命令以安装x11vnc：</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get install x11vnc</span><br/></pre></td></tr></table></figure>
+<p>安装完成后，输入以下命令以生成密码文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> x11vnc -storepasswd /etc/x11vnc.pass</span><br/></pre></td></tr></table></figure>
+<p>该命令将提示您输入密码，然后将密码保存在/etc/x11vnc.pass文件中。</p>
+<h2 id="创建一个systemd服务文件，以便在系统启动时自动启动x11vnc"><a class="headerlink" href="#创建一个systemd服务文件，以便在系统启动时自动启动x11vnc" title="创建一个systemd服务文件，以便在系统启动时自动启动x11vnc"></a>创建一个systemd服务文件，以便在系统启动时自动启动x11vnc</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/systemd/system/x11vnc.service</span><br/></pre></td></tr></table></figure>
+<p>将以下内容复制并粘贴到文件中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/><span class="line">7</span><br/><span class="line">8</span><br/><span class="line">9</span><br/><span class="line">10</span><br/></pre></td><td class="code"><pre><span class="line">[Unit]</span><br/><span class="line">Description=Start x11vnc at startup.</span><br/><span class="line">After=lightdm.service  <span class="comment"># 或 display-manager.service</span></span><br/><span class="line"></span><br/><span class="line">[Service]</span><br/><span class="line">Type=simple</span><br/><span class="line">ExecStart=/usr/bin/x11vnc -auth guess -forever -noxdamage -repeat -rfbauth /etc/x11vnc.pass -rfbport 5900 -shared</span><br/><span class="line"></span><br/><span class="line">[Install]</span><br/><span class="line">WantedBy=multi-user.target</span><br/></pre></td></tr></table></figure>
+<p>然后按Ctrl + X，输入“Y”以保存并退出nano编辑器。</p>
+<h2 id="启用并启动x11vnc服务。在终端中输入以下命令："><a class="headerlink" href="#启用并启动x11vnc服务。在终端中输入以下命令：" title="启用并启动x11vnc服务。在终端中输入以下命令："></a>启用并启动x11vnc服务。在终端中输入以下命令：</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> x11vnc.service </span><br/><span class="line"><span class="built_in">sudo</span> systemctl start x11vnc.service</span><br/></pre></td></tr></table></figure>
+<p>重启服务器</p>
+<p>现在，x11vnc服务应该已经启动并正在运行。</p>
+<p>使用VNC客户端连接到桌面，使用IP地址和端口号5900，并输入先前设置的密码。</p>
+<h1 id="启动x11vnc失败的解决办法"><a class="headerlink" href="#启动x11vnc失败的解决办法" title="启动x11vnc失败的解决办法"></a>启动x11vnc失败的解决办法</h1><h2 id="终端启动x11vnc命令"><a class="headerlink" href="#终端启动x11vnc命令" title="终端启动x11vnc命令"></a>终端启动x11vnc命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">/usr/bin/x11vnc -auth guess -forever -noxdamage -repeat -rfbauth /etc/x11vnc.pass -rfbport 5900 -shared</span><br/></pre></td></tr></table></figure>
+<p>终端启动x11vnc,并使用vnc客户端查看是否能正常进入系统</p>
+<h3 id="1-进入系统失败"><a class="headerlink" href="#1-进入系统失败" title="1.进入系统失败"></a>1.进入系统失败</h3><h4 id="检查服务状态："><a class="headerlink" href="#检查服务状态：" title="检查服务状态："></a><strong>检查服务状态</strong>：</h4><p>查看服务状态和日志，以确保服务正确启动：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl status x11vnc.service</span><br/><span class="line"><span class="built_in">sudo</span> journalctl -u x11vnc.service</span><br/></pre></td></tr></table></figure>
+<h4 id="确保-etc-x11vnc-pass-文件权限正确："><a class="headerlink" href="#确保-etc-x11vnc-pass-文件权限正确：" title="确保 /etc/x11vnc.pass 文件权限正确："></a><strong>确保</strong> <code>/etc/x11vnc.pass</code> 文件权限正确：</h4><p>确认密码文件的权限和路径：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">chmod</span> 600 /etc/x11vnc.pass</span><br/></pre></td></tr></table></figure>
+<h4 id="重新加载-systemd-守护进程："><a class="headerlink" href="#重新加载-systemd-守护进程：" title="重新加载 systemd 守护进程："></a><strong>重新加载 systemd 守护进程</strong>：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl daemon-reload</span><br/></pre></td></tr></table></figure>
+<h4 id="启用并启动-x11vnc-服务："><a class="headerlink" href="#启用并启动-x11vnc-服务：" title="启用并启动 x11vnc 服务："></a><strong>启用并启动 x11vnc 服务</strong>：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> x11vnc.service</span><br/><span class="line"><span class="built_in">sudo</span> systemctl start x11vnc.service</span><br/></pre></td></tr></table></figure>
+<h3 id="2-成功登录系统"><a class="headerlink" href="#2-成功登录系统" title="2.成功登录系统"></a>2.成功登录系统</h3><p>无其他错误，重新加载 systemd 守护进程并重启 x11vnc 服务即可</p>
+<h4 id="重新加载-systemd-守护进程：-1"><a class="headerlink" href="#重新加载-systemd-守护进程：-1" title="重新加载 systemd 守护进程："></a><strong>重新加载 systemd 守护进程</strong>：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl daemon-reload</span><br/></pre></td></tr></table></figure>
+<h4 id="启用并启动-x11vnc-服务：-1"><a class="headerlink" href="#启用并启动-x11vnc-服务：-1" title="启用并启动 x11vnc 服务："></a><strong>启用并启动 x11vnc 服务</strong>：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> x11vnc.service</span><br/><span class="line"><span class="built_in">sudo</span> systemctl start x11vnc.service</span><br/></pre></td></tr></table></figure>

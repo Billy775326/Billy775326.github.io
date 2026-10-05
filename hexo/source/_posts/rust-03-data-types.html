@@ -1,0 +1,186 @@
+---
+title: "20240409-Rust-03-数据类型"
+date: "2024-09-20T12:46:07.000Z"
+updated: "2024-09-20T12:46:07.000Z"
+permalink: "blog/2024/09/rust-03-data-types/"
+slug: "rust-03-data-types"
+categories: ["编程开发"]
+tags: ["Rust", "语言基础", "数据类型"]
+description: "Rust 的每个值都有确切的数据类型（data type），该类型告诉 Rust 数据是被指定成哪类数据，从而让 Rust 知道如何使用该数据。在本节中，我们将介绍两种数据类型：标量类型和复合类型。"
+cover: "https://img.billy12.xyz/file/1786437586692_千与千寻.jpg"
+thumbnail: "https://img.billy12.xyz/file/默认封面/thumbs/cover.jpg"
+disableNunjucks: true
+migration_order: 25
+legacy_html: true
+comments: false
+related_nav: [{"url": "/blog/2024/09/rust-00-introduction/", "rel": "prev", "title": "20240410-Rust-00-前言"}, {"url": "/blog/2024/09/linux-kernel-root-privilege/", "rel": "next", "title": "Linux内核态赋予进程root权限"}]
+---
+<h1 id="数据类型"><a class="headerlink" href="#数据类型" title="数据类型"></a>数据类型</h1><blockquote>
+<p>Rust 的每个值都有确切的<strong>数据类型</strong>（<em>data type</em>），该类型告诉 Rust 数据是被指定成哪类数据，从而让 Rust 知道如何使用该数据。在本节中，我们将介绍两种数据类型：标量类型和复合类型。</p>
+<p>请记住 Rust 是一种<strong>静态类型</strong>（<em>statically typed</em>）的语言，这意味着它必须在编译期知道所有变量的类型。</p>
+</blockquote>
+<p>当类型可能是多种情况或编译器无法推导和确定时，必须加上一个类型标注：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">guess</span>: <span class="type">u32</span> = <span class="string">"42"</span>.<span class="title function_ invoke__">parse</span>().<span class="title function_ invoke__">expect</span>(<span class="string">"Not a number!"</span>);</span><br/></pre></td></tr></table></figure>
+<h2 id="标量类型"><a class="headerlink" href="#标量类型" title="标量类型"></a>标量类型</h2><blockquote>
+<p><strong>标量</strong>（<em>scalar</em>）类型表示单个值。Rust 有 4 个基本的标量类型：整型、浮点型、布尔型和字符。你可能从其他语言了解过这些类型。下面我们深入了解它们在 Rust 中的用法。</p>
+</blockquote>
+<h3 id="整数类型"><a class="headerlink" href="#整数类型" title="整数类型"></a>整数类型</h3><blockquote>
+<p><strong>整数</strong>（<em>integer</em>）是没有小数部分的数字。我们在第 2 章使用过一个整数类型（整型），即 <code>u32</code> 类型。此类型声明表明它关联的值应该是占用 32 位空间的无符号整型（有符号整型以 <code>i</code> 开始，<code>i</code> 是英文单词 <em>integer</em> 的首字母，与之相反的是 <code>u</code>，代表无符号 <code>unsigned</code> 类型）。表 3-1 显示了 Rust 中的内置的整数类型。我们可以使用这些定义形式中的任何一个来声明整数值的类型。</p>
+</blockquote>
+<p>表 3-1: Rust 中的整型</p>
+<table>
+<thead>
+<tr>
+<th>长度</th>
+<th>有符号类型</th>
+<th>无符号类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>8 位</td>
+<td><code>i8</code></td>
+<td><code>u8</code></td>
+</tr>
+<tr>
+<td>16 位</td>
+<td><code>i16</code></td>
+<td><code>u16</code></td>
+</tr>
+<tr>
+<td>32 位</td>
+<td><code>i32</code></td>
+<td><code>u32</code></td>
+</tr>
+<tr>
+<td>64 位</td>
+<td><code>i64</code></td>
+<td><code>u64</code></td>
+</tr>
+<tr>
+<td>128 位</td>
+<td><code>i128</code></td>
+<td><code>u128</code></td>
+</tr>
+<tr>
+<td>arch</td>
+<td><code>isize</code></td>
+<td><code>usize</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>每个定义形式要么是有符号类型要么是无符号类型，且带有一个显式的大小。</p>
+<p>此外，<code>isize</code> 和 <code>usize</code> 类型取决于程序运行的计算机体系结构，在表中表示为“arch”：若使用 64 位架构系统则为 64 位，若使用 32 位架构系统则为 32 位。</p>
+<p>你可按表 3-2 中所示的任意形式来编写整型的字面量。注意，可能属于多种数字类型的数字字面量允许使用类型后缀来指定类型，例如 <code>57u8</code>。数字字面量还可以使用 <code>_</code> 作为可视分隔符以方便读数，如 <code>1_000</code>，此值和 <code>1000</code> 相同。</p>
+</blockquote>
+<p>表 3-2: Rust 的整型字面量</p>
+<table>
+<thead>
+<tr>
+<th>数字字面量</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>十进制</td>
+<td><code>98_222</code></td>
+</tr>
+<tr>
+<td>十六进制</td>
+<td><code>0xff</code></td>
+</tr>
+<tr>
+<td>八进制</td>
+<td><code>0o77</code></td>
+</tr>
+<tr>
+<td>二进制</td>
+<td><code>0b1111_0000</code></td>
+</tr>
+<tr>
+<td>字节 (仅限于 <code>u8</code>)</td>
+<td><code>b'A'</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<h5 id="整型溢出"><a class="headerlink" href="#整型溢出" title="整型溢出"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch03-02-data-types.html#%E6%95%B4%E5%9E%8B%E6%BA%A2%E5%87%BA" rel="noopener" target="_blank">整型溢出</a></h5><p>比方说有一个 <code>u8</code> ，它可以存放从 0 到 255 的值。那么当你将其修改为范围之外的值，比如 256，则会发生<strong>整型溢出</strong>（<em>integer overflow</em>），这会导致两种行为的其中一种。当在调试（debug）模式编译时，Rust 会检查整型溢出，若存在这些问题则使程序在编译时 <em>panic</em>。Rust 使用 panic 这个术语来表明程序因错误而退出。第 9 章 <a href="https://www.rustwiki.org.cn/zh-CN/book/ch09-01-unrecoverable-errors-with-panic.html" rel="noopener" target="_blank">“<code>panic!</code> 与不可恢复的错误”</a>会详细介绍 panic。</p>
+<p>在当使用 <code>--release</code> 参数进行发布（release）模式构建时，Rust <strong>不</strong>检测会导致 panic 的整型溢出。相反当检测到整型溢出时，Rust 会进行一种被称为二进制补码包裹（<em>two’s complement wrapping</em>）的操作。简而言之，大于该类型最大值的数值会被“包裹”成该类型能够支持的对应数字的最小值。比如在 <code>u8</code> 的情况下，256 变成 0，257 变成 1，依此类推。程序不会 panic，但是该变量的值可能不是你期望的值。依赖整型溢出包裹的行为不是一种正确的做法。</p>
+<p>要显式处理溢出的可能性，可以使用标准库针对原始数字类型提供的以下一系列方法：</p>
+<ul>
+<li>使用 <code>wrapping_*</code> 方法在所有模式下进行包裹，例如 <code>wrapping_add</code></li>
+<li>如果使用 <code>checked_*</code> 方法时发生溢出，则返回 <code>None</code> 值</li>
+<li>使用 <code>overflowing_*</code> 方法返回该值和一个指示是否存在溢出的布尔值</li>
+<li>使用 <code>saturating_*</code> 方法使值达到最小值或最大值</li>
+</ul>
+</blockquote>
+<h3 id="浮点类型"><a class="headerlink" href="#浮点类型" title="浮点类型"></a>浮点类型</h3><blockquote>
+<p><strong>浮点数</strong>（<em>floating-point number</em>）是带有小数点的数字，在 Rust 中浮点类型（简称浮点型）数字也有两种基本类型。Rust 的浮点型是 <code>f32</code> 和 <code>f64</code>，它们的大小分别为 32 位和 64 位。默认浮点类型是 <code>f64</code>，因为在现代的 CPU 中它的速度与 <code>f32</code> 的几乎相同，但精度更高。所有浮点型都是有符号的。</p>
+<p>浮点数按照 IEEE-754 标准表示。<code>f32</code> 类型是单精度浮点型，<code>f64</code> 为双精度浮点型。</p>
+</blockquote>
+<p>下面是一个演示浮点数的示例：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() {</span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">x</span> = <span class="number">2.0</span>; <span class="comment">// f64</span></span><br/><span class="line"></span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">y</span>: <span class="type">f32</span> = <span class="number">3.0</span>; <span class="comment">// f32</span></span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
+<h3 id="数字运算"><a class="headerlink" href="#数字运算" title="数字运算"></a>数字运算</h3><blockquote>
+<p>Rust 的所有数字类型都支持基本数学运算：加法、减法、乘法、除法和取模运算。整数除法会向下取整。</p>
+</blockquote>
+<p>下面代码演示了各使用一条 <code>let</code> 语句来说明相应数字运算的用法：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/><span class="line">7</span><br/><span class="line">8</span><br/><span class="line">9</span><br/><span class="line">10</span><br/><span class="line">11</span><br/><span class="line">12</span><br/><span class="line">13</span><br/><span class="line">14</span><br/><span class="line">15</span><br/><span class="line">16</span><br/><span class="line">17</span><br/></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() {</span><br/><span class="line">    <span class="comment">// addition</span></span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">sum</span> = <span class="number">5</span> + <span class="number">10</span>;</span><br/><span class="line"></span><br/><span class="line">    <span class="comment">// subtraction</span></span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">difference</span> = <span class="number">95.5</span> - <span class="number">4.3</span>;</span><br/><span class="line"></span><br/><span class="line">    <span class="comment">// multiplication</span></span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">product</span> = <span class="number">4</span> * <span class="number">30</span>;</span><br/><span class="line"></span><br/><span class="line">    <span class="comment">// division</span></span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">quotient</span> = <span class="number">56.7</span> / <span class="number">32.2</span>;</span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">floored</span> = <span class="number">2</span> / <span class="number">3</span>; <span class="comment">// Results in 0</span></span><br/><span class="line"></span><br/><span class="line">    <span class="comment">// remainder</span></span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">remainder</span> = <span class="number">43</span> % <span class="number">5</span>;</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
+<p>==经过尝试，和C++等语言不同的是，Rust的运算表达式中所有参与运算的数的类型必须是相同的，不同类型不能放在一起运算，如以下几种写法都是会报错的==</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">x</span> = <span class="number">12i32</span> + <span class="number">13u32</span>;</span><br/><span class="line"><span class="keyword">let</span> <span class="variable">x</span> = <span class="number">12.2</span> + <span class="number">11</span>;</span><br/><span class="line"><span class="keyword">let</span> <span class="variable">x</span> = <span class="number">12i32</span> + <span class="number">13i64</span>;</span><br/></pre></td></tr></table></figure>
+<h3 id="布尔类型"><a class="headerlink" href="#布尔类型" title="布尔类型"></a>布尔类型</h3><blockquote>
+<p>和大多数编程语言一样，Rust 中的布尔类型也有两个可能的值：<code>true</code> 和 <code>false</code>。布尔值的大小为 1 个字节。Rust 中的布尔类型使用 <code>bool</code> 声明。</p>
+</blockquote>
+<p>例如：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() {</span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">t</span> = <span class="literal">true</span>;</span><br/><span class="line"></span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">f</span>: <span class="type">bool</span> = <span class="literal">false</span>; <span class="comment">// with explicit type annotation</span></span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
+<h3 id="字符类型"><a class="headerlink" href="#字符类型" title="字符类型"></a>字符类型</h3><blockquote>
+<p>Rust 的 <code>char</code>（字符）类型是该语言最基本的字母类型</p>
+</blockquote>
+<p>例子：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() {</span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">c</span> = <span class="string">'z'</span>;</span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">z</span> = <span class="string">'ℤ'</span>;</span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">heart_eyed_cat</span> = <span class="string">'😻'</span>;</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
+<blockquote>
+<p>注意，我们声明的 <code>char</code> 字面量采用单引号括起来，这与字符串字面量不同，字符串字面量是用双引号括起来。==Rust 的字符类型大小为 <strong>4 个字节</strong>==，表示的是一个 Unicode 标量值，这意味着它可以表示的远远不止是 ASCII。标音字母，中文/日文/韩文的文字，emoji，还有零宽空格(zero width space)在 Rust 中都是合法的字符类型。Unicode 值的范围为 <code>U+0000</code> ~ <code>U+D7FF</code> 和 <code>U+E000</code>~`U+10FFFF`。不过“字符”并不是 Unicode 中的一个概念，所以人在直觉上对“字符”的理解和 Rust 的字符概念并不一致。</p>
+</blockquote>
+<h2 id="复合类型"><a class="headerlink" href="#复合类型" title="复合类型"></a>复合类型</h2><blockquote>
+<p><strong>复合类型</strong>（<em>compound type</em>）可以将多个值组合成一个类型。Rust 有两种基本的复合类型：元组（tuple）和数组（array）。</p>
+</blockquote>
+<h3 id="元组类型"><a class="headerlink" href="#元组类型" title="元组类型"></a>元组类型</h3><blockquote>
+<p>元组是将多种类型的多个值组合到一个复合类型中的一种基本方式。元组的长度是固定的：声明后，它们就无法增长或缩小。</p>
+</blockquote>
+<p>我们通过在小括号内写入以逗号分隔的值列表来创建一个元组。元组中的每个位置都有一个类型，并且元组中不同值的类型不要求是相同的。我们在下面示例中添加了可选的类型标注：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() {</span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">tup</span>: (<span class="type">i32</span>, <span class="type">f64</span>, <span class="type">u8</span>) = (<span class="number">500</span>, <span class="number">6.4</span>, <span class="number">1</span>);</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
+<p>变量 <code>tup</code> 绑定到整个元组，因为元组被认作是单个复合元素。 想从元组中获取个别值，我们可以使用模式匹配来解构（destructure）元组的一个值，如下所示：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/><span class="line">7</span><br/></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() {</span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">tup</span> = (<span class="number">500</span>, <span class="number">6.4</span>, <span class="number">1</span>);</span><br/><span class="line"></span><br/><span class="line">    <span class="keyword">let</span> (x, y, z) = tup;</span><br/><span class="line"></span><br/><span class="line">    <span class="built_in">println!</span>(<span class="string">"The value of y is: {}"</span>, y);</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
+<p>该程序首先创建一个元组并将其绑定到变量 <code>tup</code> 上。 然后它借助 <code>let</code> 来使用一个模式匹配 <code>tup</code>，并将它分解成三个单独的变量 <code>x</code>、<code>y</code> 和 <code>z</code>。 这过程称为<strong>解构</strong>（<em>destructuring</em>），因为它将单个元组分为三部分。最后，程序打印出 <code>y</code> 值，为 <code>6.4</code>。</p>
+<p>除了通过模式匹配进行解构外，我们还可以使用一个句点（<code>.</code>）连上要访问的值的索引来直接访问元组元素。例如：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/><span class="line">7</span><br/><span class="line">8</span><br/><span class="line">9</span><br/></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() {</span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">x</span>: (<span class="type">i32</span>, <span class="type">f64</span>, <span class="type">u8</span>) = (<span class="number">500</span>, <span class="number">6.4</span>, <span class="number">1</span>);</span><br/><span class="line"></span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">five_hundred</span> = x.<span class="number">0</span>;</span><br/><span class="line"></span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">six_point_four</span> = x.<span class="number">1</span>;</span><br/><span class="line"></span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">one</span> = x.<span class="number">2</span>;</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
+<p>该程序创建一个元组 <code>x</code>，然后通过使用它们的索引为每个元素创建新的变量。和大多数编程语言一样，元组中的第一个索引为 0。</p>
+<p>没有任何值的元组 <code>()</code> 有一个特殊的名字，<strong>单元</strong>(<em>unit</em>)，这个值及其对应的类型都被写成<code>()</code>，代表空值或空返回类型。该类型被称为<strong>单元类型</strong>（<em>unit type</em>），该值被称为<strong>单元值</strong>（<em>unit value</em>）。如果表达式不返回任何其他值，就隐式地返回单元值。</p>
+<p>这里原文是：</p>
+<blockquote>
+<p>The tuple without any values has a special name, <em>unit</em>. This value and its corresponding type are both written <code>()</code> and represent an empty value or an empty return type. Expressions implicitly return the unit value if they don’t return any other value.</p>
+</blockquote>
+<p>译文是：</p>
+<blockquote>
+<p>没有任何值的元组 <code>()</code> 是一种特殊的类型，只有一个值，也写成 <code>()</code>。该类型被称为<strong>单元类型</strong>（<em>unit type</em>），该值被称为<strong>单元值</strong>（<em>unit value</em>）。如果表达式不返回任何其他值，就隐式地返回单元值。</p>
+</blockquote>
+<p>“没有任何值的元组 <code>()</code> 是一种特殊的类型，只有一个值，也写成 <code>()</code>“这句话感觉翻译的不是很好？看了原文才明白。</p>
+<h3 id="数组类型"><a class="headerlink" href="#数组类型" title="数组类型"></a>数组类型</h3><blockquote>
+<p>将多个值组合在一起的另一种方式就是使用<strong>数组</strong>（<em>array</em>）。与元组不同，数组的每个元素必须具有相同的类型。与某些其他语言中的数组不同，Rust 中的数组具有固定长度。</p>
+</blockquote>
+<p>我们在方括号内以逗号分隔的列表形式将值写到数组中：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() {</span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">a</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
+<blockquote>
+<p>当你希望将数据分配到栈（stack）而不是堆（heap）时，或者当你希望确保始终具有固定数量的元素时，数组特别有用。但它们不像 vector （译注：中文字面翻译为“向量”，在 Rust 中意义为“动态数组，可变数组”）类型那么灵活。vector 类型类似于标准库中提供的集合类型，其大小<strong>允许</strong>增长或缩小。如果不确定是使用数组还是 vector，那就应该使用一个 vector。</p>
+<p>不过当你明确元素数量不需要改变时，数组会更有用。</p>
+</blockquote>
+<p>使用方括号编写数组的类型，其中包含每个元素的类型、分号，然后是数组中的元素数，如下所示：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">a</span>: [<span class="type">i32</span>; <span class="number">5</span>] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br/></pre></td></tr></table></figure>
+<p>对于每个元素都相同的情况，还可以通过指定初始值、后跟分号和方括号中的数组长度来初始化数组，如下所示：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">a</span> = [<span class="number">3</span>; <span class="number">5</span>];</span><br/></pre></td></tr></table></figure>
+<p>这种写法与 <code>let a = [3, 3, 3, 3, 3];</code> 效果相同，但更简洁。</p>
+<h4 id="访问数组元素"><a class="headerlink" href="#访问数组元素" title="访问数组元素"></a>访问数组元素</h4><p>数组是可以在栈上分配的已知固定大小的单个内存块。可以使用索引访问数组的元素，如下所示：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() {</span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">a</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br/><span class="line"></span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">first</span> = a[<span class="number">0</span>];</span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">second</span> = a[<span class="number">1</span>];</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
+<h5 id="无效的数组元素访问"><a class="headerlink" href="#无效的数组元素访问" title="无效的数组元素访问"></a>无效的数组元素访问</h5><p>如果尝试访问超出数组末尾的数组元素，会发生什么？</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/><span class="line">7</span><br/><span class="line">8</span><br/><span class="line">9</span><br/><span class="line">10</span><br/><span class="line">11</span><br/><span class="line">12</span><br/><span class="line">13</span><br/><span class="line">14</span><br/><span class="line">15</span><br/><span class="line">16</span><br/><span class="line">17</span><br/><span class="line">18</span><br/><span class="line">19</span><br/><span class="line">20</span><br/><span class="line">21</span><br/><span class="line">22</span><br/><span class="line">23</span><br/><span class="line">24</span><br/><span class="line">25</span><br/></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::io;</span><br/><span class="line"></span><br/><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() {</span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">a</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br/><span class="line"></span><br/><span class="line">    <span class="built_in">println!</span>(<span class="string">"Please enter an array index."</span>);</span><br/><span class="line"></span><br/><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">index</span> = <span class="type">String</span>::<span class="title function_ invoke__">new</span>();</span><br/><span class="line"></span><br/><span class="line">    io::<span class="title function_ invoke__">stdin</span>()</span><br/><span class="line">        .<span class="title function_ invoke__">read_line</span>(&amp;<span class="keyword">mut</span> index)</span><br/><span class="line">        .<span class="title function_ invoke__">expect</span>(<span class="string">"Failed to read line"</span>);</span><br/><span class="line"></span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">index</span>: <span class="type">usize</span> = index</span><br/><span class="line">        .<span class="title function_ invoke__">trim</span>()</span><br/><span class="line">        .<span class="title function_ invoke__">parse</span>()</span><br/><span class="line">        .<span class="title function_ invoke__">expect</span>(<span class="string">"Index entered was not a number"</span>);</span><br/><span class="line"></span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">element</span> = a[index];</span><br/><span class="line"></span><br/><span class="line">    <span class="built_in">println!</span>(</span><br/><span class="line">        <span class="string">"The value of the element at index {} is: {}"</span>,</span><br/><span class="line">        index, element</span><br/><span class="line">    );</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
+<p>此代码编译成功。如果使用 <code>cargo run</code> 来运行此代码并输入 0、1、2、3 或 4，则程序将打印数组对应索引的值。如果输入的是超出数组末尾的数字，例如 10，则会看到类似以下的输出：</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/></pre></td><td class="code"><pre><span class="line">thread 'main' panicked at 'index out of bounds: the len is 5 but the index is 10', src/main.rs:19:19</span><br/><span class="line">note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace</span><br/></pre></td></tr></table></figure>
+<p>该程序在索引操作中使用无效值时导致<strong>运行时</strong>（<em>runtime</em>）错误。程序退出并显示错误消息，未执行后面的 <code>println!</code> 语句。当你尝试使用索引访问元素时，Rust 将检查你指定的索引是否小于数组长度。如果索引大于或等于数组长度，Rust 会出现 <code>panic</code>。这种检查必须在运行时进行，尤其是在这种情况下，因为编译器可能无法知道用户之后运行代码时将输入什么值。</p>
+<p>这是 Rust 在实践中安全原则的第一个例子。在很多低级语言中，并不进行这种检查，而且在你使用不正确的索引时，可以访问无效的内存。Rust 通过立即退出来的方式防止这种错误，而不是允许内存访问并继续运行程序。</p>

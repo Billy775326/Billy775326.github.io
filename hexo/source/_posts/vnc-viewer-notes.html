@@ -1,0 +1,29 @@
+---
+title: "vnc viwer reading"
+date: "2026-09-10T07:29:21.000Z"
+updated: "2026-09-10T07:29:21.000Z"
+permalink: "blog/2026/09/vnc-viewer-notes/"
+slug: "vnc-viewer-notes"
+categories: ["系统与运维"]
+tags: ["Ubuntu", "VNC", "LXDE", "远程桌面"]
+description: "Ubuntu如何安装图形化界面并使用vnc viewer连接安装图形用户界面。你可以选择安装完整的Ubuntu桌面或者轻量级的图形用户界面，如LXDE。例如，为了安装LXDE，你可以在终端中输入以下命令： 12345sudo apt-get updatesudo apt-get install lxde```          ## 安装完图形用户界面后，安装VNC服务器。 sudo apt-ge"
+cover: "https://img.billy12.xyz/file/1786437586692_千与千寻.jpg"
+thumbnail: "https://img.billy12.xyz/file/默认封面/thumbs/cover.jpg"
+disableNunjucks: true
+migration_order: 11
+legacy_html: true
+comments: false
+related_nav: [{"url": "/blog/2026/09/redroid-arknights/", "rel": "prev", "title": "使用 redroid 玩耍 Arknights"}, {"url": "/blog/2026/09/linuxqq-wont-start-core-dump/", "rel": "next", "title": "linuxQQ安装后双击启动无响应,提示追踪与中断点陷阱 (核心已转储)"}]
+---
+<h1 id="Ubuntu如何安装图形化界面并使用vnc-viewer连接"><a class="headerlink" href="#Ubuntu如何安装图形化界面并使用vnc-viewer连接" title="Ubuntu如何安装图形化界面并使用vnc viewer连接"></a>Ubuntu如何安装图形化界面并使用vnc viewer连接</h1><h2 id="安装图形用户界面。"><a class="headerlink" href="#安装图形用户界面。" title="安装图形用户界面。"></a>安装图形用户界面。</h2><p>你可以选择安装完整的Ubuntu桌面或者轻量级的图形用户界面，如LXDE。例如，为了安装LXDE，你可以在终端中输入以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br/><span class="line">sudo apt-get install lxde</span><br/><span class="line">```          </span><br/><span class="line">## 安装完图形用户界面后，安装VNC服务器。</span><br/><span class="line"></span><br/></pre></td></tr></table></figure>
+<p>sudo apt-get install tightvncserver</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/><span class="line">7</span><br/><span class="line">8</span><br/><span class="line">9</span><br/><span class="line">10</span><br/><span class="line">11</span><br/><span class="line">12</span><br/></pre></td><td class="code"><pre><span class="line"></span><br/><span class="line">## 启动VNC服务器。</span><br/><span class="line">在首次启动VNC服务器时，你需要设置一个密码，这将在后续使用VNC Viewer连接时使用。你可以通过以下命令启动VNC服务器：</span><br/><span class="line">&gt; vncserver :1</span><br/><span class="line"></span><br/><span class="line">在这里，":1"表示的是你的显示号。如果你想要启动更多的VNC服务器，你可以改变这个数字。</span><br/><span class="line"></span><br/><span class="line">## 启动VNC服务器后，配置开机自启</span><br/><span class="line">编辑~/.vnc/xstartup文件。你可以使用你喜欢的文本编辑器打开这个文件，例如使用nano：</span><br/><span class="line">&gt; nano ~/.vnc/xstartup</span><br/><span class="line">          </span><br/><span class="line">然后，将以下内容添加到文件的末尾：</span><br/></pre></td></tr></table></figure>
+<p>lxterminal &amp;<br/>/usr/bin/lxsession -s LXDE &amp;</p>
+<pre><code>保存并关闭文件。
+
+## win安装VNC Viewer。
+
+安装完VNC Viewer后，输入你的服务器的IP地址和显示号（例如，192.168.1.2:1），然后输入你之前设置的密码。
+注意：别忘了在服务器防火墙中开放VNC服务器所使用的端口（默认为5900+显示号）。例如，如果你的显示号为1，那么你需要开放5901端口。
+</code></pre>

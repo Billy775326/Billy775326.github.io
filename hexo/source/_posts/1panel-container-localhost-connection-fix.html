@@ -1,0 +1,36 @@
+---
+title: "1Panel面板容器无法使用localhost、127.0.0.1配置链接的问题说明及解决办法"
+date: "2024-09-20T12:26:14.000Z"
+updated: "2024-09-20T12:26:14.000Z"
+permalink: "blog/2024/09/1panel-container-localhost-connection-fix/"
+slug: "1panel-container-localhost-connection-fix"
+categories: ["系统与运维"]
+tags: ["1Panel", "Docker", "MySQL", "容器网络", "故障排查"]
+description: "报错现象： 安装图床应用时无法连接数据库,但是MySQL进程无报错 mysql：报错信息一览 SQLSTATE[HY000] [2002] Connection refused 当使用PHP 运行环境/容器安装的应用时,即从1panel应用商店安装(自行安装的应用使用localhost连接不受影响)"
+cover: "https://img.billy12.xyz/file/1786437586692_千与千寻.jpg"
+thumbnail: "https://img.billy12.xyz/file/默认封面/thumbs/cover.jpg"
+disableNunjucks: true
+migration_order: 39
+legacy_html: true
+comments: false
+related_nav: [{"url": "/blog/2024/09/roco-park-pets-guide/", "rel": "prev", "title": "ROCO乐园宠获取方式一览"}, {"url": "/blog/2024/09/install-x11vnc-remote-desktop/", "rel": "next", "title": "安装x11vnc远程桌面"}]
+---
+<h2 id="报错现象："><a class="headerlink" href="#报错现象：" title="报错现象："></a>报错现象：</h2><p>安装图床应用时无法连接数据库,但是MySQL进程无报错<br/>mysql：报错信息一览</p>
+<blockquote>
+<p>SQLSTATE[HY000] [2002] Connection refused</p>
+</blockquote>
+<p>当使用PHP 运行环境/容器安装的应用时,即从1panel应用商店安装(自行安装的应用使用localhost连接不受影响)<br/>MySQL报错</p>
+<blockquote>
+<p>SQLSTATE[HY000] [2002] Connection refused (SQL: SHOW FULL TABLES WHERE table_type = ‘BASE TABLE’)</p>
+</blockquote>
+<ol>
+<li>使用localhost 报错无法链接redis、mysql。</li>
+<li>使用127.0.0.1报错无法链接redis、mysql。</li>
+</ol>
+<h2 id="主要原因："><a class="headerlink" href="#主要原因：" title="主要原因："></a>主要原因：</h2><p>1panel的运行环境为docker创建的容器，故此我们无法通过localhost、127.0.0.1进行直接访问和使用mysql、redis、memache等服务。</p>
+<p>这是由于docker每个容器都是单独的一个ip造成的，故此每个容器环境中的127.0.0.1和localhost都是独立的，就相当于两个世界那样，完全无法进行联通。</p>
+<h2 id="解决办法："><a class="headerlink" href="#解决办法：" title="解决办法："></a>解决办法：</h2><p>如果使用公网ip、内网ip端是可以进行访问的。但是由于公网访问会造成延迟、内网ip会在容器重启后进行变化，故此不建议通过这两种方式进行解决。</p>
+<p>使用容器名称配置连接信息，有效解决办法。<br/>如容器名称如下类型：</p>
+<p>复制容器名称并在你的网站配置文件host处填写替换localhost、127.0.0.1：</p>
+<p><a href="http://23.224.239.232:40027/i/2024/08/17/66c0bd740391b.png" rel="noopener" target="_blank"><img alt="1723907441483.png" src="http://23.224.239.232:40027/i/2024/08/17/66c0bd740391b.png"/></a></p>
+<p>配置容器名称后再次连接数据库，你会发现后续重启容器和服务器都不需要重新填写配置信息。redis和其他数据库或服务也是如此配置，使用容器名称进行连接。</p>

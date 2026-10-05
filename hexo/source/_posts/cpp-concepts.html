@@ -1,0 +1,37 @@
+---
+title: "20240414-C++-Concepts"
+date: "2024-09-20T12:46:08.000Z"
+updated: "2024-09-20T12:46:08.000Z"
+permalink: "blog/2024/09/cpp-concepts/"
+slug: "cpp-concepts"
+categories: ["编程开发"]
+tags: ["C++", "C++20", "模板编程"]
+description: "概念（Concepts）是C++20中引入的一项特性，它们是对模板参数的约束，用于指定模板参数必须满足的接口（例如，一组必需的函数、类型、操作符等）和语义要求。概念旨在提高模板编程的表达力和安全性，…"
+cover: "https://img.billy12.xyz/file/1786437586692_千与千寻.jpg"
+thumbnail: "https://img.billy12.xyz/file/默认封面/thumbs/cover.jpg"
+disableNunjucks: true
+migration_order: 21
+legacy_html: true
+comments: false
+related_nav: [{"url": "/blog/2024/09/webserver-0-introduction/", "rel": "prev", "title": "20240627-WebServer-0"}, {"url": "/blog/2024/09/rust-09-structs/", "rel": "next", "title": "20240413-Rust-09-结构体"}]
+---
+<h1 id="C-Concepts"><a class="headerlink" href="#C-Concepts" title="C++ Concepts"></a>C++ Concepts</h1><p>概念（Concepts）是C++20中引入的一项特性，它们是对模板参数的约束，用于指定模板参数必须满足的接口（例如，一组必需的函数、类型、操作符等）和语义要求。概念旨在提高模板编程的表达力和安全性，通过更清晰的语义来改善编译器错误信息，并促使编写更干净、更易于理解的代码。</p>
+<p>在C++20之前，模板编程通常是通过特化和重载来实现各种约束的，这往往会产生冗长的错误信息，让人难以理解实际的问题所在。概念允许你以更声明式的方式指定约束，使得模板的意图更明确，能够在编译时提早发现错误，同时生成更有用的错误信息。</p>
+<p><strong>以下是一些使用概念的优势：</strong></p>
+<ol>
+<li><strong>提升代码清晰度：</strong> 概念使得模板的要求变得明确，可以直接在函数模板的声明中看到对类型参数的要求。</li>
+<li><strong>改进错误信息：</strong> 当传递给模板的类型不符合概念要求时，编译器可以提供更加直接的错误信息，这有助于快速定位问题。</li>
+<li><strong>简化模板定义：</strong> 概念能够替代复杂的SFINAE（Substitution Failure Is Not An Error）表达式，简化模板的定义。</li>
+<li><strong>提供更好的工具支持：</strong> 由于概念的语义更加明确，IDE和其他代码分析工具能够提供更好的支持。</li>
+</ol>
+<p><strong>示例：</strong></p>
+<p>在C++20之前，你可能需要这样写模板：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br/><span class="line"><span class="keyword">typename</span> std::enable_if&lt;std::is_integral&lt;T&gt;::value, <span class="type">bool</span>&gt;::<span class="function">type</span></span><br/><span class="line"><span class="function"><span class="title">is_odd</span><span class="params">(T i)</span> </span>{</span><br/><span class="line">    <span class="keyword">return</span> <span class="built_in">bool</span>(i % <span class="number">2</span>);</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
+<p>使用C++20的概念，可以更清晰地表达这一意图：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/><span class="line">7</span><br/><span class="line">8</span><br/><span class="line">9</span><br/><span class="line">10</span><br/><span class="line">11</span><br/></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span></span><br/><span class="line"><span class="function"><span class="keyword">requires</span> std::integral&lt;T&gt;</span></span><br/><span class="line"><span class="function"><span class="type">bool</span> <span class="title">is_odd</span><span class="params">(T i)</span> </span>{</span><br/><span class="line">    <span class="keyword">return</span> <span class="built_in">bool</span>(i % <span class="number">2</span>);</span><br/><span class="line">}</span><br/><span class="line"></span><br/><span class="line"><span class="comment">// 或者使用概念作为函数模板参数的一部分</span></span><br/><span class="line"><span class="function"><span class="keyword">template</span>&lt;std::integral T&gt;</span></span><br/><span class="line"><span class="function"><span class="type">bool</span> <span class="title">is_odd</span><span class="params">(T i)</span> </span>{</span><br/><span class="line">    <span class="keyword">return</span> <span class="built_in">bool</span>(i % <span class="number">2</span>);</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
+<p>在这个例子中，<code>std::integral</code>是一个标准库提供的概念，它要求类型T必须是一个整数类型。如果尝试将非整数类型的值传递给<code>is_odd</code>函数，编译器将提供明确的错误信息，指出传递的参数没有满足<code>std::integral</code>概念的要求。</p>
+<p><strong>创建自定义概念：</strong></p>
+<p>你可以定义自己的概念来表示特定的约束集合。例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/><span class="line">7</span><br/><span class="line">8</span><br/><span class="line">9</span><br/><span class="line">10</span><br/><span class="line">11</span><br/></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;concepts&gt;</span></span></span><br/><span class="line"></span><br/><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br/><span class="line"><span class="keyword">concept</span> Addable = <span class="keyword">requires</span>(T a, T b) {</span><br/><span class="line">    { a + b } -&gt; std::convertible_to&lt;T&gt;;</span><br/><span class="line">};</span><br/><span class="line"></span><br/><span class="line"><span class="function"><span class="keyword">template</span>&lt;Addable T&gt;</span></span><br/><span class="line"><span class="function">T <span class="title">add</span><span class="params">(T a, T b)</span> </span>{</span><br/><span class="line">    <span class="keyword">return</span> a + b;</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
+<p>在上面的代码中，<code>Addable</code>概念要求任何使用该概念的类型必须支持加法操作，并且结果可以转换为该类型。</p>
+<p>总的来说，概念使得模板代码的编写和使用变得更加直观和安全，丰富了C++的类型系统，提高了模板编程的整体体验。</p>

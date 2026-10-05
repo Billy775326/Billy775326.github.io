@@ -4,6 +4,8 @@ Run from any directory with Python 3 and beautifulsoup4 installed.
 Article bodies are kept byte-for-byte; taxonomy.json is the editable source.
 """
 from pathlib import Path
+if (Path(__file__).resolve().parents[1] / 'hexo/_config.yml').exists():
+    raise SystemExit('Hexo source migration is active. Use npm --prefix hexo run build / release; see docs/publishing.md.')
 from collections import defaultdict
 from urllib.parse import quote, unquote
 from html import escape

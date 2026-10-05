@@ -1,0 +1,6 @@
+* text=auto eol=lf
+# Preserve imported article/code whitespace and unmodified upstream theme sources.
+hexo/themes/** -whitespace
+hexo/migration/** -whitespace
+hexo/source/_posts/** -whitespace
+hexo/source/legacy-html/** -whitespace

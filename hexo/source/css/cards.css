@@ -1,0 +1,119 @@
+/* Homepage post layout: 3-column card grid (on top of Butterfly defaults)
+   Uses high-specificity selectors so injected rules beat theme defaults */
+
+#recent-posts .recent-post-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin: 0;
+}
+
+#recent-posts div.recent-post-item.recent-post-item {
+  display: flex;
+  flex-direction: column;
+  width: 32.3%;
+  margin: 0 1% 20px 0;
+  height: 320px;
+  border-radius: 60px;
+  overflow: hidden;
+  outline: 1px solid rgba(7, 17, 27, 0.06);
+  outline-offset: -1px;
+  box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.05);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+[data-theme="dark"] #recent-posts div.recent-post-item.recent-post-item {
+  outline-color: rgba(255, 255, 255, 0.08);
+}
+
+#recent-posts div.recent-post-item.recent-post-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.09);
+}
+
+/* cover on top */
+#recent-posts .recent-post-item div.post_cover.post_cover {
+  width: 100%;
+  height: 192px;
+  flex: 0 0 192px;
+  order: 0;
+  margin: 0;
+  display: block;
+}
+
+#recent-posts .recent-post-item .post_cover a,
+#recent-posts .recent-post-item .post_cover img.post-bg.post-bg {
+  width: 100%;
+  height: 192px;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+  margin: 0;
+}
+
+/* info below cover */
+#recent-posts .recent-post-item div.recent-post-info.recent-post-info {
+  order: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 25px 30px 10px;
+  min-width: 0;
+}
+
+#recent-posts .recent-post-info .article-title.article-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5;
+  height: auto;
+  min-height: 1.5em;
+  white-space: normal;
+  margin-bottom: 6px;
+}
+
+#recent-posts .recent-post-info div.content.content { display: none; }
+#recent-posts .recent-post-info .article-title.article-title { font-size: 19.2px; line-height: 1.2; min-height: 1.2em; }
+#recent-posts .article-meta-wrap { font-size: 12.8px; }
+.layout:has(> #recent-posts) { max-width: 1250px; }
+
+/* 2 columns on medium screens */
+@media screen and (max-width: 1200px) {
+  #recent-posts div.recent-post-item.recent-post-item {
+    width: 47%;
+    margin: 0 3% 20px 0;
+  }
+}
+
+/* 1 column on mobile */
+@media screen and (max-width: 768px) {
+  #recent-posts div.recent-post-item.recent-post-item {
+    width: 100%;
+    margin: 0 0 20px;
+  }
+  #recent-posts .recent-post-items {
+    margin: 0;
+  }
+}
+
+/* Compact single-line publication date and category. */
+#recent-posts .recent-post-item > .recent-post-info > .article-meta-wrap {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 3px;
+  min-width: 0;
+  font-size: 11px;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+#recent-posts .post-meta-date { display: inline-flex; align-items: center; flex-shrink: 0; }
+#recent-posts .article-meta__categories { display: inline-flex; align-items: center; gap: 3px; min-width: 0; }
+#recent-posts .recent-post-item > .recent-post-info > .article-meta-wrap i { margin: 0 3px 0 0; flex-shrink: 0; }
+#recent-posts .recent-post-item > .recent-post-info > .article-meta-wrap .article-meta-separator { margin: 0; }
+#recent-posts .article-meta__categories a { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media screen and (max-width: 1200px) and (min-width: 901px) {
+  #recent-posts .recent-post-item div.recent-post-info.recent-post-info { padding-left: 22px; padding-right: 22px; }
+}
