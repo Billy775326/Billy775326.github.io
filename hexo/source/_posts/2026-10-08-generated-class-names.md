@@ -1,9 +1,9 @@
 ---
 date: "2026-10-08T16:24:59+08:00"
-updated: "2026-10-08T16:24:59+08:00"
+updated: "2026-10-08T16:37:58+08:00"
 permalink: blog/2026/10/generated-class-names/
-cover: https://img.iowill.com/file/1786437586692_千与千寻.jpg
-thumbnail: https://img.iowill.com/file/默认封面/thumbs/cover.jpg
+cover: https://img.iowill.com/file/编程开发/网页里的class为什么像乱码-用一个榜单理解生成类名/cover.png
+thumbnail: https://img.iowill.com/file/编程开发/网页里的class为什么像乱码-用一个榜单理解生成类名/thumbs/cover.jpg
 title: 网页里的 class 为什么像乱码？用一个榜单理解生成类名
 description: 网页里的 class 是谁生成的，为什么变化后样式仍能对应？本文用虚构榜单解释类名映射与 CSS Modules，结合匿名评论区的两次加载观察和实际定位代码，区分生成类名、动态改名与加密，并说明固定选择器的维护风险。
 categories:
@@ -133,6 +133,10 @@ element.textContent = 'Billy 的代码手记';
 
 这段导入语法需要支持 CSS Modules 的工具链处理，不是把代码原样贴进普通 HTML 就能运行。CSS Modules 提供局部名称与生成名称之间的映射，让组件通过导入结果引用样式。[CSS Modules 项目说明](https://github.com/css-modules/css-modules)
 
+
+![源码 nickname 通过映射对应到 HTML 类名与 CSS 选择器，两端均使用 name_D2q5](https://img.iowill.com/file/编程开发/网页里的class为什么像乱码-用一个榜单理解生成类名/body1.png)
+
+*类名映射示意：HTML 与 CSS 使用同一名称；图中生成值仅为示意。*
 
 ## 好好的名字，为什么还要换
 
@@ -305,6 +309,10 @@ if (sibling && sibling.matches('.FduGc_lz')) {
 
 这个实验是手动改名，不是哈希生成器，也没有实现完整的 CSS Modules。它只验证最关键的一点：浏览器关心的是选择器能否匹配元素，不关心名称是否容易读懂。
 
+
+![类名匹配实验：名称一致时样式生效，只改 HTML 后失配，同步修改 CSS 后恢复](https://img.iowill.com/file/编程开发/网页里的class为什么像乱码-用一个榜单理解生成类名/body2.png)
+
+*从左到右：名称匹配、只改 HTML 后失配、两边同步改名后重新匹配。*
 
 ## 用开发者工具检查类名和样式
 

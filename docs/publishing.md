@@ -41,6 +41,24 @@ thumbnail: https://img.iowill.com/实际缩略图地址
 
 图片先备份 `upload/文章名/`，再上传图床，cover 使用原图、thumbnail 使用缩略图，正文使用图床 URI。上传工具继续在 `scripts/`，Token 只在本机读取，不入库。
 
+### 配图完成后再发布（2026-10-08 补充）
+
+已约定专属配图的文章，必须完成封面、正文插图和封面缩略图后再发布；不能自行改用默认封面或删除占位符来跳过步骤。只有用户明确要求先发无图版本时才例外。
+
+1. 根据文章主题生成配图，查看最近 6–9 篇封面，避免重复主体、构图和配色组合。全站以淡彩描边、圆润造型、柔和阴影为基础；分类只调整结构感、空间感和场景气质，不绑定固定物件。
+2. 原图及提示词备份到 `upload/文章名/`。核对技术图的文字、名称大小写、箭头与正文一致。生成最长边不超过 1000px、JPEG q80 的封面缩略图。
+3. 上传到 `img.iowill.com`，保存 `image-urls.json`，替换 cover、thumbnail 以及正文占位，补充描述性 alt 和图注。
+4. 检查生成文章确实含有预期数量的正文图片，图床响应可解码为图片；核对首页、侧栏、分享元数据使用专属封面，桌面和手机均可显示。
+
+本次三图方案可使用以下上传工具（Python 需安装 `requests`）；读取仓库外的 `E:/tmp/bed_token.txt`，默认干跑，`--go` 才上传：
+
+```powershell
+python scripts/upload_article_images.py "upload/文章名" --folder "编程开发/文章名"
+python scripts/upload_article_images.py "upload/文章名" --folder "编程开发/文章名" --go
+```
+
+该工具上传 `cover.png`、`body1.png`、`body2.png`、`thumbs/cover.jpg`，按已保存映射跳过已上传文件；复用 `BED_STATE` 与 `BED_PROXY` 配置，默认使用本机代理。替换已发布图片时应另行规划版本文件，不能把旧 URI 映射当作新图上传成功。
+
 历史 `.html` 文章可直接编辑正文 HTML。`legacy_html: true` 表示仍与迁移基线保持原样；首次有意修改正文时设为 `false` 并更新 `updated`，校验仍检查原永久链接和发布时间。三篇原 Markdown 另存 `hexo/migration/original-markdown/` 供参考，不是第二份发布输入。不要直接将复杂历史 HTML 自动反转成 Markdown。
 
 ## 构建与预览
