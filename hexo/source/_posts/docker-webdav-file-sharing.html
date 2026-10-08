@@ -7,20 +7,20 @@ slug: "docker-webdav-file-sharing"
 categories: ["系统与运维"]
 tags: ["WebDAV", "Docker", "Docker Compose", "自托管", "文件共享"]
 description: "使用 Docker Compose 部署 hacdias/webdav，从目录挂载、账号权限和本机读写验证开始，再配置服务自带的 HTTPS。附上传下载、复制改名命令，以及连接失败、无法写入和证书错误的排查方法。"
-cover: "https://img.billy12.xyz/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/cover.png"
-thumbnail: "https://img.billy12.xyz/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/thumbs/cover.jpg"
+cover: "https://img.iowill.com/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/cover.png"
+thumbnail: "https://img.iowill.com/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/thumbs/cover.jpg"
 disableNunjucks: true
 migration_order: 0
 legacy_html: true
 comments: false
 related_nav: [{"url": "/blog/2026/09/from-vibe-coding-to-spec-coding/", "rel": "prev", "title": "从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳"}]
 ---
-<p><img alt="Docker WebDAV 文件共享服务" decoding="async" loading="lazy" src="https://img.billy12.xyz/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/cover.png"/></p>
+<p><img alt="Docker WebDAV 文件共享服务" decoding="async" loading="lazy" src="https://img.iowill.com/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/cover.png"/></p>
 <p>如果只是想把服务器上的一个目录提供给电脑、手机和备份工具使用，可以先试试 WebDAV。它在 HTTP 上增加了目录、文件操作等能力；客户端是否支持挂载、锁定和大文件传输，要看具体实现。</p>
 <p>这里使用 hacdias/webdav，配合 Docker Compose 管理配置和数据目录。先让服务只在宿主机上可访问，验证读写正常；需要给其他设备使用时，再开启服务自带的 TLS。整个方案只运行一个 WebDAV 容器，不需要管理面板或反向代理。</p>
 <p>本文命令面向安装了 Docker Engine 和 Compose 插件的 Linux 主机，以普通 bridge 网络为例。域名 <code>dav.example.com</code> 是示例，公网访问时替换为自己的域名。以下响应码是验证预期，不是某台服务器的实测日志。</p>
 <h2 id="section-1">先分清三个路径和两个监听地址</h2>
-<p><img alt="Docker 容器的端口入口、配置挂载和数据挂载" decoding="async" loading="lazy" src="https://img.billy12.xyz/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/body1.png"/></p>
+<p><img alt="Docker 容器的端口入口、配置挂载和数据挂载" decoding="async" loading="lazy" src="https://img.iowill.com/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/body1.png"/></p>
 <p>配置文件在宿主机上保存，容器读取它；上传文件则写到单独的数据目录。容器更新后，仍然挂载同一份目录。</p>
 <table>
 <thead>

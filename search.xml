@@ -3,12 +3,12 @@
   <entry>
     <title>Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务</title>
     <url>/blog/2026/10/docker-webdav-file-sharing/</url>
-    <content><![CDATA[<p><img alt="Docker WebDAV 文件共享服务" decoding="async" loading="lazy" src="https://img.billy12.xyz/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/cover.png"/></p>
+    <content><![CDATA[<p><img alt="Docker WebDAV 文件共享服务" decoding="async" loading="lazy" src="https://img.iowill.com/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/cover.png"/></p>
 <p>如果只是想把服务器上的一个目录提供给电脑、手机和备份工具使用，可以先试试 WebDAV。它在 HTTP 上增加了目录、文件操作等能力；客户端是否支持挂载、锁定和大文件传输，要看具体实现。</p>
 <p>这里使用 hacdias/webdav，配合 Docker Compose 管理配置和数据目录。先让服务只在宿主机上可访问，验证读写正常；需要给其他设备使用时，再开启服务自带的 TLS。整个方案只运行一个 WebDAV 容器，不需要管理面板或反向代理。</p>
 <p>本文命令面向安装了 Docker Engine 和 Compose 插件的 Linux 主机，以普通 bridge 网络为例。域名 <code>dav.example.com</code> 是示例，公网访问时替换为自己的域名。以下响应码是验证预期，不是某台服务器的实测日志。</p>
 <h2 id="section-1">先分清三个路径和两个监听地址</h2>
-<p><img alt="Docker 容器的端口入口、配置挂载和数据挂载" decoding="async" loading="lazy" src="https://img.billy12.xyz/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/body1.png"/></p>
+<p><img alt="Docker 容器的端口入口、配置挂载和数据挂载" decoding="async" loading="lazy" src="https://img.iowill.com/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/body1.png"/></p>
 <p>配置文件在宿主机上保存，容器读取它；上传文件则写到单独的数据目录。容器更新后，仍然挂载同一份目录。</p>
 <table>
 <thead>
@@ -304,7 +304,7 @@
   <entry>
     <title>从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳</title>
     <url>/blog/2026/09/from-vibe-coding-to-spec-coding/</url>
-    <content><![CDATA[<p><img alt="从对话式探索走向规范驱动开发的主题封面" loading="lazy" src="https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/cover(1).png"/></p>
+    <content><![CDATA[<p><img alt="从对话式探索走向规范驱动开发的主题封面" loading="lazy" src="https://img.iowill.com/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/cover(1).png"/></p>
 <p>“帮我把文章卡片改得好看一点。”</p>
 <p>AI 很快更新一版：圆角更大，封面比例统一，标题可以显示两行，页面背景也有了一层渐变。</p>
 <p>但卡片太高，日期和分类挤到两行，侧栏为了和文章列表对齐被拉出了空白。于是回滚再补一句新要求。</p>
@@ -329,7 +329,7 @@
 <p>如果要求只是“优化一下”，AI 可以通过自己选定的标准宣告完成。代码可能符合它的理解，却没有符合你的预期。</p>
 <p>把这些问题全部归结为“提示词不够长”，并不准确。真正需要补充的是：可定位的需求、明确的范围，以及能独立检查的完成条件。</p>
 <h2 id="section-3">3. Spec Coding 把哪些事情提前了？</h2>
-<p><img alt="Vibe Coding 的迭代探索与 Spec Coding 的规范、实现、验证流程对比" loading="lazy" src="https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/body1.png"/></p>
+<p><img alt="Vibe Coding 的迭代探索与 Spec Coding 的规范、实现、验证流程对比" loading="lazy" src="https://img.iowill.com/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/body1.png"/></p>
 <p><em>两种工作方式可以衔接：先探索需求，再明确规范和验收条件。</em></p>
 <p>一份有用的 Spec，至少能回答四个问题：</p>
 <ol>
@@ -385,7 +385,7 @@
 <p>这个例子里的 44 和 18/18/8 是针对一次发布的具体预期。长期维护的检查应尽量从真实文章集合推导总数，再独立验证分页中实际出现的链接；不要每次靠手动修改一串散落的常量。</p>
 <p>同时，测试不能只比较两个都由同一个错误变量生成的数字。否则源数据少了一篇，两边仍然可能相等。可以交叉检查文章文件、登记表、搜索索引和分页链接集合，并明确哪个集合应当包含哪些文章。</p>
 <h2 id="section-6">6. 一个适合个人项目的工作循环</h2>
-<p><img alt="规范、计划、实现、验证及反馈修订组成的开发循环" loading="lazy" src="https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/body2.png"/></p>
+<p><img alt="规范、计划、实现、验证及反馈修订组成的开发循环" loading="lazy" src="https://img.iowill.com/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/body2.png"/></p>
 <p><em>SPEC：规范；PLAN：计划；BUILD：实现；VERIFY：验证；REFINE：反馈修订。</em></p>
 <p>我更倾向于把流程控制在六步，而不是要求每次改颜色都写一套长文档。</p>
 <h3 id="section-7">先调查现状</h3>
@@ -558,7 +558,7 @@
 <p>本次环境输出均为 <code>0</code>。</p>
 <p>因此，可以排除 eth0、eth1 上的 <code>rp_filter</code> 检查导致丢包。其他环境如果使用严格模式 <code>1</code>，多网卡的非对称路由可能触发丢包，需要单独核查。<a href="https://www.kernel.org/doc/html/next/networking/ip-sysctl.html">Linux 内核文档</a></p>
 <h2 id="eth1-eth0">三、抓包发现：eth1 进，eth0 出</h2>
-<figure><img alt="故障路径：eth1 进入，eth0 返回" decoding="async" loading="lazy" src="https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663890788_02-wrong-return-path.png"/><figcaption>故障路径：eth1 进入，eth0 返回</figcaption></figure>
+<figure><img alt="故障路径：eth1 进入，eth0 返回" decoding="async" loading="lazy" src="https://img.iowill.com/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663890788_02-wrong-return-path.png"/><figcaption>故障路径：eth1 进入，eth0 返回</figcaption></figure>
 <p>在服务器执行：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre>tcpdump -ni any -nn \
   'tcp port 3306 and not (src net 172.20.0.0/16 and dst net 172.20.0.0/16)'
@@ -604,7 +604,7 @@ eth0 Out:
 </pre></td></tr></table></figure>
 <p>这也解释了为什么 eth0 能连接：主路由表的默认出口恰好就是 eth0，而其他网卡需要正确的回程选路。</p>
 <h2 id="_3">五、修复：识别连接的回包，再按标记选路</h2>
-<figure><img alt="修复原理：识别回包，按标记选路" decoding="async" loading="lazy" src="https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663900746_03-mark-routing-fix.png"/><figcaption>修复原理：识别回包，按标记选路</figcaption></figure>
+<figure><img alt="修复原理：识别回包，按标记选路" decoding="async" loading="lazy" src="https://img.iowill.com/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663900746_03-mark-routing-fix.png"/><figcaption>修复原理：识别回包，按标记选路</figcaption></figure>
 <p>本次采用的办法是：</p>
 <ol>
 <li>利用连接跟踪，识别原本访问 <code>198.51.100.20:3306</code> 的连接。</li>

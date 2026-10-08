@@ -115,7 +115,7 @@
 
 ### MySQL 文章(Debian多网卡Docker-MySQL回程路由排查)
 - IP 代号(ETH0_IP 等)→ RFC 5737 文档地址(203.0.113.10 / 198.51.100.20 / 172.20.0.2 / 0.0.0.0),**用户要求用户友好方便看**;`MARK` 为 iptables 动作名,保留
-- 三张配图换 img.billy12.xyz 外链 URI(01-cover / 02-wrong-return-path / 03-mark-routing-fix),封面同步到 og/JSON-LD/首页卡/各页侧栏/相邻文章导航卡(共 96 文件)
+- 三张配图换 img.iowill.com 外链 URI(01-cover / 02-wrong-return-path / 03-mark-routing-fix),封面同步到 og/JSON-LD/首页卡/各页侧栏/相邻文章导航卡(共 96 文件)
 - JSON-LD 日期修正:2025-04-17(模板残留)→ 2026-09-29T04:00:00.000Z
 
 ### 代码块
@@ -127,8 +127,8 @@
 - 新建根 `README.md`(面向人)与 `CLAUDE.md`(Claude Code 入口指针)
 
 ### 2026-09-29 晚间追加
-- **默认封面规则:无专属配图的文章,封面默认用外链 `https://img.billy12.xyz/file/1786437586692_千与千寻.jpg`**(用户指定),已写入 conventions.md
-- MySQL 文章封面/插图确认换为 img.billy12.xyz 外链;清除已过时的"上传图床后替换 URI"注释(HTML+md)
+- **默认封面规则:无专属配图的文章,封面默认用外链 `https://img.iowill.com/file/1786437586692_千与千寻.jpg`**(用户指定),已写入 conventions.md
+- MySQL 文章封面/插图确认换为 img.iowill.com 外链;清除已过时的"上传图床后替换 URI"注释(HTML+md)
 - ~~**老文章侧栏"最新文章"批量刷新**(用户要求):43 篇文章页 + tags/categories 等共 149 页统一为真实最新 5 篇~~ → **已整体回滚**(见下)
 - **品牌资产更换(用户指定)**:`Billy_blog_logo.png` 做网站 logo(生成 64×64 favicon.png + 多尺寸 favicon.ico,替换原 32×32 模糊图);`me.jpg` 做用户头像(替换原 60×58 的 img/avatar.jpg);只改 img/ 二进制,HTML 零改动;约定写入 conventions.md「品牌资产」
 - **封面治理(用户指定"替换成封面,没有封面就使用默认图片")**:清查发现 `Linux系统根分区满了….jpg` 被当作 `云服务器Debian12根分区扩容记录` 的封面(正文并未使用,属构建期乱配)→ 换默认图;MySQL 文章 1 处残留 → 换专属封面;全站 og:image / twitter:image / JSON-LD image / data-image 中凡值为本地千与千寻或该 Linux 图(=无真实封面标记)的文章,统一换成默认外链 `…/1786437586692_千与千寻.jpg`(共 140 处,11 个文件清理残留);有真实封面的文章(redroid 系列外链图等)验证未动;导航卡/侧栏仍用本地缩略图不变
@@ -146,7 +146,7 @@
 
 ### 缩略图迁移图床(用户指示"使用图床啊" + 上传规则)
 - **规则(用户指定)**:封面/正文图上传到 `<文章分类>/<文章标题>/`,缩略图到 `<文章分类>/<文章标题>/thumbs/`;命名 `cover`/`body`(多插图 body1/body2 递增);全站默认封面缩略图单独放 `默认封面/thumbs/cover.jpg`
-- 图床 = img.billy12.xyz(CloudFlare ImgBed/cfbed),API 文档 https://cfbed.sanyue.de/api/;Token 由用户提供,存 `e:/tmp/bed_token.txt`,**严禁入库**
+- 图床 = img.iowill.com(CloudFlare ImgBed/cfbed),API 文档 https://cfbed.sanyue.de/api/;Token 由用户提供,存 `e:/tmp/bed_token.txt`,**严禁入库**
 - 本次上传 5 张缩略图(1Panel/Focal-Fossa/ROCO/TigerVNC/千与千寻;`Linux系统根分区满了` 0 引用成孤儿,未上传),图床把目录名空格转下划线
 - 全站替换 `/upload/thumbs/…` → 图床 URL:正文 149 页 1038 处 + legacy-html 12 页 48 处(legacy-html 同被 GitHub Pages 托管,一并替换防挂图);残留验证 0
 - **删除本地 `upload/thumbs/` 目录**(git rm);此后图片一律走图床,仓库不放图片文件
@@ -179,3 +179,8 @@
 ## 2026-10-08 统计异常处理发布
 
 - 完成前述统计适配器发布；成功、502、异常数据、超时及迟到响应测试通过。浏览器回归脚本为 `python hexo/bin/test_visit_counter.py`（需 Playwright/Chromium，仅测试用）。保留官方统计接口，外部故障时展示不可用状态。
+
+## 2026-10-08 全站图床域名替换
+
+- 按用户授权统一使用 img.iowill.com；源文章、封面、缩略图、历史页面、图片清单和上传工具同步。
+- 迁移正文基线仅同步此次域名替换并重算 SHA-256；发布时对照 Git 旧正文验证除域名外无变化。图片路径及文章永久链接保留。

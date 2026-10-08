@@ -27,7 +27,7 @@
 - 卡片显示标题去掉 `YYYYMMDD-` 日期前缀(title 属性保留全名)
 - hover 摘要固定为「阅读全文：标题」,**不塞正文段落**
 - 不使用 `full-width` 类(单卡由 flex 自动撑满)
-- 封面统一相对路径;外链图床(img.billy12.xyz)直接用原 URI
+- 封面统一相对路径;外链图床(img.iowill.com)直接用原 URI
 - 上下篇按**主题相邻**优先,不强求时间序
 
 ## 顶栏毛玻璃
@@ -43,8 +43,8 @@
 
 - 用户提供图床 URI 后，正文占位注释必须转换为实际 `<img>`（可使用 `<figure>` 与 `<figcaption>`）；仅替换注释中的 URI 不会显示图片。发布前检查 `#article-container img` 的数量及链接。
 
-- **文章没有专属配图时,封面默认用** `https://img.billy12.xyz/file/1786437586692_千与千寻.jpg`(og:image / JSON-LD / 导航卡 / 侧栏直接引用该外链)
-- **图片一律存图床 img.billy12.xyz(CloudFlare ImgBed,即 cfbed),仓库不放图片文件**(2026-09-30 用户指示"使用图床";本地 `upload/thumbs/` 已删除):
+- **文章没有专属配图时,封面默认用** `https://img.iowill.com/file/1786437586692_千与千寻.jpg`(og:image / JSON-LD / 导航卡 / 侧栏直接引用该外链)
+- **图片一律存图床 img.iowill.com(CloudFlare ImgBed,即 cfbed),仓库不放图片文件**(2026-09-30 用户指示"使用图床";本地 `upload/thumbs/` 已删除):
   - 封面/正文图:`<分类>/<文章标题>/cover.<ext>`、`<分类>/<文章标题>/body<N>.<ext>`(多张插图 body1/body2 递增)
   - 缩略图:`<分类>/<文章标题>/thumbs/cover.<ext>` 或 `thumbs/body<N>.<ext>`(先 PIL 压缩 ≤1000px、JPEG q80 再传)
   - 全站默认封面缩略图(不属于单篇文章):`默认封面/thumbs/cover.jpg`
@@ -151,3 +151,7 @@
 - 发布前必须 build + verify，release 自动备份再同步；完整流程与回滚见 publishing.md。
 
 - 2026-10-05 访问统计异常时最多等待 8 秒，之后显示“暂不可用”，不可用不等于 0。继续使用不蒜子官方接口；禁止为显示数字填造假值或静默切换会重置历史数据的其他服务。实现位于 hexo/themes/butterfly/source/js/visit-counter.js。
+
+## 2026-10-08 图床域名统一
+
+用户确认新域名可用并授权全站替换。图床统一使用 `https://img.iowill.com`，图片路径不变；正文、封面、缩略图、元数据、上传工具及 URI 清单一致。

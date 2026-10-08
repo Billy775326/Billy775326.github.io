@@ -5,7 +5,7 @@ draft: false
 date: 2026-10-04T10:07:52+00:00
 updated: 2026-10-04T10:07:52+00:00
 description: 使用 Docker Compose 部署 hacdias/webdav，从目录挂载、账号权限和本机读写验证开始，再配置服务自带的 HTTPS。附上传下载、复制改名命令，以及连接失败、无法写入和证书错误的排查方法。
-cover: https://img.billy12.xyz/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/cover.png
+cover: https://img.iowill.com/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/cover.png
 categories:
   - 系统与运维
 tags:
@@ -18,7 +18,7 @@ tags:
 
 # Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务
 
-![Docker WebDAV 文件共享服务](https://img.billy12.xyz/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/cover.png)
+![Docker WebDAV 文件共享服务](https://img.iowill.com/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/cover.png)
 
 如果只是想把服务器上的一个目录提供给电脑、手机和备份工具使用，可以先试试 WebDAV。它在 HTTP 上增加了目录、文件操作等能力；客户端是否支持挂载、锁定和大文件传输，要看具体实现。
 
@@ -28,7 +28,7 @@ tags:
 
 ## 先分清三个路径和两个监听地址
 
-![Docker 容器的端口入口、配置挂载和数据挂载](https://img.billy12.xyz/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/body1.png)
+![Docker 容器的端口入口、配置挂载和数据挂载](https://img.iowill.com/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/body1.png)
 
 配置文件在宿主机上保存，容器读取它；上传文件则写到单独的数据目录。容器更新后，仍然挂载同一份目录。
 

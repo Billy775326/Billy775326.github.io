@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""按用户规则把缩略图上传到 img.billy12.xyz (CloudFlare ImgBed / cfbed)。
+"""按用户规则把缩略图上传到 img.iowill.com (CloudFlare ImgBed / cfbed)。
 
 目录/命名规则(用户 2026-09-30 指定):
   封面   -> <文章分类>/<文章标题>/cover.<ext>
@@ -21,7 +21,7 @@
 import os, sys, json, shutil, subprocess, urllib.parse, tempfile
 
 # ====== 配置 ======
-BASE = "https://img.billy12.xyz"
+BASE = "https://img.iowill.com"
 DEFAULT_THUMB_FOLDER = "默认封面/thumbs"   # 全站默认封面缩略图的存放目录
 UPLOAD_NAME_TYPE = "origin"               # 文件名已在暂存时改为 cover/body,原名直传
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

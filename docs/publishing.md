@@ -32,8 +32,8 @@ categories:
   - 系统与运维
 tags:
   - Docker
-cover: https://img.billy12.xyz/实际封面地址
-thumbnail: https://img.billy12.xyz/实际缩略图地址
+cover: https://img.iowill.com/实际封面地址
+thumbnail: https://img.iowill.com/实际缩略图地址
 ---
 ```
 

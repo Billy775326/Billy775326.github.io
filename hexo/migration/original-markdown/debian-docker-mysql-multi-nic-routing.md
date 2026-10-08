@@ -16,7 +16,7 @@ tags:
 # Debian 多网卡部署 Docker MySQL，为什么只有 eth0 的 IP 能连接？
 
 <!-- 封面：Debian-Docker-MySQL配图/01-cover.png -->
-![Docker MySQL 多网卡连接排查封面](https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663905540_01-cover.png)
+![Docker MySQL 多网卡连接排查封面](https://img.iowill.com/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663905540_01-cover.png)
 
 在一台 Debian 服务器上配置了多块网卡，每块网卡都有独立公网 IP。MySQL 通过 Docker 部署，发布端口为 `3306`。
 
@@ -117,7 +117,7 @@ sysctl net.ipv4.conf.all.rp_filter \
 ## 三、抓包发现：eth1 进，eth0 出
 
 <!-- 插图一：Debian-Docker-MySQL配图/02-wrong-return-path.png -->
-![故障路径示意：请求从 eth1 进入，MySQL 回包从 eth0 发出](https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663890788_02-wrong-return-path.png)
+![故障路径示意：请求从 eth1 进入，MySQL 回包从 eth0 发出](https://img.iowill.com/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663890788_02-wrong-return-path.png)
 
 *图 1：请求与回复使用了不同的网卡，TCP 握手未完成。箭头表示发送方向，不代表客户端已收到回复。*
 
@@ -195,7 +195,7 @@ eth0 Out，源地址却是 eth1 的公网 IP
 ## 五、修复：识别连接的回包，再按标记选路
 
 <!-- 插图二：Debian-Docker-MySQL配图/03-mark-routing-fix.png -->
-![修复原理：识别连接的回复方向，设置标记并通过路由表 199 选择 eth1](https://img.billy12.xyz/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663900746_03-mark-routing-fix.png)
+![修复原理：识别连接的回复方向，设置标记并通过路由表 199 选择 eth1](https://img.iowill.com/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663900746_03-mark-routing-fix.png)
 
 *图 2：利用连接跟踪识别回包，在路由选择前打标，使其匹配 eth1 对应的路由表。*
 

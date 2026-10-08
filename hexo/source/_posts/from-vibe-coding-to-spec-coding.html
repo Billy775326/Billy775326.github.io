@@ -7,15 +7,15 @@ slug: "from-vibe-coding-to-spec-coding"
 categories: ["编程开发"]
 tags: ["AI 编程", "Vibe Coding", "Spec Coding", "需求分析", "软件工程"]
 description: "从博客卡片、分页和发布同步的实际问题出发，理解 Vibe Coding 与规范驱动开发的区别，用轻量 Spec 把需求、实现和验收连接起来。"
-cover: "https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/cover(1).png"
-thumbnail: "https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/thumbs/cover.jpg"
+cover: "https://img.iowill.com/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/cover(1).png"
+thumbnail: "https://img.iowill.com/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/thumbs/cover.jpg"
 disableNunjucks: true
 migration_order: 1
 legacy_html: true
 comments: false
 related_nav: [{"url": "/blog/2026/09/debian-docker-mysql-multi-nic-routing/", "rel": "prev", "title": "Debian多网卡Docker-MySQL回程路由排查"}, {"url": "/blog/2026/10/docker-webdav-file-sharing/", "rel": "next", "title": "Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务"}]
 ---
-<p><img alt="从对话式探索走向规范驱动开发的主题封面" loading="lazy" src="https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/cover(1).png"/></p>
+<p><img alt="从对话式探索走向规范驱动开发的主题封面" loading="lazy" src="https://img.iowill.com/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/cover(1).png"/></p>
 <p>“帮我把文章卡片改得好看一点。”</p>
 <p>AI 很快更新一版：圆角更大，封面比例统一，标题可以显示两行，页面背景也有了一层渐变。</p>
 <p>但卡片太高，日期和分类挤到两行，侧栏为了和文章列表对齐被拉出了空白。于是回滚再补一句新要求。</p>
@@ -40,7 +40,7 @@ related_nav: [{"url": "/blog/2026/09/debian-docker-mysql-multi-nic-routing/", "r
 <p>如果要求只是“优化一下”，AI 可以通过自己选定的标准宣告完成。代码可能符合它的理解，却没有符合你的预期。</p>
 <p>把这些问题全部归结为“提示词不够长”，并不准确。真正需要补充的是：可定位的需求、明确的范围，以及能独立检查的完成条件。</p>
 <h2 id="section-3">3. Spec Coding 把哪些事情提前了？</h2>
-<p><img alt="Vibe Coding 的迭代探索与 Spec Coding 的规范、实现、验证流程对比" loading="lazy" src="https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/body1.png"/></p>
+<p><img alt="Vibe Coding 的迭代探索与 Spec Coding 的规范、实现、验证流程对比" loading="lazy" src="https://img.iowill.com/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/body1.png"/></p>
 <p><em>两种工作方式可以衔接：先探索需求，再明确规范和验收条件。</em></p>
 <p>一份有用的 Spec，至少能回答四个问题：</p>
 <ol>
@@ -96,7 +96,7 @@ related_nav: [{"url": "/blog/2026/09/debian-docker-mysql-multi-nic-routing/", "r
 <p>这个例子里的 44 和 18/18/8 是针对一次发布的具体预期。长期维护的检查应尽量从真实文章集合推导总数，再独立验证分页中实际出现的链接；不要每次靠手动修改一串散落的常量。</p>
 <p>同时，测试不能只比较两个都由同一个错误变量生成的数字。否则源数据少了一篇，两边仍然可能相等。可以交叉检查文章文件、登记表、搜索索引和分页链接集合，并明确哪个集合应当包含哪些文章。</p>
 <h2 id="section-6">6. 一个适合个人项目的工作循环</h2>
-<p><img alt="规范、计划、实现、验证及反馈修订组成的开发循环" loading="lazy" src="https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/body2.png"/></p>
+<p><img alt="规范、计划、实现、验证及反馈修订组成的开发循环" loading="lazy" src="https://img.iowill.com/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/body2.png"/></p>
 <p><em>SPEC：规范；PLAN：计划；BUILD：实现；VERIFY：验证；REFINE：反馈修订。</em></p>
 <p>我更倾向于把流程控制在六步，而不是要求每次改颜色都写一套长文档。</p>
 <h3 id="section-7">先调查现状</h3>

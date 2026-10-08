@@ -4,7 +4,7 @@ slug: from-vibe-coding-to-spec-coding
 draft: false
 date: 2026-09-30 18:12:30
 updated: 2026-09-30 18:12:30
-cover: "https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/cover(1).png"
+cover: "https://img.iowill.com/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/cover(1).png"
 description: 从博客卡片、分页和发布同步的实际问题出发，理解 Vibe Coding 与规范驱动开发的区别，用轻量 Spec 把需求、实现和验收连接起来。
 categories:
   - 编程开发
@@ -18,7 +18,7 @@ tags:
 
 # 从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳
 
-![从对话式探索走向规范驱动开发的主题封面](https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/cover(1).png)
+![从对话式探索走向规范驱动开发的主题封面](https://img.iowill.com/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/cover(1).png)
 
 “帮我把文章卡片改得好看一点。”
 
@@ -68,7 +68,7 @@ AI 很快更新一版：圆角更大，封面比例统一，标题可以显示�
 
 ## 3. Spec Coding 把哪些事情提前了？
 
-![Vibe Coding 的迭代探索与 Spec Coding 的规范、实现、验证流程对比](https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/body1.png)
+![Vibe Coding 的迭代探索与 Spec Coding 的规范、实现、验证流程对比](https://img.iowill.com/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/body1.png)
 
 *两种工作方式可以衔接：先探索需求，再明确规范和验收条件。*
 
@@ -168,7 +168,7 @@ GitHub 的 Spec Kit 将需求描述、澄清、技术计划、任务拆解和实
 
 ## 6. 一个适合个人项目的工作循环
 
-![规范、计划、实现、验证及反馈修订组成的开发循环](https://img.billy12.xyz/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/body2.png)
+![规范、计划、实现、验证及反馈修订组成的开发循环](https://img.iowill.com/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/body2.png)
 
 *SPEC：规范；PLAN：计划；BUILD：实现；VERIFY：验证；REFINE：反馈修订。*
 
