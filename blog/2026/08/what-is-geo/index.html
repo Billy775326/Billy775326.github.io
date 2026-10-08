@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html data-theme="light" lang="zh-CN"><head><meta charset="utf-8"/><meta content="IE=edge" http-equiv="X-UA-Compatible"/><meta content="width=device-width, initial-scale=1.0,viewport-fit=cover" name="viewport"/><title>GEO 是什么？它真的能让大模型‘愿意推荐你’吗？ | Billy 的博客</title><meta content="Billy" name="author"/><meta content="Billy" name="copyright"/><meta content="telephone=no" name="format-detection"/><meta content="#ffffff" name="theme-color"/><meta content="GEO 关注内容在生成式答案中的可见性。本文从 SEO 与 GEO 的差异、相关论文的评价指标、预训练知识与检索信息的关系出发，讨论内容结构、来源和时效性的作用，以及研究结果不能直接转化为效果保证的原因。" name="description"/>
+<meta content="article" property="og:type"/>
+<meta content="GEO 是什么？它真的能让大模型‘愿意推荐你’吗？" property="og:title"/>
+<meta content="https://iowill.com/blog/2026/08/what-is-geo/" property="og:url"/>
+<meta content="Billy 的博客" property="og:site_name"/>
+<meta content="GEO 关注内容在生成式答案中的可见性。本文从 SEO 与 GEO 的差异、相关论文的评价指标、预训练知识与检索信息的关系出发，讨论内容结构、来源和时效性的作用，以及研究结果不能直接转化为效果保证的原因。" property="og:description"/>
+<meta content="zh_CN" property="og:locale"/>
+<meta content="https://img.iowill.com/file/%E8%BD%AF%E4%BB%B6%E4%B8%8E%E5%B7%A5%E5%85%B7/GEO%E6%98%AF%E4%BB%80%E4%B9%88/cover.png" property="og:image"/>
+<meta content="2026-08-12T05:38:39.000Z" property="article:published_time"/>
+<meta content="2026-10-08T09:53:17.000Z" property="article:modified_time"/>
+<meta content="Billy" property="article:author"/>
+<meta content="AI搜索" property="article:tag"/>
+<meta content="GEO" property="article:tag"/>
+<meta content="SEO" property="article:tag"/>
+<meta content="信息检索" property="article:tag"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://img.iowill.com/file/%E8%BD%AF%E4%BB%B6%E4%B8%8E%E5%B7%A5%E5%85%B7/GEO%E6%98%AF%E4%BB%80%E4%B9%88/cover.png" name="twitter:image"/><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "GEO 是什么？它真的能让大模型‘愿意推荐你’吗？", "url": "https://iowill.com/blog/2026/08/what-is-geo/", "image": "https://img.iowill.com/file/软件与工具/GEO是什么/cover.png", "datePublished": "2026-08-12T05:38:39.000Z", "dateModified": "2026-10-08T09:53:17.000Z", "author": {"@type": "Person", "@id": "https://iowill.com/#author", "name": "Billy", "url": "https://iowill.com/", "sameAs": ["https://github.com/Billy775326"]}, "@id": "https://iowill.com/blog/2026/08/what-is-geo/#article", "description": "GEO 关注内容在生成式答案中的可见性。本文从 SEO 与 GEO 的差异、相关论文的评价指标、预训练知识与检索信息的关系出发，讨论内容结构、来源和时效性的作用，以及研究结果不能直接转化为效果保证的原因。", "publisher": {"@type": "Person", "@id": "https://iowill.com/#author", "name": "Billy", "url": "https://iowill.com/", "sameAs": ["https://github.com/Billy775326"]}, "inLanguage": "zh-CN", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://iowill.com/blog/2026/08/what-is-geo/"}, "isPartOf": {"@type": "WebSite", "@id": "https://iowill.com/#website"}, "articleSection": "软件与工具", "keywords": ["AI搜索", "GEO", "SEO", "信息检索"]}</script><link href="/img/favicon.png" rel="shortcut icon"/><link href="https://iowill.com/blog/2026/08/what-is-geo/" rel="canonical"/><link href="//cdn.jsdelivr.net" rel="preconnect"/><link href="/css/index.css?v=5.7.0" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css" rel="stylesheet"/><script>
+    (() => {
+
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+
+
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+
+
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+
+
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+
+    })()
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'GEO 是什么？它真的能让大模型‘愿意推荐你’吗？',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link href="/css/site-preserved.css" rel="stylesheet"/><link href="/css/cards.css" rel="stylesheet"/><meta content="Hexo 8.1.2" name="generator"/><meta content="AI搜索,GEO,SEO,信息检索" name="keywords"/></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img alt="avatar" onerror="this.onerror=null;this.src='/img/friend_404.gif'" src="/img/avatar.jpg"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">48</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">102</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://img.iowill.com/file/软件与工具/GEO是什么/cover.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Billy 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">GEO 是什么？它真的能让大模型‘愿意推荐你’吗？</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">GEO 是什么？它真的能让大模型‘愿意推荐你’吗？</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-08-12T05:38:39.000Z" title="2026-08-12 13:38:39">2026-08-12 13:38:39</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-08T09:53:17.000Z" title="2026-10-08 17:53:17">2026-10-08 17:53:17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/software-tools/">软件与工具</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" data-flag-title="" id=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><blockquote><p>迁移说明：本文原发表于 <a href="https://billy12.xyz/archives/what-is-GEO">Billy 原站</a>，保留原发布时间，2026 年 10 月 8 日迁入本站并重新配图。迁移时保留主体结构，对效果保证、评价指标和平台机制的绝对化表述补充校注。文中历史研究或平台报告的数值受样本、版本与指标定义限制，不代表本站实测，也不构成收录、推荐或转化保证。</p></blockquote>
+<hr/>
+<hr/>
+<h2 id="一句话剧透">一句话剧透</h2>
+<blockquote>
+<p><strong>SEO 与 GEO 的侧重点不同：前者关注搜索可见性与访问，后者更关注内容是否进入生成式答案。两者存在交集，GEO 并不意味着可以跳过 SEO 基础工作。</strong></p>
+</blockquote>
+<hr/>
+<h2 id="一为什么-seo-不够用了">一、为什么 SEO 不够用了</h2>
+<p><strong>一句话定义</strong>：当用户在 Google 看到 AI Summary 而不再点击链接时，传统 SEO 的优化目标就从"前十名"坍缩成了"AI 答案里有没有我"。</p>
+<p><strong>五个事实点</strong>：</p>
+<ol>
+<li>chat.openai.com 单月 31 亿次访问（Similarweb，2024-09）。</li>
+<li>Perplexity 月查询量 7.8 亿（公司自报，2025-05）。</li>
+<li>Google 出现 AI Summary 时，点击率从 15% 跌到 8%（Pew 实地研究）。</li>
+<li>AI 答案可能改变用户是否继续点击网页的行为；原文此处百分比未明确对应统计口径，迁移版不保留该数值。</li>
+<li>关于未来流量超过传统搜索的判断属于预测，不应作为已经发生的事实或确定的业务规划依据。</li>
+</ol>
+<p><strong>对比块：SEO vs GEO</strong></p>
+<table><thead><tr><th>维度</th><th>SEO</th><th>GEO</th></tr></thead><tbody><tr><td>优化目标</td><td>在 SERP 排第几</td><td>是否被 AI 选进答案</td></tr><tr><td>用户行为</td><td>点 10 个蓝链之一</td><td>只看 AI 推荐的 3 个</td></tr><tr><td>排名机制</td><td>关键词 + 链接权重</td><td>预训练先验 + 检索片段合成</td></tr><tr><td>评估指标</td><td>排名 / CTR</td><td>引用词数 / 位置 / 主观印象</td></tr><tr><td>失败模式</td><td>排不到首页</td><td>完全不被引用</td></tr></tbody></table><figure><img alt="SEO 的搜索结果列表与 GEO 的答案引用来源对比" loading="lazy" src="https://img.iowill.com/file/软件与工具/GEO是什么/body1.png"/><figcaption>概念示意：结果列表可见性与答案引用可见性存在差异，图示不代表固定的来源数量。</figcaption></figure>
+<h2 id="二geo-到底在优化什么">二、GEO 到底在优化什么？</h2>
+<p><strong>可见性评价</strong>：相关研究分别考察引用词数、位置加权词数和主观印象等指标。它们不是所有生成式引擎共同使用的一条排名公式，具体定义应以论文为准。</p>
+<p><strong>三个 visibility 指标</strong>：</p>
+<ol>
+<li><strong>Word Count</strong>——AI 答案里有多少词在引用你。</li>
+<li><strong>Position-Adjusted Word Count</strong>——被引用词数 × <code>e^(-位置)</code>，靠前的引用权重大。</li>
+<li><strong>Subjective Impression</strong>——用 G-Eval（LLM-as-judge）从相关性、影响力、独特性等 7 个子维度打分。</li>
+</ol>
+<p><strong>九种 GEO 方法</strong>（同样来自 Aggarwal et al., 2024）：Authoritative、Statistics Addition、Cite Sources、Quotation Addition、Easy-to-Understand、Fluency Optimization、Unique Words、Technical Terms、Keyword Stuffing。</p>
+<p><strong>对比块：在 GEO-bench（10K queries）上的效果</strong></p>
+<p><small>研究记录：下表沿用原文整理的实验数据，本次迁移未重新复现实验；不同指标、样本与模型之间不可直接套用。</small></p><table><thead><tr><th>方法</th><th>visibility 提升</th><th>实测备注</th></tr></thead><tbody><tr><td>Cite Sources + Quotation Addition + Statistics</td><td><strong>+40%</strong></td><td>论文中最强组合</td></tr><tr><td>仅 Statistics Addition</td><td>+30%</td><td>性价比最高</td></tr><tr><td>Keyword Stuffing（传统 SEO 老套路）</td><td>&lt; +10%</td><td>LLM 不吃这套</td></tr><tr><td>整体最高</td><td>40%（synthetic）/ 37%（Perplexity.ai 真实环境）</td><td>—</td></tr></tbody></table>
+<hr/>
+<figure><img alt="模型既有知识与检索来源共同影响生成答案" loading="lazy" src="https://img.iowill.com/file/软件与工具/GEO是什么/body2.png"/><figcaption>概念示意：既有知识与检索信息可能共同影响答案；图中不表示测得的权重比例。</figcaption></figure><h2 id="三toronto-团队的祛魅实验geo-在一半场景里是无效的">三、检索信息与模型既有知识：为什么不同查询的表现不同</h2>
+<p><strong>一句话定义</strong>：在主流 entity 查询上，模型用检索内容只是"给自己找个证据"，而不是"获取新知识"。</p>
+<p><strong>三个扰动实验</strong>（Chen et al., EDBT/ICDT 2026）：</p>
+<ol>
+<li><strong>Snippet Shuffle</strong>——随机打乱检索片段顺序，看答案会不会变。</li>
+<li><strong>Strict Grounding</strong>——强制模型只用提供的片段，禁止用预训练知识。</li>
+<li><strong>Entity-Swap Injection</strong>——把片段里 A、B 两个实体的名字对调，看模型会不会上当。</li>
+</ol>
+<p><strong>对比块：主流 vs 小众 entity 的模型行为</strong></p>
+<p><small>研究记录：下表沿用原文整理的实验数据，本次迁移未重新复现实验；不同指标、样本与模型之间不可直接套用。</small></p><table><thead><tr><th>指标</th><th>主流 entity（"最好的 SUV"）</th><th>小众 entity（"多伦多家事律所"）</th></tr></thead><tbody><tr><td>检索片段顺序打乱后排名变化</td><td>2.30</td><td>4.15</td></tr><tr><td>实体名互换后排名变化</td><td>2.60</td><td>4.63</td></tr><tr><td>一次性排序 vs 两两比较排序的 Kendall τ</td><td>0.911</td><td>0.556</td></tr><tr><td>模型答出但<strong>根本没出现在检索片段中</strong>的 entity 占比</td><td><strong>16%</strong></td><td>—</td></tr></tbody></table>
+<p><strong>五个品牌的具体"幽灵率"</strong>（SUV 查询）：</p>
+<ul>
+<li>Toyota：<strong>6%</strong>——几乎每个引用都有检索片段支撑。</li>
+<li>Honda：<strong>3%</strong>——同上。</li>
+<li>Kia：<strong>10%</strong>——基本可靠。</li>
+<li>Cadillac：<strong>58%</strong>——模型自顾自答。</li>
+<li>Infiniti：<strong>73%</strong>——纯靠预训练先验。</li>
+</ul>
+<blockquote>
+<p><strong>阅读结论</strong>：部分查询可能更受模型既有知识影响，但不能由局部实验推出“主流实体做 GEO 都无效”。应按查询类型、模型和实际结果判断。</p>
+</blockquote>
+<hr/>
+<h2 id="四geo-真正能赢的四种场景">四、GEO 真正能赢的四种场景</h2>
+<p><strong>步骤块：判断 GEO 对你是否有用的四问</strong></p>
+<ol>
+<li><strong>你的实体够小众吗？</strong>——B2B SaaS、本地服务、长尾知识、专业工具。模型脑子里没货，必须检索。[必做] 做 GEO。</li>
+<li><strong>你的内容够新鲜吗？</strong>——AI 引擎对 freshness 的权重显著高于 Google。消费电子垂直：AI 引擎引用内容平均 62-90 天 vs Google 130 天；汽车垂直：AI 148-217 天 vs Google <strong>493 天</strong>。[必做] 做 GEO。</li>
+<li><strong>你的内容是争议性/对比性的吗？</strong>——LLM 在 RAG 模式下会重新排序证据，"X vs Y" 类内容天然容易进答案。[必做] 做 GEO。</li>
+<li><strong>你能拿到第三方权威背书吗？</strong>——AI 引擎对 earned media 有系统性偏好：Claude 引用 <strong>65%</strong> 是 earned media，GPT-4o <strong>57%</strong>，而 Google 只有 41%。[必做] 把资源投到 earned media 而不是自家内容工程。</li>
+</ol>
+<p>如果四个答案都是 [不做]，省下 GEO 预算。</p>
+<hr/>
+<h2 id="五实操建议四个-tier按优先级做">五、实操建议：四个 Tier，按优先级做</h2>
+<p><strong>一句话定义</strong>：真正值得做的 GEO 工程只有十几条；其余的 ROI 不值得投入。</p>
+<p><strong>Tier 1——任何人都该做（成本低、回报确定）</strong></p>
+<ul>
+<li><strong>结构化数据</strong>：在适用时标注文章、作者或产品等信息，并与可见内容一致。它能补充机器可读信息，但不是 AI 引用的必要保证，也不能据此说模型无法识别实体。</li>
+<li><strong>问答与对比内容</strong>：针对真实问题组织清晰答案。原文提到的“4 倍”概率缺少可核查的统一实验条件，此处不作通用收益依据。</li>
+<li>[必做] <strong>保持新鲜</strong>——至少每季度实质性更新（不要只改日期）。Ahrefs 2025 分析 1700 万次引用：ChatGPT 引用的内容比 Google 平均新 <strong>25.7%</strong>。</li>
+<li><strong>自检</strong>：准备固定问题集，记录平台、日期、联网状态、重复次数与引用 URL。少量提问适合初步观察，不应当作比所有分析工具更准确的测量。</li>
+</ul>
+<p><strong>Tier 2——值得投入（成本中、回报看情况）</strong></p>
+<ul>
+<li>[可做] <strong>追求 earned media</strong>——主动找行业评测站、独立媒体投稿、专家圆桌。</li>
+<li>[可做] <strong>多语覆盖</strong>——至少英文 + 本地语的双语元数据/摘要。COAR 2023 列为不可选项。</li>
+<li>[可做] <strong>多模态补充</strong>——结构化图表、视频字幕、播客文字稿都被 LLM 当检索源。</li>
+</ul>
+<p><strong>Tier 3——ROI 存疑（小心）</strong></p>
+<ul>
+<li>[谨慎] <strong>小众长尾内容矩阵</strong>——确认 niche 够 niche（竞争弱 + 用户意图在小众里）。</li>
+<li>[谨慎] <strong>过度优化</strong>——Reyes-Lillo 2025 警告：为算法而写会让内容"去人化"，反而触发 LLM 质量判断降低。</li>
+</ul>
+<p><strong>Tier 0——绝对不要做</strong></p>
+<ul>
+<li>[禁做] <strong>prompt injection 让模型"必须引用我"</strong>——LLM 会拒绝 / 失败。</li>
+<li>[禁做] <strong>伪造引用 / 制造伪权威</strong>——Orduña-Malea &amp; Cabezas-Clavijo 2023 报告的"幽灵引用"风险；伪造数据只会更快被识别。</li>
+<li>[禁做] <strong>关键词堆砌</strong>——LLM 不吃这套，重复 5 遍"买房"也没用。</li>
+</ul>
+<hr/>
+<h2 id="六回到标题那个问题愿意推荐你是伪命题">六、回到标题那个问题——"愿意推荐你"是伪命题</h2>
+<p><strong>一句话定义</strong>：LLM 不是"愿意"或"不愿意"推荐你，它只是在算 next token 的概率。</p>
+<p>当用户问"最好的家用咖啡机"，模型不是在"想"——它是在从数十亿参数里查一个概率分布。这个分布被两样东西塑形：</p>
+<ul>
+<li><strong>预训练阶段见过的语料</strong>（你改不动）。</li>
+<li><strong>这次会话里检索到的网页</strong>（你 GEO 能优化的部分）。</li>
+</ul>
+<p>"愿不愿意"是人类语言，在 LLM 这里没意义。</p>
+<p>GEO 真正在优化的是**"被检索到的概率"** + <strong>"被合成进答案的概率"</strong>——前者靠 SEO / freshness / 关键词覆盖；后者靠 earned media / 结构化数据 / FAQ 化内容 / 可被引用的素材。</p>
+<p>而 Chen 2026 隐含但没明说的话是：</p>
+<blockquote>
+<p><strong>选题判断</strong>：小众、长尾和时效敏感的问题值得测试，但这是基于研究的实践推断，不是 GEO 只在这些领域有效的定论。</p>
+</blockquote>
+<p>另一半的赢家，是那些<strong>早就在那里、模型脑子里的存货</strong>——这种优势 GEO 给不了你，只能靠时间积累。</p>
+<hr/>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li>Aggarwal, P., Murahari, V., Rajpurohit, T., Kalyan, A., Narasimhan, K., &amp; Deshpande, A. (2024). <a href="https://arxiv.org/abs/2311.09735"><em>GEO: Generative Engine Optimization</em></a>. In KDD '24. <a href="https://doi.org/10.1145/3637528.3671900">DOI: 10.1145/3637528.3671900</a>.</li>
+<li>Chen, M., Wang, X., Chen, K., &amp; Koudas, N. (2025). <a href="https://arxiv.org/abs/2509.08919"><em>Generative Engine Optimization: How to Dominate AI Search</em></a>. arXiv:2509.08919.</li>
+<li>Chen, M., Wang, X., Chen, K., &amp; Koudas, N. (2026). <a href="https://arxiv.org/abs/2601.16858"><em>Navigating the Shift: A Comparative Analysis of Web Search and Generative AI Response Generation</em></a>. In EDBT/ICDT 2026 Workshops. arXiv:2601.16858.</li>
+<li>Reyes-Lillo, D., Morales-Vargas, A., &amp; Rovira, C. (2025). <a href="https://doi.org/10.3145/infonomy.25.034"><em>Generative Engine Optimization en repositorios digitales: optimización de la visibilidad para la IA generativa</em></a>. Infonomy, 3(5). DOI: <a href="https://doi.org/10.3145/infonomy.25.034">10.3145/infonomy.25.034</a>.</li>
+</ul><h2>迁移校注与补充资料</h2><p>Google 的 AI 搜索功能文档说明，现有 SEO 基础仍然适用，无需特殊的 AI 专用结构化数据。其内容质量文档也明确，E-E-A-T 本身不是一个具体排名因子。这些说明适用于 Google 的公开文档，不能直接代替其他服务的实现说明。</p><ul><li><a href="https://developers.google.com/search/docs/appearance/ai-features">Google：AI features and your website</a></li><li><a href="https://developers.google.com/search/docs/fundamentals/creating-helpful-content">Google：Creating helpful, reliable, people-first content</a></li><li><a href="https://arxiv.org/abs/2311.09735">GEO: Generative Engine Optimization</a>：摘要中的最高提升值属于实验结果，不是单个网站的收益保证。</li></ul><p>相关阅读：<a href="/blog/2026/08/geo-optimization-practice/">如何做好 GEO 优化</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://iowill.com/">Billy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://iowill.com/blog/2026/08/what-is-geo/">https://iowill.com/blog/2026/08/what-is-geo/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://iowill.com" target="_blank">Billy 的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI%E6%90%9C%E7%B4%A2/">AI搜索</a><a class="post-meta__tags" href="/tags/GEO/">GEO</a><a class="post-meta__tags" href="/tags/SEO/">SEO</a><a class="post-meta__tags" href="/tags/%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2/">信息检索</a></div></div><nav aria-label="文章导航" class="pagination-post" id="pagination"><a aria-label="上一篇：如何做好 GEO 优化" class="pagination-related" href="/blog/2026/08/geo-optimization-practice/" rel="prev" title="如何做好 GEO 优化"><img alt="如何做好 GEO 优化" class="cover" loading="lazy" src="https://img.iowill.com/file/软件与工具/如何做好GEO优化/thumbs/cover.jpg"/><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">如何做好 GEO 优化</div></div><div class="info-2">阅读全文：如何做好 GEO 优化</div></div></a><a aria-label="下一篇：构建自己的服务器项目" class="pagination-related" href="/blog/2026/09/build-own-server-project/" rel="next" title="构建自己的服务器项目"><img alt="构建自己的服务器项目" class="cover" loading="lazy" src="https://img.iowill.com/file/默认封面/thumbs/cover.jpg"/><div class="info"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">构建自己的服务器项目</div></div><div class="info-2">阅读全文：构建自己的服务器项目</div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img alt="avatar" onerror="this.onerror=null;this.src='/img/friend_404.gif'" src="/img/avatar.jpg"/></div><div class="author-info-name">Billy</div><div class="author-info-description">记录学习与折腾</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">48</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">102</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a href="https://github.com/Billy775326" id="card-info-btn"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，记录学习与折腾</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%89%A7%E9%80%8F"><span class="toc-text">一句话剧透</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%B8%BA%E4%BB%80%E4%B9%88-seo-%E4%B8%8D%E5%A4%9F%E7%94%A8%E4%BA%86"><span class="toc-text">一、为什么 SEO 不够用了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8Cgeo-%E5%88%B0%E5%BA%95%E5%9C%A8%E4%BC%98%E5%8C%96%E4%BB%80%E4%B9%88"><span class="toc-text">二、GEO 到底在优化什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89toronto-%E5%9B%A2%E9%98%9F%E7%9A%84%E7%A5%9B%E9%AD%85%E5%AE%9E%E9%AA%8Cgeo-%E5%9C%A8%E4%B8%80%E5%8D%8A%E5%9C%BA%E6%99%AF%E9%87%8C%E6%98%AF%E6%97%A0%E6%95%88%E7%9A%84"><span class="toc-text">三、检索信息与模型既有知识：为什么不同查询的表现不同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9Bgeo-%E7%9C%9F%E6%AD%A3%E8%83%BD%E8%B5%A2%E7%9A%84%E5%9B%9B%E7%A7%8D%E5%9C%BA%E6%99%AF"><span class="toc-text">四、GEO 真正能赢的四种场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E5%AE%9E%E6%93%8D%E5%BB%BA%E8%AE%AE%E5%9B%9B%E4%B8%AA-tier%E6%8C%89%E4%BC%98%E5%85%88%E7%BA%A7%E5%81%9A"><span class="toc-text">五、实操建议：四个 Tier，按优先级做</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E5%9B%9E%E5%88%B0%E6%A0%87%E9%A2%98%E9%82%A3%E4%B8%AA%E9%97%AE%E9%A2%98%E6%84%BF%E6%84%8F%E6%8E%A8%E8%8D%90%E4%BD%A0%E6%98%AF%E4%BC%AA%E5%91%BD%E9%A2%98"><span class="toc-text">六、回到标题那个问题——"愿意推荐你"是伪命题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">迁移校注与补充资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/generated-class-names/" title="网页里的 class 为什么像乱码？用一个榜单理解生成类名"><img alt="网页里的 class 为什么像乱码？用一个榜单理解生成类名" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/编程开发/网页里的class为什么像乱码-用一个榜单理解生成类名/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/10/generated-class-names/" title="网页里的 class 为什么像乱码？用一个榜单理解生成类名">网页里的 class 为什么像乱码？用一个榜单理解生成类名</a><time datetime="2026-10-08T08:24:59.000Z" title="2026/10/08 16:24:59">2026/10/08 16:24:59</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/docker-webdav-file-sharing/" title="Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务"><img alt="Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/10/docker-webdav-file-sharing/" title="Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务">Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务</a><time datetime="2026-10-04T10:07:52.000Z" title="2026/10/04 18:07:52">2026/10/04 18:07:52</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/from-vibe-coding-to-spec-coding/" title="从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳"><img alt="从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/09/from-vibe-coding-to-spec-coding/" title="从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳">从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳</a><time datetime="2026-09-30T10:12:30.000Z" title="2026/09/30 18:12:30">2026/09/30 18:12:30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/debian-docker-mysql-multi-nic-routing/" title="Debian多网卡Docker-MySQL回程路由排查"><img alt="Debian多网卡Docker-MySQL回程路由排查" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663905540_01-cover.png"/></a><div class="content"><a class="title" href="/blog/2026/09/debian-docker-mysql-multi-nic-routing/" title="Debian多网卡Docker-MySQL回程路由排查">Debian多网卡Docker-MySQL回程路由排查</a><time datetime="2026-09-29T04:00:00.000Z" title="2026/09/29 12:00:00">2026/09/29 12:00:00</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/archlinux-kde-one-week-review/" title="ArchLinux KDE 一周使用小结"><img alt="ArchLinux KDE 一周使用小结" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/默认封面/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/09/archlinux-kde-one-week-review/" title="ArchLinux KDE 一周使用小结">ArchLinux KDE 一周使用小结</a><time datetime="2026-09-10T07:29:21.000Z" title="2026/09/10 15:29:21">2026/09/10 15:29:21</time></div></div></div></div></div></div></main><footer aria-label="网站页脚" id="footer"><div class="footer-other"><div class="footer-credits"><span class="copyright">© 2023–2026 By <a href="/">Billy</a></span><span class="framework-info">由 <a href="https://hexo.io" rel="noopener" target="_blank">Hexo</a> 驱动<span aria-hidden="true" class="footer-separator">·</span><a href="https://github.com/jerryc127/hexo-theme-butterfly" rel="noopener" target="_blank">Butterfly</a> 主题</span></div><div class="footer_custom_text"><nav aria-label="页脚导航"><a href="/about/"><i aria-hidden="true" class="fas fa-user"></i>关于</a><a href="/archives/"><i aria-hidden="true" class="fas fa-archive"></i>归档</a><a href="/categories/"><i aria-hidden="true" class="fas fa-folder-open"></i>分类</a><a href="/tags/"><i aria-hidden="true" class="fas fa-tags"></i>标签</a><a href="/sitemap.xml"><i aria-hidden="true" class="fas fa-sitemap"></i>站点地图</a><a href="https://github.com/Billy775326" rel="me noopener" target="_blank"><i aria-hidden="true" class="fab fa-github"></i>GitHub</a></nav></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" title="阅读模式" type="button"><i class="fas fa-book-open"></i></button><button id="darkmode" title="日间和夜间模式切换" type="button"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" title="单栏和双栏切换" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" title="设置" type="button"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" title="目录" type="button"><i class="fas fa-list-ul"></i></button><button id="go-up" title="回到顶部" type="button"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async="" data-pjax="" src="/js/visit-counter.js?v=20261005"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" hidden="hidden" id="loading-status"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=20261005-domready"></script></div></div></body></html>

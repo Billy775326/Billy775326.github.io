@@ -1,6 +1,18 @@
 <?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://iowill.com/blog/2026/08/what-is-geo/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-10-08T09:53:17.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://iowill.com/blog/2026/08/geo-optimization-practice/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-10-08T09:53:17.000Z</lastmod>
+  </url>
+  <url>
     <loc>https://iowill.com/blog/2026/10/generated-class-names/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -307,6 +319,11 @@
     <priority>0.2</priority>
   </url>
   <url>
+    <loc>https://iowill.com/tags/AI%E6%90%9C%E7%B4%A2/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
     <loc>https://iowill.com/tags/APatch/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -367,6 +384,11 @@
     <priority>0.2</priority>
   </url>
   <url>
+    <loc>https://iowill.com/tags/E-E-A-T/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
     <loc>https://iowill.com/tags/editor-md/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -383,6 +405,11 @@
   </url>
   <url>
     <loc>https://iowill.com/tags/FGO/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://iowill.com/tags/GEO/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -477,6 +504,11 @@
     <priority>0.2</priority>
   </url>
   <url>
+    <loc>https://iowill.com/tags/SEO/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
     <loc>https://iowill.com/tags/SSH/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -532,7 +564,17 @@
     <priority>0.2</priority>
   </url>
   <url>
+    <loc>https://iowill.com/tags/%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
     <loc>https://iowill.com/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://iowill.com/tags/%E5%86%85%E5%AE%B9%E4%BC%98%E5%8C%96/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -826,10 +868,16 @@
     <loc>https://iowill.com/archives/page/3/</loc>
   </url>
   <url>
+    <loc>https://iowill.com/archives/2026/08/</loc>
+  </url>
+  <url>
     <loc>https://iowill.com/archives/2026/09/</loc>
   </url>
   <url>
     <loc>https://iowill.com/archives/2026/10/</loc>
+  </url>
+  <url>
+    <loc>https://iowill.com/archives/2026/page/2/</loc>
   </url>
   <url>
     <loc>https://iowill.com/archives/2025/04/</loc>
