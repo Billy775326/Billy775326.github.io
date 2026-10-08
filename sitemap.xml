@@ -1,6 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://iowill.com/blog/2026/10/generated-class-names/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-10-08T08:24:59.000Z</lastmod>
+  </url>
+  <url>
     <loc>https://iowill.com/tags/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -336,6 +342,16 @@
     <priority>0.2</priority>
   </url>
   <url>
+    <loc>https://iowill.com/tags/CSS/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://iowill.com/tags/CSS%20Modules/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
     <loc>https://iowill.com/tags/Debian/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -387,6 +403,11 @@
   </url>
   <url>
     <loc>https://iowill.com/tags/github-pages/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://iowill.com/tags/HTML/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -527,6 +548,11 @@
   </url>
   <url>
     <loc>https://iowill.com/tags/%E5%88%87%E7%89%87/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://iowill.com/tags/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>

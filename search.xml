@@ -1,6 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>网页里的 class 为什么像乱码？用一个榜单理解生成类名</title>
+    <url>/blog/2026/10/generated-class-names/</url>
+    <content><![CDATA[<p>查看网页代码时，经常能碰到这样的内容：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;aK7mQ2pL&quot;</span>&gt;</span>Billy 的代码手记<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>昵称能看懂，<code>aK7mQ2pL</code> 却不知道是什么意思。它是用户编号吗？浏览器临时生成的吗？如果过一会儿变了，网页为什么还不会乱？</p>
+<p>先记住一个关系：<strong>class 可以用来给元素标记身份，CSS 通过这个标记找到元素并设置样式。名称不需要有英文含义，只要引用它的地方能对应起来。</strong></p>
+<p>下面用一个虚构榜单，从最普通的类名开始，逐步换成工具生成的名称。榜单中的昵称、排名和短字符串都是演示数据；后面的匿名评论区观察另行注明实测内容，不展示真实昵称、评论正文或视频链接。</p>
+<h2 id="class-到底是什么"><a href="#class-到底是什么" class="headerlink" title="class 到底是什么"></a>class 到底是什么</h2><p>先看最简单的一行：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;nickname&quot;</span>&gt;</span>Billy 的代码手记<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>class=&quot;nickname&quot;</code> 给这个元素加上了一个名叫 <code>nickname</code> 的类。再写一条 CSS：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.nickname</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#6554a4</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>CSS 中的点号表示按类名选择元素。<code>.nickname</code> 找到带有 <code>nickname</code> 类的元素，然后把文字颜色设为紫色。</p>
+<p>浏览器不会理解 nickname 是“昵称”才应用这条规则。它匹配的是名称。把两边都改成下面这样，效果仍然一样：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;aK7mQ2pL&quot;</span>&gt;</span>Billy 的代码手记<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.aK7mQ2pL</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#6554a4</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以，难读的名字并没有特殊能力。这里改变的只是标记的名称，文字和颜色都没有改变。</p>
+<p>一个元素还可以有多个类，用空格分隔。例如 <code>class=&quot;rank first&quot;</code> 同时包含 <code>rank</code> 和 <code>first</code>，并不是一个带空格的长名称。<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/class">MDN：HTML class 属性</a></p>
+<h2 id="榜单里为什么会出现那么多类名"><a href="#榜单里为什么会出现那么多类名" class="headerlink" title="榜单里为什么会出现那么多类名"></a>榜单里为什么会出现那么多类名</h2><p>假设榜单有三条记录：</p>
+<table>
+<thead>
+<tr>
+<th>排名</th>
+<th>昵称</th>
+<th>徽章</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Billy 的代码手记</td>
+<td>编程开发</td>
+</tr>
+<tr>
+<td>2</td>
+<td>云端运维笔记</td>
+<td>系统与运维</td>
+</tr>
+<tr>
+<td>3</td>
+<td>今天也在折腾 Hexo</td>
+<td>博客折腾</td>
+</tr>
+</tbody></table>
+<p>每条记录都需要布局，昵称需要文字样式，排名数字需要背景色。开发者可以分别命名：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;row&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;rank first&quot;</span>&gt;</span>1<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;nickname&quot;</span>&gt;</span>Billy 的代码手记<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;badge&quot;</span>&gt;</span>编程开发<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里四种元素各有职责：</p>
+<ul>
+<li><code>row</code>：排列整条记录。</li>
+<li><code>rank</code>：设置所有排名数字的公共样式。</li>
+<li><code>first</code>：给第一名加上不同的背景。</li>
+<li><code>nickname</code> 和 <code>badge</code>：分别设置昵称与徽章的样式。</li>
+</ul>
+<p>如果工具换了一套名称，结构可以变成：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;r_A7k2&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;n_B8m3 top_C9p4&quot;</span>&gt;</span>1<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;name_D2q5&quot;</span>&gt;</span>Billy 的代码手记<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;badge_E3s6&quot;</span>&gt;</span>编程开发<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这些名称不必包含 <code>name</code>、<code>badge</code> 等前缀，这里保留前缀只是为了方便对照。</p>
+<p>第二条记录仍然可以使用相同的行、昵称和徽章类，只把第一名的特殊样式换掉。因此，看到多个元素拥有同一个类名，通常是在复用样式，并不表示它们属于同一个用户。</p>
+<h2 id="名字是谁生成的，开发者需要记住它吗"><a href="#名字是谁生成的，开发者需要记住它吗" class="headerlink" title="名字是谁生成的，开发者需要记住它吗"></a>名字是谁生成的，开发者需要记住它吗</h2><p>在很多工程里，开发者写的是 <code>row</code>、<code>nickname</code> 这样的名称。发布前，构建工具处理源码，生成供浏览器使用的文件，也可以在这个过程中改写类名。</p>
+<p>可以把它理解为工具维护了一份对应表：</p>
+<table>
+<thead>
+<tr>
+<th>源码名称</th>
+<th>生成后的名称（示意）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>row</td>
+<td>r_A7k2</td>
+</tr>
+<tr>
+<td>rank</td>
+<td>n_B8m3</td>
+</tr>
+<tr>
+<td>first</td>
+<td>top_C9p4</td>
+</tr>
+<tr>
+<td>nickname</td>
+<td>name_D2q5</td>
+</tr>
+<tr>
+<td>badge</td>
+<td>badge_E3s6</td>
+</tr>
+</tbody></table>
+<p>工具不仅处理 CSS 中的选择器，还要让渲染元素的代码取得相应名称。否则只改一边，样式就匹配不上了。</p>
+<p>以 CSS Modules 为例，开发者可以这样引用：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> styles <span class="keyword">from</span> <span class="string">&#x27;./Ranking.module.css&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> element = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">element.<span class="property">className</span> = styles.<span class="property">nickname</span>;</span><br><span class="line">element.<span class="property">textContent</span> = <span class="string">&#x27;Billy 的代码手记&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><code>styles.nickname</code> 可以理解为“从对应表里取出昵称样式的实际名称”。开发者使用的是 <code>nickname</code> 这个键，不需要记住 <code>name_D2q5</code>。</p>
+<p>这段导入语法需要支持 CSS Modules 的工具链处理，不是把代码原样贴进普通 HTML 就能运行。CSS Modules 提供局部名称与生成名称之间的映射，让组件通过导入结果引用样式。<a href="https://github.com/css-modules/css-modules">CSS Modules 项目说明</a></p>
+<h2 id="好好的名字，为什么还要换"><a href="#好好的名字，为什么还要换" class="headerlink" title="好好的名字，为什么还要换"></a>好好的名字，为什么还要换</h2><p>一个页面可能有榜单、侧栏和文章卡片。三处开发者都觉得 <code>title</code> 是个合适的名字：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 榜单希望标题紫色 */</span></span><br><span class="line"><span class="selector-class">.title</span> &#123; <span class="attribute">color</span>: purple; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 侧栏希望标题蓝色 */</span></span><br><span class="line"><span class="selector-class">.title</span> &#123; <span class="attribute">color</span>: blue; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果它们进入同一份全局样式，且其他条件相同，后面的规则会覆盖前面的颜色。榜单标题也可能因此变蓝。</p>
+<p>可以人为写成长名称，例如 <code>ranking-title</code> 和 <code>sidebar-title</code>；也可以让工具自动区分模块：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.ranking_X7a2</span> &#123; <span class="attribute">color</span>: purple; &#125;</span><br><span class="line"><span class="selector-class">.sidebar_Y8b3</span> &#123; <span class="attribute">color</span>: blue; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>榜单使用前者，侧栏使用后者。两份源码仍然可以各写各的 <code>.title</code>。</p>
+<p>这就是自动命名的一项实际价值：<strong>让不同组件中的同名样式不容易相互干扰。</strong> 但局部类名并不会阻止所有样式影响，文字继承、全局选择器等仍然需要考虑。</p>
+<h2 id="看起来随机，就一定是随机数吗"><a href="#看起来随机，就一定是随机数吗" class="headerlink" title="看起来随机，就一定是随机数吗"></a>看起来随机，就一定是随机数吗</h2><p>不一定。常见生成方式包括增加文件或组件前缀、生成哈希标识，以及使用序号或其他自定义规则。</p>
+<p>哈希可以粗略理解为：把一些输入交给算法，得到一段标识。输入可能包括文件路径、局部名称、样式内容或额外配置，具体取决于工具。相同算法和相同输入通常会得到相同结果，因此看起来像随机字符，并不意味着每次刷新都重新随机生成。</p>
+<p>也不要尝试从示意字符串中读取业务信息。它一般不能告诉你用户是谁、排名多少，更不能把字符串长度直接当作某种算法的证据。</p>
+<h2 id="为什么类名随时可能变化，页面却仍然正常"><a href="#为什么类名随时可能变化，页面却仍然正常" class="headerlink" title="为什么类名随时可能变化，页面却仍然正常"></a>为什么类名随时可能变化，页面却仍然正常</h2><p>对于查看页面或编写外部脚本的人来说，生成类名没有长期不变的保证。今天复制的名称，下一次发布后可能就失效了。</p>
+<p>变化可能发生在不同阶段：</p>
+<table>
+<thead>
+<tr>
+<th>情况</th>
+<th>可能发生的事情</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>网站重新构建或发布</td>
+<td>文件、配置或工具版本改变，生成名称随之变化</td>
+</tr>
+<tr>
+<td>服务端生成页面</td>
+<td>程序按自己的规则生成名称，并协调相关样式</td>
+</tr>
+<tr>
+<td>浏览器运行脚本</td>
+<td>脚本动态创建名称或替换已有名称，同时提供匹配规则</td>
+</tr>
+<tr>
+<td>元素状态发生变化</td>
+<td>原本就存在的不同类被切换，不一定生成了新名称</td>
+</tr>
+</tbody></table>
+<p>例如，一行被选中后从 <code>row</code> 变成 <code>row selected</code>，这是状态变化。它和程序临时造出一个全新的类名不是同一回事。</p>
+<p>无论在哪个阶段改名，正常显示都依赖相同的条件：<strong>元素当前使用的类名，仍然能找到预期的样式规则。</strong> 网站自身可以同步维护这些引用，外部脚本里写死的旧名称却不会自动跟着更新。</p>
+<p>因此，“生成类名可能变化”是使用时应有的预期；“每次刷新必然变化”则需要实际观察，不能一概而论。</p>
+<h2 id="动态改名是不是动态加密"><a href="#动态改名是不是动态加密" class="headerlink" title="动态改名是不是动态加密"></a>动态改名是不是动态加密</h2><p>只看到 class 变化，不能得出这个结论。</p>
+<p>如果程序把 <code>nickname</code> 换成 <code>name_D2q5</code>，同时把 CSS 选择器也换掉，浏览器只需要匹配名称，没有把这段字符串解密回 <code>nickname</code> 的必要。</p>
+<p>描述这种现象时，可以使用“类名生成”“动态改名”或“类名混淆”。如果还涉及接口签名、传输数据加密，那是另外需要检查的机制。</p>
+<p>让名称难读，确实可能增加理解页面或维护固定选择器的成本，但名称本身无法隐藏浏览器已经显示的昵称和排名，也不能替代访问权限控制。</p>
+<p>本文用 CSS Modules 解释一种常见的名称映射方式，并不据此认定某个页面一定采用了它。</p>
+<h2 id="实际打开评论区后，观察到了什么"><a href="#实际打开评论区后，观察到了什么" class="headerlink" title="实际打开评论区后，观察到了什么"></a>实际打开评论区后，观察到了什么</h2><p>为检查“名称是否每次打开都会变化”，2026 年 10 月 8 日使用浏览器自动化打开了一个公开视频的详情页，并在同一浏览器上下文内重新访问相同地址。两次都等到评论条目出现，再读取对应位置的 DOM 类名。</p>
+<p>这里记录的是同类节点的结构与名称，不是对某位用户或某条评论的身份追踪：</p>
+<table>
+<thead>
+<tr>
+<th>节点位置</th>
+<th>第一次加载</th>
+<th>重新打开后</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>评论条目</td>
+<td><code>Eh0a5CD4</code></td>
+<td><code>Eh0a5CD4</code></td>
+</tr>
+<tr>
+<td>用户信息区域</td>
+<td><code>xRxUIIMP comment-item-info-wrap</code></td>
+<td><code>xRxUIIMP comment-item-info-wrap</code></td>
+</tr>
+<tr>
+<td>信息区域相邻的正文节点</td>
+<td><code>FduGc_lz</code></td>
+<td><code>FduGc_lz</code></td>
+</tr>
+</tbody></table>
+<p><strong>这两次观察中，对应位置的类名相同。没有观察到每次打开页面就随机换一套名称。</strong></p>
+<p>这并不证明它们永久固定，也没有确定其生成算法。此次未比较不同账号、不同浏览器会话或不同发布版本，也未追踪生成类名的源码，不能据此确认使用了 CSS Modules，更不能认定其目的就是反采集。</p>
+<h3 id="评论入口和样式类名可以同时存在"><a href="#评论入口和样式类名可以同时存在" class="headerlink" title="评论入口和样式类名可以同时存在"></a>评论入口和样式类名可以同时存在</h3><p>在同一视频的另一次页面检查中，评论按钮具有下面的属性组合。以下片段仅保留定位相关属性：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span></span></span><br><span class="line"><span class="tag">  <span class="attr">data-e2e</span>=<span class="string">&quot;feed-comment-icon&quot;</span></span></span><br><span class="line"><span class="tag">  <span class="attr">class</span>=<span class="string">&quot;p9sQWW6T XWM3GZvM iYydV9CZ&quot;</span></span></span><br><span class="line"><span class="tag">&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 按钮内部内容省略 --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>feed-comment-icon</code> 是 <code>data-e2e</code> 属性的值，不是 class。对应选择器是：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-attr">[data-e2e=<span class="string">&quot;feed-comment-icon&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p>而 <code>.feed-comment-icon</code> 查找的是带这个类名的元素，两者含义不同。这解释了为什么只按 class 查找，可能找不到明明存在的入口。</p>
+<p>可读的属性标记与难读的样式类名可以放在同一个元素上，承担不同用途。但属性存在不等于对外承诺长期稳定，页面改版仍可能调整它。</p>
+<h3 id="没找到节点，也可能只是还没加载"><a href="#没找到节点，也可能只是还没加载" class="headerlink" title="没找到节点，也可能只是还没加载"></a>没找到节点，也可能只是还没加载</h3><p>成功取得评论条目的两次观察中，从导航返回后开始计时，大约分别等待了 40 秒和 15 秒。检查按约 5 秒间隔进行，因此这是本次环境下的粗略记录，不是网站的固定加载时间。</p>
+<p>更早的短时检查没有拿到条目，而后续检查中先出现了列表容器，再出现评论节点。这个过程提醒我们：<strong>选择器没有匹配到元素，不一定说明类名变了。</strong> 还应检查加载状态、页签、弹层和元素可见性。</p>
+<h2 id="实际项目为什么组合多种定位方式"><a href="#实际项目为什么组合多种定位方式" class="headerlink" title="实际项目为什么组合多种定位方式"></a>实际项目为什么组合多种定位方式</h2><p>本地一个评论处理项目使用了以下几种选择器。这里仅摘录定位逻辑，不展示账号配置或用户数据：</p>
+<table>
+<thead>
+<tr>
+<th>代码中的写法</th>
+<th>依赖的条件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>[data-e2e=&quot;comment-list&quot;]</code></td>
+<td>列表元素保留该属性和值</td>
+</tr>
+<tr>
+<td><code>[class*=&quot;comment-item-info-wrap&quot;]</code></td>
+<td>类属性中包含这段可读字符串</td>
+</tr>
+<tr>
+<td><code>item.nextElementSibling</code></td>
+<td>正文仍位于信息区域紧邻的下一个元素位置</td>
+</tr>
+<tr>
+<td><code>.FduGc_lz</code></td>
+<td>正文节点仍使用这个具体类名</td>
+</tr>
+</tbody></table>
+<p>其中一段逻辑是：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> sibling = item.<span class="property">nextElementSibling</span>;</span><br><span class="line"><span class="keyword">if</span> (sibling &amp;&amp; sibling.<span class="title function_">matches</span>(<span class="string">&#x27;.FduGc_lz&#x27;</span>)) &#123;</span><br><span class="line">  text = <span class="title function_">readText</span>(sibling);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>它先找到相邻元素，再检查类名，最后读取文字。本次页面检查中的 <code>FduGc_lz</code> 与代码一致，说明这个判断确实对应了当时观察到的正文结构。</p>
+<p>如果以后名称改变，这条分支就不会执行。项目另有备用选择器，但能否读到正文还取决于备用规则与新结构是否匹配。这里只能指出维护风险，不能把尚未发生的变化写成已确认的故障。</p>
+<p>属性、类名片段和相邻关系各有依赖条件，没有一种写法天然不会失效。先确认当前页面结构，再选取含义明确、作用范围合适的定位方式，比单纯把一种选择器换成另一种更可靠。</p>
+<p>这个案例能直接支持的是“固定类名会成为代码的依赖”。至于网站是否刻意用动态改名阻碍采集，还需要另外的证据。</p>
+<h2 id="不安装工具，也能亲手看懂对应关系"><a href="#不安装工具，也能亲手看懂对应关系" class="headerlink" title="不安装工具，也能亲手看懂对应关系"></a>不安装工具，也能亲手看懂对应关系</h2><p>先不搭建项目。新建一个 <code>class-demo.html</code> 文件，复制以下内容，用浏览器打开：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;zh-CN&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>类名对应实验<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.nickname</span> &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">color</span>: <span class="number">#6554a4</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">background</span>: <span class="number">#f1edff</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">padding</span>: <span class="number">12px</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">border-radius</span>: <span class="number">12px</span>;</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">  </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;nickname&quot;</span>&gt;</span>Billy 的代码手记<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>按照下面三步修改，每次保存后刷新页面：</p>
+<ol>
+<li><strong>只改 HTML</strong>：把 <code>class=&quot;nickname&quot;</code> 改为 <code>class=&quot;aK7mQ2pL&quot;</code>。文字仍在，但原来的紫色、背景和内边距不再匹配。</li>
+<li><strong>再改 CSS</strong>：把 <code>.nickname</code> 改为 <code>.aK7mQ2pL</code>。两边重新对应，样式恢复。</li>
+<li><strong>一起换名</strong>：把两处名称都改成 <code>billyName</code>。样式保持不变。</li>
+</ol>
+<p>这个实验是手动改名，不是哈希生成器，也没有实现完整的 CSS Modules。它只验证最关键的一点：浏览器关心的是选择器能否匹配元素，不关心名称是否容易读懂。</p>
+<h2 id="用开发者工具检查类名和样式"><a href="#用开发者工具检查类名和样式" class="headerlink" title="用开发者工具检查类名和样式"></a>用开发者工具检查类名和样式</h2><p>先选中你关心的昵称或排名元素，在开发者工具的 Elements 面板看它有哪些类，再到 Styles 面板查看实际匹配的规则。看见一个陌生名称，不必先猜算法，先确认它控制的是颜色、间距还是布局。</p>
+<p>如果想研究名称变化，就记录同一个元素在刷新、交互前后的类名与规则，同时检查页面加载的资源内容。只有一份 HTML，通常无法确认名称是在发布前、服务端还是浏览器里产生的。</p>
+<p>写自己的组件时，通过工具提供的映射引用样式；做自己的页面测试时，优先使用语义定位或专用测试属性，避免把某次构建后的类名当成稳定接口。</p>
+<p>在本文的榜单示例中，昵称始终是普通文本，改变的是元素与样式之间的标识。理解这套对应关系之后，再看实际页面，就能把“名称难读”“名称发生变化”和“为什么要这样设计”分开判断。</p>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+      </categories>
+      <tags>
+        <tag>CSS</tag>
+        <tag>CSS Modules</tag>
+        <tag>HTML</tag>
+        <tag>前端工程化</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务</title>
     <url>/blog/2026/10/docker-webdav-file-sharing/</url>
     <content><![CDATA[<p><img alt="Docker WebDAV 文件共享服务" decoding="async" loading="lazy" src="https://img.iowill.com/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/cover.png"/></p>
