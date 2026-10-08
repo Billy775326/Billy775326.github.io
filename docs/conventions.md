@@ -149,3 +149,5 @@
 - 保留现有 Butterfly 外观、首页每页 18 篇、秒级日期、半透明侧栏/顶栏、透明紧凑页脚及 2023 起始版权年。
 - 安装并启用 searchdb、sitemap、wordcount；页面新增文章字数/预计阅读时间，侧栏增加全站总字数；访问量仍来自不蒜子。
 - 发布前必须 build + verify，release 自动备份再同步；完整流程与回滚见 publishing.md。
+
+- 2026-10-05 访问统计异常时最多等待 8 秒，之后显示“暂不可用”，不可用不等于 0。继续使用不蒜子官方接口；禁止为显示数字填造假值或静默切换会重置历史数据的其他服务。实现位于 hexo/themes/butterfly/source/js/visit-counter.js。
