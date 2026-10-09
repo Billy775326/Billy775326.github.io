@@ -12,7 +12,16 @@ assert posts
 expected = {'/' + p['path'].removesuffix('index.html') for p in posts}
 baseline = json.loads((ROOT / 'migration/posts.json').read_text(encoding='utf8'))
 lookup = {p['slug']: p for p in posts}
+removed_file = ROOT / 'migration/removed-posts.json'
+removed = json.loads(removed_file.read_text(encoding='utf8')) if removed_file.exists() else []
+removed_slugs = {p['slug'] for p in removed}
+assert removed_slugs <= {p['slug'] for p in baseline}, 'Unknown removal record'
+for retired in removed:
+    assert retired['slug'] not in lookup, ('Deleted article restored', retired['slug'])
+    assert not (PUBLIC / retired['url'].lstrip('/') / 'index.html').exists(), retired['url']
 for old in baseline:
+    if old['slug'] in removed_slugs:
+        continue
     assert old['slug'] in lookup, ('Lost article', old['slug'])
     current = lookup[old['slug']]
     assert '/' + current['path'].removesuffix('index.html') == old['url']

@@ -95,8 +95,12 @@ release 会先校验并在仓库外 `../backups/hexo-release-时间/` 备份待�
 
 `npm --prefix hexo run verify` 检查现有构建：迁移文章的原链接/日期/正文、全部分页、搜索条数、分类标签、字数显示、内部导航、SEO。
 
-`python hexo/bin/test_new_post.py` 在临时副本里新增 Markdown，验证 50 篇时 18/18/14，并检查重复构建结果一致。不发布测试文章。这个迁移回归用例的 50 篇基线需随真实文章数量调整；日常 verify 按实际文章数动态检查。
+`python hexo/bin/test_new_post.py` 在临时副本里新增 Markdown，验证 44 篇时 18/18/8，并检查重复构建结果一致。不发布测试文章。这个迁移回归用例的 44 篇基线需随真实文章数量调整；日常 verify 按实际文章数动态检查。
 
 迁移前完整备份在本机 `E:/pycoding/backups/blog-before-hexo-20261004-205234/`：repository.bundle、working-tree.zip、SHA-256 manifest。迁移前提交为 `4a15c30`。后续每次 release 另有静态文件备份。
 
 线上回滚首选对迁移发布提交正常 `git revert` 并推送；保留原文件和源工程的 Git 历史。不要 force push，也不要用未核实路径进行递归删除。
+
+## 删除已发布文章
+
+先备份源文件，再删除 `_posts` 中对应文章。原迁移基线保留；用户明确删除的历史文章记录于 `hexo/migration/removed-posts.json`，校验要求它们不再生成。清理 related_nav 和历史独立页面的相关入口，更新网站维护时间后执行 release；受管的旧文章和空标签输出由发布脚本移除。检查搜索、sitemap、分页和线上旧链接 404，再确认发布完成。

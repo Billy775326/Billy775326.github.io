@@ -222,3 +222,8 @@
 
 - 发布《版本号怎么定？从 1.0.0 理解语义化版本》，分类为编程开发；补齐专属封面、两张正文图和图床缩略图，原图及提示词备份于 upload。
 - 文章总数 49，首页分页 18/18/13；同步搜索、分类标签、站点统计及新文章回归用例基线。
+
+## 2026-10-09 删除六篇文章
+
+- 按用户要求删除：archlinux-kde-one-week-review、maa-readme、redroid-maa-arknights-on-linux、redroid-fgo-on-linux、build-blog-hexo-butterfly、redroid-arknights。
+- 保留迁移基线及明确删除记录，清理上下篇与历史侧栏入口；文章数为 43，分页为 18/18/7。
