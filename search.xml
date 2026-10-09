@@ -802,7 +802,7 @@
 <p>本次环境输出均为 <code>0</code>。</p>
 <p>因此，可以排除 eth0、eth1 上的 <code>rp_filter</code> 检查导致丢包。其他环境如果使用严格模式 <code>1</code>，多网卡的非对称路由可能触发丢包，需要单独核查。<a href="https://www.kernel.org/doc/html/next/networking/ip-sysctl.html">Linux 内核文档</a></p>
 <h2 id="eth1-eth0">三、抓包发现：eth1 进，eth0 出</h2>
-<figure><img alt="故障路径：eth1 进入，eth0 返回" decoding="async" loading="lazy" src="https://img.iowill.com/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663890788_02-wrong-return-path.png"/><figcaption>故障路径：eth1 进入，eth0 返回</figcaption></figure>
+<figure><img alt="故障路径：eth1 进入，eth0 返回" decoding="async" loading="lazy" src="https://img.iowill.com/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/2026-10-09/body1.png"/><figcaption>故障路径：eth1 进入，eth0 返回</figcaption></figure>
 <p>在服务器执行：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre>tcpdump -ni any -nn \
   'tcp port 3306 and not (src net 172.20.0.0/16 and dst net 172.20.0.0/16)'
@@ -848,7 +848,7 @@ eth0 Out:
 </pre></td></tr></table></figure>
 <p>这也解释了为什么 eth0 能连接：主路由表的默认出口恰好就是 eth0，而其他网卡需要正确的回程选路。</p>
 <h2 id="_3">五、修复：识别连接的回包，再按标记选路</h2>
-<figure><img alt="修复原理：识别回包，按标记选路" decoding="async" loading="lazy" src="https://img.iowill.com/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/1790663900746_03-mark-routing-fix.png"/><figcaption>修复原理：识别回包，按标记选路</figcaption></figure>
+<figure><img alt="修复原理：识别回包，按标记选路" decoding="async" loading="lazy" src="https://img.iowill.com/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/2026-10-09/body2.png"/><figcaption>修复原理：识别回包，按标记选路</figcaption></figure>
 <p>本次采用的办法是：</p>
 <ol>
 <li>利用连接跟踪，识别原本访问 <code>198.51.100.20:3306</code> 的连接。</li>

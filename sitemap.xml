@@ -1,6 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://iowill.com/blog/2026/09/debian-docker-mysql-multi-nic-routing/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-10-09T01:52:32.000Z</lastmod>
+  </url>
+  <url>
     <loc>https://iowill.com/blog/2026/08/what-is-geo/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -44,12 +50,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <lastmod>2026-09-30T10:12:30.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://iowill.com/blog/2026/09/debian-docker-mysql-multi-nic-routing/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <lastmod>2026-09-29T04:00:00.000Z</lastmod>
   </url>
   <url>
     <loc>https://iowill.com/blog/2026/09/archlinux-kde-one-week-review/</loc>
