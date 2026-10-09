@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html data-theme="light" lang="zh-CN"><head><meta charset="utf-8"/><meta content="IE=edge" http-equiv="X-UA-Compatible"/><meta content="width=device-width, initial-scale=1.0,viewport-fit=cover" name="viewport"/><title>版本号怎么定？从 1.0.0 理解语义化版本 | Billy 的博客</title><meta content="Billy" name="author"/><meta content="Billy" name="copyright"/><meta content="telephone=no" name="format-detection"/><meta content="#ffffff" name="theme-color"/><meta content="软件修复 Bug、增加功能或调整接口后，版本号该怎么升？本文用一个文章列表组件的变化解释语义化版本，介绍主版本号、次版本号、修订号，以及预发布版本和 npm 依赖范围，帮助判断升级影响。" name="description"/>
+<meta content="article" property="og:type"/>
+<meta content="版本号怎么定？从 1.0.0 理解语义化版本" property="og:title"/>
+<meta content="https://iowill.com/blog/2026/10/semantic-versioning/" property="og:url"/>
+<meta content="Billy 的博客" property="og:site_name"/>
+<meta content="软件修复 Bug、增加功能或调整接口后，版本号该怎么升？本文用一个文章列表组件的变化解释语义化版本，介绍主版本号、次版本号、修订号，以及预发布版本和 npm 依赖范围，帮助判断升级影响。" property="og:description"/>
+<meta content="zh_CN" property="og:locale"/>
+<meta content="https://img.iowill.com/file/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/%E7%89%88%E6%9C%AC%E5%8F%B7%E6%80%8E%E4%B9%88%E5%AE%9A-%E4%BB%8E1.0.0%E7%90%86%E8%A7%A3%E8%AF%AD%E4%B9%89%E5%8C%96%E7%89%88%E6%9C%AC/cover.png" property="og:image"/>
+<meta content="2026-10-09T09:16:32.000Z" property="article:published_time"/>
+<meta content="2026-10-09T09:16:32.000Z" property="article:modified_time"/>
+<meta content="Billy" property="article:author"/>
+<meta content="SemVer" property="article:tag"/>
+<meta content="版本管理" property="article:tag"/>
+<meta content="语义化版本" property="article:tag"/>
+<meta content="软件工程" property="article:tag"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://img.iowill.com/file/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/%E7%89%88%E6%9C%AC%E5%8F%B7%E6%80%8E%E4%B9%88%E5%AE%9A-%E4%BB%8E1.0.0%E7%90%86%E8%A7%A3%E8%AF%AD%E4%B9%89%E5%8C%96%E7%89%88%E6%9C%AC/cover.png" name="twitter:image"/><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "版本号怎么定？从 1.0.0 理解语义化版本", "url": "https://iowill.com/blog/2026/10/semantic-versioning/", "image": "https://img.iowill.com/file/编程开发/版本号怎么定-从1.0.0理解语义化版本/cover.png", "datePublished": "2026-10-09T09:16:32.000Z", "dateModified": "2026-10-09T09:16:32.000Z", "author": {"@type": "Person", "@id": "https://iowill.com/#author", "name": "Billy", "url": "https://iowill.com/", "sameAs": ["https://github.com/Billy775326"]}, "@id": "https://iowill.com/blog/2026/10/semantic-versioning/#article", "description": "软件修复 Bug、增加功能或调整接口后，版本号该怎么升？本文用一个文章列表组件的变化解释语义化版本，介绍主版本号、次版本号、修订号，以及预发布版本和 npm 依赖范围，帮助判断升级影响。", "publisher": {"@type": "Person", "@id": "https://iowill.com/#author", "name": "Billy", "url": "https://iowill.com/", "sameAs": ["https://github.com/Billy775326"]}, "inLanguage": "zh-CN", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://iowill.com/blog/2026/10/semantic-versioning/"}, "isPartOf": {"@type": "WebSite", "@id": "https://iowill.com/#website"}, "articleSection": "编程开发", "keywords": ["SemVer", "版本管理", "语义化版本", "软件工程"]}</script><link href="/img/favicon.png" rel="shortcut icon"/><link href="https://iowill.com/blog/2026/10/semantic-versioning/" rel="canonical"/><link href="//cdn.jsdelivr.net" rel="preconnect"/><link href="/css/index.css?v=5.7.0" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css" rel="stylesheet"/><script>
+    (() => {
+
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+
+
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+
+
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+
+
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+
+    })()
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '版本号怎么定？从 1.0.0 理解语义化版本',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link href="/css/site-preserved.css" rel="stylesheet"/><link href="/css/cards.css" rel="stylesheet"/><meta content="Hexo 8.1.2" name="generator"/><meta content="SemVer,版本管理,语义化版本,软件工程" name="keywords"/></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img alt="avatar" onerror="this.onerror=null;this.src='/img/friend_404.gif'" src="/img/avatar.jpg"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">49</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">105</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://img.iowill.com/file/编程开发/版本号怎么定-从1.0.0理解语义化版本/cover.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Billy 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">版本号怎么定？从 1.0.0 理解语义化版本</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">版本号怎么定？从 1.0.0 理解语义化版本</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-09T09:16:32.000Z" title="2026-10-09 17:16:32">2026-10-09 17:16:32</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-09T09:16:32.000Z" title="2026-10-09 17:16:32">2026-10-09 17:16:32</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/programming/">编程开发</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" data-flag-title="" id=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>给项目发一个新版本，代码改完了，版本号却不一定好定。</p>
+<p>修复了一个影响很大的 Bug，要不要直接升到 <code>2.0.0</code>？新增了不少代码，但旧功能照常使用，又该怎么编号？还有常见的 <code>1.0.0-beta.1</code>，它和 <code>1.0.0</code> 到底差在哪里？</p>
+<p>语义化版本（Semantic Versioning，简称 SemVer）提供了一套约定：用三段数字说明一次更新对使用者的影响。判断时，先看原有使用方式是否仍然成立，再看这次增加了功能，还是修正了错误。</p>
+<p>这篇从 <a href="https://semver.org/lang/zh-CN/">SemVer 2.0.0 中文规范</a>出发，用一个虚构的文章列表组件举例。它已经发布了 <code>1.4.2</code>，其他项目通过 <code>listPosts()</code> 读取文章。下面分别看看几种改动该怎样编号。</p>
+<h2 id="三段数字分别是什么"><a class="headerlink" href="#三段数字分别是什么" title="三段数字分别是什么"></a>三段数字分别是什么</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/></pre></td><td class="code"><pre><span class="line">1 . 4 . 2</span><br/><span class="line">│   │   └─ 修订号 Patch</span><br/><span class="line">│   └───── 次版本号 Minor</span><br/><span class="line">└───────── 主版本号 Major</span><br/></pre></td></tr></table></figure>
+<p>对于已经进入 <code>1.0.0</code> 及以后阶段的项目，可以先按这张表判断：</p>
+<table>
+<thead>
+<tr>
+<th>这次发布的变化</th>
+<th>从 1.4.2 升到</th>
+<th>使用者需要关注什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>兼容原有用法的问题修复</td>
+<td><code>1.4.3</code></td>
+<td>哪个错误得到了修正</td>
+</tr>
+<tr>
+<td>兼容原有用法的功能新增</td>
+<td><code>1.5.0</code></td>
+<td>新功能怎样使用</td>
+</tr>
+<tr>
+<td>公共 API 出现不兼容修改</td>
+<td><code>2.0.0</code></td>
+<td>旧代码需要怎样迁移</td>
+</tr>
+</tbody></table>
+<p>这里的公共 API，是项目明确提供给别人依赖的接口和行为。它可以是函数的参数、返回值，也可以是有文档约定的命令行选项或配置格式。</p>
+<p>先写清楚这些约定，才能判断更新是否兼容。假如文档承诺 <code>listPosts()</code> 返回文章数组，调用方就有理由写出这样的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> posts = <span class="title function_">listPosts</span>();</span><br/><span class="line">posts.<span class="title function_">map</span>(<span class="function"><span class="params">post</span> =&gt;</span> post.<span class="property">title</span>);</span><br/></pre></td></tr></table></figure>
+<p>后续修改要考虑这段代码还能不能按约定工作。</p>
+<p><img alt="从 1.4.2 出发，修复、新功能和不兼容修改分别对应 1.4.3、1.5.0 和 2.0.0" src="https://img.iowill.com/file/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/%E7%89%88%E6%9C%AC%E5%8F%B7%E6%80%8E%E4%B9%88%E5%AE%9A-%E4%BB%8E1.0.0%E7%90%86%E8%A7%A3%E8%AF%AD%E4%B9%89%E5%8C%96%E7%89%88%E6%9C%AC/body1.png"/></p>
+<p><em>三个独立的升级选择，按本次变更对公共 API 的影响判断。</em></p>
+<h2 id="修复-Bug-后，版本号怎么升"><a class="headerlink" href="#修复-Bug-后，版本号怎么升" title="修复 Bug 后，版本号怎么升"></a>修复 Bug 后，版本号怎么升</h2><p>假设组件约定按发布时间从新到旧排列文章，但某些日期被当成字符串错误比较，导致排序错乱。修正比较逻辑后，函数参数、返回类型和排序约定都保持原样。</p>
+<p>这次可以发布为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">1.4.2 → 1.4.3</span><br/></pre></td></tr></table></figure>
+<p>即使排查花了三天，最后修改了几百行，判断仍然取决于修复对使用者的影响。严重 Bug 也可能通过修订版本修复。</p>
+<p>不过，写着“修复 Bug”并不代表一定适合只升修订号。</p>
+<p>例如，原先公开约定文章 ID 可以是字符串，现在为了简化校验，只允许传数字。原本合法的 <code>getPost("42")</code> 开始报错，这就改变了使用约定。不能因为提交说明写了 <code>fix</code>，便忽略兼容性变化。</p>
+<p>另一种更难处理的情况是：某个行为确实不符合文档，但已经被大量使用者依赖。此时需要评估迁移成本，说明受影响范围，必要时通过主版本发布。规范的 FAQ 也讨论了这种修复对使用者造成重大影响的情况。<a href="https://semver.org/lang/zh-CN/#faq">参考：SemVer FAQ</a></p>
+<h2 id="新增功能后，版本号怎么升"><a class="headerlink" href="#新增功能后，版本号怎么升" title="新增功能后，版本号怎么升"></a>新增功能后，版本号怎么升</h2><p>接下来，希望调用方可以选择文章分类，于是给 <code>listPosts()</code> 增加一个可选参数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/></pre></td><td class="code"><pre><span class="line"><span class="comment">// 原有调用仍然返回全部文章</span></span><br/><span class="line"><span class="title function_">listPosts</span>();</span><br/><span class="line"></span><br/><span class="line"><span class="comment">// 新增按分类筛选的用法</span></span><br/><span class="line"><span class="title function_">listPosts</span>({ <span class="attr">category</span>: <span class="string">"编程开发"</span> });</span><br/></pre></td></tr></table></figure>
+<p>只要原有调用的行为保持兼容，这属于功能新增。如果上一个版本已经是 <code>1.4.3</code>，这次就发布 <code>1.5.0</code>。</p>
+<p>注意最后一段归零了，不是接着写 <code>1.5.3</code>。次版本递增时，修订号从零开始。</p>
+<p>如果这次同时修了几个 Bug，也可以一起包含在 <code>1.5.0</code> 中。一批变更可以在同一个版本发布，版本号按其中需要的最高级别确定。</p>
+<p>还有一种容易漏掉的变化：<strong>把公共 API 标记为弃用，也需要递增次版本号。</strong> “弃用”表示建议使用者开始迁移，旧接口此时仍然可用；直接删除则是另一回事。<a href="https://semver.org/lang/zh-CN/">参考：SemVer 第 7、8 条</a></p>
+<h2 id="哪些改动需要升主版本号"><a class="headerlink" href="#哪些改动需要升主版本号" title="哪些改动需要升主版本号"></a>哪些改动需要升主版本号</h2><p>组件后来要支持分页。开发者决定把返回值从数组改成包含总数的对象：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/><span class="line">7</span><br/><span class="line">8</span><br/></pre></td><td class="code"><pre><span class="line"><span class="comment">// 旧返回值</span></span><br/><span class="line">[{ <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">title</span>: <span class="string">"第一篇文章"</span> }]</span><br/><span class="line"></span><br/><span class="line"><span class="comment">// 新返回值</span></span><br/><span class="line">{</span><br/><span class="line">  <span class="attr">items</span>: [{ <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">title</span>: <span class="string">"第一篇文章"</span> }],</span><br/><span class="line">  <span class="attr">total</span>: <span class="number">48</span></span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
+<p>新结构看起来更方便，但之前的 <code>posts.map(...)</code> 已经不能用了。调用方必须改成 <code>result.items.map(...)</code>。</p>
+<p>如果保留 <code>listPosts()</code> 这个名字却直接改变它的返回约定，就应该通过新的主版本发布，例如从 <code>1.5.0</code> 升到 <code>2.0.0</code>，并提供迁移说明。</p>
+<p>也有兼容的做法：保留原函数，另加 <code>listPostsPage()</code> 返回分页对象。新增能力没有破坏旧接口，就可以按次版本发布。<strong>同一个功能需求，采用不同的接口设计，可能对应不同的版本级别。</strong></p>
+<p>删除公开函数、把可选参数改成必填、改变文档承诺的默认行为，都需要检查旧代码是否仍然有效。一次很小的接口修改，也可能需要升主版本号。</p>
+<h2 id="0-x-y-和-1-0-0-有什么区别"><a class="headerlink" href="#0-x-y-和-1-0-0-有什么区别" title="0.x.y 和 1.0.0 有什么区别"></a>0.x.y 和 1.0.0 有什么区别</h2><p><code>0.x.y</code> 表示初始开发阶段，公共 API 尚未形成稳定承诺。使用者不能仅凭主版本号没变，就认为所有更新都兼容。</p>
+<p><code>1.0.0</code> 则是一个明确的起点：项目开始围绕已定义的公共 API 管理兼容性。它不意味着软件没有 Bug，也不要求把设想中的所有功能都实现。</p>
+<p>以这个组件为例，如果参数、返回结构还在频繁试验，保留 <code>0.x.y</code> 很合理。等到其他项目已经依赖这些接口，就需要认真决定哪些行为要长期支持，并为它们补上文档和验证。</p>
+<p>不同生态还可能有额外约定。例如 <a href="https://go.dev/doc/modules/version-numbers">Go 的模块版本文档</a>说明，v2 及以上主版本通常要在模块路径中体现版本后缀。这是 Go 的模块管理规则，不能照搬为所有项目的要求。</p>
+<h2 id="版本号后面的-alpha、beta、rc-是什么"><a class="headerlink" href="#版本号后面的-alpha、beta、rc-是什么" title="版本号后面的 alpha、beta、rc 是什么"></a>版本号后面的 alpha、beta、rc 是什么</h2><p>正式发布 <code>2.0.0</code> 前，可以先提供试用版本，让调用方提前检查迁移是否顺利：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/></pre></td><td class="code"><pre><span class="line">2.0.0-alpha.1</span><br/><span class="line">2.0.0-beta.1</span><br/><span class="line">2.0.0-rc.1</span><br/><span class="line">2.0.0</span><br/></pre></td></tr></table></figure>
+<p>这些带连字符的后缀属于先行版本标识，实际项目也常称为预发布版本。<code>alpha</code>、<code>beta</code>、<code>rc</code> 是常见命名习惯；各阶段具体做多少测试、开放给哪些人，要看项目自己的说明。</p>
+<p>比较版本时，相同三段数字下的先行版本低于正式版本。标识中的独立数字按数值比较，所以 <code>beta.2</code> 排在 <code>beta.11</code> 前面。</p>
+<p>还可能看到这样的编号：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">2.0.0+build.123</span><br/></pre></td></tr></table></figure>
+<p>加号后面是构建元数据，可以用于记录构建身份，但不参与 SemVer 的优先级比较。不能据此把 <code>2.0.0+build.124</code> 判为比 <code>2.0.0+build.123</code> 更高的语义化版本。<a href="https://semver.org/lang/zh-CN/">参考：SemVer 第 9—11 条</a></p>
+<p><img alt="从 alpha、beta、rc 到正式版本的顺序，以及独立展示的构建元数据" src="https://img.iowill.com/file/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/%E7%89%88%E6%9C%AC%E5%8F%B7%E6%80%8E%E4%B9%88%E5%AE%9A-%E4%BB%8E1.0.0%E7%90%86%E8%A7%A3%E8%AF%AD%E4%B9%89%E5%8C%96%E7%89%88%E6%9C%AC/body2.png"/></p>
+<p><em>预发布命名示例；构建元数据不参与版本优先级比较。</em></p>
+<h2 id="升级依赖时，版本号能告诉我们什么"><a class="headerlink" href="#升级依赖时，版本号能告诉我们什么" title="升级依赖时，版本号能告诉我们什么"></a>升级依赖时，版本号能告诉我们什么</h2><p>给自己的项目定版本，是在向使用者说明变化；安装别人的依赖，则是在解读对方的承诺。</p>
+<p>以 npm 为例，<code>package.json</code> 中的范围符号决定了哪些版本允许被选择。下面只比较正式版本，预发布版本另有匹配条件：</p>
+<table>
+<thead>
+<tr>
+<th>声明</th>
+<th>允许的正式版本范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>1.4.2</code></td>
+<td>仅 <code>1.4.2</code></td>
+</tr>
+<tr>
+<td><code>~1.4.2</code></td>
+<td>大于等于 <code>1.4.2</code>，小于 <code>1.5.0</code></td>
+</tr>
+<tr>
+<td><code>^1.4.2</code></td>
+<td>大于等于 <code>1.4.2</code>，小于 <code>2.0.0</code></td>
+</tr>
+<tr>
+<td><code>^0.2.3</code></td>
+<td>大于等于 <code>0.2.3</code>，小于 <code>0.3.0</code></td>
+</tr>
+</tbody></table>
+<p>这也解释了为什么不能把 <code>^</code> 一概理解成“固定主版本号”。在主版本为零的情况下，它的范围更窄。具体匹配规则见 <a href="https://github.com/npm/node-semver#ranges">npm/node-semver 文档</a>。</p>
+<p>允许安装的范围也不等于当前实际安装的版本；检查项目时还要结合锁文件与已安装的依赖。</p>
+<p>即使版本号表示兼容，升级也可能遇到回归错误或维护者判断失误。实际操作时，我更建议先看变更记录，再验证项目依赖的关键行为。例如这个文章组件，就至少要检查旧调用、排序结果和分页返回值。</p>
+<h2 id="发布前，把变化写给使用者看"><a class="headerlink" href="#发布前，把变化写给使用者看" title="发布前，把变化写给使用者看"></a>发布前，把变化写给使用者看</h2><p>给上述虚构组件整理一份简短发布记录，可以写成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/><span class="line">7</span><br/><span class="line">8</span><br/><span class="line">9</span><br/></pre></td><td class="code"><pre><span class="line">1.4.3</span><br/><span class="line">修复：文章发布时间排序错误，原有调用方式保持不变。</span><br/><span class="line"></span><br/><span class="line">1.5.0</span><br/><span class="line">新增：listPosts 支持可选的 category 筛选参数。</span><br/><span class="line"></span><br/><span class="line">2.0.0</span><br/><span class="line">变更：listPosts 返回值由数组调整为 { items, total }。</span><br/><span class="line">迁移：将 posts.map(...) 改为 result.items.map(...)。</span><br/></pre></td></tr></table></figure>
+<p>版本号提示变化级别，发布记录说明具体影响。<a href="https://keepachangelog.com/zh-CN/1.1.0/">Keep a Changelog</a>建议为人整理有意义的变更，而不是把所有提交记录直接堆给读者。</p>
+<p>如果项目采用<a href="https://www.conventionalcommits.org/zh-hans/v1.0.0/">约定式提交</a>，<code>fix</code>、<code>feat</code> 和 <code>BREAKING CHANGE</code> 可以为发布工具提供判断依据。但自动化依赖准确的提交描述；接口已经不兼容时，仅仅写上 <code>fix</code> 无法让它变得兼容。</p>
+<p>已经发布的版本内容也应保持不变。发现问题后发一个新版本，并交代修正内容，避免两位使用者拿着相同版本号，却得到不同代码。</p>
+<p>以后再纠结该升哪一位，可以先把这次更新写成一句面向使用者的话：原有用法是否要改？如果不用改，这次是增加了能力，还是修好了原本承诺的行为？版本号通常就有了答案。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://iowill.com/">Billy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://iowill.com/blog/2026/10/semantic-versioning/">https://iowill.com/blog/2026/10/semantic-versioning/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://iowill.com" target="_blank">Billy 的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/SemVer/">SemVer</a><a class="post-meta__tags" href="/tags/%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86/">版本管理</a><a class="post-meta__tags" href="/tags/%E8%AF%AD%E4%B9%89%E5%8C%96%E7%89%88%E6%9C%AC/">语义化版本</a><a class="post-meta__tags" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/">软件工程</a></div></div><nav aria-label="文章导航" class="pagination-post" id="pagination"><a aria-label="上一篇：网页里的 class 为什么像乱码？用一个榜单理解生成类名" class="pagination-related" href="/blog/2026/10/generated-class-names/" rel="prev" title="网页里的 class 为什么像乱码？用一个榜单理解生成类名"><img alt="网页里的 class 为什么像乱码？用一个榜单理解生成类名" class="cover" loading="lazy" src="https://img.iowill.com/file/编程开发/网页里的class为什么像乱码-用一个榜单理解生成类名/thumbs/cover.jpg"/><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">网页里的 class 为什么像乱码？用一个榜单理解生成类名</div></div><div class="info-2">阅读全文：网页里的 class 为什么像乱码？用一个榜单理解生成类名</div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img alt="avatar" onerror="this.onerror=null;this.src='/img/friend_404.gif'" src="/img/avatar.jpg"/></div><div class="author-info-name">Billy</div><div class="author-info-description">记录学习与折腾</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">49</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">105</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a href="https://github.com/Billy775326" id="card-info-btn"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，记录学习与折腾</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E6%AE%B5%E6%95%B0%E5%AD%97%E5%88%86%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">三段数字分别是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E5%A4%8D-Bug-%E5%90%8E%EF%BC%8C%E7%89%88%E6%9C%AC%E5%8F%B7%E6%80%8E%E4%B9%88%E5%8D%87"><span class="toc-text">修复 Bug 后，版本号怎么升</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E5%A2%9E%E5%8A%9F%E8%83%BD%E5%90%8E%EF%BC%8C%E7%89%88%E6%9C%AC%E5%8F%B7%E6%80%8E%E4%B9%88%E5%8D%87"><span class="toc-text">新增功能后，版本号怎么升</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%AA%E4%BA%9B%E6%94%B9%E5%8A%A8%E9%9C%80%E8%A6%81%E5%8D%87%E4%B8%BB%E7%89%88%E6%9C%AC%E5%8F%B7"><span class="toc-text">哪些改动需要升主版本号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0-x-y-%E5%92%8C-1-0-0-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="toc-text">0.x.y 和 1.0.0 有什么区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E5%8F%B7%E5%90%8E%E9%9D%A2%E7%9A%84-alpha%E3%80%81beta%E3%80%81rc-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">版本号后面的 alpha、beta、rc 是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%87%E7%BA%A7%E4%BE%9D%E8%B5%96%E6%97%B6%EF%BC%8C%E7%89%88%E6%9C%AC%E5%8F%B7%E8%83%BD%E5%91%8A%E8%AF%89%E6%88%91%E4%BB%AC%E4%BB%80%E4%B9%88"><span class="toc-text">升级依赖时，版本号能告诉我们什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%91%E5%B8%83%E5%89%8D%EF%BC%8C%E6%8A%8A%E5%8F%98%E5%8C%96%E5%86%99%E7%BB%99%E4%BD%BF%E7%94%A8%E8%80%85%E7%9C%8B"><span class="toc-text">发布前，把变化写给使用者看</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/semantic-versioning/" title="版本号怎么定？从 1.0.0 理解语义化版本"><img alt="版本号怎么定？从 1.0.0 理解语义化版本" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/编程开发/版本号怎么定-从1.0.0理解语义化版本/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/10/semantic-versioning/" title="版本号怎么定？从 1.0.0 理解语义化版本">版本号怎么定？从 1.0.0 理解语义化版本</a><time datetime="2026-10-09T09:16:32.000Z" title="2026/10/09 17:16:32">2026/10/09 17:16:32</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/generated-class-names/" title="网页里的 class 为什么像乱码？用一个榜单理解生成类名"><img alt="网页里的 class 为什么像乱码？用一个榜单理解生成类名" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/编程开发/网页里的class为什么像乱码-用一个榜单理解生成类名/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/10/generated-class-names/" title="网页里的 class 为什么像乱码？用一个榜单理解生成类名">网页里的 class 为什么像乱码？用一个榜单理解生成类名</a><time datetime="2026-10-08T08:24:59.000Z" title="2026/10/08 16:24:59">2026/10/08 16:24:59</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/docker-webdav-file-sharing/" title="Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务"><img alt="Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/系统与运维/Docker_部署_WebDAV：用_hacdias_webdav_搭建个人文件共享服务/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/10/docker-webdav-file-sharing/" title="Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务">Docker 部署 WebDAV：用 hacdias/webdav 搭建个人文件共享服务</a><time datetime="2026-10-04T10:07:52.000Z" title="2026/10/04 18:07:52">2026/10/04 18:07:52</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/from-vibe-coding-to-spec-coding/" title="从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳"><img alt="从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/编程开发/从_Vibe_Coding_到_Spec_Coding：让_AI_写得快，也改得稳/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/09/from-vibe-coding-to-spec-coding/" title="从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳">从 Vibe Coding 到 Spec Coding：让 AI 写得快，也改得稳</a><time datetime="2026-09-30T10:12:30.000Z" title="2026/09/30 18:12:30">2026/09/30 18:12:30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/09/debian-docker-mysql-multi-nic-routing/" title="Debian多网卡Docker-MySQL回程路由排查"><img alt="Debian多网卡Docker-MySQL回程路由排查" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/系统与运维/Debian多网卡Docker-MySQL回程路由排查/2026-10-09/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/09/debian-docker-mysql-multi-nic-routing/" title="Debian多网卡Docker-MySQL回程路由排查">Debian多网卡Docker-MySQL回程路由排查</a><time datetime="2026-09-29T04:00:00.000Z" title="2026/09/29 12:00:00">2026/09/29 12:00:00</time></div></div></div></div></div></div></main><footer aria-label="网站页脚" id="footer"><div class="footer-other"><div class="footer-credits"><span class="copyright">© 2023–2026 By <a href="/">Billy</a></span><span class="framework-info">由 <a href="https://hexo.io" rel="noopener" target="_blank">Hexo</a> 驱动<span aria-hidden="true" class="footer-separator">·</span><a href="https://github.com/jerryc127/hexo-theme-butterfly" rel="noopener" target="_blank">Butterfly</a> 主题</span></div><div class="footer_custom_text"><nav aria-label="页脚导航"><a href="/about/"><i aria-hidden="true" class="fas fa-user"></i>关于</a><a href="/archives/"><i aria-hidden="true" class="fas fa-archive"></i>归档</a><a href="/categories/"><i aria-hidden="true" class="fas fa-folder-open"></i>分类</a><a href="/tags/"><i aria-hidden="true" class="fas fa-tags"></i>标签</a><a href="/sitemap.xml"><i aria-hidden="true" class="fas fa-sitemap"></i>站点地图</a><a href="https://github.com/Billy775326" rel="me noopener" target="_blank"><i aria-hidden="true" class="fab fa-github"></i>GitHub</a></nav></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" title="阅读模式" type="button"><i class="fas fa-book-open"></i></button><button id="darkmode" title="日间和夜间模式切换" type="button"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" title="单栏和双栏切换" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" title="设置" type="button"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" title="目录" type="button"><i class="fas fa-list-ul"></i></button><button id="go-up" title="回到顶部" type="button"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async="" data-pjax="" src="/js/visit-counter.js?v=20261005"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" hidden="hidden" id="loading-status"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=20261005-domready"></script></div></div></body></html>

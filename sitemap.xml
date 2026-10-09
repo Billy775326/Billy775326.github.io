@@ -1,6 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://iowill.com/blog/2026/10/semantic-versioning/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-10-09T09:16:32.000Z</lastmod>
+  </url>
+  <url>
     <loc>https://iowill.com/about/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -514,6 +520,11 @@
     <priority>0.2</priority>
   </url>
   <url>
+    <loc>https://iowill.com/tags/SemVer/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
     <loc>https://iowill.com/tags/Spec%20Coding/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -734,6 +745,11 @@
     <priority>0.2</priority>
   </url>
   <url>
+    <loc>https://iowill.com/tags/%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
     <loc>https://iowill.com/tags/%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -780,6 +796,11 @@
   </url>
   <url>
     <loc>https://iowill.com/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://iowill.com/tags/%E8%AF%AD%E4%B9%89%E5%8C%96%E7%89%88%E6%9C%AC/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
