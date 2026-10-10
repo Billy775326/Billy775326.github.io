@@ -1,6 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>网页 class 变了，自动化脚本怎么定位元素？</title>
+    <url>/blog/2026/10/dynamic-class-locators/</url>
+    <content><![CDATA[<p>评论按钮明明就在页面上，脚本却一直等到超时。如果你也遇到过这种情况，可以打开开发者工具，看看当初复制的 class 还在不在。</p>
+<p>把新的类名换进去，往往又能跑了。可这样修几次之后就会发现，脚本好像一直在追着页面改。</p>
+<p>前一篇写了<a href="/blog/2026/10/generated-class-names/">这些类名可能是怎么生成的</a>。这篇接着聊一个实际问题：不把类名写死，还能怎么找到评论按钮和正文？下面用一小段虚构的评论区 HTML 演示，昵称和属性都是示例。</p>
+<h2 id="类名变化与选择器失效"><a href="#类名变化与选择器失效" class="headerlink" title="类名变化与选择器失效"></a>类名变化与选择器失效</h2><p>看到 <code>aK7mQ2pL</code> 这种名字，很容易把它理解成“每次打开网页都会随机生成”。但光看这串字符，还判断不了。</p>
+<p>以 CSS Modules 的一种实现为例，css-loader 可以根据配置生成带哈希的类名，文件路径和名称等信息会参与生成。输入没变，结果不一定变；网站发了新版，相关输入变了，名称才可能跟着变化。<a href="https://github.com/webpack/css-loader#localidentname">命名配置文档</a>里有具体说明。</p>
+<p>页面也可能使用运行时样式，或者给不同访问展示不同版本。到底是哪一种，需要比较实际页面和资源，不能只凭使用了 React、Vue 就下结论。</p>
+<p>不过，修脚本不必先查清整个网站的构建流程。既然这个 class 已经变过，就值得看看旁边还有什么可以用。</p>
+<h2 id="通过按钮名称定位"><a href="#通过按钮名称定位" class="headerlink" title="通过按钮名称定位"></a>通过按钮名称定位</h2><p>比如这个按钮：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&quot;aK7mQ2pL&quot;</span> <span class="attr">aria-label</span>=<span class="string">&quot;打开评论&quot;</span>&gt;</span>评论<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>它有按钮角色，也有 <code>aria-label</code> 提供的名称。在 Playwright Python 里可以直接写：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">page.get_by_role(<span class="string">&quot;button&quot;</span>, name=<span class="string">&quot;打开评论&quot;</span>, exact=<span class="literal">True</span>).click()</span><br></pre></td></tr></table></figure>
+
+<p>这条定位不依赖 class。以后按钮换了颜色、换了样式类名，只要角色和名称没变，脚本就不用跟着改。</p>
+<p>当然，要先看清楚页面实际写了什么。有些“按钮”只是一个绑定了点击事件的普通 <code>div</code>，没有按钮语义，照搬 <code>get_by_role(&quot;button&quot;)</code> 就找不到。Playwright 的<a href="https://playwright.dev/python/docs/locators">定位器文档</a>也建议优先考虑用户可感知的属性和明确的测试约定。</p>
+<h2 id="通过-data-属性定位评论"><a href="#通过-data-属性定位评论" class="headerlink" title="通过 data 属性定位评论"></a>通过 data 属性定位评论</h2><p>展开评论区后，可能会看到这样的结构：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">section</span> <span class="attr">data-e2e</span>=<span class="string">&quot;comment-panel&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">article</span> <span class="attr">class</span>=<span class="string">&quot;m8Qx2LpA&quot;</span> <span class="attr">data-e2e</span>=<span class="string">&quot;comment-item&quot;</span> <span class="attr">data-id</span>=<span class="string">&quot;demo-101&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">data-e2e</span>=<span class="string">&quot;comment-author&quot;</span>&gt;</span>Billy 的代码手记<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">data-e2e</span>=<span class="string">&quot;comment-content&quot;</span>&gt;</span>这是一条演示评论。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">article</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里已经把面板、评论、作者和正文标出来了，可以直接利用这些属性：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">panel = page.locator(<span class="string">&#x27;[data-e2e=&quot;comment-panel&quot;]:visible&#x27;</span>)</span><br><span class="line">item = panel.locator(<span class="string">&#x27;[data-e2e=&quot;comment-item&quot;][data-id=&quot;demo-101&quot;]&#x27;</span>)</span><br><span class="line">author = item.locator(<span class="string">&#x27;[data-e2e=&quot;comment-author&quot;]&#x27;</span>).inner_text()</span><br><span class="line">content = item.locator(<span class="string">&#x27;[data-e2e=&quot;comment-content&quot;]&#x27;</span>).inner_text()</span><br></pre></td></tr></table></figure>
+
+<p>这几行是先找面板，再找指定评论，最后取出它的作者和正文。<code>demo-101</code> 是这条演示记录的 ID，读取别的评论时自然要换成对应记录，不能把它当作列表通用选择器。</p>
+<p>为什么不直接在整个页面找正文？因为页面里可能同时留着主页面评论区、弹层和隐藏的旧面板。不限定范围，匹配到的内容就可能来自另一个区域。</p>
+<p><code>data-e2e</code> 也没有什么特殊魔法。它属于网站自定义的 <code>data-*</code> 属性，名字和用途都由开发者决定，<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/How_to/Use_data_attributes">HTML 本身并不保证它不会变</a>。只是相较于随样式处理的类名，这种明确表示用途的标记更值得优先检查。</p>
+<p><img src="https://img.iowill.com/file/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/%E7%BD%91%E9%A1%B5class%E5%8F%98%E4%BA%86-%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC%E6%80%8E%E4%B9%88%E5%AE%9A%E4%BD%8D%E5%85%83%E7%B4%A0/body1.png" alt="从页面到评论面板、单条评论和正文的定位范围"></p>
+<p><em>先限定评论面板，再在单条评论内读取正文。</em></p>
+<h2 id="相对路径与评论层级"><a href="#相对路径与评论层级" class="headerlink" title="相对路径与评论层级"></a>相对路径与评论层级</h2><p>没有好用的属性时，确实可以借助结构。比如先找到一条评论，再取作者信息后面的正文节点。</p>
+<p>但如果复制出来的是这种路径：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">/html/body/div[2]/div[1]/div[3]/div[4]/span</span><br></pre></td></tr></table></figure>
+
+<p>就得小心了。中间随便多包一层 <code>div</code>，这条路径就可能失效。尽量把查找范围缩到目标记录里面，少依赖那些与内容无关的层级。</p>
+<p>相邻关系也要检查。作者信息后面原本是正文，后来插入了一个提示条，脚本仍然可能读到文字，却已经读错了地方。</p>
+<p>还有评论里的回复。一级评论下面嵌套了二级回复时，搜索父节点的全部后代，会连回复的作者和正文一起找到。出现多个匹配结果，先看它们分别来自哪里，别直接加个 <code>.first</code> 把报错压下去。</p>
+<h2 id="加载延迟也会导致定位超时"><a href="#加载延迟也会导致定位超时" class="headerlink" title="加载延迟也会导致定位超时"></a>加载延迟也会导致定位超时</h2><p>按钮点开了，列表却还没加载出来，这种情况也很常见。</p>
+<p>排查时可以先停在出错的位置，看评论面板有没有展开，是加载中、空列表，还是已经显示了错误提示。节点如果在 iframe 里，还需要进入对应的 frame 定位。</p>
+<p>对于确定有评论的测试页面，可以等第一条评论可见：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">expect(panel).to_be_visible()</span><br><span class="line">expect(panel.locator(<span class="string">&#x27;[data-e2e=&quot;comment-item&quot;]&#x27;</span>).first).to_be_visible()</span><br></pre></td></tr></table></figure>
+
+<p>这里的 <code>.first</code> 只是用来判断列表开始显示，不是挑出某条业务记录。真实页面允许没有评论时，还要识别空状态，否则空列表也会一直等到超时。</p>
+<p>第一条出现，也不代表全部加载完了。尤其是虚拟滚动列表，DOM 里可能只保留当前屏幕附近的内容，不能拿节点数量直接当评论总数。</p>
+<h2 id="验证：修改-class-后能否继续定位"><a href="#验证：修改-class-后能否继续定位" class="headerlink" title="验证：修改 class 后能否继续定位"></a>验证：修改 class 后能否继续定位</h2><p><img src="https://img.iowill.com/file/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/%E7%BD%91%E9%A1%B5class%E5%8F%98%E4%BA%86-%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC%E6%80%8E%E4%B9%88%E5%AE%9A%E4%BD%8D%E5%85%83%E7%B4%A0/body2.png" alt="示例中 class 改变，data-e2e 属性保持不变"></p>
+<p><em>这个实验只替换样式类名，定位所用的属性保持不变。</em></p>
+<p>用下面这个小页面就能试。先安装依赖和浏览器：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python -m pip install playwright</span><br><span class="line">python -m playwright install chromium</span><br></pre></td></tr></table></figure>
+
+<p>代码会打开评论面板，读取正文，然后把评论节点的 class 改掉，再读一次：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> playwright.sync_api <span class="keyword">import</span> sync_playwright, expect</span><br><span class="line"></span><br><span class="line">HTML = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">&lt;button aria-label=&quot;打开评论&quot;</span></span><br><span class="line"><span class="string">        onclick=&quot;document.querySelector(&#x27;section&#x27;).hidden=false&quot;&gt;评论&lt;/button&gt;</span></span><br><span class="line"><span class="string">&lt;section data-e2e=&quot;comment-panel&quot; hidden&gt;</span></span><br><span class="line"><span class="string">  &lt;article class=&quot;m8Qx2LpA&quot; data-e2e=&quot;comment-item&quot; data-id=&quot;demo-101&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;span data-e2e=&quot;comment-author&quot;&gt;Billy 的代码手记&lt;/span&gt;</span></span><br><span class="line"><span class="string">    &lt;p data-e2e=&quot;comment-content&quot;&gt;这是一条演示评论。&lt;/p&gt;</span></span><br><span class="line"><span class="string">  &lt;/article&gt;</span></span><br><span class="line"><span class="string">&lt;/section&gt;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> sync_playwright() <span class="keyword">as</span> p:</span><br><span class="line">    browser = p.chromium.launch()</span><br><span class="line">    page = browser.new_page()</span><br><span class="line">    page.set_content(HTML)</span><br><span class="line">    page.get_by_role(<span class="string">&quot;button&quot;</span>, name=<span class="string">&quot;打开评论&quot;</span>, exact=<span class="literal">True</span>).click()</span><br><span class="line"></span><br><span class="line">    panel = page.locator(<span class="string">&#x27;[data-e2e=&quot;comment-panel&quot;]:visible&#x27;</span>)</span><br><span class="line">    expect(panel).to_have_count(<span class="number">1</span>)</span><br><span class="line">    expect(panel).to_be_visible()</span><br><span class="line"></span><br><span class="line">    item = panel.locator(<span class="string">&#x27;[data-e2e=&quot;comment-item&quot;][data-id=&quot;demo-101&quot;]&#x27;</span>)</span><br><span class="line">    expect(item).to_have_count(<span class="number">1</span>)</span><br><span class="line">    content = item.locator(<span class="string">&#x27;[data-e2e=&quot;comment-content&quot;]&#x27;</span>)</span><br><span class="line">    expect(content).to_have_text(<span class="string">&quot;这是一条演示评论。&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 模拟样式类名发生变化，业务属性保持不变。</span></span><br><span class="line">    item.evaluate(<span class="string">&quot;el =&gt; el.className = &#x27;q9Nv4ZtB&#x27;&quot;</span>)</span><br><span class="line">    expect(page.locator(<span class="string">&#x27;.m8Qx2LpA&#x27;</span>)).to_have_count(<span class="number">0</span>)</span><br><span class="line">    expect(content).to_have_text(<span class="string">&quot;这是一条演示评论。&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(content.inner_text())</span><br><span class="line">    browser.close()</span><br></pre></td></tr></table></figure>
+
+<p>这段示例已在本地运行通过，输出是：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">这是一条演示评论。</span><br></pre></td></tr></table></figure>
+
+<p>旧的 <code>.m8Qx2LpA</code> 已经匹配不到元素，按属性找到的正文仍然能读出来。原因也很简单：这次修改只动了 class，定位用到的属性还在。</p>
+<p>写实际脚本时，可以把这类检查留着：面板是否唯一、目标字段是否存在、读到的内容是否属于当前记录。比起“没有抛异常就继续往下跑”，出问题时会好查得多。</p>
+<p>至于评论去重，尽量使用页面实际提供的记录 ID，并带上所属页面、父评论等必要信息。两个人可能发一样的话，列表也可能在滚动时复用同一个节点，文字相同或位置相同，都不等于同一条评论。</p>
+<p>维护选择器时，顺手记下它找的是哪个区域、正常应匹配几个元素。下次脚本再停住，就有东西可以对照，不用重新从一整页 DOM 里猜起。</p>
+]]></content>
+      <categories>
+        <category>编程开发</category>
+      </categories>
+      <tags>
+        <tag>CSS选择器</tag>
+        <tag>DOM</tag>
+        <tag>Playwright</tag>
+        <tag>浏览器自动化</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>版本号怎么定？从 1.0.0 理解语义化版本</title>
     <url>/blog/2026/10/semantic-versioning/</url>
     <content><![CDATA[<p>给项目发一个新版本，代码改完了，版本号却不一定好定。</p>

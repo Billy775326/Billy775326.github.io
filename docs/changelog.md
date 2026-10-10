@@ -227,3 +227,8 @@
 
 - 按用户要求删除：archlinux-kde-one-week-review、maa-readme、redroid-maa-arknights-on-linux、redroid-fgo-on-linux、build-blog-hexo-butterfly、redroid-arknights。
 - 保留迁移基线及明确删除记录，清理上下篇与历史侧栏入口；文章数为 43，分页为 18/18/7。
+
+## 2026-10-10 发布元素定位文章
+
+- 发布《网页 class 变了，自动化脚本怎么定位元素？》，使用用户确认文稿；封面、两张插图及缩略图上传图床，原图和提示词存入 upload。
+- 全站 44 篇，分页 18/18/8；同步搜索、分类标签、统计及回归测试基线。

@@ -1,6 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://iowill.com/blog/2026/10/dynamic-class-locators/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-10-10T07:25:55.000Z</lastmod>
+  </url>
+  <url>
     <loc>https://iowill.com/blog/2026/10/semantic-versioning/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -329,6 +335,16 @@
     <priority>0.2</priority>
   </url>
   <url>
+    <loc>https://iowill.com/tags/CSS%E9%80%89%E6%8B%A9%E5%99%A8/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://iowill.com/tags/DOM/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
     <loc>https://iowill.com/tags/Debian/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -420,6 +436,11 @@
   </url>
   <url>
     <loc>https://iowill.com/tags/Office/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://iowill.com/tags/Playwright/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -635,6 +656,11 @@
   </url>
   <url>
     <loc>https://iowill.com/tags/%E6%B4%9B%E5%85%8B%E7%8E%8B%E5%9B%BD/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://iowill.com/tags/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%87%AA%E5%8A%A8%E5%8C%96/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
