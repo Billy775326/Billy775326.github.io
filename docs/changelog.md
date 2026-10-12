@@ -247,3 +247,8 @@
 
 - 删除 apatch-patch-boot、ffmpeg-live-streaming、vnc-viewer-notes、install-office-suite、build-own-server-project、debian12-root-partition-resize、linux-memory-paging-va-to-pa；源文件已在仓库外备份，删除记录保存在 migration/removed-posts.json。
 - 同步相关入口、搜索、分类标签与统计；全站 38 篇，分页 18/18/2。
+
+## 2026-10-12 恢复历史文章封面
+
+- 对照 billy12.xyz 与 upload，为 25 篇默认封面文章恢复原封面，共 20 张原图，上传原图及缩略图到 img.iowill.com。
+- 同步卡片、文章分享、相邻文章和历史页面侧栏；逐篇来源与上传映射见 upload/封面恢复-2026-10-12。正文和文章时间不变。
