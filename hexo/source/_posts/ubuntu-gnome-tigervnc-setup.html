@@ -13,7 +13,7 @@ disableNunjucks: true
 migration_order: 7
 legacy_html: true
 comments: false
-related_nav: [{"url": "/blog/2026/09/apatch-patch-boot/", "rel": "prev", "title": "apatch修补boot"}, {"url": "/blog/2026/09/tigervnc-lock-screen-fix/", "rel": "next", "title": "TigerVNC 锁屏问题解决方案"}]
+related_nav: [{"url": "/blog/2026/09/tigervnc-lock-screen-fix/", "rel": "next", "title": "TigerVNC 锁屏问题解决方案"}]
 ---
 <h1 id="Ubuntu-GNOME-桌面安装和配置-TigerVNC，包含服务设置、桌面环境适配和防火墙配置"><a class="headerlink" href="#Ubuntu-GNOME-桌面安装和配置-TigerVNC，包含服务设置、桌面环境适配和防火墙配置" title="Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置"></a>Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置</h1><h2 id="一、安装-TigerVNC"><a class="headerlink" href="#一、安装-TigerVNC" title="一、安装 TigerVNC"></a>一、安装 TigerVNC</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br/><span class="line"><span class="built_in">sudo</span> apt install tigervnc-standalone-server tigervnc-common -y</span><br/></pre></td></tr></table></figure>
 <h2 id="二、首次配置"><a class="headerlink" href="#二、首次配置" title="二、首次配置"></a>二、首次配置</h2><h3 id="1-设置-VNC-密码（长度需-≥6-位）"><a class="headerlink" href="#1-设置-VNC-密码（长度需-≥6-位）" title="1. 设置 VNC 密码（长度需 ≥6 位）"></a>1. 设置 VNC 密码（长度需 ≥6 位）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">vncpasswd</span><br/></pre></td></tr></table></figure>

@@ -242,3 +242,8 @@
 - 使用确认标题《用了代理，为什么还会暴露真实 IP？WebRTC 泄漏排查与防护》，分类为系统与运维。
 - 专属封面、两张正文图和缩略图上传图床；原图、提示词与 URI 映射保留在 upload。
 - 全站 45 篇，分页 18/18/9，同步索引、分类标签及文章回归基线。
+
+## 2026-10-12 删除七篇指定文章
+
+- 删除 apatch-patch-boot、ffmpeg-live-streaming、vnc-viewer-notes、install-office-suite、build-own-server-project、debian12-root-partition-resize、linux-memory-paging-va-to-pa；源文件已在仓库外备份，删除记录保存在 migration/removed-posts.json。
+- 同步相关入口、搜索、分类标签与统计；全站 38 篇，分页 18/18/2。

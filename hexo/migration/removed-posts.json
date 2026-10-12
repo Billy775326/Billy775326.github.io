@@ -34,5 +34,47 @@
     "url": "/blog/2026/09/redroid-arknights/",
     "reason": "用户要求删除",
     "removed_at": "2026-10-09T10:00:54+00:00"
+  },
+  {
+    "slug": "debian12-root-partition-resize",
+    "url": "/blog/2024/09/debian12-root-partition-resize/",
+    "reason": "用户要求删除",
+    "removed_at": "2026-10-12T08:14:16+00:00"
+  },
+  {
+    "slug": "linux-memory-paging-va-to-pa",
+    "url": "/blog/2024/09/linux-memory-paging-va-to-pa/",
+    "reason": "用户要求删除",
+    "removed_at": "2026-10-12T08:14:16+00:00"
+  },
+  {
+    "slug": "apatch-patch-boot",
+    "url": "/blog/2026/09/apatch-patch-boot/",
+    "reason": "用户要求删除",
+    "removed_at": "2026-10-12T08:14:16+00:00"
+  },
+  {
+    "slug": "build-own-server-project",
+    "url": "/blog/2026/09/build-own-server-project/",
+    "reason": "用户要求删除",
+    "removed_at": "2026-10-12T08:14:16+00:00"
+  },
+  {
+    "slug": "ffmpeg-live-streaming",
+    "url": "/blog/2026/09/ffmpeg-live-streaming/",
+    "reason": "用户要求删除",
+    "removed_at": "2026-10-12T08:14:16+00:00"
+  },
+  {
+    "slug": "install-office-suite",
+    "url": "/blog/2026/09/install-office-suite/",
+    "reason": "用户要求删除",
+    "removed_at": "2026-10-12T08:14:16+00:00"
+  },
+  {
+    "slug": "vnc-viewer-notes",
+    "url": "/blog/2026/09/vnc-viewer-notes/",
+    "reason": "用户要求删除",
+    "removed_at": "2026-10-12T08:14:16+00:00"
   }
 ]

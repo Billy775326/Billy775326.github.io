@@ -82,37 +82,7 @@
     <lastmod>2026-09-10T07:29:21.000Z</lastmod>
   </url>
   <url>
-    <loc>https://iowill.com/blog/2026/09/apatch-patch-boot/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <lastmod>2026-09-10T07:29:21.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://iowill.com/blog/2026/09/ffmpeg-live-streaming/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <lastmod>2026-09-10T07:29:21.000Z</lastmod>
-  </url>
-  <url>
     <loc>https://iowill.com/blog/2026/09/linuxqq-wont-start-core-dump/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <lastmod>2026-09-10T07:29:21.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://iowill.com/blog/2026/09/vnc-viewer-notes/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <lastmod>2026-09-10T07:29:21.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://iowill.com/blog/2026/09/install-office-suite/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <lastmod>2026-09-10T07:29:21.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://iowill.com/blog/2026/09/build-own-server-project/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <lastmod>2026-09-10T07:29:21.000Z</lastmod>
@@ -232,19 +202,7 @@
     <lastmod>2024-09-20T12:46:05.000Z</lastmod>
   </url>
   <url>
-    <loc>https://iowill.com/blog/2024/09/debian12-root-partition-resize/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <lastmod>2024-09-20T12:46:05.000Z</lastmod>
-  </url>
-  <url>
     <loc>https://iowill.com/blog/2024/09/bmp-image-format/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <lastmod>2024-09-20T12:46:05.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://iowill.com/blog/2024/09/linux-memory-paging-va-to-pa/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <lastmod>2024-09-20T12:46:05.000Z</lastmod>
@@ -302,16 +260,6 @@
   </url>
   <url>
     <loc>https://iowill.com/tags/AI%E6%90%9C%E7%B4%A2/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  <url>
-    <loc>https://iowill.com/tags/APatch/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  <url>
-    <loc>https://iowill.com/tags/Android/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -386,11 +334,6 @@
     <priority>0.2</priority>
   </url>
   <url>
-    <loc>https://iowill.com/tags/FFmpeg/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  <url>
     <loc>https://iowill.com/tags/GEO/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -421,11 +364,6 @@
     <priority>0.2</priority>
   </url>
   <url>
-    <loc>https://iowill.com/tags/LXDE/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  <url>
     <loc>https://iowill.com/tags/LeetCode/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -442,11 +380,6 @@
   </url>
   <url>
     <loc>https://iowill.com/tags/MySQL/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  <url>
-    <loc>https://iowill.com/tags/Office/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -571,11 +504,6 @@
     <priority>0.2</priority>
   </url>
   <url>
-    <loc>https://iowill.com/tags/%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  <url>
     <loc>https://iowill.com/tags/%E5%8D%8F%E7%A8%8B/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -661,11 +589,6 @@
     <priority>0.2</priority>
   </url>
   <url>
-    <loc>https://iowill.com/tags/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  <url>
     <loc>https://iowill.com/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -692,11 +615,6 @@
   </url>
   <url>
     <loc>https://iowill.com/tags/%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  <url>
-    <loc>https://iowill.com/tags/%E7%9B%B4%E6%92%AD%E6%8E%A8%E6%B5%81/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -747,11 +665,6 @@
   </url>
   <url>
     <loc>https://iowill.com/tags/%E8%87%AA%E6%89%98%E7%AE%A1/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  <url>
-    <loc>https://iowill.com/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
