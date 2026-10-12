@@ -1,6 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>用了代理，为什么还会暴露真实 IP？WebRTC 泄漏排查与防护</title>
+    <url>/blog/2026/10/webrtc-ip-leak/</url>
+    <content><![CDATA[<p>浏览器设置好代理后，打开 IP 查询页面，显示的已经是代理节点地址。换到 WebRTC 检测页面，却可能又出现本地宽带的公网出口。</p>
+<p>看起来像是代理失效了，但普通网页访问可能一直正常走代理。需要排查的是：<strong>浏览器的其他连接，是否也经过了同一个出口。</strong></p>
+<p>这里说的“真实 IP”，主要指你希望通过代理隐藏的本地公网出口地址。它可能属于家里的路由器、运营商共享出口，也可能是设备的公网 IPv6 地址，并不等同于能够唯一识别某个人的身份信息。</p>
+<p>本文讨论的是机制和排查方法，代码片段来自公开项目；没有把某台服务器或某个浏览器版本的实际泄漏测试当作前提。</p>
+<h2 id="网页走代理，不代表所有连接都走代理"><a href="#网页走代理，不代表所有连接都走代理" class="headerlink" title="网页走代理，不代表所有连接都走代理"></a>网页走代理，不代表所有连接都走代理</h2><p>假设本地网络公网出口叫 A，代理服务器出口叫 B。</p>
+<p>普通网页请求已经按浏览器代理设置转发，网站看到 B：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">浏览器网页请求 → 本机代理客户端 → 远端节点 B → 网站</span><br></pre></td></tr></table></figure>
+
+<p>但浏览器还可能建立实时音视频、数据通道等连接。这些连接使用 WebRTC，其传输路径受浏览器实现、隐私策略、系统路由和代理能力共同影响。</p>
+<p>如果其中的请求直接从本地网络发出，就出现了另一条路径：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">浏览器 WebRTC 请求 → 本地网络出口 A → 外部服务器</span><br></pre></td></tr></table></figure>
+
+<p>这两条路径可以同时存在。因此，IP 查询页面显示 B，只能说明那次网页请求的出口符合预期。</p>
+<p>RFC 8828 专门讨论了传统代理和分流 VPN 场景下的地址暴露：当直接联网仍被允许时，WebRTC 可能使用代理以外的路径。<a href="https://www.rfc-editor.org/rfc/rfc8828.html">参考：WebRTC IP Address Handling Requirements</a></p>
+<p><img src="https://img.iowill.com/file/%E7%B3%BB%E7%BB%9F%E4%B8%8E%E8%BF%90%E7%BB%B4/%E7%94%A8%E4%BA%86%E4%BB%A3%E7%90%86%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E4%BC%9A%E6%9A%B4%E9%9C%B2%E7%9C%9F%E5%AE%9EIP-WebRTC%E6%B3%84%E6%BC%8F%E6%8E%92%E6%9F%A5%E4%B8%8E%E9%98%B2%E6%8A%A4/body1.png" alt="网页通过代理出口 B，而 WebRTC 的 STUN 请求可能从本地出口 A 直连"></p>
+<p><em>同一个浏览器可能存在两条出站路径；网页显示代理地址不代表其他连接也走代理。</em></p>
+<h2 id="WebRTC-是怎么获得地址的"><a href="#WebRTC-是怎么获得地址的" class="headerlink" title="WebRTC 是怎么获得地址的"></a>WebRTC 是怎么获得地址的</h2><p>WebRTC 建立连接时，需要寻找可用的通信地址，并检查双方能否连通。这套过程通常涉及 ICE、STUN 和 TURN。</p>
+<p>可以把它们理解为三个不同的职责：</p>
+<ul>
+<li>ICE 负责收集和检查候选路径。</li>
+<li>STUN 可以帮助发现外部服务器看到的公网映射地址。</li>
+<li>TURN 提供中继，在需要时通过中继服务器转发通信。</li>
+</ul>
+<p>浏览器可能向网页提供不同类型的 ICE 候选。判断检测结果时，不能把它们混成一个“IP 列表”：</p>
+<table>
+<thead>
+<tr>
+<th>候选类型</th>
+<th>大致含义</th>
+<th>检查重点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>host</code></td>
+<td>本机接口对应的候选地址</td>
+<td>是否暴露了不希望提供给网页的本地网络信息</td>
+</tr>
+<tr>
+<td><code>srflx</code></td>
+<td>通常通过 STUN 获取的映射地址</td>
+<td>是否出现本地公网出口 A</td>
+</tr>
+<tr>
+<td><code>relay</code></td>
+<td>TURN 分配的中继地址</td>
+<td>地址属于哪个中继出口</td>
+</tr>
+<tr>
+<td><code>prflx</code></td>
+<td>连通性检查中发现的对端反射候选</td>
+<td>结合连接过程判断，不能只看标签</td>
+</tr>
+</tbody></table>
+<p>这些类型描述地址的来源，不是风险等级。例如一个 <code>host</code> 候选也可能对应公网接口；一个 <code>srflx</code> 候选则可能是符合预期的代理出口。<a href="https://developer.mozilla.org/en-US/docs/Web/API/RTCIceCandidate/type">参考：MDN 的 ICE 候选类型说明</a></p>
+<p>浏览器有时会用 mDNS 名称隐藏本地候选中的数字地址。看到 <code>.local</code> 不等于公网出口已经隐藏，也不能反过来把每个局域网地址都当成公网 IP 泄漏。<a href="https://www.w3.org/TR/webrtc/">参考：W3C WebRTC 规范</a></p>
+<h2 id="DoH-为什么不能顺便解决这个问题"><a href="#DoH-为什么不能顺便解决这个问题" class="headerlink" title="DoH 为什么不能顺便解决这个问题"></a>DoH 为什么不能顺便解决这个问题</h2><p>最容易混淆的是“找服务器地址”和“连接服务器”这两个动作。</p>
+<p>DNS 查询回答的是：这个域名对应哪个地址？DoH 把查询放进 HTTPS 连接，保护查询的传输过程。</p>
+<p>STUN 请求回答的则是：外部服务器看到我从哪个地址发来请求？它关心的是实际连接来源。</p>
+<p>假设整个过程如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1. 网页请求通过代理，网站看到 B。</span><br><span class="line">2. STUN 服务域名通过 DoH 解析，查询内容被加密。</span><br><span class="line">3. 浏览器向解析出的地址发送 STUN 请求，却从 A 直接出站。</span><br><span class="line">4. STUN 服务器看到 A，并返回对应的映射地址。</span><br></pre></td></tr></table></figure>
+
+<p>第二步完全可以正常使用 DoH，而第三步仍然走错出口。DNS 查询没有泄漏，不代表公网地址没有暴露。</p>
+<p>一个更直观的反例是：如果服务地址已经缓存，或者直接给出 IP，本次连接可以不做 DNS 查询，但直连的来源地址仍然存在。</p>
+<p>即便通信内容经过加密，接收连接的服务器仍需要看到来源地址。隐藏查询内容和改变网络出口，是两项不同的工作。<a href="https://www.rfc-editor.org/rfc/rfc8484.html">参考：RFC 8484，DNS over HTTPS</a></p>
+<h2 id="配置了-proxy-出口，为什么还不够"><a href="#配置了-proxy-出口，为什么还不够" class="headerlink" title="配置了 proxy 出口，为什么还不够"></a>配置了 proxy 出口，为什么还不够</h2><p>看代理配置时，经常会遇到类似的规则：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;field&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;network&quot;</span><span class="punctuation">:</span> <span class="string">&quot;tcp,udp&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;outboundTag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;proxy&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这条规则容易被理解为“整台电脑的 TCP 和 UDP 都会经过代理”。实际上，它负责的是代理程序内部的路由选择。<strong>流量先进入代理程序，规则才有机会处理它。</strong></p>
+<p>以 <code>jrangus/3x-ui</code> 的 <code>3560e61</code> 快照为例，默认 JSON 订阅包含本地 SOCKS 和 HTTP 入口，再将匹配流量交给 <code>proxy</code> 出站。SOCKS 入口开启 UDP 支持，表示它能处理应用交给它的 UDP，并不会自动拦截本地网卡上的所有 UDP。</p>
+<p>这个提交把默认 DNS 改成了 DoH，但上述出站规则原本就存在，也没有同时新增客户端 TUN 或浏览器限制。<a href="https://github.com/jrangus/3x-ui/commit/3560e610567156676571653a7b0f5d538755ce8c">参考：提交 diff</a></p>
+<p>所以检查配置时，需要分开问：</p>
+<ol>
+<li>请求有没有进入代理客户端？</li>
+<li>进入后匹配了哪条规则、选择了哪个出口？</li>
+</ol>
+<p>第一个问题没解决，继续调整第二个问题的规则通常没有用。远端服务器也拦不住客户端直接发往别处的请求。</p>
+<h2 id="只使用浏览器代理，可以怎样处理"><a href="#只使用浏览器代理，可以怎样处理" class="headerlink" title="只使用浏览器代理，可以怎样处理"></a>只使用浏览器代理，可以怎样处理</h2><p>如果只配置了浏览器代理，又希望保留 WebRTC，需要查看浏览器是否提供限制非代理 WebRTC 通信的策略。</p>
+<p>例如 Chrome 扩展隐私 API 提供 <code>webRTCIPHandlingPolicy</code>，其中包括 <code>disable_non_proxied_udp</code>。它是浏览器扩展使用的设置接口，不是随便在网页控制台执行一句代码就能修改的普通页面权限。<a href="https://developer.chrome.com/docs/extensions/reference/api/privacy">参考：Chrome privacy API</a></p>
+<p>使用这类策略时，应确认设置真正生效，并测试通话或数据通道是否仍然可用。代理和浏览器的能力不同，限制直连后，某些连接可能改走可用的中继路径，也可能直接失败。</p>
+<p>如果完全不需要实时音视频和数据通道，也可以选择浏览器支持的禁用方式。代价是依赖 WebRTC 的会议、通话和其他功能可能无法工作。</p>
+<p>不要只取消摄像头、麦克风权限就认定问题解决：数据通道并不要求采集音视频。需要验证的是地址收集和网络连接行为。<a href="https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/createDataChannel">参考：RTCPeerConnection.createDataChannel()</a></p>
+<h2 id="使用-TUN，还要检查什么"><a href="#使用-TUN，还要检查什么" class="headerlink" title="使用 TUN，还要检查什么"></a>使用 TUN，还要检查什么</h2><p>TUN 的作用是让更多应用流量进入客户端，再由客户端决定出站路径。但“TUN 已开启”仍然只是一个配置状态。</p>
+<p>实际排查时，我会把检查拆成下面几项：</p>
+<table>
+<thead>
+<tr>
+<th>检查项</th>
+<th>需要确认的行为</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>UDP</td>
+<td>WebRTC 相关流量是否被接管，后续链路是否支持</td>
+</tr>
+<tr>
+<td>IPv6</td>
+<td>是否存在只代理 IPv4、IPv6 仍然直连的情况</td>
+</tr>
+<tr>
+<td>分流规则</td>
+<td>浏览器或目标地址有没有被排除、设置为直连</td>
+</tr>
+<tr>
+<td>多网卡</td>
+<td>Wi-Fi、有线和虚拟网卡切换后是否出现其他出站路径</td>
+</tr>
+<tr>
+<td>隧道中断</td>
+<td>客户端断开后，应用会失败还是退回本地直连</td>
+</tr>
+</tbody></table>
+<p>如果需求是不允许绕过隧道，需要客户端或操作系统的出站限制来兜底。所谓 kill switch，关注的就是隧道不可用时如何处理后续流量。</p>
+<p>这不意味着要阻断所有物理网卡通信：隧道连接自身也要通过物理网络建立。实际规则需要保留建立隧道所需的流量，同时限制应受保护的应用绕行，不能直接照搬一条“禁止全部出站”的命令。</p>
+<p><img src="https://img.iowill.com/file/%E7%B3%BB%E7%BB%9F%E4%B8%8E%E8%BF%90%E7%BB%B4/%E7%94%A8%E4%BA%86%E4%BB%A3%E7%90%86%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E4%BC%9A%E6%9A%B4%E9%9C%B2%E7%9C%9F%E5%AE%9EIP-WebRTC%E6%B3%84%E6%BC%8F%E6%8E%92%E6%9F%A5%E4%B8%8E%E9%98%B2%E6%8A%A4/body2.png" alt="检查 IPv4 与 IPv6 流量接管、TUN 出口选择和阻止绕行三个环节"></p>
+<p><em>分别检查流量是否被接管、选择什么出口，以及隧道失效后是否允许直连。</em></p>
+<h2 id="如果你开发的是-WebRTC-应用"><a href="#如果你开发的是-WebRTC-应用" class="headerlink" title="如果你开发的是 WebRTC 应用"></a>如果你开发的是 WebRTC 应用</h2><p>开发者还可以从应用侧限制 ICE 候选的使用，例如设置 <code>iceTransportPolicy: &quot;relay&quot;</code>，并配置可用的 TURN 服务，使连接只使用中继候选。<a href="https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/RTCPeerConnection">参考：RTCPeerConnection 配置</a></p>
+<p>这项配置作用于你创建的连接，不能替用户控制所有网站。TURN 服务也仍会看到连接到它的来源地址；若目标是连 TURN 也只能通过指定出口访问，仍要处理客户端网络路径。</p>
+<p>应用策略、浏览器策略和系统路由各自有范围。把控制点放对位置，比单独增加一个“防泄漏”开关更有用。</p>
+<h2 id="修改后怎么确认有效"><a href="#修改后怎么确认有效" class="headerlink" title="修改后怎么确认有效"></a>修改后怎么确认有效</h2><p>可以用下面的顺序做对照，避免只看一次检测页面就下结论。</p>
+<ol>
+<li><strong>记录基线。</strong> 在自己可控的测试环境中，分别记录本地 IPv4、IPv6 出口和期望的代理出口。地址只用于自己比对，分享截图时打码。</li>
+<li><strong>确认网页路径。</strong> 开启代理后检查网页请求出口，确认它确实发生了预期变化。</li>
+<li><strong>查看 ICE 候选和连接。</strong> 记录候选类型、地址及最终使用的候选对，判断是否出现不期望的本地公网出口。</li>
+<li><strong>对照客户端日志或抓包。</strong> 确认相关请求是否进入代理；抓包时关注物理网卡上是否出现绕过隧道的相关连接，不能只过滤一个固定端口。</li>
+<li><strong>测试中断和切换。</strong> 在可控环境中断开隧道、切换网络，再检查应用是否退回直连。不要在唯一的远程管理链路上贸然做断网实验。</li>
+</ol>
+<p>测试页面没有展示额外地址，可能来自浏览器限制、服务不可达、页面测试范围有限等不同原因。它只能说明这次测试没有观察到对应暴露，不能单独证明所有场景都已覆盖。</p>
+<p>也不要要求网页出口和 WebRTC 出口必须是同一个数字地址。多出口代理和 TURN 中继可能使用不同地址；判断依据应是这些地址是否属于预期路径，而不是简单比较是否相等。</p>
+<h2 id="几个容易误判的结果"><a href="#几个容易误判的结果" class="headerlink" title="几个容易误判的结果"></a>几个容易误判的结果</h2><table>
+<thead>
+<tr>
+<th>看到的现象</th>
+<th>能说明什么</th>
+<th>还不能说明什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IP 查询页面显示代理地址</td>
+<td>该次网页请求经过预期出口</td>
+<td>所有浏览器流量都经过代理</td>
+</tr>
+<tr>
+<td>DNS 使用 HTTPS</td>
+<td>使用该配置的查询传输被加密</td>
+<td>STUN 或其他连接没有直连</td>
+</tr>
+<tr>
+<td>SOCKS 开启 UDP</td>
+<td>入口具备处理相关 UDP 的能力</td>
+<td>浏览器一定把 UDP 交给它</td>
+</tr>
+<tr>
+<td>检测页出现 <code>.local</code></td>
+<td>某些本地候选使用名称表示</td>
+<td>公网出口一定不会暴露</td>
+</tr>
+<tr>
+<td>隧道断开后网页仍可访问</td>
+<td>存在其他可用访问路径或缓存等因素</td>
+<td>单凭现象就能确定具体泄漏协议</td>
+</tr>
+</tbody></table>
+<p>排查这类问题时，最值得追踪的是一条请求从浏览器到目标服务器的完整路径：谁接管它，谁决定出口，失败后是否允许直连。DoH 负责其中的 DNS 查询保护，不能替代对其他连接路径的控制。</p>
+]]></content>
+      <categories>
+        <category>系统与运维</category>
+      </categories>
+      <tags>
+        <tag>DNS</tag>
+        <tag>WebRTC</tag>
+        <tag>代理</tag>
+        <tag>网络故障排查</tag>
+        <tag>网络隐私</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>网页 class 变了，自动化脚本怎么定位元素？</title>
     <url>/blog/2026/10/dynamic-class-locators/</url>
     <content><![CDATA[<p>评论按钮明明就在页面上，脚本却一直等到超时。如果你也遇到过这种情况，可以打开开发者工具，看看当初复制的 class 还在不在。</p>

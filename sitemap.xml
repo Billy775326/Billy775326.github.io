@@ -1,6 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://iowill.com/blog/2026/10/webrtc-ip-leak/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-10-12T03:23:47.000Z</lastmod>
+  </url>
+  <url>
     <loc>https://iowill.com/blog/2026/10/dynamic-class-locators/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -340,6 +346,11 @@
     <priority>0.2</priority>
   </url>
   <url>
+    <loc>https://iowill.com/tags/DNS/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
     <loc>https://iowill.com/tags/DOM/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -505,12 +516,22 @@
     <priority>0.2</priority>
   </url>
   <url>
+    <loc>https://iowill.com/tags/WebRTC/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
     <loc>https://iowill.com/tags/WebServer/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   <url>
     <loc>https://iowill.com/tags/x11vnc/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://iowill.com/tags/%E4%BB%A3%E7%90%86/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -710,7 +731,17 @@
     <priority>0.2</priority>
   </url>
   <url>
+    <loc>https://iowill.com/tags/%E7%BD%91%E7%BB%9C%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
     <loc>https://iowill.com/tags/%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://iowill.com/tags/%E7%BD%91%E7%BB%9C%E9%9A%90%E7%A7%81/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
