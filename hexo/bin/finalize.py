@@ -29,7 +29,9 @@ def meta(s, key, value, prop=False):
 def navlink(p, rel):
     label = '上一篇' if rel == 'prev' else '下一篇'
     url = '/' + p['path'].removesuffix('index.html')
-    return f'<a class="pagination-related" href="{escape(url)}" rel="{rel}" title="{escape(p["title"])}" aria-label="{label}：{escape(p["title"])}"><img class="cover" loading="lazy" src="{escape(p["thumbnail"])}" alt="{escape(p["title"])}"><div class="info"><div class="info-1"><div class="info-item-1">{label}</div><div class="info-item-2">{escape(p["title"])}</div></div><div class="info-2">阅读全文：{escape(p["title"])}</div></div></a>'
+    arrow = 'left' if rel == 'prev' else 'right'
+    alignment = '' if rel == 'prev' else ' text-right'
+    return f'<a class="pagination-related {rel}-post" href="{escape(url)}" rel="{rel}" title="{escape(p["title"])}" aria-label="{label}：{escape(p["title"])}"><img class="cover" loading="lazy" src="{escape(p["thumbnail"])}" alt="{escape(p["title"])}"><div class="info{alignment}"><div class="info-1"><div class="info-item-1"><i class="fas fa-angle-{arrow} fa-fw" aria-hidden="true"></i>{label}</div><div class="info-item-2">{escape(p["title"])}</div></div><div class="info-2">阅读全文：{escape(p["title"])}</div></div></a>'
 
 for file in PUBLIC.rglob('*.html'):
     raw = file.read_text(encoding='utf8')
@@ -92,11 +94,15 @@ for file in PUBLIC.rglob('*.html'):
         meta(s, 'keywords', ','.join(t['name'] for t in p['tags']))
         meta(s, 'twitter:card', 'summary_large_image')
         nav = s.select_one('#pagination')
-        targets = [(lookup[n['url']], n['rel']) for n in p['related_nav'] if n['url'] in lookup and n['rel'] in ['prev', 'next']]
-        if not targets:
-            i = posts.index(p)
-            if i + 1 < len(posts): targets.append((posts[i + 1], 'prev'))
-            if i > 0: targets.append((posts[i - 1], 'next'))
+        # One reciprocal chronological chain. Legacy related_nav values can
+        # leave missing sides or point backwards after publication/deletion.
+        i = posts.index(p)
+        targets = []
+        if i + 1 < len(posts): targets.append((posts[i + 1], 'prev'))
+        if i > 0: targets.append((posts[i - 1], 'next'))
+        if nav is None and targets:
+            nav = s.new_tag('nav', attrs={'id': 'pagination', 'class': 'pagination-post'})
+            s.select_one('#article-container').insert_after(nav)
         if nav:
             nav.clear(); nav['aria-label'] = '文章导航'
             for target, direction in targets: nav.append(B(navlink(target, direction), 'html.parser'))

@@ -9,6 +9,19 @@ ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / 'public'
 posts = json.loads((ROOT / '.cache/posts.json').read_text(encoding='utf8'))
 assert posts
+for index, post in enumerate(posts):
+    page = B((PUBLIC / post['path']).read_text(encoding='utf8'), 'html.parser')
+    navs = page.select('#pagination')
+    assert len(navs) == 1, ('Missing or duplicate article navigation', post['path'])
+    wanted = []
+    if index + 1 < len(posts): wanted.append(('prev', posts[index + 1]))
+    if index > 0: wanted.append(('next', posts[index - 1]))
+    links = navs[0].select('a.pagination-related')
+    assert len(links) == len(wanted), ('Missing navigation side', post['path'])
+    for link, (direction, target) in zip(links, wanted):
+        assert link.get('rel') == [direction], (post['path'], direction)
+        assert unquote(link['href']) == '/' + target['path'].removesuffix('index.html'), ('Wrong adjacent article', post['path'])
+        assert link.get('title') == target['title'], ('Wrong navigation title', post['path'])
 expected = {'/' + p['path'].removesuffix('index.html') for p in posts}
 baseline = json.loads((ROOT / 'migration/posts.json').read_text(encoding='utf8'))
 lookup = {p['slug']: p for p in posts}
