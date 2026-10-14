@@ -1,21 +1,21 @@
 ---
 title: "20240413-Rust-09-结构体"
 date: "2024-09-20T12:46:08.000Z"
-updated: "2024-09-20T12:46:08.000Z"
+updated: "2026-10-14T14:32:02+08:00"
 permalink: "blog/2024/09/rust-09-structs/"
 slug: "rust-09-structs"
 categories: ["编程开发"]
 tags: ["Rust", "结构体", "数据类型"]
-description: "结构体和我们在“元组类型”章节论过的元组类似。和元组一样，结构体的每一部分可以是不同类型。但不同于元组，结构体需要命名各部分数据以便能清楚的表明其值的意义。由于有了这些名字，…"
+description: "整理 Rust 结构体的定义、实例化与字段访问，介绍字段初始化简写、结构体更新语法、元组结构体和类单元结构体，并结合示例讨论结构体数据的所有权，便于区分几种结构体写法。"
 cover: "https://img.iowill.com/file/编程开发/历史封面恢复/973a79f0ac7757a9/cover.jpg"
 thumbnail: "https://img.iowill.com/file/编程开发/历史封面恢复/973a79f0ac7757a9/thumbs/cover.jpg"
 disableNunjucks: true
 migration_order: 20
-legacy_html: true
+legacy_html: false
 comments: false
 related_nav: [{"url": "/blog/2024/09/cpp-concepts/", "rel": "prev", "title": "20240414-C++-Concepts"}, {"url": "/blog/2024/09/rust-08-slices/", "rel": "next", "title": "20240411-Rust-08-切片"}]
 ---
-<h1 id="结构体"><a class="headerlink" href="#结构体" title="结构体"></a>结构体</h1><h2 id="定义并实例化结构体"><a class="headerlink" href="#定义并实例化结构体" title="定义并实例化结构体"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch05-01-defining-structs.html#%E5%AE%9A%E4%B9%89%E5%B9%B6%E5%AE%9E%E4%BE%8B%E5%8C%96%E7%BB%93%E6%9E%84%E4%BD%93" rel="noopener" target="_blank">定义并实例化结构体</a></h2><p>结构体和我们在<a href="https://www.rustwiki.org.cn/zh-CN/book/ch03-02-data-types.html#%E5%85%83%E7%BB%84%E7%B1%BB%E5%9E%8B" rel="noopener" target="_blank">“元组类型”</a>章节论过的元组类似。和元组一样，结构体的每一部分可以是不同类型。但不同于元组，结构体需要命名各部分数据以便能清楚的表明其值的意义。由于有了这些名字，结构体比元组更灵活：不需要依赖顺序来指定或访问实例中的值。</p>
+<span id="结构体"></span><h2 id="定义并实例化结构体"><a class="headerlink" href="#定义并实例化结构体" title="定义并实例化结构体"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch05-01-defining-structs.html#%E5%AE%9A%E4%B9%89%E5%B9%B6%E5%AE%9E%E4%BE%8B%E5%8C%96%E7%BB%93%E6%9E%84%E4%BD%93" rel="noopener" target="_blank">定义并实例化结构体</a></h2><p>结构体和我们在<a href="https://www.rustwiki.org.cn/zh-CN/book/ch03-02-data-types.html#%E5%85%83%E7%BB%84%E7%B1%BB%E5%9E%8B" rel="noopener" target="_blank">“元组类型”</a>章节论过的元组类似。和元组一样，结构体的每一部分可以是不同类型。但不同于元组，结构体需要命名各部分数据以便能清楚的表明其值的意义。由于有了这些名字，结构体比元组更灵活：不需要依赖顺序来指定或访问实例中的值。</p>
 <p>定义结构体，需要使用 <code>struct</code> 关键字并为整个结构体提供一个名字。结构体的名字需要描述它所组合的数据的意义。接着，在大括号中，定义每一部分数据的名字和类型，我们称为 <strong>字段</strong>（<em>field</em>）。例如，示例 5-1 展示了一个存储用户账号信息的结构体：</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">User</span> {</span><br/><span class="line">    active: <span class="type">bool</span>,</span><br/><span class="line">    username: <span class="type">String</span>,</span><br/><span class="line">    email: <span class="type">String</span>,</span><br/><span class="line">    sign_in_count: <span class="type">u64</span>,</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
 <p>示例 5-1：<code>User</code> 结构体定义</p>

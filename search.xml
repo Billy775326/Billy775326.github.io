@@ -1287,7 +1287,7 @@ ip rule del priority 10199 \
   <entry>
     <title>TigerVNC 锁屏问题解决方案</title>
     <url>/blog/2026/09/tigervnc-lock-screen-fix/</url>
-    <content><![CDATA[<h1 id="TigerVNC-锁屏问题解决方案"><a class="headerlink" href="#TigerVNC-锁屏问题解决方案" title="TigerVNC 锁屏问题解决方案"></a>TigerVNC 锁屏问题解决方案</h1><h2 id="问题诊断"><a class="headerlink" href="#问题诊断" title="问题诊断"></a>问题诊断</h2><ul>
+    <content><![CDATA[<span id="TigerVNC-锁屏问题解决方案"></span><h2 id="问题诊断"><a class="headerlink" href="#问题诊断" title="问题诊断"></a>问题诊断</h2><ul>
 <li><strong>根本原因</strong>：Linux <code>logind</code> 服务将会话标记为”locked”（常见于休眠/锁屏后）</li>
 <li><strong>典型表现</strong>：<ul>
 <li>VNC 连接后黑屏</li>
@@ -1358,7 +1358,7 @@ ip rule del priority 10199 \
   <entry>
     <title>Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置</title>
     <url>/blog/2026/09/ubuntu-gnome-tigervnc-setup/</url>
-    <content><![CDATA[<h1 id="Ubuntu-GNOME-桌面安装和配置-TigerVNC，包含服务设置、桌面环境适配和防火墙配置"><a class="headerlink" href="#Ubuntu-GNOME-桌面安装和配置-TigerVNC，包含服务设置、桌面环境适配和防火墙配置" title="Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置"></a>Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置</h1><h2 id="一、安装-TigerVNC"><a class="headerlink" href="#一、安装-TigerVNC" title="一、安装 TigerVNC"></a>一、安装 TigerVNC</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br/><span class="line"><span class="built_in">sudo</span> apt install tigervnc-standalone-server tigervnc-common -y</span><br/></pre></td></tr></table></figure>
+    <content><![CDATA[<span id="Ubuntu-GNOME-桌面安装和配置-TigerVNC，包含服务设置、桌面环境适配和防火墙配置"></span><h2 id="一、安装-TigerVNC"><a class="headerlink" href="#一、安装-TigerVNC" title="一、安装 TigerVNC"></a>一、安装 TigerVNC</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br/><span class="line"><span class="built_in">sudo</span> apt install tigervnc-standalone-server tigervnc-common -y</span><br/></pre></td></tr></table></figure>
 <h2 id="二、首次配置"><a class="headerlink" href="#二、首次配置" title="二、首次配置"></a>二、首次配置</h2><h3 id="1-设置-VNC-密码（长度需-≥6-位）"><a class="headerlink" href="#1-设置-VNC-密码（长度需-≥6-位）" title="1. 设置 VNC 密码（长度需 ≥6 位）"></a>1. 设置 VNC 密码（长度需 ≥6 位）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vncpasswd</span><br/></pre></td></tr></table></figure>
 <p>密码文件会保存在 ~/.vnc/passwd。</p>
 <h3 id="2-创建-xstartup-配置文件（适配不同桌面环境）"><a class="headerlink" href="#2-创建-xstartup-配置文件（适配不同桌面环境）" title="2. 创建 xstartup 配置文件（适配不同桌面环境）"></a>2. 创建 xstartup 配置文件（适配不同桌面环境）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p ~/.vnc</span><br/><span class="line">nano ~/.vnc/xstartup</span><br/></pre></td></tr></table></figure>
@@ -1415,54 +1415,54 @@ ip rule del priority 10199 \
   <entry>
     <title>linuxQQ安装后双击启动无响应,提示追踪与中断点陷阱 (核心已转储)</title>
     <url>/blog/2026/09/linuxqq-wont-start-core-dump/</url>
-    <content><![CDATA[<h1 id="linuxQQ安装后双击启动无响应-提示追踪与中断点陷阱-核心已转储"><a class="headerlink" href="#linuxQQ安装后双击启动无响应-提示追踪与中断点陷阱-核心已转储" title="linuxQQ安装后双击启动无响应,提示追踪与中断点陷阱 (核心已转储)"></a>linuxQQ安装后双击启动无响应,提示追踪与中断点陷阱 (核心已转储)</h1><p>终端报错内容:</p>
+    <content><![CDATA[<span id="linuxQQ安装后双击启动无响应-提示追踪与中断点陷阱-核心已转储"></span><p>终端报错内容:</p>
 <blockquote>
 <p>root@ubuntu:~/Desktop# qq<br/>[0415/140821.298504:FATAL:electron_main_delegate.cc(295)] Running as root without –no-sandbox is not supported. See <a href="https://crbug.com/638180" rel="noopener" target="_blank">https://crbug.com/638180</a>.<br/>追踪与中断点陷阱 (核心已转储)</p>
 </blockquote>
 <p>这个错误表明你以 root 用户 运行 QQ（Linux 版），但 Electron 框架（QQ 使用的底层技术）出于安全考虑，默认禁止 root 用户直接运行。</p>
 <hr/>
 <p>[TOC]</p>
-<h1 id="解决方案："><a class="headerlink" href="#解决方案：" title="解决方案："></a>解决方案：</h1><h2 id="1-解决方案一：使用-–no-sandbox-参数"><a class="headerlink" href="#1-解决方案一：使用-–no-sandbox-参数" title="1. 解决方案一：使用 –no-sandbox 参数"></a>1. 解决方案一：使用 –no-sandbox 参数</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 添加参数运行 QQ</span></span><br/><span class="line">qq --no-sandbox</span><br/></pre></td></tr></table></figure>
+<h2 id="解决方案："><a class="headerlink" href="#解决方案：" title="解决方案："></a>解决方案：</h2><h3 id="1-解决方案一：使用-–no-sandbox-参数"><a class="headerlink" href="#1-解决方案一：使用-–no-sandbox-参数" title="1. 解决方案一：使用 –no-sandbox 参数"></a>1. 解决方案一：使用 –no-sandbox 参数</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 添加参数运行 QQ</span></span><br/><span class="line">qq --no-sandbox</span><br/></pre></td></tr></table></figure>
 <p>注意：这会降低安全性，仅建议临时使用。</p>
-<h2 id="2-解决方案二：创建普通用户运行（推荐）"><a class="headerlink" href="#2-解决方案二：创建普通用户运行（推荐）" title="2. 解决方案二：创建普通用户运行（推荐）"></a>2. 解决方案二：创建普通用户运行（推荐）</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建新用户</span></span><br/><span class="line"><span class="built_in">sudo</span> adduser qquser</span><br/><span class="line"></span><br/><span class="line"><span class="comment"># 切换到新用户</span></span><br/><span class="line"><span class="built_in">sudo</span> -i -u qquser</span><br/><span class="line"></span><br/><span class="line"><span class="comment"># 在新用户环境下运行 QQ</span></span><br/><span class="line">qq</span><br/></pre></td></tr></table></figure>
-<h2 id="3-解决方案三：修改-QQ-启动器"><a class="headerlink" href="#3-解决方案三：修改-QQ-启动器" title="3. 解决方案三：修改 QQ 启动器"></a>3. 解决方案三：修改 QQ 启动器</h2><h3 id="1-定位QQ桌面快捷方式"><a class="headerlink" href="#1-定位QQ桌面快捷方式" title="1. 定位QQ桌面快捷方式"></a>1. 定位QQ桌面快捷方式</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查找QQ桌面文件位置</span></span><br/><span class="line"><span class="built_in">sudo</span> find / -name <span class="string">"*qq*.desktop"</span> 2&gt;/dev/null</span><br/></pre></td></tr></table></figure>
+<h3 id="2-解决方案二：创建普通用户运行（推荐）"><a class="headerlink" href="#2-解决方案二：创建普通用户运行（推荐）" title="2. 解决方案二：创建普通用户运行（推荐）"></a>2. 解决方案二：创建普通用户运行（推荐）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建新用户</span></span><br/><span class="line"><span class="built_in">sudo</span> adduser qquser</span><br/><span class="line"></span><br/><span class="line"><span class="comment"># 切换到新用户</span></span><br/><span class="line"><span class="built_in">sudo</span> -i -u qquser</span><br/><span class="line"></span><br/><span class="line"><span class="comment"># 在新用户环境下运行 QQ</span></span><br/><span class="line">qq</span><br/></pre></td></tr></table></figure>
+<h3 id="3-解决方案三：修改-QQ-启动器"><a class="headerlink" href="#3-解决方案三：修改-QQ-启动器" title="3. 解决方案三：修改 QQ 启动器"></a>3. 解决方案三：修改 QQ 启动器</h3><h4 id="1-定位QQ桌面快捷方式"><a class="headerlink" href="#1-定位QQ桌面快捷方式" title="1. 定位QQ桌面快捷方式"></a>1. 定位QQ桌面快捷方式</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查找QQ桌面文件位置</span></span><br/><span class="line"><span class="built_in">sudo</span> find / -name <span class="string">"*qq*.desktop"</span> 2&gt;/dev/null</span><br/></pre></td></tr></table></figure>
 <p>通常路径为：</p>
 <p>/usr/share/applications/qq.desktop</p>
 <p>/opt/QQ/qq.desktop</p>
-<h3 id="2-修改启动器文件"><a class="headerlink" href="#2-修改启动器文件" title="2. 修改启动器文件"></a>2. 修改启动器文件</h3><p>以/usr/share/applications/qq.desktop为例</p>
+<h4 id="2-修改启动器文件"><a class="headerlink" href="#2-修改启动器文件" title="2. 修改启动器文件"></a>2. 修改启动器文件</h4><p>以/usr/share/applications/qq.desktop为例</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /usr/share/applications/qq.desktop</span><br/></pre></td></tr></table></figure>
-<h3 id="3-修改Exec行"><a class="headerlink" href="#3-修改Exec行" title="3. 修改Exec行"></a>3. 修改Exec行</h3><p>添加–no-sandbox</p>
+<h4 id="3-修改Exec行"><a class="headerlink" href="#3-修改Exec行" title="3. 修改Exec行"></a>3. 修改Exec行</h4><p>添加–no-sandbox</p>
 <figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[Desktop Entry]</span></span><br/><span class="line">...</span><br/><span class="line"><span class="attr">Exec</span>=qq --<span class="literal">no</span>-sandbox %U  <span class="comment"># 关键修改</span></span><br/><span class="line">...</span><br/></pre></td></tr></table></figure>
-<h3 id="4-更新桌面数据库"><a class="headerlink" href="#4-更新桌面数据库" title="4. 更新桌面数据库"></a>4. 更新桌面数据库</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> update-desktop-database</span><br/></pre></td></tr></table></figure>
-<h3 id="5-创建安全封装脚本（推荐）"><a class="headerlink" href="#5-创建安全封装脚本（推荐）" title="5. 创建安全封装脚本（推荐）"></a>5. 创建安全封装脚本（推荐）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /usr/local/bin/qq-safe</span><br/></pre></td></tr></table></figure>
+<h4 id="4-更新桌面数据库"><a class="headerlink" href="#4-更新桌面数据库" title="4. 更新桌面数据库"></a>4. 更新桌面数据库</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> update-desktop-database</span><br/></pre></td></tr></table></figure>
+<h4 id="5-创建安全封装脚本（推荐）"><a class="headerlink" href="#5-创建安全封装脚本（推荐）" title="5. 创建安全封装脚本（推荐）"></a>5. 创建安全封装脚本（推荐）</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /usr/local/bin/qq-safe</span><br/></pre></td></tr></table></figure>
 <p><strong>内容：</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br/><span class="line"><span class="comment"># 限制仅允许普通用户运行</span></span><br/><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="subst">$(id -u)</span>"</span> -eq 0 ]; <span class="keyword">then</span></span><br/><span class="line">    <span class="built_in">echo</span> <span class="string">"Error: QQ should not run as root!"</span></span><br/><span class="line">    <span class="built_in">exit</span> 1</span><br/><span class="line"><span class="keyword">fi</span></span><br/><span class="line"><span class="built_in">exec</span> qq --no-sandbox <span class="string">"<span class="variable">$@</span>"</span></span><br/></pre></td></tr></table></figure>
 <p><strong>赋予权限：</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">chmod</span> +x /usr/local/bin/qq-safe</span><br/></pre></td></tr></table></figure>
-<h3 id="6-修改启动器指向新脚本"><a class="headerlink" href="#6-修改启动器指向新脚本" title="6. 修改启动器指向新脚本"></a>6. 修改启动器指向新脚本</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /usr/share/applications/qq.desktop</span><br/></pre></td></tr></table></figure>
+<h4 id="6-修改启动器指向新脚本"><a class="headerlink" href="#6-修改启动器指向新脚本" title="6. 修改启动器指向新脚本"></a>6. 修改启动器指向新脚本</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /usr/share/applications/qq.desktop</span><br/></pre></td></tr></table></figure>
 <p><strong>修改为：</strong></p>
 <figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">Exec</span>=/usr/local/bin/qq-safe %U</span><br/></pre></td></tr></table></figure>
-<h3 id="验证步骤"><a class="headerlink" href="#验证步骤" title="验证步骤"></a>验证步骤</h3><p>通过应用菜单启动QQ</p>
+<h4 id="验证步骤"><a class="headerlink" href="#验证步骤" title="验证步骤"></a>验证步骤</h4><p>通过应用菜单启动QQ</p>
 <p>检查进程权限：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps aux | grep -i qq | grep -v grep</span><br/></pre></td></tr></table></figure>
 <p>应显示：</p>
 <blockquote>
 <p>youruser   1234  0.5  2.1  … qq –no-sandbox</p>
 </blockquote>
-<h3 id="备选方案（若仍崩溃）"><a class="headerlink" href="#备选方案（若仍崩溃）" title="备选方案（若仍崩溃）"></a>备选方案（若仍崩溃）</h3><h4 id="A-使用–disable-gpu-sandbox双重参数"><a class="headerlink" href="#A-使用–disable-gpu-sandbox双重参数" title="A. 使用–disable-gpu-sandbox双重参数"></a>A. 使用–disable-gpu-sandbox双重参数</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> sed -i <span class="string">'s|Exec=.*|Exec=qq --no-sandbox --disable-gpu-sandbox %U|g'</span> /usr/share/applications/qq.desktop</span><br/></pre></td></tr></table></figure>
-<h4 id="B-设置Chromium标志"><a class="headerlink" href="#B-设置Chromium标志" title="B. 设置Chromium标志"></a>B. 设置Chromium标志</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p ~/.config/QQ</span><br/><span class="line"><span class="built_in">echo</span> <span class="string">'--no-sandbox'</span> &gt; ~/.config/QQ/electron-flags.conf</span><br/></pre></td></tr></table></figure>
-<h3 id="安全警告"><a class="headerlink" href="#安全警告" title="安全警告"></a>安全警告</h3><blockquote>
+<h4 id="备选方案（若仍崩溃）"><a class="headerlink" href="#备选方案（若仍崩溃）" title="备选方案（若仍崩溃）"></a>备选方案（若仍崩溃）</h4><h5 id="A-使用–disable-gpu-sandbox双重参数"><a class="headerlink" href="#A-使用–disable-gpu-sandbox双重参数" title="A. 使用–disable-gpu-sandbox双重参数"></a>A. 使用–disable-gpu-sandbox双重参数</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> sed -i <span class="string">'s|Exec=.*|Exec=qq --no-sandbox --disable-gpu-sandbox %U|g'</span> /usr/share/applications/qq.desktop</span><br/></pre></td></tr></table></figure>
+<h5 id="B-设置Chromium标志"><a class="headerlink" href="#B-设置Chromium标志" title="B. 设置Chromium标志"></a>B. 设置Chromium标志</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p ~/.config/QQ</span><br/><span class="line"><span class="built_in">echo</span> <span class="string">'--no-sandbox'</span> &gt; ~/.config/QQ/electron-flags.conf</span><br/></pre></td></tr></table></figure>
+<h4 id="安全警告"><a class="headerlink" href="#安全警告" title="安全警告"></a>安全警告</h4><blockquote>
 <p>长期使用–no-sandbox会降低安全性<br/>建议最终采用 普通用户方案：</p>
 </blockquote>
-<h2 id="4-解决方案四：使用-Deepin-Wine-版-QQ"><a class="headerlink" href="#4-解决方案四：使用-Deepin-Wine-版-QQ" title="4. 解决方案四：使用 Deepin-Wine 版 QQ"></a>4. 解决方案四：使用 Deepin-Wine 版 QQ</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装 Deepin-Wine 环境</span></span><br/><span class="line">wget -O- https://deepin-wine.i-m.dev/setup.sh | sh</span><br/><span class="line"></span><br/><span class="line"><span class="comment"># 安装 QQ</span></span><br/><span class="line"><span class="built_in">sudo</span> apt install com.qq.im.deepin</span><br/><span class="line"></span><br/><span class="line"><span class="comment"># 运行（无需 root）</span></span><br/><span class="line">deepin-wine6-stable ~/.deepinwine/Deepin-QQ/drive_c/Program\ Files/Tencent/QQ/Bin/QQ.exe</span><br/></pre></td></tr></table></figure>
+<h3 id="4-解决方案四：使用-Deepin-Wine-版-QQ"><a class="headerlink" href="#4-解决方案四：使用-Deepin-Wine-版-QQ" title="4. 解决方案四：使用 Deepin-Wine 版 QQ"></a>4. 解决方案四：使用 Deepin-Wine 版 QQ</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装 Deepin-Wine 环境</span></span><br/><span class="line">wget -O- https://deepin-wine.i-m.dev/setup.sh | sh</span><br/><span class="line"></span><br/><span class="line"><span class="comment"># 安装 QQ</span></span><br/><span class="line"><span class="built_in">sudo</span> apt install com.qq.im.deepin</span><br/><span class="line"></span><br/><span class="line"><span class="comment"># 运行（无需 root）</span></span><br/><span class="line">deepin-wine6-stable ~/.deepinwine/Deepin-QQ/drive_c/Program\ Files/Tencent/QQ/Bin/QQ.exe</span><br/></pre></td></tr></table></figure>
 <hr/>
-<h1 id="错误原因说明"><a class="headerlink" href="#错误原因说明" title="错误原因说明"></a>错误原因说明</h1><ul>
+<h2 id="错误原因说明"><a class="headerlink" href="#错误原因说明" title="错误原因说明"></a>错误原因说明</h2><ul>
 <li><p>安全沙箱（Sandbox）：Electron 应用默认启用沙箱隔离，root 用户会触发保护机制</p>
 </li>
 <li><p>核心转储：因权限问题导致进程崩溃</p>
 </li>
 </ul>
-<h2 id="永久修复建议"><a class="headerlink" href="#永久修复建议" title="永久修复建议"></a>永久修复建议</h2><p>避免以 root 运行图形应用</p>
+<h3 id="永久修复建议"><a class="headerlink" href="#永久修复建议" title="永久修复建议"></a>永久修复建议</h3><p>避免以 root 运行图形应用</p>
 <p>如果必须用 root，可配置系统策略：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> sysctl kernel.unprivileged_userns_clone=1</span><br/></pre></td></tr></table></figure>
 <p>验证是否修复</p>
@@ -1713,7 +1713,7 @@ ip rule del priority 10199 \
 <p>[!WARNING]</p>
 <p>以下操作可能会导致包括但不仅限于数据丢失、无法启动等问题，严重时您可能需要重装系统，如要继续，请确保已做好数据备份等准备工作。</p>
 </blockquote>
-<h1 id="Debian12根分区扩容记录"><a class="headerlink" href="#Debian12根分区扩容记录" title="Debian12根分区扩容记录"></a>Debian12根分区扩容记录</h1><h2 id="前言"><a class="headerlink" href="#前言" title="前言"></a>前言</h2><p>云上Debian12的机器，使用 <code>df -Th</code> 查看磁盘分区信息：</p>
+<span id="Debian12根分区扩容记录"></span><h2 id="前言"><a class="headerlink" href="#前言" title="前言"></a>前言</h2><p>云上Debian12的机器，使用 <code>df -Th</code> 查看磁盘分区信息：</p>
 <figure class="highlight text"><table><tr><td class="code"><pre><span class="line">root@xxx:~# df -Th</span><br/><span class="line">Filesystem     Type      Size  Used Avail Use% Mounted on</span><br/><span class="line">udev           devtmpfs  3.8G     0  3.8G   0% /dev</span><br/><span class="line">tmpfs          tmpfs     775M  852K  775M   1% /run</span><br/><span class="line">/dev/vda1      ext4       19G  5.7G   12G  33% /</span><br/><span class="line">tmpfs          tmpfs     3.8G     0  3.8G   0% /dev/shm</span><br/><span class="line">tmpfs          tmpfs     5.0M     0  5.0M   0% /run/lock</span><br/><span class="line">tmpfs          tmpfs     775M     0  775M   0% /run/user/0</span><br/><span class="line">overlay        overlay    19G  5.7G   12G  33% /var/lib/docker/overlay2/85022b6945d418b6979839b3897502dd192a7c7b11993f1a5e30b6f3af579595/merged</span><br/><span class="line">overlay        overlay    19G  5.7G   12G  33% /var/lib/docker/overlay2/faa3aef89ddf6113d5d5805e64bc6abeeb3cd5d01da27dde5e39dc7af7f399c4/merged</span><br/><span class="line">overlay        overlay    19G  5.7G   12G  33% /var/lib/docker/overlay2/e691e3e85e02b056a6001d2b3bffcb9033a6f6456bc5aac1c6ccc1cffbb4ead6/merged</span><br/><span class="line">overlay        overlay    19G  5.7G   12G  33% /var/lib/docker/overlay2/4c14da4bf849dba7c6d05c5bb7a3d4721a2a436efaff3b2dc14ad86885ad4cd5/merged</span><br/><span class="line"></span><br/></pre></td></tr></table></figure>
 <p>可以看到根分区/dev/vda1只有19G，<code>lsblk</code>查看磁盘使用情况：</p>
 <figure class="highlight text"><table><tr><td class="code"><pre><span class="line">root@xxx:~# lsblk</span><br/><span class="line">NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS</span><br/><span class="line">sr0     11:0    1 1024M  0 rom  </span><br/><span class="line">vda    254:0    0   20G  0 disk </span><br/><span class="line">├─vda1 254:1    0   19G  0 part /</span><br/><span class="line">├─vda2 254:2    0    1K  0 part </span><br/><span class="line">└─vda5 254:5    0  975M  0 part [SWAP]</span><br/><span class="line">vdb    254:16   0   30G  0 disk </span><br/></pre></td></tr></table></figure>
@@ -1976,7 +1976,7 @@ ip rule del priority 10199 \
   <entry>
     <title>20240413-Rust-09-结构体</title>
     <url>/blog/2024/09/rust-09-structs/</url>
-    <content><![CDATA[<h1 id="结构体"><a class="headerlink" href="#结构体" title="结构体"></a>结构体</h1><h2 id="定义并实例化结构体"><a class="headerlink" href="#定义并实例化结构体" title="定义并实例化结构体"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch05-01-defining-structs.html#%E5%AE%9A%E4%B9%89%E5%B9%B6%E5%AE%9E%E4%BE%8B%E5%8C%96%E7%BB%93%E6%9E%84%E4%BD%93" rel="noopener" target="_blank">定义并实例化结构体</a></h2><p>结构体和我们在<a href="https://www.rustwiki.org.cn/zh-CN/book/ch03-02-data-types.html#%E5%85%83%E7%BB%84%E7%B1%BB%E5%9E%8B" rel="noopener" target="_blank">“元组类型”</a>章节论过的元组类似。和元组一样，结构体的每一部分可以是不同类型。但不同于元组，结构体需要命名各部分数据以便能清楚的表明其值的意义。由于有了这些名字，结构体比元组更灵活：不需要依赖顺序来指定或访问实例中的值。</p>
+    <content><![CDATA[<span id="结构体"></span><h2 id="定义并实例化结构体"><a class="headerlink" href="#定义并实例化结构体" title="定义并实例化结构体"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch05-01-defining-structs.html#%E5%AE%9A%E4%B9%89%E5%B9%B6%E5%AE%9E%E4%BE%8B%E5%8C%96%E7%BB%93%E6%9E%84%E4%BD%93" rel="noopener" target="_blank">定义并实例化结构体</a></h2><p>结构体和我们在<a href="https://www.rustwiki.org.cn/zh-CN/book/ch03-02-data-types.html#%E5%85%83%E7%BB%84%E7%B1%BB%E5%9E%8B" rel="noopener" target="_blank">“元组类型”</a>章节论过的元组类似。和元组一样，结构体的每一部分可以是不同类型。但不同于元组，结构体需要命名各部分数据以便能清楚的表明其值的意义。由于有了这些名字，结构体比元组更灵活：不需要依赖顺序来指定或访问实例中的值。</p>
 <p>定义结构体，需要使用 <code>struct</code> 关键字并为整个结构体提供一个名字。结构体的名字需要描述它所组合的数据的意义。接着，在大括号中，定义每一部分数据的名字和类型，我们称为 <strong>字段</strong>（<em>field</em>）。例如，示例 5-1 展示了一个存储用户账号信息的结构体：</p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">User</span> {</span><br/><span class="line">    active: <span class="type">bool</span>,</span><br/><span class="line">    username: <span class="type">String</span>,</span><br/><span class="line">    email: <span class="type">String</span>,</span><br/><span class="line">    sign_in_count: <span class="type">u64</span>,</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
 <p>示例 5-1：<code>User</code> 结构体定义</p>
@@ -2048,7 +2048,7 @@ ip rule del priority 10199 \
   <entry>
     <title>20240414-C++-Concepts</title>
     <url>/blog/2024/09/cpp-concepts/</url>
-    <content><![CDATA[<h1 id="C-Concepts"><a class="headerlink" href="#C-Concepts" title="C++ Concepts"></a>C++ Concepts</h1><p>概念（Concepts）是C++20中引入的一项特性，它们是对模板参数的约束，用于指定模板参数必须满足的接口（例如，一组必需的函数、类型、操作符等）和语义要求。概念旨在提高模板编程的表达力和安全性，通过更清晰的语义来改善编译器错误信息，并促使编写更干净、更易于理解的代码。</p>
+    <content><![CDATA[<span id="C-Concepts"></span><p>概念（Concepts）是C++20中引入的一项特性，它们是对模板参数的约束，用于指定模板参数必须满足的接口（例如，一组必需的函数、类型、操作符等）和语义要求。概念旨在提高模板编程的表达力和安全性，通过更清晰的语义来改善编译器错误信息，并促使编写更干净、更易于理解的代码。</p>
 <p>在C++20之前，模板编程通常是通过特化和重载来实现各种约束的，这往往会产生冗长的错误信息，让人难以理解实际的问题所在。概念允许你以更声明式的方式指定约束，使得模板的意图更明确，能够在编译时提早发现错误，同时生成更有用的错误信息。</p>
 <p><strong>以下是一些使用概念的优势：</strong></p>
 <ol>
@@ -2082,7 +2082,7 @@ ip rule del priority 10199 \
     <title>20240627-WebServer-0</title>
     <url>/blog/2024/09/webserver-0-introduction/</url>
     <content><![CDATA[<p>在设计一个WebServer时，选择线程池还是协程取决于你的具体需求、预期的并发量、以及你对编程模型的偏好。下面我将从几个方面分析线程池和协程的优缺点，以帮助你做出决策。</p>
-<h3 id="线程池"><a class="headerlink" href="#线程池" title="线程池"></a>线程池</h3><p><strong>优点：</strong></p>
+<h2 id="线程池"><a class="headerlink" href="#线程池" title="线程池"></a>线程池</h2><p><strong>优点：</strong></p>
 <ol>
 <li><strong>成熟稳定</strong>：线程池是多线程编程中常用的技术，已经非常成熟和稳定。</li>
 <li><strong>易于理解</strong>：线程的概念在操作系统层面有明确的定义，对于大多数开发者来说，线程池模型更容易理解和实现。</li>
@@ -2093,7 +2093,7 @@ ip rule del priority 10199 \
 <li><strong>资源消耗</strong>：每个线程都需要一定的内存和上下文切换开销，当并发量很大时，线程池可能会消耗大量系统资源。</li>
 <li><strong>编程复杂性</strong>：多线程编程需要处理同步和竞态条件，这可能会增加编程的复杂性。</li>
 </ol>
-<h3 id="协程"><a class="headerlink" href="#协程" title="协程"></a>协程</h3><p><strong>优点：</strong></p>
+<h2 id="协程"><a class="headerlink" href="#协程" title="协程"></a>协程</h2><p><strong>优点：</strong></p>
 <ol>
 <li><strong>资源高效</strong>：协程是一种轻量级的用户态线程，切换开销远小于系统线程，因此在相同的资源下可以支持更高的并发量。</li>
 <li><strong>编程简单</strong>：协程通常是非抢占式的，开发者可以控制协程的切换时机，这使得并发编程更加简单，减少了锁和同步的需求。</li>
@@ -2104,25 +2104,25 @@ ip rule del priority 10199 \
 <li><strong>生态和兼容性</strong>：协程的生态相对线程来说还不够成熟，特别是在C++中，协程的支持直到C++20才正式引入，而且不同平台和编译器的支持程度不一。</li>
 <li><strong>学习曲线</strong>：协程的概念相对线程来说更新，可能需要开发者学习新的编程模型和API。</li>
 </ol>
-<h3 id="总结"><a class="headerlink" href="#总结" title="总结"></a>总结</h3><p>如果你的TinyWebServer预期并发量不是特别高，且你更倾向于使用成熟稳定的解决方案，那么线程池可能是一个不错的选择。线程池可以提供良好的性能，并且在大多数情况下足够使用。</p>
+<h2 id="总结"><a class="headerlink" href="#总结" title="总结"></a>总结</h2><p>如果你的TinyWebServer预期并发量不是特别高，且你更倾向于使用成熟稳定的解决方案，那么线程池可能是一个不错的选择。线程池可以提供良好的性能，并且在大多数情况下足够使用。</p>
 <p>如果你的服务器需要处理高并发的IO密集型任务，且你愿意接受新的编程模型，那么协程可能是更好的选择。协程可以提供更高的资源利用率和更简单的编程模型，尤其是在C++20及以上版本中，协程的支持已经得到了显著的改进。</p>
 <p>最终，选择哪种技术取决于你的具体需求、技术栈、以及你对并发编程模型的熟悉程度。在实际开发中，你也可以考虑结合使用线程池和协程，例如在IO密集型任务中使用协程，在CPU密集型任务中使用线程池，以达到最佳的性能和资源利用率。</p>
 <p>在开发Web服务器时，了解哪些操作是IO密集型，哪些是CPU密集型对于优化服务器性能至关重要。以下是一些常见的IO密集型和CPU密集型场景：</p>
-<h3 id="IO密集型场景"><a class="headerlink" href="#IO密集型场景" title="IO密集型场景"></a>IO密集型场景</h3><ol>
+<h2 id="IO密集型场景"><a class="headerlink" href="#IO密集型场景" title="IO密集型场景"></a>IO密集型场景</h2><ol>
 <li><strong>HTTP请求处理</strong>：Web服务器接收客户端的HTTP请求，这通常涉及网络IO操作，如读取请求数据、解析HTTP头部等。</li>
 <li><strong>数据库交互</strong>：服务器可能需要与数据库进行交互，执行查询、更新等操作，这些操作通常涉及磁盘IO。</li>
 <li><strong>文件系统操作</strong>：服务器可能需要读取或写入文件，如静态资源文件、配置文件等，这些操作也是IO密集型的。</li>
 <li><strong>外部服务调用</strong>：服务器可能需要调用外部服务，如API调用、第三方服务集成等，这些调用通常涉及网络IO。</li>
 <li><strong>会话管理</strong>：如果服务器需要管理用户会话，可能需要读写会话数据，这些操作可能涉及内存或磁盘IO。</li>
 </ol>
-<h3 id="CPU密集型场景"><a class="headerlink" href="#CPU密集型场景" title="CPU密集型场景"></a>CPU密集型场景</h3><ol>
+<h2 id="CPU密集型场景"><a class="headerlink" href="#CPU密集型场景" title="CPU密集型场景"></a>CPU密集型场景</h2><ol>
 <li><strong>数据处理和转换</strong>：服务器可能需要对请求数据进行复杂的处理或转换，如数据加密、解密、压缩、解压缩等。</li>
 <li><strong>模板渲染</strong>：如果服务器提供动态内容，可能需要使用模板引擎渲染页面，这通常涉及大量的字符串操作和逻辑判断。</li>
 <li><strong>算法执行</strong>：服务器可能需要执行复杂的算法，如搜索、排序、数据分析等。</li>
 <li><strong>图像处理</strong>：如果服务器需要处理图像数据，如缩放、裁剪、格式转换等，这些操作通常是CPU密集型的。</li>
 <li><strong>编译型语言的编译过程</strong>：如果服务器使用编译型语言（如Java、C#），启动时或动态编译代码可能会消耗大量CPU资源。</li>
 </ol>
-<h3 id="优化策略"><a class="headerlink" href="#优化策略" title="优化策略"></a>优化策略</h3><ul>
+<h2 id="优化策略"><a class="headerlink" href="#优化策略" title="优化策略"></a>优化策略</h2><ul>
 <li><strong>IO密集型优化</strong>：对于IO密集型任务，可以使用异步IO、非阻塞IO、协程等技术来提高IO操作的效率，减少等待时间，从而提高并发处理能力。</li>
 <li><strong>CPU密集型优化</strong>：对于CPU密集型任务，可以通过优化算法、使用更高效的代码实现、利用多线程或分布式计算等方式来提高CPU的利用率。</li>
 </ul>
@@ -2142,7 +2142,7 @@ ip rule del priority 10199 \
   <entry>
     <title>LeetCode-189.轮转数组</title>
     <url>/blog/2024/09/leetcode-189-rotate-array/</url>
-    <content><![CDATA[<h1 id="189-轮转数组"><a class="headerlink" href="#189-轮转数组" title="189.轮转数组"></a>189.轮转数组</h1><h2 id="题目描述"><a class="headerlink" href="#题目描述" title="题目描述"></a>题目描述</h2><p>给定一个整数数组 <code>nums</code>，将数组中的元素向右轮转 <code>k</code> 个位置，其中 <code>k</code> 是非负数。</p>
+    <content><![CDATA[<span id="189-轮转数组"></span><h2 id="题目描述"><a class="headerlink" href="#题目描述" title="题目描述"></a>题目描述</h2><p>给定一个整数数组 <code>nums</code>，将数组中的元素向右轮转 <code>k</code> 个位置，其中 <code>k</code> 是非负数。</p>
 <p><strong>示例 1:</strong></p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">输入: nums = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>], k = <span class="number">3</span></span><br/><span class="line">输出: [<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br/><span class="line">解释:</span><br/><span class="line">向右轮转 <span class="number">1</span> 步: [<span class="number">7</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br/><span class="line">向右轮转 <span class="number">2</span> 步: [<span class="number">6</span>,<span class="number">7</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br/><span class="line">向右轮转 <span class="number">3</span> 步: [<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br/></pre></td></tr></table></figure>
 <p><strong>示例 2:</strong></p>
@@ -2180,7 +2180,7 @@ ip rule del priority 10199 \
   <entry>
     <title>LeetCode-80.删除有序数组中的重复项II</title>
     <url>/blog/2024/09/leetcode-80-remove-duplicates-ii/</url>
-    <content><![CDATA[<h1 id="80-删除有序数组中的重复项II"><a class="headerlink" href="#80-删除有序数组中的重复项II" title="80.删除有序数组中的重复项II"></a>80.删除有序数组中的重复项II</h1><h2 id="题目描述"><a class="headerlink" href="#题目描述" title="题目描述"></a>题目描述</h2><p>给你一个有序数组 <code>nums</code> ，请你**<a href="http://baike.baidu.com/item/%E5%8E%9F%E5%9C%B0%E7%AE%97%E6%B3%95" rel="noopener" target="_blank"> 原地</a>** 删除重复出现的元素，使得出现次数超过两次的元素<strong>只出现两次</strong> ，返回删除后数组的新长度。</p>
+    <content><![CDATA[<span id="80-删除有序数组中的重复项II"></span><h2 id="题目描述"><a class="headerlink" href="#题目描述" title="题目描述"></a>题目描述</h2><p>给你一个有序数组 <code>nums</code> ，请你**<a href="http://baike.baidu.com/item/%E5%8E%9F%E5%9C%B0%E7%AE%97%E6%B3%95" rel="noopener" target="_blank"> 原地</a>** 删除重复出现的元素，使得出现次数超过两次的元素<strong>只出现两次</strong> ，返回删除后数组的新长度。</p>
 <p>不要使用额外的数组空间，你必须在 <strong><a href="https://baike.baidu.com/item/%E5%8E%9F%E5%9C%B0%E7%AE%97%E6%B3%95" rel="noopener" target="_blank">原地 </a>修改输入数组</strong> 并在使用 O(1) 额外空间的条件下完成。</p>
 <p><strong>说明：</strong></p>
 <p>为什么返回数值是整数，但输出的答案是数组呢？</p>
@@ -2219,7 +2219,7 @@ ip rule del priority 10199 \
   <entry>
     <title>20240409-Rust-03-数据类型</title>
     <url>/blog/2024/09/rust-03-data-types/</url>
-    <content><![CDATA[<h1 id="数据类型"><a class="headerlink" href="#数据类型" title="数据类型"></a>数据类型</h1><blockquote>
+    <content><![CDATA[<span id="数据类型"></span><blockquote>
 <p>Rust 的每个值都有确切的<strong>数据类型</strong>（<em>data type</em>），该类型告诉 Rust 数据是被指定成哪类数据，从而让 Rust 知道如何使用该数据。在本节中，我们将介绍两种数据类型：标量类型和复合类型。</p>
 <p>请记住 Rust 是一种<strong>静态类型</strong>（<em>statically typed</em>）的语言，这意味着它必须在编译期知道所有变量的类型。</p>
 </blockquote>
@@ -2306,7 +2306,7 @@ ip rule del priority 10199 \
 </tr>
 </tbody></table>
 <blockquote>
-<h5 id="整型溢出"><a class="headerlink" href="#整型溢出" title="整型溢出"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch03-02-data-types.html#%E6%95%B4%E5%9E%8B%E6%BA%A2%E5%87%BA" rel="noopener" target="_blank">整型溢出</a></h5><p>比方说有一个 <code>u8</code> ，它可以存放从 0 到 255 的值。那么当你将其修改为范围之外的值，比如 256，则会发生<strong>整型溢出</strong>（<em>integer overflow</em>），这会导致两种行为的其中一种。当在调试（debug）模式编译时，Rust 会检查整型溢出，若存在这些问题则使程序在编译时 <em>panic</em>。Rust 使用 panic 这个术语来表明程序因错误而退出。第 9 章 <a href="https://www.rustwiki.org.cn/zh-CN/book/ch09-01-unrecoverable-errors-with-panic.html" rel="noopener" target="_blank">“<code>panic!</code> 与不可恢复的错误”</a>会详细介绍 panic。</p>
+<h4 id="整型溢出"><a class="headerlink" href="#整型溢出" title="整型溢出"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch03-02-data-types.html#%E6%95%B4%E5%9E%8B%E6%BA%A2%E5%87%BA" rel="noopener" target="_blank">整型溢出</a></h4><p>比方说有一个 <code>u8</code> ，它可以存放从 0 到 255 的值。那么当你将其修改为范围之外的值，比如 256，则会发生<strong>整型溢出</strong>（<em>integer overflow</em>），这会导致两种行为的其中一种。当在调试（debug）模式编译时，Rust 会检查整型溢出，若存在这些问题则使程序在编译时 <em>panic</em>。Rust 使用 panic 这个术语来表明程序因错误而退出。第 9 章 <a href="https://www.rustwiki.org.cn/zh-CN/book/ch09-01-unrecoverable-errors-with-panic.html" rel="noopener" target="_blank">“<code>panic!</code> 与不可恢复的错误”</a>会详细介绍 panic。</p>
 <p>在当使用 <code>--release</code> 参数进行发布（release）模式构建时，Rust <strong>不</strong>检测会导致 panic 的整型溢出。相反当检测到整型溢出时，Rust 会进行一种被称为二进制补码包裹（<em>two’s complement wrapping</em>）的操作。简而言之，大于该类型最大值的数值会被“包裹”成该类型能够支持的对应数字的最小值。比如在 <code>u8</code> 的情况下，256 变成 0，257 变成 1，依此类推。程序不会 panic，但是该变量的值可能不是你期望的值。依赖整型溢出包裹的行为不是一种正确的做法。</p>
 <p>要显式处理溢出的可能性，可以使用标准库针对原始数字类型提供的以下一系列方法：</p>
 <ul>
@@ -2416,7 +2416,7 @@ ip rule del priority 10199 \
   <entry>
     <title>20240410-Rust-04-语句与表达式与函数</title>
     <url>/blog/2024/09/rust-04-statements-expressions-functions/</url>
-    <content><![CDATA[<h1 id="语句与表达式与函数"><a class="headerlink" href="#语句与表达式与函数" title="语句与表达式与函数"></a>语句与表达式与函数</h1><h2 id="函数"><a class="headerlink" href="#函数" title="函数"></a>函数</h2><p><code>main</code>函数是程序入口，<code>fn</code>是用来声明新函数的关键字。</p>
+    <content><![CDATA[<span id="语句与表达式与函数"></span><h2 id="函数"><a class="headerlink" href="#函数" title="函数"></a>函数</h2><p><code>main</code>函数是程序入口，<code>fn</code>是用来声明新函数的关键字。</p>
 <p>Rust代码中的函数和变量名都使用下划线命名法（<em>snake case</em>，直译为蛇形命名法）规范风格。此命名法中，所有字母都是小写并使用下划线分隔单词。</p>
 <p>与C/C++不同的是，Rust 不关心函数定义于何处，只要定义了就行。</p>
 <p>形参必须标注类型。</p>
@@ -2474,7 +2474,7 @@ ip rule del priority 10199 \
   <entry>
     <title>20240410-Rust-05-控制流</title>
     <url>/blog/2024/09/rust-05-control-flow/</url>
-    <content><![CDATA[<h1 id="控制流"><a class="headerlink" href="#控制流" title="控制流"></a>控制流</h1><blockquote>
+    <content><![CDATA[<span id="控制流"></span><blockquote>
 <p>根据条件是否为真来决定是否执行某些代码，或根据条件是否为真来重复运行一段代码，是大部分编程语言的基本组成部分。Rust 代码中最常见的用来控制执行流的结构是 <code>if</code> 表达式和循环。</p>
 </blockquote>
 <h2 id="if-表达式"><a class="headerlink" href="#if-表达式" title="if 表达式"></a>if 表达式</h2><p>每个分支的代码块都必须以<code>{}</code>包裹，哪怕只有一行或一条表达式。</p>
@@ -2546,7 +2546,7 @@ ip rule del priority 10199 \
   <entry>
     <title>20240411-Rust-06-所有权</title>
     <url>/blog/2024/09/rust-06-ownership/</url>
-    <content><![CDATA[<h1 id="所有权"><a class="headerlink" href="#所有权" title="所有权"></a>所有权</h1><blockquote>
+    <content><![CDATA[<span id="所有权"></span><blockquote>
 <p>所有权（系统）是 Rust 最为与众不同的特性，它让 Rust 无需垃圾回收器（garbage collector）即可保证内存安全。因此，理解 Rust 中所有权的运作方式非常重要。在本章中，我们将讨论所有权以及相关功能：借用、slice 以及 Rust 如何在内存中存放数据。</p>
 </blockquote>
 <h2 id="什么是所有权？"><a class="headerlink" href="#什么是所有权？" title="什么是所有权？"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch04-01-what-is-ownership.html#%E4%BB%80%E4%B9%88%E6%98%AF%E6%89%80%E6%9C%89%E6%9D%83" rel="noopener" target="_blank">什么是所有权？</a></h2><p>Rust 的核心功能（之一）是 <strong>所有权</strong>（<em>ownership</em>）。虽然该功能很容易解释，但它对语言的其他部分有着深刻的影响。</p>
@@ -2678,15 +2678,18 @@ ip rule del priority 10199 \
   <entry>
     <title>20240320-配置GitHub-SSH默认使用443端口</title>
     <url>/blog/2024/09/github-ssh-port-443/</url>
-    <content><![CDATA[<h1 id="配置GitHub-SSH默认使用443端口"><a class="headerlink" href="#配置GitHub-SSH默认使用443端口" title="配置GitHub SSH默认使用443端口"></a>配置GitHub SSH默认使用443端口</h1><h2 id="1-测试443端口是否可用"><a class="headerlink" href="#1-测试443端口是否可用" title="1.测试443端口是否可用"></a>1.测试443端口是否可用</h2><p>首先测试一下使用443端口进行GitHub SSH连接：</p>
+    <content><![CDATA[<span id="配置GitHub-SSH默认使用443端口"></span><p>当访问 GitHub.com 的 SSH 22 端口受网络规则限制时，可以尝试通过 <code>ssh.github.com:443</code> 连接。这里仍然使用 SSH 协议，443 是连接端口；HTTP 代理或只允许 HTTPS 流量的网络仍可能拦截它。</p>
+<p>本文假定你已经生成 SSH 密钥并把公钥添加到对应 GitHub 账号。该入口面向 GitHub.com，不适用于 GitHub Enterprise Server 或带数据驻留的 GitHub Enterprise Cloud。配置与范围见 <a href="https://docs.github.com/en/authentication/troubleshooting-ssh/using-ssh-over-the-https-port" rel="noopener" target="_blank">GitHub 官方说明</a>。</p>
+<h2 id="1-测试443端口是否可用"><a class="headerlink" href="#1-测试443端口是否可用" title="1.测试443端口是否可用"></a>1.测试443端口是否可用</h2><p>首先测试一下使用443端口进行GitHub SSH连接：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -T -p 443 git@ssh.github.com</span><br/></pre></td></tr></table></figure>
-<p>如果一切正常，那么你应该得到如下输出：</p>
+<p>首次连接可能要求确认主机密钥，先与 <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints" rel="noopener" target="_blank">GitHub 公布的 SSH 指纹</a>核对。认证成功时会看到类似输出，其中 UserName 是你的账号名：</p>
 <blockquote>
 <p>Hi UserName! You’ve successfully authenticated, but GitHub does not provide shell access.</p>
 </blockquote>
+<p>这条提示说明认证成功；GitHub 不提供交互式 Shell 是正常行为。若出现 <code>Permission denied (publickey)</code>，应检查使用的密钥和账号授权。</p>
 <h2 id="2-配置SSH使用443端口"><a class="headerlink" href="#2-配置SSH使用443端口" title="2.配置SSH使用443端口"></a>2.配置SSH使用443端口</h2><p><strong>SSH客户端配置文件</strong></p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">全局配置文件：/etc/ssh/ssh_config</span></span><br/><span class="line"><span class="meta prompt_"># </span><span class="language-bash">用户配置文件：~/.ssh/config <span class="comment"># 如果不存在则创建</span></span></span><br/></pre></td></tr></table></figure>
-<p>在你的SSH客户端配置文件中增加以下内容：</p>
+<p>优先编辑当前用户的 <code>~/.ssh/config</code>（Windows OpenSSH 通常位于用户目录下的 <code>.ssh/config</code>）。如果已有 <code>Host github.com</code> 配置，请检查并合并对应项：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Host github.com</span><br/><span class="line">  Hostname ssh.github.com</span><br/><span class="line">  Port 443</span><br/><span class="line">  User git</span><br/></pre></td></tr></table></figure>
 <p>再次测试是否有效：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br/></pre></td></tr></table></figure>
@@ -2706,7 +2709,7 @@ ip rule del priority 10199 \
   <entry>
     <title>20240327-LeetCode-15.三数之和</title>
     <url>/blog/2024/09/leetcode-15-3sum/</url>
-    <content><![CDATA[<h1 id="15-三数之和"><a class="headerlink" href="#15-三数之和" title="15.三数之和"></a>15.三数之和</h1><h2 id="题目描述"><a class="headerlink" href="#题目描述" title="题目描述"></a>题目描述</h2><p>给你一个整数数组 <code>nums</code> ，判断是否存在三元组 <code>[nums[i], nums[j], nums[k]]</code> 满足 <code>i != j</code>、<code>i != k</code> 且 <code>j != k</code> ，同时还满足 <code>nums[i] + nums[j] + nums[k] == 0</code> 。请</p>
+    <content><![CDATA[<span id="15-三数之和"></span><h2 id="题目描述"><a class="headerlink" href="#题目描述" title="题目描述"></a>题目描述</h2><p>给你一个整数数组 <code>nums</code> ，判断是否存在三元组 <code>[nums[i], nums[j], nums[k]]</code> 满足 <code>i != j</code>、<code>i != k</code> 且 <code>j != k</code> ，同时还满足 <code>nums[i] + nums[j] + nums[k] == 0</code> 。请</p>
 <p>你返回所有和为 <code>0</code> 且不重复的三元组。</p>
 <p>**注意：**答案中不可以包含重复的三元组。</p>
 <p><strong>示例 1：</strong></p>
@@ -2736,7 +2739,7 @@ ip rule del priority 10199 \
   <entry>
     <title>20240408-Rust-01-猜数字游戏</title>
     <url>/blog/2024/09/rust-01-guessing-game/</url>
-    <content><![CDATA[<h1 id="猜数字游戏"><a class="headerlink" href="#猜数字游戏" title="猜数字游戏"></a>猜数字游戏</h1><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> rand::Rng;</span><br/><span class="line"><span class="keyword">use</span> std::cmp::Ordering;</span><br/><span class="line"><span class="keyword">use</span> std::io;</span><br/><span class="line"></span><br/><span class="line"><span class="comment">/**</span></span><br/><span class="line"><span class="comment"> * The main function of the program.</span></span><br/><span class="line"><span class="comment"> * It starts the game by printing a welcome message, generating a secret number, and then entering a loop where it prompts the user to guess the number.</span></span><br/><span class="line"><span class="comment"> * It continues to loop until the user guesses the correct number.</span></span><br/><span class="line"><span class="comment"> */</span></span><br/><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() {</span><br/><span class="line">    <span class="built_in">println!</span>(<span class="string">"Guess the number!"</span>);</span><br/><span class="line"></span><br/><span class="line">    <span class="comment">/**</span></span><br/><span class="line"><span class="comment">     * Generates a secret number between 1 and 100 (inclusive) using the `rand::thread_rng().gen_range(1..101)` function.</span></span><br/><span class="line"><span class="comment">     * This number will be the target that the user will try to guess.</span></span><br/><span class="line"><span class="comment">     */</span></span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">secret_number</span> = rand::<span class="title function_ invoke__">thread_rng</span>().<span class="title function_ invoke__">gen_range</span>(<span class="number">1</span>..<span class="number">101</span>);</span><br/><span class="line"></span><br/><span class="line">    <span class="comment">/**</span></span><br/><span class="line"><span class="comment">     * The main game loop. It will continue to run until the user guesses the correct number.</span></span><br/><span class="line"><span class="comment">     */</span></span><br/><span class="line">    <span class="keyword">loop</span> {</span><br/><span class="line">        <span class="built_in">println!</span>(<span class="string">"Enter your guess: "</span>);</span><br/><span class="line"></span><br/><span class="line">        <span class="comment">/**</span></span><br/><span class="line"><span class="comment">         * Reads a line of input from the user.</span></span><br/><span class="line"><span class="comment">         * If the input cannot be read, the program will panic with the message "Failed to read line".</span></span><br/><span class="line"><span class="comment">         */</span></span><br/><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">guess</span> = <span class="type">String</span>::<span class="title function_ invoke__">new</span>();</span><br/><span class="line">        io::<span class="title function_ invoke__">stdin</span>()</span><br/><span class="line">            .<span class="title function_ invoke__">read_line</span>(&amp;<span class="keyword">mut</span> guess)</span><br/><span class="line">            .<span class="title function_ invoke__">expect</span>(<span class="string">"Failed to read line"</span>);</span><br/><span class="line"></span><br/><span class="line">        <span class="comment">/**</span></span><br/><span class="line"><span class="comment">         * Parses the user's input into a u32 integer.</span></span><br/><span class="line"><span class="comment">         * If the input cannot be parsed, the program will skip the current iteration of the loop and continue to the next one.</span></span><br/><span class="line"><span class="comment">         */</span></span><br/><span class="line">        <span class="keyword">let</span> <span class="variable">guess</span>: <span class="type">u32</span> = <span class="keyword">match</span> guess.<span class="title function_ invoke__">trim</span>().<span class="title function_ invoke__">parse</span>() {</span><br/><span class="line">            <span class="title function_ invoke__">Ok</span>(num) =&gt; num,</span><br/><span class="line">            <span class="title function_ invoke__">Err</span>(_) =&gt; <span class="keyword">continue</span>,</span><br/><span class="line">        };</span><br/><span class="line"></span><br/><span class="line">        <span class="built_in">println!</span>(<span class="string">"You guessed: {}"</span>, guess);</span><br/><span class="line"></span><br/><span class="line">        <span class="comment">/**</span></span><br/><span class="line"><span class="comment">         * Compares the user's guess with the secret number.</span></span><br/><span class="line"><span class="comment">         * If the guess is less than the secret number, it prints "Too small!".</span></span><br/><span class="line"><span class="comment">         * If the guess is greater than the secret number, it prints "Too big!".</span></span><br/><span class="line"><span class="comment">         * If the guess is equal to the secret number, it prints "You got it!" and breaks out of the loop.</span></span><br/><span class="line"><span class="comment">         */</span></span><br/><span class="line">        <span class="keyword">match</span> guess.<span class="title function_ invoke__">cmp</span>(&amp;secret_number) {</span><br/><span class="line">            Ordering::Less =&gt; <span class="built_in">println!</span>(<span class="string">"Too small!"</span>),</span><br/><span class="line">            Ordering::Greater =&gt; <span class="built_in">println!</span>(<span class="string">"Too big!"</span>),</span><br/><span class="line">            Ordering::Equal =&gt; {</span><br/><span class="line">                <span class="built_in">println!</span>(<span class="string">"You got it!"</span>);</span><br/><span class="line">                <span class="keyword">break</span>;</span><br/><span class="line">            }</span><br/><span class="line">        }</span><br/><span class="line">    }</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
+    <content><![CDATA[<span id="猜数字游戏"></span><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> rand::Rng;</span><br/><span class="line"><span class="keyword">use</span> std::cmp::Ordering;</span><br/><span class="line"><span class="keyword">use</span> std::io;</span><br/><span class="line"></span><br/><span class="line"><span class="comment">/**</span></span><br/><span class="line"><span class="comment"> * The main function of the program.</span></span><br/><span class="line"><span class="comment"> * It starts the game by printing a welcome message, generating a secret number, and then entering a loop where it prompts the user to guess the number.</span></span><br/><span class="line"><span class="comment"> * It continues to loop until the user guesses the correct number.</span></span><br/><span class="line"><span class="comment"> */</span></span><br/><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() {</span><br/><span class="line">    <span class="built_in">println!</span>(<span class="string">"Guess the number!"</span>);</span><br/><span class="line"></span><br/><span class="line">    <span class="comment">/**</span></span><br/><span class="line"><span class="comment">     * Generates a secret number between 1 and 100 (inclusive) using the `rand::thread_rng().gen_range(1..101)` function.</span></span><br/><span class="line"><span class="comment">     * This number will be the target that the user will try to guess.</span></span><br/><span class="line"><span class="comment">     */</span></span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">secret_number</span> = rand::<span class="title function_ invoke__">thread_rng</span>().<span class="title function_ invoke__">gen_range</span>(<span class="number">1</span>..<span class="number">101</span>);</span><br/><span class="line"></span><br/><span class="line">    <span class="comment">/**</span></span><br/><span class="line"><span class="comment">     * The main game loop. It will continue to run until the user guesses the correct number.</span></span><br/><span class="line"><span class="comment">     */</span></span><br/><span class="line">    <span class="keyword">loop</span> {</span><br/><span class="line">        <span class="built_in">println!</span>(<span class="string">"Enter your guess: "</span>);</span><br/><span class="line"></span><br/><span class="line">        <span class="comment">/**</span></span><br/><span class="line"><span class="comment">         * Reads a line of input from the user.</span></span><br/><span class="line"><span class="comment">         * If the input cannot be read, the program will panic with the message "Failed to read line".</span></span><br/><span class="line"><span class="comment">         */</span></span><br/><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">guess</span> = <span class="type">String</span>::<span class="title function_ invoke__">new</span>();</span><br/><span class="line">        io::<span class="title function_ invoke__">stdin</span>()</span><br/><span class="line">            .<span class="title function_ invoke__">read_line</span>(&amp;<span class="keyword">mut</span> guess)</span><br/><span class="line">            .<span class="title function_ invoke__">expect</span>(<span class="string">"Failed to read line"</span>);</span><br/><span class="line"></span><br/><span class="line">        <span class="comment">/**</span></span><br/><span class="line"><span class="comment">         * Parses the user's input into a u32 integer.</span></span><br/><span class="line"><span class="comment">         * If the input cannot be parsed, the program will skip the current iteration of the loop and continue to the next one.</span></span><br/><span class="line"><span class="comment">         */</span></span><br/><span class="line">        <span class="keyword">let</span> <span class="variable">guess</span>: <span class="type">u32</span> = <span class="keyword">match</span> guess.<span class="title function_ invoke__">trim</span>().<span class="title function_ invoke__">parse</span>() {</span><br/><span class="line">            <span class="title function_ invoke__">Ok</span>(num) =&gt; num,</span><br/><span class="line">            <span class="title function_ invoke__">Err</span>(_) =&gt; <span class="keyword">continue</span>,</span><br/><span class="line">        };</span><br/><span class="line"></span><br/><span class="line">        <span class="built_in">println!</span>(<span class="string">"You guessed: {}"</span>, guess);</span><br/><span class="line"></span><br/><span class="line">        <span class="comment">/**</span></span><br/><span class="line"><span class="comment">         * Compares the user's guess with the secret number.</span></span><br/><span class="line"><span class="comment">         * If the guess is less than the secret number, it prints "Too small!".</span></span><br/><span class="line"><span class="comment">         * If the guess is greater than the secret number, it prints "Too big!".</span></span><br/><span class="line"><span class="comment">         * If the guess is equal to the secret number, it prints "You got it!" and breaks out of the loop.</span></span><br/><span class="line"><span class="comment">         */</span></span><br/><span class="line">        <span class="keyword">match</span> guess.<span class="title function_ invoke__">cmp</span>(&amp;secret_number) {</span><br/><span class="line">            Ordering::Less =&gt; <span class="built_in">println!</span>(<span class="string">"Too small!"</span>),</span><br/><span class="line">            Ordering::Greater =&gt; <span class="built_in">println!</span>(<span class="string">"Too big!"</span>),</span><br/><span class="line">            Ordering::Equal =&gt; {</span><br/><span class="line">                <span class="built_in">println!</span>(<span class="string">"You got it!"</span>);</span><br/><span class="line">                <span class="keyword">break</span>;</span><br/><span class="line">            }</span><br/><span class="line">        }</span><br/><span class="line">    }</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>编程开发</category>
@@ -2750,7 +2753,7 @@ ip rule del priority 10199 \
   <entry>
     <title>20240409-Rust-02-变量与可变性</title>
     <url>/blog/2024/09/rust-02-variables-and-mutability/</url>
-    <content><![CDATA[<h1 id="变量与可变性"><a class="headerlink" href="#变量与可变性" title="变量与可变性"></a>变量与可变性</h1><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#![allow(unused)]</span></span><br/><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() {</span><br/><span class="line">    <span class="comment">// 变量默认是不可变的，如要声明可变变量，应使用mut关键字</span></span><br/><span class="line">    <span class="comment">// let x = 5;</span></span><br/><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">x</span> = <span class="number">5</span>;</span><br/><span class="line">    <span class="built_in">println!</span>(<span class="string">"The value of x is {}"</span>, x); <span class="comment">// 5</span></span><br/><span class="line">    x = <span class="number">6</span>;</span><br/><span class="line">    <span class="built_in">println!</span>(<span class="string">"The value of x is {}"</span>, x); <span class="comment">// 6</span></span><br/><span class="line"></span><br/><span class="line">    <span class="comment">// 常量，命名约定是全部字母大写，并以下划线分隔单词</span></span><br/><span class="line">    <span class="comment">// 在声明的作用域内，常量在程序运行的整个过程中都有效</span></span><br/><span class="line">    <span class="keyword">const</span> THREE_HOURS_IN_SECONDS: <span class="type">u32</span> = <span class="number">60</span> * <span class="number">60</span> * <span class="number">3</span>;</span><br/><span class="line"></span><br/><span class="line">    <span class="comment">// 遮蔽(shadow)，可以通过使用相同的变量名并重复使用 let 关键字来遮蔽之前的变量</span></span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">x</span> = <span class="number">5</span>;</span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">x</span> = x + <span class="number">1</span>;</span><br/><span class="line">    {</span><br/><span class="line">        <span class="keyword">let</span> <span class="variable">x</span> = x * <span class="number">2</span>;</span><br/><span class="line">        <span class="built_in">println!</span>(<span class="string">"The value of x in the inner scope is: {}"</span>, x); <span class="comment">// 12</span></span><br/><span class="line">    }</span><br/><span class="line">    <span class="built_in">println!</span>(<span class="string">"The value of x is: {}"</span>, x); <span class="comment">// 6</span></span><br/><span class="line"></span><br/><span class="line">    <span class="comment">// 遮蔽也可以改变变量的类型</span></span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">spaces</span> = <span class="string">"   "</span>;</span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">spaces</span> = spaces.<span class="title function_ invoke__">len</span>();</span><br/><span class="line">    <span class="comment">// 而 mut 不行</span></span><br/><span class="line">    <span class="comment">// let mut spaces = "   ";</span></span><br/><span class="line">    <span class="comment">// spaces = spaces.len();</span></span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
+    <content><![CDATA[<span id="变量与可变性"></span><figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#![allow(unused)]</span></span><br/><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() {</span><br/><span class="line">    <span class="comment">// 变量默认是不可变的，如要声明可变变量，应使用mut关键字</span></span><br/><span class="line">    <span class="comment">// let x = 5;</span></span><br/><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">x</span> = <span class="number">5</span>;</span><br/><span class="line">    <span class="built_in">println!</span>(<span class="string">"The value of x is {}"</span>, x); <span class="comment">// 5</span></span><br/><span class="line">    x = <span class="number">6</span>;</span><br/><span class="line">    <span class="built_in">println!</span>(<span class="string">"The value of x is {}"</span>, x); <span class="comment">// 6</span></span><br/><span class="line"></span><br/><span class="line">    <span class="comment">// 常量，命名约定是全部字母大写，并以下划线分隔单词</span></span><br/><span class="line">    <span class="comment">// 在声明的作用域内，常量在程序运行的整个过程中都有效</span></span><br/><span class="line">    <span class="keyword">const</span> THREE_HOURS_IN_SECONDS: <span class="type">u32</span> = <span class="number">60</span> * <span class="number">60</span> * <span class="number">3</span>;</span><br/><span class="line"></span><br/><span class="line">    <span class="comment">// 遮蔽(shadow)，可以通过使用相同的变量名并重复使用 let 关键字来遮蔽之前的变量</span></span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">x</span> = <span class="number">5</span>;</span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">x</span> = x + <span class="number">1</span>;</span><br/><span class="line">    {</span><br/><span class="line">        <span class="keyword">let</span> <span class="variable">x</span> = x * <span class="number">2</span>;</span><br/><span class="line">        <span class="built_in">println!</span>(<span class="string">"The value of x in the inner scope is: {}"</span>, x); <span class="comment">// 12</span></span><br/><span class="line">    }</span><br/><span class="line">    <span class="built_in">println!</span>(<span class="string">"The value of x is: {}"</span>, x); <span class="comment">// 6</span></span><br/><span class="line"></span><br/><span class="line">    <span class="comment">// 遮蔽也可以改变变量的类型</span></span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">spaces</span> = <span class="string">"   "</span>;</span><br/><span class="line">    <span class="keyword">let</span> <span class="variable">spaces</span> = spaces.<span class="title function_ invoke__">len</span>();</span><br/><span class="line">    <span class="comment">// 而 mut 不行</span></span><br/><span class="line">    <span class="comment">// let mut spaces = "   ";</span></span><br/><span class="line">    <span class="comment">// spaces = spaces.len();</span></span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>编程开发</category>
@@ -2764,14 +2767,14 @@ ip rule del priority 10199 \
   <entry>
     <title>Linux内核态赋予进程root权限</title>
     <url>/blog/2024/09/linux-kernel-root-privilege/</url>
-    <content><![CDATA[<h3 id="一、Linux中进程的用户管理"><a class="headerlink" href="#一、Linux中进程的用户管理" title="一、Linux中进程的用户管理"></a>一、Linux中进程的用户管理</h3><p>在Linux中，每个进程都拥有真实用户ID (==uid==)和真实组ID (==gid==)，有效用户ID (==euid==)和有效组ID (==egid==)，保存的设置用户ID (==suid==)和保存的设置组ID (==sgid==)，另外地，还有文件系统用户ID (==fsuid==)和文件系统组ID (==fsgid==)。</p>
+    <content><![CDATA[<h2 id="一、Linux中进程的用户管理"><a class="headerlink" href="#一、Linux中进程的用户管理" title="一、Linux中进程的用户管理"></a>一、Linux中进程的用户管理</h2><p>在Linux中，每个进程都拥有真实用户ID (==uid==)和真实组ID (==gid==)，有效用户ID (==euid==)和有效组ID (==egid==)，保存的设置用户ID (==suid==)和保存的设置组ID (==sgid==)，另外地，还有文件系统用户ID (==fsuid==)和文件系统组ID (==fsgid==)。</p>
 <blockquote>
 <p>(1) 真实用户、组 (uid/gid)：指的是进程的实际所有者和所属组，一般就是执行此进程的用户。</p>
 <p>(2) 有效用户、组 (euid/egid)：用来判断进程执行各种操作的权限。</p>
 <p>(3) 保存的设置用户、组 (suid/sgid)：是有效用户、组的副本，主要用来还原有效用户、组的值。</p>
 <p>(4) 文件系统用户、组 (fsuid/fsgid)：仅用来进行文件权限检查。</p>
 </blockquote>
-<h3 id="二、如何获取进程号？"><a class="headerlink" href="#二、如何获取进程号？" title="二、如何获取进程号？"></a>二、如何获取进程号？</h3><p>(1) 通过<code>pidof</code>命令获取:</p>
+<h2 id="二、如何获取进程号？"><a class="headerlink" href="#二、如何获取进程号？" title="二、如何获取进程号？"></a>二、如何获取进程号？</h2><p>(1) 通过<code>pidof</code>命令获取:</p>
 <p><img alt="image-20230823033635993.png" src="https://s2.loli.net/2024/09/20/eGMTpc2dHVA6RS7.png"/></p>
 <p>(2) 通过<code>pgrep</code>命令获取:</p>
 <p><img alt="image-20230823033705071.png" src="https://s2.loli.net/2024/09/20/DVXpEvNmKGFfTdO.png"/></p>
@@ -2781,7 +2784,7 @@ ip rule del priority 10199 \
 </blockquote>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">pid_t</span> <span class="title function_">get_pid_t</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *cmd)</span> {</span><br/><span class="line">    DIR *dir;</span><br/><span class="line">    FILE *file;</span><br/><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">dirent</span> *<span class="title">ent</span>;</span></span><br/><span class="line">    <span class="type">char</span> filename[<span class="number">256</span>], cmdline[<span class="number">256</span>];</span><br/><span class="line">    <span class="type">pid_t</span> pid = <span class="number">-1</span>;</span><br/><span class="line">    dir = opendir(<span class="string">"/proc"</span>);</span><br/><span class="line"></span><br/><span class="line">    <span class="keyword">if</span> (dir != <span class="literal">NULL</span>) {</span><br/><span class="line">        <span class="keyword">while</span> ((ent = readdir(dir))) {</span><br/><span class="line">            <span class="keyword">if</span> (ent-&gt;d_type == DT_DIR &amp;&amp; STR_IS_INT(ent-&gt;d_name)) {</span><br/><span class="line">                <span class="built_in">snprintf</span>(filename, <span class="keyword">sizeof</span>(filename), <span class="string">"/proc/%s/cmdline"</span>, ent-&gt;d_name);</span><br/><span class="line">                file = fopen(filename, <span class="string">"r"</span>);</span><br/><span class="line">                <span class="keyword">if</span> (file) {</span><br/><span class="line">                    fgets(cmdline, <span class="keyword">sizeof</span>(cmdline), file);</span><br/><span class="line">                    fclose(file);</span><br/><span class="line">                    <span class="keyword">if</span> (<span class="built_in">strcmp</span>(cmd, cmdline) == <span class="number">0</span>) {</span><br/><span class="line">                        pid = atoi(ent-&gt;d_name);</span><br/><span class="line">                        <span class="keyword">break</span>;</span><br/><span class="line">                    }</span><br/><span class="line">                }</span><br/><span class="line">            }</span><br/><span class="line">        }</span><br/><span class="line">        closedir(dir);</span><br/><span class="line">    }</span><br/><span class="line"></span><br/><span class="line">    <span class="keyword">return</span> pid;</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
 <p><img alt="image-20230823033747157.png" src="https://s2.loli.net/2024/09/20/R7xFbdO4gtfiYvr.png"/></p>
-<h3 id="三、通过进程号获取struct-pid"><a class="headerlink" href="#三、通过进程号获取struct-pid" title="三、通过进程号获取struct pid"></a>三、通过进程号获取<code>struct pid</code></h3><p>先看一下<code>struct pid</code>的定义：</p>
+<h2 id="三、通过进程号获取struct-pid"><a class="headerlink" href="#三、通过进程号获取struct-pid" title="三、通过进程号获取struct pid"></a>三、通过进程号获取<code>struct pid</code></h2><p>先看一下<code>struct pid</code>的定义：</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pid</span></span></span><br/><span class="line"><span class="class">{</span></span><br/><span class="line">	<span class="type">atomic_t</span> count; <span class="comment">// pid的引用计数</span></span><br/><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> level; <span class="comment">// pid的层级</span></span><br/><span class="line">	<span class="comment">/* lists of tasks that use this pid */</span></span><br/><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">hlist_head</span> <span class="title">tasks</span>[<span class="title">PIDTYPE_MAX</span>];</span></span><br/><span class="line">	<span class="comment">/* wait queue for pidfd notifications */</span></span><br/><span class="line">	<span class="type">wait_queue_head_t</span> wait_pidfd;</span><br/><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">rcu_head</span> <span class="title">rcu</span>;</span> <span class="comment">// RCU头, 用于RCU同步机制</span></span><br/><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">upid</span> <span class="title">numbers</span>[1];</span> <span class="comment">// 用于储存pid号的结构体数组</span></span><br/><span class="line">};</span><br/></pre></td></tr></table></figure>
 <p>其中<code>struct upid</code>定义如下：</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">upid</span></span></span><br/><span class="line"><span class="class">{</span></span><br/><span class="line">    <span class="comment">/* Try to keep pid_chain in the same cacheline as nr for find_vpid */</span></span><br/><span class="line">    <span class="type">int</span> nr;                        <span class="comment">/* the pid value */</span></span><br/><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">pid_namespace</span> *<span class="title">ns</span>;</span>      <span class="comment">/* namespace */</span></span><br/><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">hlist_node</span> <span class="title">pid_chain</span>;</span>   <span class="comment">/* hash chain */</span></span><br/><span class="line">};</span><br/></pre></td></tr></table></figure>
@@ -2791,12 +2794,12 @@ ip rule del priority 10199 \
 <p>其中<code>find_vpid</code>和<code>get_pid</code>定义如下：</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> pid *<span class="title function_">find_vpid</span><span class="params">(<span class="type">int</span> nr)</span></span><br/><span class="line">{</span><br/><span class="line">	<span class="keyword">return</span> find_pid_ns(nr, task_active_pid_ns(current));</span><br/><span class="line">}</span><br/><span class="line"></span><br/><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="keyword">struct</span> pid *<span class="title function_">get_pid</span><span class="params">(<span class="keyword">struct</span> pid *pid)</span></span><br/><span class="line">{</span><br/><span class="line">	<span class="keyword">if</span> (pid)</span><br/><span class="line">		atomic_inc(&amp;pid-&gt;count);</span><br/><span class="line">	<span class="keyword">return</span> pid;</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
 <p>其中<code>atomic_inc(&amp;pid-&gt;count)</code>表示对<code>pid-&gt;count</code>进行原子级加一操作，所谓“原子”，就是最小的不可分解的最小执行单位，使用锁定总线的单指令进行不可分解的原子操作，以避免操作被中断或其他事件打断。</p>
-<h3 id="四、通过struct-pid获取struct-task-struct："><a class="headerlink" href="#四、通过struct-pid获取struct-task-struct：" title="四、通过struct pid获取struct task_struct："></a>四、通过<code>struct pid</code>获取<code>struct task_struct</code>：</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> task_struct *<span class="title function_">get_pid_task</span><span class="params">(<span class="keyword">struct</span> pid *pid, <span class="keyword">enum</span> pid_type type)</span></span><br/><span class="line">{</span><br/><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">task_struct</span> *<span class="title">result</span>;</span></span><br/><span class="line">	rcu_read_lock();</span><br/><span class="line">	result = pid_task(pid, type);</span><br/><span class="line">	<span class="keyword">if</span> (result)</span><br/><span class="line">		get_task_struct(result);</span><br/><span class="line">	rcu_read_unlock();</span><br/><span class="line">	<span class="keyword">return</span> result;</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
+<h2 id="四、通过struct-pid获取struct-task-struct："><a class="headerlink" href="#四、通过struct-pid获取struct-task-struct：" title="四、通过struct pid获取struct task_struct："></a>四、通过<code>struct pid</code>获取<code>struct task_struct</code>：</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> task_struct *<span class="title function_">get_pid_task</span><span class="params">(<span class="keyword">struct</span> pid *pid, <span class="keyword">enum</span> pid_type type)</span></span><br/><span class="line">{</span><br/><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">task_struct</span> *<span class="title">result</span>;</span></span><br/><span class="line">	rcu_read_lock();</span><br/><span class="line">	result = pid_task(pid, type);</span><br/><span class="line">	<span class="keyword">if</span> (result)</span><br/><span class="line">		get_task_struct(result);</span><br/><span class="line">	rcu_read_unlock();</span><br/><span class="line">	<span class="keyword">return</span> result;</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
 <p>其中<code>struct task_struct</code>定义在<code>$(Linux-4.19)/include/Linux/sched.h</code>，太长了就只贴出本篇要用到的两个成员变量：</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">task_struct</span></span></span><br/><span class="line"><span class="class">{</span></span><br/><span class="line">	...</span><br/><span class="line">	<span class="comment">/* Objective and real subjective task credentials (COW): */</span></span><br/><span class="line">	<span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">cred</span> __<span class="title">rcu</span>		*<span class="title">real_cred</span>;</span></span><br/><span class="line"></span><br/><span class="line">	<span class="comment">/* Effective (overridable) subjective task credentials (COW): */</span></span><br/><span class="line">	<span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">cred</span> __<span class="title">rcu</span>		*<span class="title">cred</span>;</span></span><br/><span class="line">	...</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
 <p>看注释可以知道，其中<code>real_cred</code>指向客体和真实主体证书，<code>cred</code>指向有效主体证书，其结构体定义如下：</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">cred</span> {</span></span><br/><span class="line">	<span class="type">atomic_t</span>	usage;</span><br/><span class="line"><span class="meta">#<span class="keyword">ifdef</span> CONFIG_DEBUG_CREDENTIALS</span></span><br/><span class="line">	<span class="type">atomic_t</span>	subscribers;	<span class="comment">/* number of processes subscribed */</span></span><br/><span class="line">	<span class="type">void</span>		*put_addr;</span><br/><span class="line">	<span class="type">unsigned</span>	magic;</span><br/><span class="line"><span class="meta">#<span class="keyword">define</span> CRED_MAGIC	0x43736564</span></span><br/><span class="line"><span class="meta">#<span class="keyword">define</span> CRED_MAGIC_DEAD	0x44656144</span></span><br/><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br/><span class="line">	<span class="type">kuid_t</span>		uid;		<span class="comment">/* real UID of the task */</span></span><br/><span class="line">	<span class="type">kgid_t</span>		gid;		<span class="comment">/* real GID of the task */</span></span><br/><span class="line">	<span class="type">kuid_t</span>		suid;		<span class="comment">/* saved UID of the task */</span></span><br/><span class="line">	<span class="type">kgid_t</span>		sgid;		<span class="comment">/* saved GID of the task */</span></span><br/><span class="line">	<span class="type">kuid_t</span>		euid;		<span class="comment">/* effective UID of the task */</span></span><br/><span class="line">	<span class="type">kgid_t</span>		egid;		<span class="comment">/* effective GID of the task */</span></span><br/><span class="line">	<span class="type">kuid_t</span>		fsuid;		<span class="comment">/* UID for VFS ops */</span></span><br/><span class="line">	<span class="type">kgid_t</span>		fsgid;		<span class="comment">/* GID for VFS ops */</span></span><br/><span class="line">	<span class="type">unsigned</span>	securebits;	<span class="comment">/* SUID-less security management */</span></span><br/><span class="line">	<span class="type">kernel_cap_t</span>	cap_inheritable; <span class="comment">/* caps our children can inherit */</span></span><br/><span class="line">	<span class="type">kernel_cap_t</span>	cap_permitted;	<span class="comment">/* caps we're permitted */</span></span><br/><span class="line">	<span class="type">kernel_cap_t</span>	cap_effective;	<span class="comment">/* caps we can actually use */</span></span><br/><span class="line">	<span class="type">kernel_cap_t</span>	cap_bset;	<span class="comment">/* capability bounding set */</span></span><br/><span class="line">	<span class="type">kernel_cap_t</span>	cap_ambient;	<span class="comment">/* Ambient capability set */</span></span><br/><span class="line"><span class="meta">#<span class="keyword">ifdef</span> CONFIG_KEYS</span></span><br/><span class="line">	<span class="type">unsigned</span> <span class="type">char</span>	jit_keyring;	<span class="comment">/* default keyring to attach requested</span></span><br/><span class="line"><span class="comment">					 * keys to */</span></span><br/><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">key</span> __<span class="title">rcu</span> *<span class="title">session_keyring</span>;</span> <span class="comment">/* keyring inherited over fork */</span></span><br/><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">key</span>	*<span class="title">process_keyring</span>;</span> <span class="comment">/* keyring private to this process */</span></span><br/><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">key</span>	*<span class="title">thread_keyring</span>;</span> <span class="comment">/* keyring private to this thread */</span></span><br/><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">key</span>	*<span class="title">request_key_auth</span>;</span> <span class="comment">/* assumed request_key authority */</span></span><br/><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br/><span class="line"><span class="meta">#<span class="keyword">ifdef</span> CONFIG_SECURITY</span></span><br/><span class="line">	<span class="type">void</span>		*security;	<span class="comment">/* subjective LSM security */</span></span><br/><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br/><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">user_struct</span> *<span class="title">user</span>;</span>	<span class="comment">/* real user ID subscription */</span></span><br/><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">user_namespace</span> *<span class="title">user_ns</span>;</span> <span class="comment">/* user_ns the caps and keyrings are relative to. */</span></span><br/><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">group_info</span> *<span class="title">group_info</span>;</span>	<span class="comment">/* supplementary groups for euid/fsgid */</span></span><br/><span class="line">	<span class="comment">/* RCU deletion */</span></span><br/><span class="line">	<span class="class"><span class="keyword">union</span> {</span></span><br/><span class="line">		<span class="type">int</span> non_rcu;			<span class="comment">/* Can we skip RCU deletion? */</span></span><br/><span class="line">		<span class="class"><span class="keyword">struct</span> <span class="title">rcu_head</span>	<span class="title">rcu</span>;</span>		<span class="comment">/* RCU deletion hook */</span></span><br/><span class="line">	};</span><br/><span class="line">};</span><br/></pre></td></tr></table></figure>
-<h3 id="五、更改权限"><a class="headerlink" href="#五、更改权限" title="五、更改权限"></a>五、更改权限</h3><p>将得到的<code>struct cred</code>中的以下几个成员变量赋值<code>0</code>：</p>
+<h2 id="五、更改权限"><a class="headerlink" href="#五、更改权限" title="五、更改权限"></a>五、更改权限</h2><p>将得到的<code>struct cred</code>中的以下几个成员变量赋值<code>0</code>：</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">kuid_t</span>		uid;		<span class="comment">/* real UID of the task */</span></span><br/><span class="line"><span class="type">kgid_t</span>		gid;		<span class="comment">/* real GID of the task */</span></span><br/><span class="line"><span class="type">kuid_t</span>		suid;		<span class="comment">/* saved UID of the task */</span></span><br/><span class="line"><span class="type">kgid_t</span>		sgid;		<span class="comment">/* saved GID of the task */</span></span><br/><span class="line"><span class="type">kuid_t</span>		euid;		<span class="comment">/* effective UID of the task */</span></span><br/><span class="line"><span class="type">kgid_t</span>		egid;		<span class="comment">/* effective GID of the task */</span></span><br/><span class="line"><span class="type">kuid_t</span>		fsuid;		<span class="comment">/* UID for VFS ops */</span></span><br/><span class="line"><span class="type">kgid_t</span>		fsgid;		<span class="comment">/* GID for VFS ops */</span></span><br/></pre></td></tr></table></figure>
 <p>至此，就已经将一个进程提权至<code>root</code>了。</p>
 ]]></content>
@@ -2813,7 +2816,7 @@ ip rule del priority 10199 \
   <entry>
     <title>20240326-Typora激活教程</title>
     <url>/blog/2024/09/typora-activation/</url>
-    <content><![CDATA[<p>::: tip 声明<br/>本博客仅以学习为目的进行记录，请支持正版，并将本博客提及相关文件于24h内删除。<br/>:::</p>
+    <content><![CDATA[<blockquote><p><strong>声明：</strong>本博客仅以学习为目的进行记录，请支持正版，并将本博客提及相关文件于24h内删除。</p></blockquote>
 <h2 id="1-安装原版Typora"><a class="headerlink" href="#1-安装原版Typora" title="1.安装原版Typora"></a>1.安装原版Typora</h2><p><strong>安装过程略过</strong></p>
 <h2 id="2-克隆相关仓库"><a class="headerlink" href="#2-克隆相关仓库" title="2.克隆相关仓库"></a>2.克隆相关仓库</h2><h3 id="方式一"><a class="headerlink" href="#方式一" title="方式一"></a>方式一</h3><p>直接克隆<a href="https://github.com/hazukieq/Yporaject" rel="noopener" target="_blank">Yporaject</a> (此项目对原两个项目进行了合并)，好处是一键编译即可，坏处是此项目并未和原项目代码同步。</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">可以直接克隆本项目的仓库, depth=1 表示仅克隆最新版本,以减少等待时间</span></span><br/><span class="line">git clone https://github.com/hazukieq/Yporaject.git --depth=1</span><br/></pre></td></tr></table></figure>
@@ -2842,7 +2845,41 @@ ip rule del priority 10199 \
   <entry>
     <title>BMP图片格式</title>
     <url>/blog/2024/09/bmp-image-format/</url>
-    <content><![CDATA[<p><img alt="bmp.png" src="https://s2.loli.net/2024/09/20/hmtQkegKV2XfE45.png"/></p>
+    <content><![CDATA[<p>BMP 位图文件把图像尺寸、像素格式和像素数据放在同一文件中。下面以 Windows 常见的 <strong>40 字节 BITMAPINFOHEADER、24 位、BI_RGB 未压缩</strong>格式为例；调色板、位域掩码和压缩 BMP 需要按各自格式另外解析。</p>
+<h2 id="bmp-layout">文件从哪里开始读</h2>
+<p>常见布局为文件头、DIB 信息头、可选颜色信息、像素数据。文件头中的 <code>bfOffBits</code>给出像素区相对文件起点的偏移，不能一律假定像素从第 54 字节开始。信息头也有多个版本，应先读 <code>biSize</code> 再决定解析方式。参见微软的<a href="https://learn.microsoft.com/en-us/windows/win32/gdi/bitmap-header-types" rel="noopener" target="_blank">位图头类型说明</a>。</p>
+<p><img alt="BMP 位图文件结构示意图" src="https://s2.loli.net/2024/09/20/hmtQkegKV2XfE45.png"/></p>
+<h2 id="bmp-file-header">14 字节文件头</h2>
+<p>下表偏移以文件起点为零。整数按小端读取：低有效字节在前，例如 <code>36 00 00 00</code> 表示十进制 54。文件开头的两个字节为 <code>42 4D</code>，对应 ASCII 字符 <code>BM</code>。</p>
+<table><thead><tr><th>偏移</th><th>大小</th><th>字段</th><th>含义</th></tr></thead><tbody>
+<tr><td>0</td><td>2 字节</td><td>bfType</td><td>文件标识，数值为 0x4D42</td></tr>
+<tr><td>2</td><td>4 字节</td><td>bfSize</td><td>文件总大小，单位为字节</td></tr>
+<tr><td>6</td><td>2 字节</td><td>bfReserved1</td><td>保留，必须为 0</td></tr>
+<tr><td>8</td><td>2 字节</td><td>bfReserved2</td><td>保留，必须为 0</td></tr>
+<tr><td>10</td><td>4 字节</td><td>bfOffBits</td><td>像素数据的起始偏移</td></tr>
+</tbody></table>
+<p>字段定义见 <a href="https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-bitmapfileheader" rel="noopener" target="_blank">BITMAPFILEHEADER</a>。读取二进制文件时还要检查实际长度，不能只信任头部声明的大小。</p>
+<h2 id="bmp-info-header">40 字节信息头</h2>
+<p>本例信息头紧跟文件头，下表偏移仍从文件起点计算。</p>
+<table><thead><tr><th>偏移</th><th>大小</th><th>字段</th><th>本例中的含义</th></tr></thead><tbody>
+<tr><td>14</td><td>4 字节</td><td>biSize</td><td>信息头本身的大小，为 40</td></tr>
+<tr><td>18</td><td>4 字节</td><td>biWidth</td><td>有符号整数，图像宽度，单位为像素</td></tr>
+<tr><td>22</td><td>4 字节</td><td>biHeight</td><td>有符号整数，绝对值为高度，符号决定行方向</td></tr>
+<tr><td>26</td><td>2 字节</td><td>biPlanes</td><td>必须为 1</td></tr>
+<tr><td>28</td><td>2 字节</td><td>biBitCount</td><td>每像素位数，本例为 24</td></tr>
+<tr><td>30</td><td>4 字节</td><td>biCompression</td><td>BI_RGB 为 0，表示本例像素未压缩</td></tr>
+<tr><td>34</td><td>4 字节</td><td>biSizeImage</td><td>像素区大小；未压缩 RGB 允许填 0，需据尺寸计算</td></tr>
+<tr><td>38、42</td><td>各 4 字节</td><td>biXPelsPerMeter、biYPelsPerMeter</td><td>水平、垂直分辨率，单位为像素/米</td></tr>
+<tr><td>46、50</td><td>各 4 字节</td><td>biClrUsed、biClrImportant</td><td>使用的颜色数与重要颜色数；本例无颜色表，均为 0</td></tr>
+</tbody></table>
+<p>字段与方向说明见 <a href="https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-bitmapinfoheader" rel="noopener" target="_blank">BITMAPINFOHEADER</a>。24 位像素以蓝、绿、红（BGR）三个字节存储，每通道 8 位，没有独立的透明度通道。</p>
+<h2 id="bmp-row-stride">行对齐和图像方向</h2>
+<p>24 位像素每行的有效数据是 <code>width × 3</code> 字节，文件中的每行要补齐到 4 字节的整数倍。补齐字节不属于下一个像素。可按下列公式计算行跨度与像素区大小：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">stride = ((width * 24 + 31) // 32) * 4</span><br/><span class="line">pixel_bytes = stride * abs(height)</span><br/></pre></td></tr></table></figure>
+<p>例如宽度 3、高度 2：每行像素占 9 字节，需要补 3 字节，行跨度为 12 字节，像素区共 24 字节。在本例没有额外颜色信息、像素偏移为 54 的前提下，文件总大小为 <code>54 + 24 = 78</code> 字节。这是按格式计算的示例值。</p>
+<p>对本例的未压缩 RGB，<code>biHeight &gt; 0</code> 表示文件先存最下面一行；<code>biHeight &lt; 0</code> 表示先存最上面一行。每行内部仍从左往右排列。逐行读取时，应同时处理行跨度和高度符号，否则容易出现错行或上下颠倒。相关布局见 <a href="https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-bitmapinfo" rel="noopener" target="_blank">BITMAPINFO 的说明</a>。</p>
+<h2 id="bmp-checks">解析时核对什么</h2>
+<ul><li>确认 BM 标识、信息头大小、位深与压缩类型属于解析器支持的范围。</li><li>确认宽度为正、高度非零，并限制允许的尺寸，检查乘法和偏移计算是否溢出。</li><li>确认像素偏移在头部之后且位于文件范围内，再核对 <code>bfOffBits + pixel_bytes</code> 不超过实际文件长度。</li><li>不要把 24 位 BI_RGB 的 BGR 顺序、大小计算或第 54 字节的例子直接套用到调色板、压缩或其他信息头版本。</li></ul>
 ]]></content>
       <categories>
         <category>编程开发</category>
@@ -2872,7 +2909,7 @@ ip rule del priority 10199 \
 <h2 id="解决办法："><a class="headerlink" href="#解决办法：" title="解决办法："></a>解决办法：</h2><p>如果使用公网ip、内网ip端是可以进行访问的。但是由于公网访问会造成延迟、内网ip会在容器重启后进行变化，故此不建议通过这两种方式进行解决。</p>
 <p>使用容器名称配置连接信息，有效解决办法。<br/>如容器名称如下类型：</p>
 <p>复制容器名称并在你的网站配置文件host处填写替换localhost、127.0.0.1：</p>
-<p><a href="http://23.224.239.232:40027/i/2024/08/17/66c0bd740391b.png" rel="noopener" target="_blank"><img alt="1723907441483.png" src="http://23.224.239.232:40027/i/2024/08/17/66c0bd740391b.png"/></a></p>
+<p><a href="http://23.224.239.232:40027/i/2024/08/17/66c0bd740391b.png" rel="noopener" target="_blank"><img alt="1Panel 数据库连接信息中的容器地址，外部地址已脱敏" src="https://img.iowill.com/file/系统与运维/1Panel容器localhost连接问题/20261014/connection-info-masked.png"/></a></p>
 <p>配置容器名称后再次连接数据库，你会发现后续重启容器和服务器都不需要重新填写配置信息。redis和其他数据库或服务也是如此配置，使用容器名称进行连接。</p>
 ]]></content>
       <categories>
@@ -2944,10 +2981,12 @@ ip rule del priority 10199 \
 <p>耗时20天，终于学完啦，顺便写了1.4w字的笔记，坚持互联网开源精神，分享出来</p>
 </blockquote>
 <p>操作系统</p>
-<p>1.1_1 操作系统的概念、功能和目标</p>
+<h2 id="os-chapter-1">1. 操作系统基础</h2>
+<h3 id="os-group-1-1">1.1 概念、机制与系统调用</h3>
+<h4 id="os-1-1-1">1.1_1 操作系统的概念、功能和目标</h4>
 <p>作为用户和计算机硬件之间的接口</p>
 <p>提供的功能<br/>命令接口（联机命令接口|脱机命令接口）<br/>程序接口<br/>GUI（图形用户界面win|ios|andrio）<br/>目标<br/>方便用户使用</p>
-<p>1.1_2 操作系统的特征</p>
+<h4 id="os-1-1-2">1.1_2 操作系统的特征</h4>
 <p>并发|并行</p>
 <p>并发：多个事件交替发生（宏观同时发生、微观交替进行）</p>
 <p>并行：多个事件同时发生</p>
@@ -2957,20 +2996,26 @@ ip rule del priority 10199 \
 <p>概念：把一个物理上的实体变为若干个逻辑上的对应物</p>
 <p>空分复用计数<br/>时分复用计数<br/>异步</p>
 <p>概念：在多道程序环境下，允许多个程序并发执行，但由于资源有限，进程的执行不是一贯到底的，而是走走停停的，以不可预知的速度向前推进。只有系统拥有并发性，才有可能导致异步性。</p>
-<p>1.1_3 操作系统的发展与分类</p>
+<h4 id="os-1-1-3">1.1_3 操作系统的发展与分类</h4>
 <p>OS的发展与分类</p>
-<p>手工操作阶段<br/>纸带机（用户独占全机、人机速度矛盾）<br/>批处理阶段——dan’dao<br/>单道批处理系统（外围机——磁带）<br/>多道批处理系统（操作系统开始出现）<br/>分时操作系统<br/>轮流处理作业<br/>不能处理紧急任务<br/>实时操作系统<br/>优先处理紧急任务<br/>硬实时系统：必须在严格的时间内完成处理<br/>软实时系统：可以偶尔犯错<br/>网络操作系统<br/>分布式操作系统<br/>个人计算机操作系统<br/>1.1_4 操作系统的运行机制与体系结构</p>
+<p>手工操作阶段<br/>纸带机（用户独占全机、人机速度矛盾）<br/>批处理阶段——dan’dao<br/>单道批处理系统（外围机——磁带）<br/>多道批处理系统（操作系统开始出现）<br/>分时操作系统<br/>轮流处理作业<br/>不能处理紧急任务<br/>实时操作系统<br/>优先处理紧急任务<br/>硬实时系统：必须在严格的时间内完成处理<br/>软实时系统：可以偶尔犯错<br/>网络操作系统<br/>分布式操作系统<br/>个人计算机操作系统</p>
+<h4 id="os-1-1-4">1.1_4 操作系统的运行机制与体系结构</h4>
 <p>OS的运行机制和体系结构</p>
-<p>运行机制<br/>两种指令<br/>特权指令<br/>非特权指令<br/>两种处理器状态<br/>核心态（root）<br/>用户态<br/>两种程序<br/>内核程序(运行在核心态 )<br/>应用程序<br/>操作系统内核<br/>时钟管理（实现计时功能）<br/>中断处理<br/>原语（程序运行具有原子性，不可中断）<br/>对系统资源进行管理的功能<br/>进程管理<br/>存储器管理<br/>设备管理<br/>操作系统的体系结构<br/>大内核（将操作系统的主要功能模块都作为系统内核，运行在核心态）<br/>微内核（只把最基本的功能保留在内核）<br/>1.1_5 中断和异常</p>
-<p>中断机制的诞生<br/>操作系统介入，开展管理工作<br/>“用户态—&gt;核心态”是通过中断实现的。并且中断是唯一途径<br/>中断的概念和作用<br/>中断的分类<br/>内中断（异常）<br/>陷阱（trap）<br/>故障（fault）<br/>中止（abort）<br/>外中断 （CPU外部）<br/>外中断的处理过程<br/>1.1_6 系统调用</p>
+<p>运行机制<br/>两种指令<br/>特权指令<br/>非特权指令<br/>两种处理器状态<br/>核心态（root）<br/>用户态<br/>两种程序<br/>内核程序(运行在核心态 )<br/>应用程序<br/>操作系统内核<br/>时钟管理（实现计时功能）<br/>中断处理<br/>原语（程序运行具有原子性，不可中断）<br/>对系统资源进行管理的功能<br/>进程管理<br/>存储器管理<br/>设备管理<br/>操作系统的体系结构<br/>大内核（将操作系统的主要功能模块都作为系统内核，运行在核心态）<br/>微内核（只把最基本的功能保留在内核）</p>
+<h4 id="os-1-1-5">1.1_5 中断和异常</h4>
+<p>中断机制的诞生<br/>操作系统介入，开展管理工作<br/>“用户态—&gt;核心态”是通过中断实现的。并且中断是唯一途径<br/>中断的概念和作用<br/>中断的分类<br/>内中断（异常）<br/>陷阱（trap）<br/>故障（fault）<br/>中止（abort）<br/>外中断 （CPU外部）<br/>外中断的处理过程</p>
+<h4 id="os-1-1-6">1.1_6 系统调用</h4>
 <p>概念：应用程序通过系统调用请求操作系统的服务。保证系统的稳定性和安全性。</p>
 <p>系统调用和库函数的区别：</p>
-<p>系统调用是操作系统向上层提供的接口<br/>有的库函数是对系统调用的进一步封装<br/>当今编写的应用程序大多是通过高级语言提供的库函数间接地进行系统调用<br/>2.1_1 进程的定义、组成、组织方式、特征</p>
+<p>系统调用是操作系统向上层提供的接口<br/>有的库函数是对系统调用的进一步封装<br/>当今编写的应用程序大多是通过高级语言提供的库函数间接地进行系统调用</p>
+<h2 id="os-chapter-2">2. 进程、调度与同步</h2>
+<h3 id="os-group-2-1">2.1 进程与线程</h3>
+<h4 id="os-2-1-1">2.1_1 进程的定义、组成、组织方式、特征</h4>
 <p>定义：</p>
 <p>组成：PCB（进程存在唯一的标志），程序段，数据段</p>
 <p>组织方式：链接方式，指针指向不同的队列；索引方式，索引表</p>
 <p>特征：动态性、并发性、独立性、异步性、结构性</p>
-<p>2.1_2 进程的状态与转换</p>
+<h4 id="os-2-1-2">2.1_2 进程的状态与转换</h4>
 <p>状态：</p>
 <p>运行状态：占有CPU，并在CPU上运行，单核只能一个进程（双核两个）（CPU√，其它资源√）</p>
 <p>就绪状态：已经具备运行条件，但是没有空闲的CPU，暂时不能运行（CPUX，其它资源√）</p>
@@ -2984,7 +3029,7 @@ ip rule del priority 10199 \
 <p>运行态-&gt;中止态（比如数组越界）</p>
 <p>运行态-&gt;阻塞态（主动）</p>
 <p>阻塞态-&gt;就绪态（被动）</p>
-<p>2.1_3 进程控制</p>
+<h4 id="os-2-1-3">2.1_3 进程控制</h4>
 <p>基本概念：</p>
 <p>什么是进程控制？</p>
 <p>答：实现各种进程状态转换。</p>
@@ -3010,7 +3055,7 @@ ip rule del priority 10199 \
 <p>5、进程的切换</p>
 <p>切换原语</p>
 <p>引起进程切换的事件：当前进程事件片到、有更高优先级的进程到达、当前进程主动阻塞、当前进程终止</p>
-<p>2.1_4 进程通信</p>
+<h4 id="os-2-1-4">2.1_4 进程通信</h4>
 <p>1、共享存储   （分配共享空间，且互斥（P、V操作）</p>
 <p>基于数据结构的共享：固定分配（低级）</p>
 <p>基于存储区的共享：划分存储区（高级）</p>
@@ -3021,7 +3066,7 @@ ip rule del priority 10199 \
 <p>3、管道通信（pipe）</p>
 <p>只能半双工通信</p>
 <p>互斥（没写满，不能读，反之同理）</p>
-<p>2.1_5 线程概念和多线程模型</p>
+<h4 id="os-2-1-5">2.1_5 线程概念和多线程模型</h4>
 <p>什么是线程，为什么要引入线程？</p>
 <p>答：线程是一个基本的CPU执行单元，也是程序执行流的最小单位，进一步提高了系统的并发度</p>
 <p>引入线程机制后，有什么变化？</p>
@@ -3048,7 +3093,8 @@ ip rule del priority 10199 \
 <p>多对多模型</p>
 <p>n个ULT映射到m个KLT上（n&gt;=m）</p>
 <p>中和以上两种优缺点</p>
-<p>2.2_1 处理机调度的概念、层次</p>
+<h3 id="os-group-2-2">2.2 处理机调度</h3>
+<h4 id="os-2-2-1">2.2_1 处理机调度的概念、层次</h4>
 <p>基本概念</p>
 <p>通常进程数量大于处理机数量，所以要按照一定的算法选择一个进程，并将处理机分配给它运行，以实现进程的并发执行</p>
 <p>三个层次</p>
@@ -3062,7 +3108,7 @@ ip rule del priority 10199 \
 <p>进程的“挂起态”</p>
 <p>七状态模型</p>
 <p>五状态前面学了，挂起分为就绪挂起、阻塞挂起</p>
-<p>2.2_2 进程调度的时机、切换与过程调度方式</p>
+<h4 id="os-2-2-2">2.2_2 进程调度的时机、切换与过程调度方式</h4>
 <p>1、时机</p>
 <p>什么时候需要进程调度？</p>
 <p>主动放弃（进程正常终止、运行过程中发生异常而终止、进程主动请求阻塞）<br/>被动放弃（分给进程的时间片用完、有更紧急的事需要处理、有更高优先级的进程进入就绪队列）<br/>什么时候不能进行进程调度？</p>
@@ -3072,7 +3118,8 @@ ip rule del priority 10199 \
 <p>对原来运行进程各种数据的保存<br/>对新的进程各种数据的恢复<br/>3、方式</p>
 <p>非剥夺调度方式（非抢占式）</p>
 <p>只允许进程主动放弃处理机<br/>剥夺调度方式（抢占式）</p>
-<p>进程被动放弃，可以优先处理紧急任务，适合分时操作系统、实时操作系统<br/>2.2_3 调度算法的评价指标</p>
+<p>进程被动放弃，可以优先处理紧急任务，适合分时操作系统、实时操作系统</p>
+<h4 id="os-2-2-3">2.2_3 调度算法的评价指标</h4>
 <p>1、CPU利用率</p>
 <p>CPU利用率=CPU忙碌的时间/总时间</p>
 <p>2、系统吞吐量</p>
@@ -3084,7 +3131,7 @@ ip rule del priority 10199 \
 <p>作业：建立后的等待时间+作业在外存后备队列中等待的时间</p>
 <p>5、响应时间</p>
 <p>从用户提交请求到首次产生响应所用的时间</p>
-<p>2.2_4 FCFS、SJF、HRRN调度算法</p>
+<h4 id="os-2-2-4">2.2_4 FCFS、SJF、HRRN调度算法</h4>
 <p>1、先来先服务（FCFS）</p>
 <p>先到达先进行服务</p>
 <p>作业-后备队列；进程-就绪队列</p>
@@ -3106,7 +3153,7 @@ ip rule del priority 10199 \
 <p>非抢占式</p>
 <p>进程主动放弃CPU时，需要该算法选取就绪队列的作业</p>
 <p>不会饥饿</p>
-<p>2.2_5 时间片轮转、优先级调度、多级反馈队列（适合交互式系统）</p>
+<h4 id="os-2-2-5">2.2_5 时间片轮转、优先级调度、多级反馈队列（适合交互式系统）</h4>
 <p>1、时间片轮转算法（RR）</p>
 <p>算法思想：公平轮流地位各个进程服务，让每个进程在一定时间间隔内都可以得到响应</p>
 <p>算法规则：按照各进程到达就绪队列的顺序，轮流让各个进程执行一个时间片（如100ms）。若进程未在一个时间片内执行完，则剥夺处理机，将进程重新放到就绪队列对位重新排队。</p>
@@ -3131,7 +3178,8 @@ ip rule del priority 10199 \
 <p>优点：对各个进程相对公平（FCFS的优点），每个新到达的进程都可以很快就得到响应（RR的优点）；短进程只用较少的时间就可以完成（SPF的优点）；不必实现估计进程的运行时间（避免用户作假）；可灵活地调整对各类进程的偏好程度，比如CPU密集型进程、IO密集型进程</p>
 <p>默认抢占式</p>
 <p>会饥饿</p>
-<p>2.3_1 进程同步、进程互斥</p>
+<h3 id="os-group-2-3">2.3 同步与互斥</h3>
+<h4 id="os-2-3-1">2.3_1 进程同步、进程互斥</h4>
 <p>1、进程同步</p>
 <p>指为了完成某种任务而建立的两个或多个进程，这些进程因为需要在某些位置上协调他们的工作次序而产生的制约关系。进程间的直接制约关系就是源于它们之间的相互合作。</p>
 <p>2、进程互斥</p>
@@ -3147,7 +3195,7 @@ ip rule del priority 10199 \
 <p>2、忙则等待。 繁忙不能进去</p>
 <p>3、有限等待。 不能让进程等待无限长时间</p>
 <p>4、让权等待。 不能进去，不要堵着</p>
-<p>2.3_2 进程互斥的软件实现方法</p>
+<h4 id="os-2-3-2">2.3_2 进程互斥的软件实现方法</h4>
 <p>1、单标志法</p>
 <p>两个进程在访问完临界区后会把使用临界区的权限教给另一个进程。也就是说每个进程进入临界区的权限只能被另一个进程赋予</p>
 <p>int turn =0;</p>
@@ -3216,7 +3264,7 @@ ip rule del priority 10199 \
 <p>remainder section;</p>
 <p>遵循空闲让进、忙则等待、有限等待三个原则</p>
 <p>但是未遵循让权等待的原则</p>
-<p>2.3_3 进程互斥的硬件实现方法</p>
+<h4 id="os-2-3-3">2.3_3 进程互斥的硬件实现方法</h4>
 <p>1、中断屏蔽方法</p>
 <p>关中断（不允许进程中断）</p>
 <p>临界区</p>
@@ -3262,7 +3310,7 @@ ip rule del priority 10199 \
 <p>简单</p>
 <p>适用多处理机</p>
 <p>不能让权等待</p>
-<p>2.3_4 信号量机制</p>
+<h4 id="os-2-3-4">2.3_4 信号量机制</h4>
 <p>信号量：</p>
 <p>信号量是一种变量，表示系统中某种资源的数量</p>
 <p>一对原语：wait（S）原语和signal（S）原语，分别简称P（S）、V（S）</p>
@@ -3302,7 +3350,7 @@ ip rule del priority 10199 \
 <p> }</p>
 <p>}</p>
 <p>除非特别说明，否则默认S为记录型信号量</p>
-<p>2.3_5 用信号量机制实现进程互斥、同步、前驱关系</p>
+<h4 id="os-2-3-5">2.3_5 用信号量机制实现进程互斥、同步、前驱关系</h4>
 <p>1、实现进程互斥</p>
 <p>设置互斥信号量mutex，初值为1</p>
 <p>对不同的临界资源需要设置不同的互斥信号量</p>
@@ -3316,7 +3364,7 @@ ip rule del priority 10199 \
 <p>1、要为每一对前驱关系各设置一个同步变量</p>
 <p>2、在“前操作”之后对相应的同步变量执行V操作</p>
 <p>3、在“后操作”之前对相应的同步变量执行P操作</p>
-<p>2.3_6 生产者-消费者问题</p>
+<h4 id="os-2-3-6">2.3_6 生产者-消费者问题</h4>
 <p>（好像很幼稚的逻辑</p>
 <p>只有缓冲区没满时，生产者才能把产品放入缓冲区，否则必须等待</p>
 <p>只有缓冲区不空时，消费者才能从中取出产品，否则必须等待</p>
@@ -3324,13 +3372,13 @@ ip rule del priority 10199 \
 <p>实现互斥的P操作要放在实现同步的P操作之后，不然会发生死锁</p>
 <p>V操作不会导致进程发生阻塞的状态，所以可以交换</p>
 <p>使用操作不要放在临界区，不然并发度会降低</p>
-<p>2.3_7 多生产者-多消费者模型</p>
+<h4 id="os-2-3-7">2.3_7 多生产者-多消费者模型</h4>
 <p>在生产-消费者问题中，如果缓冲区大小为1，那么有可能不需要设置互斥信号量就可以实现互斥访问缓冲区</p>
 <p>分析同步问题是，应该从“事件”的角度来考虑</p>
-<p>2.3_8 吸烟者问题</p>
+<h4 id="os-2-3-8">2.3_8 吸烟者问题</h4>
 <p>解决“可以让生产多个产品的单生产者”问题提供一个思路；</p>
 <p>若一个生产者要生产多种产品（或者说会引发多种前驱事件），那么各个V操作应该放在各自对应的“事件”发生之后的位置</p>
-<p>2.3_9 读者-写者问题</p>
+<h4 id="os-2-3-9">2.3_9 读者-写者问题</h4>
 <p>1、允许多个读者同时对文件执行读操作</p>
 <p>2、只允许一个写者往文件中写信息</p>
 <p>3、任一写者在完成写操作之前不允许其他读者或写者工作</p>
@@ -3382,7 +3430,7 @@ V(mutex);
 </code></pre>
 <p> }</p>
 <p>}</p>
-<p>2.3_10 哲学家进餐问题</p>
+<h4 id="os-2-3-10">2.3_10 哲学家进餐问题</h4>
 <p>五个人，必须拿左右的筷子才能吃饭</p>
 <p>避免死锁发生</p>
 <p>解决方案：</p>
@@ -3411,7 +3459,7 @@ V(chopstick[(i+1)%5]);
 </code></pre>
 <p> }</p>
 <p>}</p>
-<p>2.3_11 管程</p>
+<h4 id="os-2-3-11">2.3_11 管程</h4>
 <p>1、为什么要引入管程</p>
 <p>PV操作容易出错、困难</p>
 <p>2、管程的定义和基本特征</p>
@@ -3472,7 +3520,8 @@ producerconsumer.insert(item);
 <p>}</p>
 <p>拓展2：Java中类似于管程的机制</p>
 <p>java中用synchronized来描述一个函数,这个函数同一时间只能被一个线程调用</p>
-<p>2.4_1 死锁的概念</p>
+<h3 id="os-group-2-4">2.4 死锁</h3>
+<h4 id="os-2-4-1">2.4_1 死锁的概念</h4>
 <p>1、什么是死锁</p>
 <p>各进程互相等待对方手里的资源，导致各进程都阻塞，无法向前推进的现象。</p>
 <p>2、进程死锁、饥饿、死循环的区别</p>
@@ -3488,10 +3537,12 @@ producerconsumer.insert(item);
 <p>3、死锁产生的必要条件</p>
 <p>互斥条件：多个进程争夺资源发生死锁<br/>不剥夺条件：进程获得的资源不能由其它进程强行抢夺<br/>请求和保持条件：某个进程有了资源，还在请求资源<br/>循环等待条件：存在资源的循环等待链<br/>4、什么时候会发生死锁</p>
 <p>对系统资源的竞争<br/>进程推进顺序非法<br/>信号量的使用不当也会造成死锁<br/>5、死锁的处理策略</p>
-<p>预防死锁<br/>避免死锁<br/>死锁的检测和解除<br/>2.4_2 死锁的处理策略——预防死锁</p>
+<p>预防死锁<br/>避免死锁<br/>死锁的检测和解除</p>
+<h4 id="os-2-4-2">2.4_2 死锁的处理策略——预防死锁</h4>
 <p>1、不允许死锁发生</p>
 <p>静态策略：预防死锁<br/>破坏互斥条件（有些不能破坏）<br/> 把互斥的资源改造为共享资源<br/>破坏不剥夺条件（复杂，造成之前工作失效，降低系统开销，会全部放弃、导致饥饿）<br/> 方案1：当请求得不到满足的时候，立即释放手里的资源<br/> 方案2：由系统介入，强行帮助剥夺<br/>破坏请求和保持条件（资源利用率极低，可能会导致某些进程饥饿）<br/> 采用静态分配方法，一次性全部申请，如果申请不到，不要允许<br/>破坏循环等待条件（不方便增加新的设备，实际使用与递增顺序不一致，会导致资源的浪费，必须按规定次序申请资源）<br/> 顺序资源分配法：对资源编号，进程按编号递增顺序请求资源<br/>动态检测：避免死锁<br/>2、允许死锁发生</p>
-<p>死锁的检测和解除<br/>2.4_3 死锁的处理策略——避免死锁</p>
+<p>死锁的检测和解除</p>
+<h4 id="os-2-4-3">2.4_3 死锁的处理策略——避免死锁</h4>
 <p>动态检测：避免死锁</p>
 <p>什么是安全序列<br/>进行后面的某些情况，不会使系统发生死锁<br/>什么是系统的不安全状态，与死锁有何联系<br/>如果系统处于安全状态，就一定不会发生死锁。如果系统进入不安全状态，就可能发生死锁（处于不安全状态未必就是发生了死锁，但发生死锁时一定时在不安全状态）<br/>如何避免系统进入不安全状态——银行家算法<br/>初始分配完成后，优先全部分配给最少的，并且拿回资源<br/>		步骤：</p>
 <pre><code>		1、检查此次申请是否超过了之前声明的最大需求数
@@ -3502,7 +3553,7 @@ producerconsumer.insert(item);
 
 		4、用安全性算法检查此次所分配是否会导致系统进入不安全状态
 </code></pre>
-<p>2.4_4 死锁的处理策略——检测和解除</p>
+<h4 id="os-2-4-4">2.4_4 死锁的处理策略——检测和解除</h4>
 <p>死锁的检测</p>
 <p>1、用某种数据结构来保存资源的请求和分配信息</p>
 <p>2、提供一种算法，利用上述信息来检测系统是否已进入死锁状态</p>
@@ -3510,7 +3561,9 @@ producerconsumer.insert(item);
 <p>1、资源剥夺法：挂起某些死锁进程，并抢占它的资源，将这些资源分配给其他的死锁进程。</p>
 <p>2、撤销进程法：强制撤销部分，甚至全部死锁进程，并剥夺这些进程的资源。</p>
 <p>3、进程回退法：让一个或多个死锁进程回退到足以避免死锁的地步。</p>
-<p>3.1_1 内存的基础知识</p>
+<h2 id="os-chapter-3">3. 内存管理</h2>
+<h3 id="os-group-3-1">3.1 内存与地址转换</h3>
+<h4 id="os-3-1-1">3.1_1 内存的基础知识</h4>
 <p>1、什么是内存</p>
 <p>存储单元：每个地址对应一个存储单元</p>
 <p>内存地址：</p>
@@ -3520,26 +3573,27 @@ producerconsumer.insert(item);
 <p>从写程序到程序运行：编辑-编译-链接-装入</p>
 <p>三种链接方式：静态链接（在程序运行前，先将各目标模块及它们所需的库函数连接成一个完整的可执行文件）、装入时动态链接（将各目标模块装入内存时，边装入边链接的链接方式）、运行时动态链接（在程序执行中需要该模块时，才对它进行链接，其优点时便于修改和更新。）</p>
 <p>三种装入方式：绝对装入（在编译的时候就知道程序放在内存的哪个位置）、静态重定位（装入时将逻辑地址转表为物理地址）、动态重定位（把地址转化推迟到程序真正要执行时才进行）</p>
-<p>3.1_2 内存管理的概念</p>
+<h4 id="os-3-1-2">3.1_2 内存管理的概念</h4>
 <p>1、内存空间的分配与回收</p>
 <p>2、内存空间的扩充</p>
 <p>内存的虚拟性</p>
 <p>3、地址转换</p>
 <p>逻辑地址和物理地址转换</p>
 <p>4、存储保护</p>
-<p>设置上下限寄存器<br/>采用重定位寄存器（基址寄存器）和界地址寄存器（限长寄存器）<br/>3.1_3 覆盖与交换</p>
+<p>设置上下限寄存器<br/>采用重定位寄存器（基址寄存器）和界地址寄存器（限长寄存器）</p>
+<h4 id="os-3-1-3">3.1_3 覆盖与交换</h4>
 <p>内存空间的扩充</p>
 <p>覆盖技术：将程序分为多个段，内存分为”固定区“和”覆盖区“，需要常驻的放在”固定区“，调入后就不再调出，不常用的段放在”覆盖区“，需要用到时调入内存，用不到时掉出内存</p>
 <p>交换技术：内存空间紧张时，系统将内存中某些进程暂时换出外存，把外存中某些已具备运行条件的进程换入内存（PCB会常驻内存，不会被患处）</p>
 <p>虚拟存储技术：</p>
-<p>3.1_4 连续分配管理方式</p>
+<h4 id="os-3-1-4">3.1_4 连续分配管理方式</h4>
 <p>连续分配方式</p>
 <p>单一连续分配：内存被分配为系统区和用户区，系统区在低地址，用户区是一个用户独享</p>
 <p>固定分区分配：将用户区分割为若干固定分区给各道程序，分割策略有分区大小相等和分区大小不相等，可以建议一个分区说明表来管理各个分区</p>
 <p>动态分区分配：可变分区分配，不会预先划分内存分区，而是在进程装入内存时，根据进程的大小动态地建立分区，并使分区的大小正好适合进程的需要。</p>
 <p>内部碎片：分配给某进程的内存区域中，如果有些部分没有用上</p>
 <p>外部碎片：是指内存中的某些空闲分区由于太小而难以利用（如果有外部碎片，可以采用紧凑技术）</p>
-<p>3.1_5 动态分区分配算法</p>
+<h4 id="os-3-1-5">3.1_5 动态分区分配算法</h4>
 <p>1、首次适应算法（First Fit)</p>
 <p>算法思想：每次从低地址开始查找，找到第一个能满足大小的空闲分区</p>
 <p>2、最佳适应算法(Best Fit)</p>
@@ -3551,7 +3605,7 @@ producerconsumer.insert(item);
 <p>4、领近适应算法(Next Fit)</p>
 <p>算法思想：每次从上次查找结束的位置开始检索</p>
 <p>缺点：大空间容易被用完</p>
-<p>3.1_6 基本分页存储管理的基本概念</p>
+<h4 id="os-3-1-6">3.1_6 基本分页存储管理的基本概念</h4>
 <p>允许一个进程分散地装入道许多不相邻的位置</p>
 <p>连续分配：为用户进程分配连续的内存空间</p>
 <p>非连续分配：为用户进程分配分散的内存空间</p>
@@ -3559,16 +3613,16 @@ producerconsumer.insert(item);
 <p>分页管理：物理地址=页面的其实位置+偏移量</p>
 <p>计算机中用2的整数倍表示页面的大小</p>
 <p>页表：存放页号和块号的对应关系</p>
-<p>3.1_7 基本地址变换机构</p>
+<h4 id="os-3-1-7">3.1_7 基本地址变换机构</h4>
 <p>页表寄存器（PTR），存放页表在内存中的起始地址F和页表长度M，进程未执行时，页表的起始地址和页表的长度放在进程控制块（PCB）中，当进程被调度时，操作系统内核会把它们放在页表寄存器中。</p>
-<p>3.1_8 具有快表的地址变换机构</p>
+<h4 id="os-3-1-8">3.1_8 具有快表的地址变换机构</h4>
 <p>1、局部性原理</p>
 <p>时间局部性：访问某个变量后，在不久的将来还会被访问</p>
 <p>空间局部性：程序访问了某个存储单元，不久之后，其附近的存储单元也很有可能被访问</p>
 <p>2、什么是快表（TLB）</p>
 <p>快表：又称联想寄存器（TLB），是一种访问速度比内存快很多的高速缓冲存储器，用来存放当前访问的若干页表项，以加速地址变换的过程。与此对应，内存中的页表常称为慢表。</p>
 <p>3、引入快表后，地址的变换过程</p>
-<p>3.1_9 两级页表</p>
+<h4 id="os-3-1-9">3.1_9 两级页表</h4>
 <p>1、单级页表存在什么问题？如何解决？</p>
 <p>所有页表项必须连续存放，页表过大时需要很大的连续空间</p>
 <p>在一段时间内并非所有页面都用得到，因此没必要让整个页表常驻内存</p>
@@ -3584,7 +3638,7 @@ producerconsumer.insert(item);
 <p>4、两级页表问题需要注意的几个细节</p>
 <p>多级页表中，各级页表的大小不能超过一个页面。若两级页表不够，可以分更多级</p>
 <p>多级页表的访问次数（假设没有快表结构）——N级页表访问一个逻辑地址需要N+1次访存</p>
-<p>3.1_10 基本分段存储管理方式</p>
+<h4 id="os-3-1-10">3.1_10 基本分段存储管理方式</h4>
 <p>1、什么是分段？</p>
 <p>进程的地址空间：按照程序自身的逻辑关系划分为若干个段，每段有段名，每段从0开始编址</p>
 <p>段号的位数决定了每个进程最多可以分几个段</p>
@@ -3598,7 +3652,7 @@ producerconsumer.insert(item);
 <p>页：信息的物理单位，实现离散分配，提高内存利用率，地址是一维的，访存两次</p>
 <p>段：信息的逻辑单位，对系统可见，地址是二维的，访存3次</p>
 <p>分段比分页更容易实现信息的共享和保护（不能被修改的代码称为纯代码和可重入代码，不属于临界资源）</p>
-<p>3.1_11 段页式的管理方式</p>
+<h4 id="os-3-1-11">3.1_11 段页式的管理方式</h4>
 <p>1、分页、分段管理方式最大的优缺点</p>
 <p>分页：利用率高，碎片少，不方便进行信息共享和保护</p>
 <p>分段：方便信息共享和保护，如果段长大，容易产生外部碎片</p>
@@ -3608,7 +3662,8 @@ producerconsumer.insert(item);
 <p>地址结构是二维的</p>
 <p>3、段表、页表</p>
 <p>4、如何实现地址变换</p>
-<p>3.2_1 虚拟内存的基本概念</p>
+<h3 id="os-group-3-2">3.2 虚拟内存</h3>
+<h4 id="os-3-2-1">3.2_1 虚拟内存的基本概念</h4>
 <p>1、传统存储管理方式的特征、缺点</p>
 <p>之前讲的</p>
 <p>一次性：作业必须全部装入内存后才能开始运行，并发性下降</p>
@@ -3626,14 +3681,14 @@ producerconsumer.insert(item);
 <p>4、如何实现虚拟内存技术</p>
 <p>在程序执行过程中，当所访问的信息不再内存时，由操作系统负责将所需信息从外存调入内存，然后继续执行程序。</p>
 <p>若内存空间不够，由操作系统负责将内存中暂时用不到的信息换出到外存。</p>
-<p>3.2_2 请求分页管理方式</p>
+<h4 id="os-3-2-2">3.2_2 请求分页管理方式</h4>
 <p>1、页表机制</p>
 <p> 请求分页存储的页表：</p>
 <p>内存块号  状态位 访问字段 修改位 外存地址</p>
 <p>2、缺页中断机构</p>
 <p>内中断，可被修复</p>
 <p>3、地址变换机构</p>
-<p>3.2_3 页面置换算法</p>
+<h4 id="os-3-2-3">3.2_3 页面置换算法</h4>
 <p>1、最佳置换算法（OPT）</p>
 <p>每次选择淘汰的页面是以后永不使用或者在最长时间内不再被访问的页面，这样可以保证最低的缺页率。</p>
 <p>实际上不知道后面的序列</p>
@@ -3646,7 +3701,7 @@ producerconsumer.insert(item);
 <p>简单的：最多经历两轮扫描，初始为1，扫一下为0，再扫一下被踢</p>
 <p>5、改进型的时钟置换算法</p>
 <p>优先淘汰没有被修改过的，因为没有修改过的不用进行IO操作00-&gt;01（改）-&gt;00-&gt;01</p>
-<p>3.2_4 页面分配策略</p>
+<h4 id="os-3-2-4">3.2_4 页面分配策略</h4>
 <p>1、驻留集</p>
 <p>指请求分页存储管理中给进程分配的物理块的集合</p>
 <p>2、页面分配、置换策略</p>
@@ -3660,14 +3715,16 @@ producerconsumer.insert(item);
 <p>刚刚换出的又要换入，刚刚换入的又要换出，物理块不够</p>
 <p>6、工作集</p>
 <p>指在某段时间间隔里，进程实际访问页面的集合</p>
-<p>4.1_1 初识文件管理</p>
+<h2 id="os-chapter-4">4. 文件系统与磁盘</h2>
+<h3 id="os-group-4-1">4.1 文件管理</h3>
+<h4 id="os-4-1-1">4.1_1 初识文件管理</h4>
 <p>提供的功能：</p>
 <p>处理机管理</p>
 <p>存储器管理</p>
 <p>文件管理</p>
 <p>设备管理</p>
 <p>目标：安全高效</p>
-<p>4.1_2 文件的逻辑结构</p>
+<h4 id="os-4-1-2">4.1_2 文件的逻辑结构</h4>
 <p>1、无结构文件</p>
 <p>文件由一系列二进制文件流组成</p>
 <p>2、有结构文件（记录式文件）</p>
@@ -3677,7 +3734,7 @@ producerconsumer.insert(item);
 <p>顺序存储：</p>
 <p>可变长：无法随机存取<br/>定长：可以随机存取，采用串结构，无法快速找到关键字；采用顺序结构，可以快速查找关键字<br/>索引文件：索引表本身是定长的顺序文件</p>
 <p>索引顺序文件：多级索引表嵌套查找</p>
-<p>4.1_3 文件目录</p>
+<h4 id="os-4-1-3">4.1_3 文件目录</h4>
 <p>1、文件控制块（FCB）</p>
 <p>搜索、创建文件、删除文件、显示目录、修改目录</p>
 <p>2、目录结构</p>
@@ -3685,18 +3742,21 @@ producerconsumer.insert(item);
 <p>多级目录结构（树形目录结构）<br/>		当代操作系统采用方法、不便于文件共享</p>
 <p>无环图目录结构<br/>可以共享<br/>3、索引节点（对文件控制块</p>
 <p>压缩文件名和信息</p>
-<p>4.1_4 文件的物理结构（文件分配方式）</p>
+<h4 id="os-4-1-4">4.1_4 文件的物理结构（文件分配方式）</h4>
 <p>1、对非空闲磁盘块的管理</p>
 <p>连续分配：连续分配方式要求每个文件在磁盘上占有一组连续的块，对文件的拓展不方便，有很多磁盘碎片</p>
 <p>链接分配</p>
-<p>隐式分配：采用链接分配方式的文件，只支持顺序访问，不支持随机访问，方便拓展<br/>显示分配：文件分配表显式记录下一块物理块的位置，方便拓展，支持随机访问，文件表会占内存空间<br/>4.1_4 文件的物理结构（文件分配方式）</p>
+<p>隐式分配：采用链接分配方式的文件，只支持顺序访问，不支持随机访问，方便拓展<br/>显示分配：文件分配表显式记录下一块物理块的位置，方便拓展，支持随机访问，文件表会占内存空间</p>
+<h4 id="os-4-1-4-2">4.1_4 文件的物理结构（文件分配方式）</h4>
 <p>索引分配</p>
 <p>索引分配允许文件离散地分配在各个磁盘块中，系统会为每个文件建立一张索引表，索引表记录了文件的各个逻辑块对应的物理块</p>
 <p>支持随机访问</p>
-<p>链接方案<br/>多层索引<br/>混合索引<br/>4.1_5 文件存储空间管理</p>
+<p>链接方案<br/>多层索引<br/>混合索引</p>
+<h4 id="os-4-1-5">4.1_5 文件存储空间管理</h4>
 <p>1、存储空间的划分与初始化</p>
 <p>文件卷（逻辑卷）的概念<br/>目录区与文件区<br/>2、几种管理方法</p>
-<p>空闲表法：首位置+长度，回收时注意修改<br/>空闲链表法（空闲盘块链、空闲盘区链）<br/>位示图法<br/>成组链接法：文件卷的目录区中专门用一个磁盘块作为超级块，当系统启动时需要将超级内存块读入内存。并且保证内存与外存中的超级块数据一致。<br/>4.1_6 文件的基本操作</p>
+<p>空闲表法：首位置+长度，回收时注意修改<br/>空闲链表法（空闲盘块链、空闲盘区链）<br/>位示图法<br/>成组链接法：文件卷的目录区中专门用一个磁盘块作为超级块，当系统启动时需要将超级内存块读入内存。并且保证内存与外存中的超级块数据一致。</p>
+<h4 id="os-4-1-6">4.1_6 文件的基本操作</h4>
 <p>创建文件（create）</p>
 <p>1、在外存中找到文件所需的空间</p>
 <p>2、创建该文件对应的目录项</p>
@@ -3710,19 +3770,19 @@ producerconsumer.insert(item);
 <p>1、找到文件名对应的目录项</p>
 <p>2、将目录项复制到内存中的“打开文件”中</p>
 <p>关闭文件(close)</p>
-<p>4.1_7 文件共享</p>
+<h4 id="os-4-1-7">4.1_7 文件共享</h4>
 <p>1、基于索引结点的共享方式（硬链接）</p>
 <p>直接指向文件的索引节点</p>
 <p>2、基于符号链的共享方式（软链接）</p>
 <p>相当于win的快捷方式</p>
-<p>4.1_8 文件保护</p>
+<h4 id="os-4-1-8">4.1_8 文件保护</h4>
 <p>1、口令保护</p>
 <p>2、加密保护</p>
 <p>保密性强，不需要在系统中存储“密码”</p>
 <p>编码/译码，需要花费一定时间</p>
 <p>3、访问控制</p>
 <p>在每个文件的FCB中增加一个访问控制表（ACL），该表记录了各个用户可以对该文件执行哪些操作</p>
-<p>4.1_9 文件系统的层次结构</p>
+<h4 id="os-4-1-9">4.1_9 文件系统的层次结构</h4>
 <p>用户/应用接口</p>
 <p>用户接口</p>
 <p>文件目录系统</p>
@@ -3732,13 +3792,14 @@ producerconsumer.insert(item);
 <p>辅助分配模块       设备管理模块</p>
 <pre><code>								设备
 </code></pre>
-<p>4.2_1 磁盘的结构</p>
+<h3 id="os-group-4-2">4.2 磁盘管理</h3>
+<h4 id="os-4-2-1">4.2_1 磁盘的结构</h4>
 <p>磁盘、磁道、扇区的概念</p>
 <p>如何在磁盘中读写数据</p>
 <p>盘面柱面的概念</p>
 <p>磁盘的物理地址</p>
 <p>磁盘的分类</p>
-<p>4.2_2 磁盘调度算法</p>
+<h4 id="os-4-2-2">4.2_2 磁盘调度算法</h4>
 <pre><code>1、一次磁盘读/写操作需要的时间
 </code></pre>
 <p>寻找时间Ts=s+m*n<br/>延迟时间Tr=1/(2r)<br/>传输时间Tt=b/(rN)<br/>2、磁盘调度算法</p>
@@ -3749,7 +3810,7 @@ producerconsumer.insert(item);
 <p>循环扫描算法（C-SCAN）<br/>返回时直接快速移动至起始端而不处理任何请求</p>
 <pre><code>C-LOOK，如果在磁头移动方向上已经没有别的请求，就可以立即改变磁头移动方向
 </code></pre>
-<p>4.2_3 减小磁盘延迟时间的方法</p>
+<h4 id="os-4-2-3">4.2_3 减小磁盘延迟时间的方法</h4>
 <p>1、寻找时间（寻道时间）：启动磁臂、移动磁头所花的时间</p>
 <p>2、延迟时间：将目标扇区转到磁头下面所化的时间</p>
 <p>磁头读取一块内容后，需要一小段的时间处理</p>
@@ -3757,14 +3818,16 @@ producerconsumer.insert(item);
 <p>柱面号在盘面号之前，可以减少磁头移动消耗的时间</p>
 <p>错位命名</p>
 <p>3、传输时间：读/写 数据花费的时间</p>
-<p>4.2_4 磁盘的管理</p>
+<h4 id="os-4-2-4">4.2_4 磁盘的管理</h4>
 <p>1、磁盘初始化</p>
 <p>低级格式化/物理分区</p>
 <p>2、引导块</p>
 <p>ROM不可修改，ROM中只存放很小的“自举装入程序”</p>
 <p>3、坏块的管理</p>
 <p>在FAT表上标明（坏块对操作系统不透明）</p>
-<p>5.1_1 I-O设备的概念和分类</p>
+<h2 id="os-chapter-5">5. I/O 管理</h2>
+<h3 id="os-group-5-1">5.1 设备与 I/O</h3>
+<h4 id="os-5-1-1">5.1_1 I-O设备的概念和分类</h4>
 <p>1、什么是I-O设备</p>
 <p>输入/输出</p>
 <p>2、按使用特性分类</p>
@@ -3775,7 +3838,7 @@ producerconsumer.insert(item);
 <p>低俗设备、中速设备、高速设备</p>
 <p>4、按信息交换的单位分类</p>
 <p>块设备、字符设备</p>
-<p>5.1_2 I-O控制器</p>
+<h4 id="os-5-1-2">5.1_2 I-O控制器</h4>
 <p>机械部件：鼠标等</p>
 <p>电子部件</p>
 <p>功能：</p>
@@ -3788,7 +3851,7 @@ producerconsumer.insert(item);
 <p>4、地址识别</p>
 <p>内存映射IO</p>
 <p>寄存器独立编制</p>
-<p>5.1_3 I-O控制方式</p>
+<h4 id="os-5-1-3">5.1_3 I-O控制方式</h4>
 <p>1、程序直接控制方式</p>
 <p>轮询：完成一次读/写操作的流程</p>
 <p>CPU干预频繁</p>
@@ -3813,7 +3876,7 @@ producerconsumer.insert(item);
 <p>通道程序：任务清单</p>
 <p>cpu发送命令给通道，然后让通道处理IO操作就行了</p>
 <p>处理完了，向cpu发送中断信号</p>
-<p>5.1_4 I-O软件层次结构</p>
+<h4 id="os-5-1-4">5.1_4 I-O软件层次结构</h4>
 <p>1、用户层软件</p>
 <p>实现与用户交互的接口，向上提供方便易用的库函数</p>
 <p>2、设备独立性软件（设备无关性软件）</p>
@@ -3830,7 +3893,7 @@ producerconsumer.insert(item);
 <p>进行中断处理</p>
 <p>5、硬件</p>
 <p>执行IO操作，有机械部件、电子部件组成</p>
-<p>5.1_5 I-O核心子系统</p>
+<h4 id="os-5-1-5">5.1_5 I-O核心子系统</h4>
 <p>1、用户层软件</p>
 <p>假脱机系统</p>
 <p>2、设备独立性软件（设备无关性软件）</p>
@@ -3838,13 +3901,13 @@ producerconsumer.insert(item);
 <p>3、设备驱动程序（比如打印机驱动）</p>
 <p>4、中断处理程序</p>
 <p>5、硬件</p>
-<p>5.1_6 假脱机技术</p>
+<h4 id="os-5-1-6">5.1_6 假脱机技术</h4>
 <p>1、什么是脱机技术，脱机技术可以解决什么问题</p>
 <p>脱离主机的控制进行输入/输出控制</p>
 <p>SPPOLing系统：必须要有多道程序并发进行</p>
 <p>2、假脱机技术的实现原理</p>
 <p>输入井和输出井<br/>输入进程和输出进程<br/>输入缓冲区和输出缓冲区<br/>3、共享打印机的原理分析</p>
-<p>5.1_7 设备的分配与回收</p>
+<h4 id="os-5-1-7">5.1_7 设备的分配与回收</h4>
 <p>1、设备分配时应考虑的因素</p>
 <p>设备的固有属性：独占设备、共享设备、虚拟设备</p>
 <p>设备分配算法：</p>
@@ -3862,7 +3925,7 @@ producerconsumer.insert(item);
 <p>根据进程请求的物理设备名——&gt;设备控制表——&gt;控制器控制表——&gt;通道</p>
 <p>5、设备分配步骤的改进方法</p>
 <p>建立逻辑设备名和设备的映射</p>
-<p>5.1_8 缓冲区管理</p>
+<h4 id="os-5-1-8">5.1_8 缓冲区管理</h4>
 <p>1、什么时缓冲区？有什么作用？</p>
 <p>缓冲区是一个存储区域</p>
 <p>缓和CPU与IO设备之间速度不匹配的矛盾</p>
@@ -3904,17 +3967,17 @@ producerconsumer.insert(item);
 <p>重启服务器</p>
 <p>现在，x11vnc服务应该已经启动并正在运行。</p>
 <p>使用VNC客户端连接到桌面，使用IP地址和端口号5900，并输入先前设置的密码。</p>
-<h1 id="启动x11vnc失败的解决办法"><a class="headerlink" href="#启动x11vnc失败的解决办法" title="启动x11vnc失败的解决办法"></a>启动x11vnc失败的解决办法</h1><h2 id="终端启动x11vnc命令"><a class="headerlink" href="#终端启动x11vnc命令" title="终端启动x11vnc命令"></a>终端启动x11vnc命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/usr/bin/x11vnc -auth guess -forever -noxdamage -repeat -rfbauth /etc/x11vnc.pass -rfbport 5900 -shared</span><br/></pre></td></tr></table></figure>
+<h2 id="启动x11vnc失败的解决办法"><a class="headerlink" href="#启动x11vnc失败的解决办法" title="启动x11vnc失败的解决办法"></a>启动x11vnc失败的解决办法</h2><h3 id="终端启动x11vnc命令"><a class="headerlink" href="#终端启动x11vnc命令" title="终端启动x11vnc命令"></a>终端启动x11vnc命令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/usr/bin/x11vnc -auth guess -forever -noxdamage -repeat -rfbauth /etc/x11vnc.pass -rfbport 5900 -shared</span><br/></pre></td></tr></table></figure>
 <p>终端启动x11vnc,并使用vnc客户端查看是否能正常进入系统</p>
-<h3 id="1-进入系统失败"><a class="headerlink" href="#1-进入系统失败" title="1.进入系统失败"></a>1.进入系统失败</h3><h4 id="检查服务状态："><a class="headerlink" href="#检查服务状态：" title="检查服务状态："></a><strong>检查服务状态</strong>：</h4><p>查看服务状态和日志，以确保服务正确启动：</p>
+<h4 id="1-进入系统失败"><a class="headerlink" href="#1-进入系统失败" title="1.进入系统失败"></a>1.进入系统失败</h4><h5 id="检查服务状态："><a class="headerlink" href="#检查服务状态：" title="检查服务状态："></a><strong>检查服务状态</strong>：</h5><p>查看服务状态和日志，以确保服务正确启动：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl status x11vnc.service</span><br/><span class="line"><span class="built_in">sudo</span> journalctl -u x11vnc.service</span><br/></pre></td></tr></table></figure>
-<h4 id="确保-etc-x11vnc-pass-文件权限正确："><a class="headerlink" href="#确保-etc-x11vnc-pass-文件权限正确：" title="确保 /etc/x11vnc.pass 文件权限正确："></a><strong>确保</strong> <code>/etc/x11vnc.pass</code> 文件权限正确：</h4><p>确认密码文件的权限和路径：</p>
+<h5 id="确保-etc-x11vnc-pass-文件权限正确："><a class="headerlink" href="#确保-etc-x11vnc-pass-文件权限正确：" title="确保 /etc/x11vnc.pass 文件权限正确："></a><strong>确保</strong> <code>/etc/x11vnc.pass</code> 文件权限正确：</h5><p>确认密码文件的权限和路径：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">chmod</span> 600 /etc/x11vnc.pass</span><br/></pre></td></tr></table></figure>
-<h4 id="重新加载-systemd-守护进程："><a class="headerlink" href="#重新加载-systemd-守护进程：" title="重新加载 systemd 守护进程："></a><strong>重新加载 systemd 守护进程</strong>：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl daemon-reload</span><br/></pre></td></tr></table></figure>
-<h4 id="启用并启动-x11vnc-服务："><a class="headerlink" href="#启用并启动-x11vnc-服务：" title="启用并启动 x11vnc 服务："></a><strong>启用并启动 x11vnc 服务</strong>：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> x11vnc.service</span><br/><span class="line"><span class="built_in">sudo</span> systemctl start x11vnc.service</span><br/></pre></td></tr></table></figure>
-<h3 id="2-成功登录系统"><a class="headerlink" href="#2-成功登录系统" title="2.成功登录系统"></a>2.成功登录系统</h3><p>无其他错误，重新加载 systemd 守护进程并重启 x11vnc 服务即可</p>
-<h4 id="重新加载-systemd-守护进程：-1"><a class="headerlink" href="#重新加载-systemd-守护进程：-1" title="重新加载 systemd 守护进程："></a><strong>重新加载 systemd 守护进程</strong>：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl daemon-reload</span><br/></pre></td></tr></table></figure>
-<h4 id="启用并启动-x11vnc-服务：-1"><a class="headerlink" href="#启用并启动-x11vnc-服务：-1" title="启用并启动 x11vnc 服务："></a><strong>启用并启动 x11vnc 服务</strong>：</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> x11vnc.service</span><br/><span class="line"><span class="built_in">sudo</span> systemctl start x11vnc.service</span><br/></pre></td></tr></table></figure>]]></content>
+<h5 id="重新加载-systemd-守护进程："><a class="headerlink" href="#重新加载-systemd-守护进程：" title="重新加载 systemd 守护进程："></a><strong>重新加载 systemd 守护进程</strong>：</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl daemon-reload</span><br/></pre></td></tr></table></figure>
+<h5 id="启用并启动-x11vnc-服务："><a class="headerlink" href="#启用并启动-x11vnc-服务：" title="启用并启动 x11vnc 服务："></a><strong>启用并启动 x11vnc 服务</strong>：</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> x11vnc.service</span><br/><span class="line"><span class="built_in">sudo</span> systemctl start x11vnc.service</span><br/></pre></td></tr></table></figure>
+<h4 id="2-成功登录系统"><a class="headerlink" href="#2-成功登录系统" title="2.成功登录系统"></a>2.成功登录系统</h4><p>无其他错误，重新加载 systemd 守护进程并重启 x11vnc 服务即可</p>
+<h5 id="重新加载-systemd-守护进程：-1"><a class="headerlink" href="#重新加载-systemd-守护进程：-1" title="重新加载 systemd 守护进程："></a><strong>重新加载 systemd 守护进程</strong>：</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl daemon-reload</span><br/></pre></td></tr></table></figure>
+<h5 id="启用并启动-x11vnc-服务：-1"><a class="headerlink" href="#启用并启动-x11vnc-服务：-1" title="启用并启动 x11vnc 服务："></a><strong>启用并启动 x11vnc 服务</strong>：</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> x11vnc.service</span><br/><span class="line"><span class="built_in">sudo</span> systemctl start x11vnc.service</span><br/></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>系统与运维</category>
       </categories>
@@ -3928,31 +3991,33 @@ producerconsumer.insert(item);
   <entry>
     <title>ubuntu20.04 update to 22.04</title>
     <url>/blog/2024/07/ubuntu-20-04-to-22-04-upgrade/</url>
-    <content><![CDATA[<p>你现在使用的 Ubuntu 20.04.6 LTS 已经是最新的长期支持版本（LTS）。要升级到更高的版本（如 Ubuntu 22.04 LTS），需要确保系统配置允许这种升级。以下是步骤：</p>
-<p>确保系统配置正确<br/>更新所有包：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get update &amp;&amp; <span class="built_in">sudo</span> apt-get upgrade</span><br/></pre></td></tr></table></figure>
-<p>编辑升级配置：<br/>确保 /etc/update-manager/release-upgrades 文件中 Prompt 设置为 lts 或 normal。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/update-manager/release-upgrades</span><br/></pre></td></tr></table></figure>
-<p>确保文件包含以下内容：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Prompt=lts</span><br/></pre></td></tr></table></figure>
-<p>运行升级命令：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> do-release-upgrade</span><br/></pre></td></tr></table></figure>
-<p>如果还是无法升级，可以尝试以下步骤<br/>清理缓存并修复包依赖：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get clean</span><br/><span class="line"><span class="built_in">sudo</span> apt-get autoclean</span><br/><span class="line"><span class="built_in">sudo</span> apt-get autoremove</span><br/><span class="line"><span class="built_in">sudo</span> apt-get update</span><br/><span class="line"><span class="built_in">sudo</span> apt-get dist-upgrade</span><br/></pre></td></tr></table></figure>
-<p>尝试强制升级：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> do-release-upgrade -d</span><br/></pre></td></tr></table></figure>
-<p>检查是否存在阻止升级的问题<br/>检查 PPA 源：<br/>升级前，可能需要禁用所有第三方 PPA 源：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">mv</span> /etc/apt/sources.list.d /etc/apt/sources.list.d.bak</span><br/></pre></td></tr></table></figure>
-<p>运行升级命令：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> do-release-upgrade</span><br/></pre></td></tr></table></figure>
-<p>如果仍然无法升级，请确认以下几点<br/>检查网络连接是否正常。<br/>确保 Ubuntu 存储库可以访问。<br/>尝试手动编辑源列表以指向更高版本的存储库。<br/>手动编辑源列表<br/>备份当前源列表：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> /etc/apt/sources.list /etc/apt/sources.list.bak</span><br/></pre></td></tr></table></figure>
-<p>编辑源列表：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/apt/sources.list</span><br/></pre></td></tr></table></figure>
-<p>将所有 focal 改为 jammy（假设要升级到 22.04），然后保存并退出。</p>
-<p>更新包信息并升级系统：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get update</span><br/><span class="line"><span class="built_in">sudo</span> apt-get upgrade</span><br/><span class="line"><span class="built_in">sudo</span> apt-get dist-upgrade</span><br/></pre></td></tr></table></figure>
-<p>完成这些步骤后，系统应该能够顺利升级到更新的版本。如果在任何一步遇到错误，请提供详细的错误信息以便进一步诊断。</p>
+    <content><![CDATA[<p>本文说明 <strong>Ubuntu 20.04 LTS（Focal Fossa）到 Ubuntu 22.04 LTS（Jammy Jellyfish）</strong>的相邻 LTS 升级路径，适用于需要完成这一阶段迁移的现有系统。20.04.6 是 20.04 系列的维护版本，不能称为“最新 LTS”；22.04 也不是本文更新时的最新 LTS。版本支持周期应查看 <a href="https://ubuntu.com/about/release-cycle" rel="noopener" target="_blank">Ubuntu 发布周期</a>。</p>
+<p>下面按命令行流程组织，重点面向 Ubuntu Server 和云主机。LTS 原地升级应逐级进行；需要继续迁往后续 LTS 时，先验证本次升级完成，再评估下一阶段。路径规则见 <a href="https://ubuntu.com/server/docs/how-to/software/upgrade-your-release/" rel="noopener" target="_blank">Ubuntu 官方发行版升级说明</a>。</p>
+<h2 id="upgrade-preparation">1. 确认系统和恢复条件</h2>
+<p>先读取当前版本与磁盘空间，确认确实从 20.04 开始：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">cat /etc/os-release</span><br/><span class="line">df -h / /boot</span><br/></pre></td></tr></table></figure>
+<ul><li>把业务数据、配置和必要的数据库备份保存到另一位置，确认可以恢复；云主机可另备快照。</li><li>阅读 <a href="https://documentation.ubuntu.com/release-notes/22.04/" rel="noopener" target="_blank">Ubuntu 22.04 发行说明</a>，检查应用、驱动与第三方软件的兼容性。</li><li>预留维护时间、下载空间与重启窗口；远程操作前确认云控制台或其他恢复入口可用。</li><li>记录第三方 PPA 和软件源。升级器会禁用第三方源，升级后应确认其支持 Jammy 再恢复，不能直接把旧源全部启用。</li></ul>
+<h2 id="upgrade-current-packages">2. 完整更新当前发行版</h2>
+<p>先保持软件源对应 Focal，刷新包索引并完成当前发行版的软件包升级；查看将安装、移除的包清单后再确认。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br/><span class="line">sudo apt dist-upgrade -o APT::Get::Always-Include-Phased-Updates=true</span><br/><span class="line">sudo apt install update-manager-core</span><br/></pre></td></tr></table></figure>
+<p>这里的 <code>dist-upgrade</code> 仍在更新 20.04 的包，不会自行把系统变为 22.04。如果命令失败、存在未配置的软件包或依赖冲突，先处理具体错误，再继续发行版升级。官方文档要求先完整更新当前系统，并注意分阶段推送的软件包可能阻止升级。</p>
+<p>检查是否需要重启：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">test -f /run/reboot-required &amp;&amp; cat /run/reboot-required</span><br/></pre></td></tr></table></figure>
+<p>若该文件存在，安排重启并重新登录。文件不存在时，这条检查通常不输出内容；它本身不会执行重启。</p>
+<h2 id="upgrade-lts-settings">3. 检查 LTS 升级设置</h2>
+<p>编辑配置文件，确认只有目标设置生效：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo nano /etc/update-manager/release-upgrades</span><br/></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Prompt=lts</span><br/></pre></td></tr></table></figure>
+<p><code>Prompt=lts</code> 表示检查 LTS 到 LTS 的升级，<code>Prompt=never</code> 会关闭升级提示。相关选项见 <a href="https://help.ubuntu.com/community/Upgrades" rel="noopener" target="_blank">Ubuntu 升级帮助</a>。不要通过把所有源中的 <code>focal</code> 替换成 <code>jammy</code> 来代替发行版升级器。</p>
+<h2 id="run-release-upgrade">4. 运行发行版升级器</h2>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo do-release-upgrade</span><br/></pre></td></tr></table></figure>
+<p>确认升级器提出的目标为 Ubuntu 22.04，再阅读下载量、包变更和移除清单。升级过程中留意配置文件差异提示，按实际业务需要决定保留或替换配置；完成后按提示重启。不要因等待下载或配置而中断进程。</p>
+<p><strong><code>-d</code> 不是修复升级失败的通用“强制”开关。</strong>它用于请求开发版本，官方不建议在生产环境中使用；LTS 刚发布、常规升级尚未开放时也有特殊测试用途。本文的稳定版本迁移流程使用不带 <code>-d</code> 的命令。</p>
+<h2 id="upgrade-troubleshooting">5. 没有发现新版本时如何排查</h2>
+<ul><li>确认当前版本、<code>Prompt=lts</code> 和系统时钟，检查网络、代理及 Ubuntu 软件源访问是否正常。</li><li>确认当前发行版的软件包更新已成功完成，按提示重启；用 <code>apt-mark showhold</code> 检查被保留的包，不要在不了解原因时全部解除保留。</li><li>如果升级已启动又失败，查看 <code>/var/log/dist-upgrade/</code> 中的日志，保留具体错误信息后定位问题。</li><li>按官方发行说明核对升级通道状态。不要把临时关闭的升级通道当作需要改源、移动整个软件源目录或追加 <code>-d</code> 的理由。</li></ul>
+<h2 id="upgrade-verification">6. 重启后的验证</h2>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">cat /etc/os-release</span><br/><span class="line">uname -r</span><br/><span class="line">systemctl --failed</span><br/><span class="line">sudo apt update</span><br/></pre></td></tr></table></figure>
+<p><code>/etc/os-release</code> 中应显示 <code>VERSION_ID="22.04"</code> 和 Jammy 代号。随后检查网络、SSH、磁盘挂载、业务服务与应用日志，再逐项处理受影响的第三方软件。版本号变更不代表所有业务都已验证通过。</p>
+<p>以上为依据官方文档整理的操作与检查方法；命令输出应以目标机器实际执行结果为准。</p>
 ]]></content>
       <categories>
         <category>系统与运维</category>
@@ -3966,7 +4031,7 @@ producerconsumer.insert(item);
   <entry>
     <title>Markdown Editor</title>
     <url>/blog/2024/07/markdown-editor/</url>
-    <content><![CDATA[<h3 id="主要特性"><a class="headerlink" href="#主要特性" title="主要特性"></a>主要特性</h3><ul>
+    <content><![CDATA[<h2 id="主要特性"><a class="headerlink" href="#主要特性" title="主要特性"></a>主要特性</h2><ul>
 <li>支持“标准”Markdown / CommonMark和Github风格的语法，也可变身为代码编辑器；</li>
 <li>支持实时预览、图片（跨域）上传、预格式文本/代码/表格插入、代码折叠、搜索替换、只读模式、自定义样式主题和多语言语法高亮等功能；</li>
 <li>支持ToC（Table of Contents）、Emoji表情、Task lists、@链接等Markdown扩展语法；</li>
@@ -3976,12 +4041,11 @@ producerconsumer.insert(item);
 <li>兼容主流的浏览器（IE8+）和Zepto.js，且支持iPad等平板设备；</li>
 <li>支持自定义主题样式；</li>
 </ul>
-<h1 id="Editor-md"><a class="headerlink" href="#Editor-md" title="Editor.md"></a>Editor.md</h1><p><img src="https://pandao.github.io/editor.md/images/logos/editormd-logo-180x180.png"/></p>
+<h2 id="Editor-md"><a class="headerlink" href="#Editor-md" title="Editor.md"></a>Editor.md</h2><p><img src="https://pandao.github.io/editor.md/images/logos/editormd-logo-180x180.png"/></p>
 <p><img src="https://img.shields.io/github/stars/pandao/editor.md.svg"/> <img src="https://img.shields.io/github/forks/pandao/editor.md.svg"/> <img src="https://img.shields.io/github/tag/pandao/editor.md.svg"/> <img src="https://img.shields.io/github/release/pandao/editor.md.svg"/> <img src="https://img.shields.io/github/issues/pandao/editor.md.svg"/> <img src="https://img.shields.io/bower/v/editor.md.svg"/></p>
 <p><strong>目录 (Table of Contents)</strong></p>
-<p>[TOCM]</p>
-<p>[TOC]</p>
-<h1 id="Heading-1"><a class="headerlink" href="#Heading-1" title="Heading 1"></a>Heading 1</h1><h2 id="Heading-2"><a class="headerlink" href="#Heading-2" title="Heading 2"></a>Heading 2</h2><h3 id="Heading-3"><a class="headerlink" href="#Heading-3" title="Heading 3"></a>Heading 3</h3><h4 id="Heading-4"><a class="headerlink" href="#Heading-4" title="Heading 4"></a>Heading 4</h4><h5 id="Heading-5"><a class="headerlink" href="#Heading-5" title="Heading 5"></a>Heading 5</h5><h6 id="Heading-6"><a class="headerlink" href="#Heading-6" title="Heading 6"></a>Heading 6</h6><h1 id="Heading-1-link-Heading-link"><a class="headerlink" href="#Heading-1-link-Heading-link" title="Heading 1 link Heading link"></a>Heading 1 link <a href="https://github.com/pandao/editor.md" rel="noopener" target="_blank" title="Heading link">Heading link</a></h1><h2 id="Heading-2-link-Heading-link"><a class="headerlink" href="#Heading-2-link-Heading-link" title="Heading 2 link Heading link"></a>Heading 2 link <a href="https://github.com/pandao/editor.md" rel="noopener" target="_blank" title="Heading link">Heading link</a></h2><h3 id="Heading-3-link-Heading-link"><a class="headerlink" href="#Heading-3-link-Heading-link" title="Heading 3 link Heading link"></a>Heading 3 link <a href="https://github.com/pandao/editor.md" rel="noopener" target="_blank" title="Heading link">Heading link</a></h3><h4 id="Heading-4-link-Heading-link-Heading-link-Heading-link"><a class="headerlink" href="#Heading-4-link-Heading-link-Heading-link-Heading-link" title="Heading 4 link Heading link Heading link Heading link"></a>Heading 4 link <a href="https://github.com/pandao/editor.md" rel="noopener" target="_blank" title="Heading link">Heading link</a> Heading link <a href="https://github.com/pandao/editor.md" rel="noopener" target="_blank" title="Heading link">Heading link</a></h4><h5 id="Heading-5-link-Heading-link"><a class="headerlink" href="#Heading-5-link-Heading-link" title="Heading 5 link Heading link"></a>Heading 5 link <a href="https://github.com/pandao/editor.md" rel="noopener" target="_blank" title="Heading link">Heading link</a></h5><h6 id="Heading-6-link-Heading-link"><a class="headerlink" href="#Heading-6-link-Heading-link" title="Heading 6 link Heading link"></a>Heading 6 link <a href="https://github.com/pandao/editor.md" rel="noopener" target="_blank" title="Heading link">Heading link</a></h6><h4 id="标题（用底线的形式）Heading-underline"><a class="headerlink" href="#标题（用底线的形式）Heading-underline" title="标题（用底线的形式）Heading (underline)"></a>标题（用底线的形式）Heading (underline)</h4><h1 id="This-is-an-H1"><a class="headerlink" href="#This-is-an-H1" title="This is an H1"></a>This is an H1</h1><h2 id="This-is-an-H2"><a class="headerlink" href="#This-is-an-H2" title="This is an H2"></a>This is an H2</h2><h3 id="字符效果和横线等"><a class="headerlink" href="#字符效果和横线等" title="字符效果和横线等"></a>字符效果和横线等</h3><hr/>
+<p>下面保留原演示中的标题文字与锚点；文章内的一级标题示例按二级标题显示，目录由本站主题生成。</p>
+<h2 id="Heading-1"><a class="headerlink" href="#Heading-1" title="Heading 1"></a>Heading 1</h2><h2 id="Heading-2"><a class="headerlink" href="#Heading-2" title="Heading 2"></a>Heading 2</h2><h3 id="Heading-3"><a class="headerlink" href="#Heading-3" title="Heading 3"></a>Heading 3</h3><h4 id="Heading-4"><a class="headerlink" href="#Heading-4" title="Heading 4"></a>Heading 4</h4><h5 id="Heading-5"><a class="headerlink" href="#Heading-5" title="Heading 5"></a>Heading 5</h5><h6 id="Heading-6"><a class="headerlink" href="#Heading-6" title="Heading 6"></a>Heading 6</h6><h2 id="Heading-1-link-Heading-link"><a class="headerlink" href="#Heading-1-link-Heading-link" title="Heading 1 link Heading link"></a>Heading 1 link <a href="https://github.com/pandao/editor.md" rel="noopener" target="_blank" title="Heading link">Heading link</a></h2><h2 id="Heading-2-link-Heading-link"><a class="headerlink" href="#Heading-2-link-Heading-link" title="Heading 2 link Heading link"></a>Heading 2 link <a href="https://github.com/pandao/editor.md" rel="noopener" target="_blank" title="Heading link">Heading link</a></h2><h3 id="Heading-3-link-Heading-link"><a class="headerlink" href="#Heading-3-link-Heading-link" title="Heading 3 link Heading link"></a>Heading 3 link <a href="https://github.com/pandao/editor.md" rel="noopener" target="_blank" title="Heading link">Heading link</a></h3><h4 id="Heading-4-link-Heading-link-Heading-link-Heading-link"><a class="headerlink" href="#Heading-4-link-Heading-link-Heading-link-Heading-link" title="Heading 4 link Heading link Heading link Heading link"></a>Heading 4 link <a href="https://github.com/pandao/editor.md" rel="noopener" target="_blank" title="Heading link">Heading link</a> Heading link <a href="https://github.com/pandao/editor.md" rel="noopener" target="_blank" title="Heading link">Heading link</a></h4><h5 id="Heading-5-link-Heading-link"><a class="headerlink" href="#Heading-5-link-Heading-link" title="Heading 5 link Heading link"></a>Heading 5 link <a href="https://github.com/pandao/editor.md" rel="noopener" target="_blank" title="Heading link">Heading link</a></h5><h6 id="Heading-6-link-Heading-link"><a class="headerlink" href="#Heading-6-link-Heading-link" title="Heading 6 link Heading link"></a>Heading 6 link <a href="https://github.com/pandao/editor.md" rel="noopener" target="_blank" title="Heading link">Heading link</a></h6><h4 id="标题（用底线的形式）Heading-underline"><a class="headerlink" href="#标题（用底线的形式）Heading-underline" title="标题（用底线的形式）Heading (underline)"></a>标题（用底线的形式）Heading (underline)</h4><h2 id="This-is-an-H1"><a class="headerlink" href="#This-is-an-H1" title="This is an H1"></a>This is an H1</h2><h2 id="This-is-an-H2"><a class="headerlink" href="#This-is-an-H2" title="This is an H2"></a>This is an H2</h2><h3 id="字符效果和横线等"><a class="headerlink" href="#字符效果和横线等" title="字符效果和横线等"></a>字符效果和横线等</h3><hr/>
 <p><del>删除线</del> <s>删除线（开启识别HTML标签时）</s><br/><em>斜体字</em> <em>斜体字</em><br/><strong>粗体</strong> <strong>粗体</strong><br/><em><strong>粗斜体</strong></em> <em><strong>粗斜体</strong></em></p>
 <p>上标：X<sub>2</sub>，下标：O<sup>2</sup></p>
 <p><strong>缩写(同HTML的abbr标签)</strong></p>

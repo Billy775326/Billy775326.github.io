@@ -1,21 +1,21 @@
 ---
 title: "20240411-Rust-06-所有权"
 date: "2024-09-20T12:46:07.000Z"
-updated: "2024-09-20T12:46:07.000Z"
+updated: "2026-10-14T14:32:02+08:00"
 permalink: "blog/2024/09/rust-06-ownership/"
 slug: "rust-06-ownership"
 categories: ["编程开发"]
 tags: ["Rust", "所有权", "内存管理"]
-description: "所有权（系统）是 Rust 最为与众不同的特性，它让 Rust 无需垃圾回收器（garbage collector）即可保证内存安全。因此，理解 Rust 中所有权的运作方式非常重要。在本章中，…"
+description: "梳理 Rust 所有权的基本规则，结合栈与堆、变量作用域和 String 示例，区分移动、克隆与复制，并说明函数传参、返回值和资源释放之间的关系，帮助理解数据何时被移动或释放。"
 cover: "https://img.iowill.com/file/编程开发/历史封面恢复/15988c23a9965c5e/cover.png"
 thumbnail: "https://img.iowill.com/file/编程开发/历史封面恢复/15988c23a9965c5e/thumbs/cover.jpg"
 disableNunjucks: true
 migration_order: 29
-legacy_html: true
+legacy_html: false
 comments: false
 related_nav: [{"url": "/blog/2024/09/rust-07-references-and-borrowing/", "rel": "prev", "title": "20240411-Rust-07-引用与借用"}, {"url": "/blog/2024/09/rust-05-control-flow/", "rel": "next", "title": "20240410-Rust-05-控制流"}]
 ---
-<h1 id="所有权"><a class="headerlink" href="#所有权" title="所有权"></a>所有权</h1><blockquote>
+<span id="所有权"></span><blockquote>
 <p>所有权（系统）是 Rust 最为与众不同的特性，它让 Rust 无需垃圾回收器（garbage collector）即可保证内存安全。因此，理解 Rust 中所有权的运作方式非常重要。在本章中，我们将讨论所有权以及相关功能：借用、slice 以及 Rust 如何在内存中存放数据。</p>
 </blockquote>
 <h2 id="什么是所有权？"><a class="headerlink" href="#什么是所有权？" title="什么是所有权？"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch04-01-what-is-ownership.html#%E4%BB%80%E4%B9%88%E6%98%AF%E6%89%80%E6%9C%89%E6%9D%83" rel="noopener" target="_blank">什么是所有权？</a></h2><p>Rust 的核心功能（之一）是 <strong>所有权</strong>（<em>ownership</em>）。虽然该功能很容易解释，但它对语言的其他部分有着深刻的影响。</p>

@@ -29,7 +29,15 @@ for old in baseline:
     # Imported HTML is kept structurally identical; future edits may remove legacy_html.
     if current['legacy_html']:
         s = B((PUBLIC / current['path']).read_text(encoding='utf8'), 'html.parser')
-        assert str(B(s.select_one('#article-container').decode_contents(), 'html.parser')) == str(B(old['body'], 'html.parser')), ('Body changed', current['slug'])
+        def preserved_body(html):
+            fragment = B(html, 'html.parser')
+            # The finalizer may add layout/loading hints; all content, links,
+            # image sources and alternative text still match the import baseline.
+            for image in fragment.select('img'):
+                for attr in ('width', 'height', 'loading', 'decoding'):
+                    image.attrs.pop(attr, None)
+            return str(fragment)
+        assert preserved_body(s.select_one('#article-container').decode_contents()) == preserved_body(old['body']), ('Body changed', current['slug'])
 urls = []
 for page in range(1, math.ceil(len(posts) / 18) + 1):
     file = PUBLIC / ('index.html' if page == 1 else f'page/{page}/index.html')
@@ -68,3 +76,7 @@ for file in PUBLIC.rglob('index.html'):
         target = PUBLIC / href.lstrip('/')
         assert target.exists() or target.with_suffix('.html').exists(), (file, href)
 print(f'PASS: {len(posts)} articles; original bodies/URLs/dates; 18-per-page; search, taxonomy, metadata, internal navigation')
+from verify_seo import verify_seo
+from check_publish_tree import check_tree
+verify_seo()
+check_tree()

@@ -1,17 +1,17 @@
 ---
 title: "云服务器Debian12根分区扩容记录"
 date: "2025-04-17T16:13:51.000Z"
-updated: "2025-04-17T16:13:51.000Z"
+updated: "2026-10-14T14:32:02+08:00"
 permalink: "blog/2025/04/cloud-debian12-root-resize/"
 slug: "cloud-debian12-root-resize"
 categories: ["系统与运维"]
 tags: ["Linux", "Debian", "磁盘扩容", "LVM"]
-description: "以下操作可能会导致包括但不仅限于数据丢失、无法启动等问题，严重时您可能需要重装系统，如要继续，请确保已做好数据备份等准备工作。"
+description: "记录 Debian 12 云服务器将根目录迁移到新磁盘 LVM 逻辑卷并扩容的过程，涵盖物理卷、卷组、文件系统、fstab、chroot 和引导更新，以及迁移后的检查与历史报错处理。"
 cover: "https://img.iowill.com/file/系统与运维/历史封面恢复/f54fa0932eb35f8b/cover.jpg"
 thumbnail: "https://img.iowill.com/file/系统与运维/历史封面恢复/f54fa0932eb35f8b/thumbs/cover.jpg"
 disableNunjucks: true
 migration_order: 17
-legacy_html: true
+legacy_html: false
 comments: false
 related_nav: [{"url": "/blog/2024/09/leetcode-80-remove-duplicates-ii/", "rel": "next", "title": "LeetCode-80.删除有序数组中的重复项II"}]
 ---
@@ -19,7 +19,7 @@ related_nav: [{"url": "/blog/2024/09/leetcode-80-remove-duplicates-ii/", "rel": 
 <p>[!WARNING]</p>
 <p>以下操作可能会导致包括但不仅限于数据丢失、无法启动等问题，严重时您可能需要重装系统，如要继续，请确保已做好数据备份等准备工作。</p>
 </blockquote>
-<h1 id="Debian12根分区扩容记录"><a class="headerlink" href="#Debian12根分区扩容记录" title="Debian12根分区扩容记录"></a>Debian12根分区扩容记录</h1><h2 id="前言"><a class="headerlink" href="#前言" title="前言"></a>前言</h2><p>云上Debian12的机器，使用 <code>df -Th</code> 查看磁盘分区信息：</p>
+<span id="Debian12根分区扩容记录"></span><h2 id="前言"><a class="headerlink" href="#前言" title="前言"></a>前言</h2><p>云上Debian12的机器，使用 <code>df -Th</code> 查看磁盘分区信息：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/><span class="line">7</span><br/><span class="line">8</span><br/><span class="line">9</span><br/><span class="line">10</span><br/><span class="line">11</span><br/><span class="line">12</span><br/><span class="line">13</span><br/></pre></td><td class="code"><pre><span class="line">root@xxx:~# df -Th</span><br/><span class="line">Filesystem     Type      Size  Used Avail Use% Mounted on</span><br/><span class="line">udev           devtmpfs  3.8G     0  3.8G   0% /dev</span><br/><span class="line">tmpfs          tmpfs     775M  852K  775M   1% /run</span><br/><span class="line">/dev/vda1      ext4       19G  5.7G   12G  33% /</span><br/><span class="line">tmpfs          tmpfs     3.8G     0  3.8G   0% /dev/shm</span><br/><span class="line">tmpfs          tmpfs     5.0M     0  5.0M   0% /run/lock</span><br/><span class="line">tmpfs          tmpfs     775M     0  775M   0% /run/user/0</span><br/><span class="line">overlay        overlay    19G  5.7G   12G  33% /var/lib/docker/overlay2/85022b6945d418b6979839b3897502dd192a7c7b11993f1a5e30b6f3af579595/merged</span><br/><span class="line">overlay        overlay    19G  5.7G   12G  33% /var/lib/docker/overlay2/faa3aef89ddf6113d5d5805e64bc6abeeb3cd5d01da27dde5e39dc7af7f399c4/merged</span><br/><span class="line">overlay        overlay    19G  5.7G   12G  33% /var/lib/docker/overlay2/e691e3e85e02b056a6001d2b3bffcb9033a6f6456bc5aac1c6ccc1cffbb4ead6/merged</span><br/><span class="line">overlay        overlay    19G  5.7G   12G  33% /var/lib/docker/overlay2/4c14da4bf849dba7c6d05c5bb7a3d4721a2a436efaff3b2dc14ad86885ad4cd5/merged</span><br/><span class="line"></span><br/></pre></td></tr></table></figure>
 <p>可以看到根分区/dev/vda1只有19G，<code>lsblk</code>查看磁盘使用情况：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/><span class="line">7</span><br/><span class="line">8</span><br/></pre></td><td class="code"><pre><span class="line">root@xxx:~# lsblk</span><br/><span class="line">NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS</span><br/><span class="line">sr0     11:0    1 1024M  0 rom  </span><br/><span class="line">vda    254:0    0   20G  0 disk </span><br/><span class="line">├─vda1 254:1    0   19G  0 part /</span><br/><span class="line">├─vda2 254:2    0    1K  0 part </span><br/><span class="line">└─vda5 254:5    0  975M  0 part [SWAP]</span><br/><span class="line">vdb    254:16   0   30G  0 disk </span><br/></pre></td></tr></table></figure>

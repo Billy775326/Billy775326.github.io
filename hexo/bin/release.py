@@ -10,7 +10,7 @@ SOURCE = Path(__file__).resolve().parents[1]
 REPO = SOURCE.parent.resolve()
 PUBLIC = (SOURCE / 'public').resolve()
 subprocess.run([sys.executable, str(SOURCE / 'bin/verify.py')], check=True)
-allowed = {'index.html', 'blog', 'archives', 'page', 'tags', 'categories', 'about', 'css', 'js', 'img', 'legacy-html', 'CNAME', 'robots.txt', 'sitemap.xml', 'search.xml', '.nojekyll', '404.html'}
+allowed = {'index.html', 'blog', 'archives', 'page', 'tags', 'categories', 'about', 'css', 'js', 'img', 'legacy-html', 'upload', 'CNAME', 'robots.txt', 'sitemap.xml', 'search.xml', '.nojekyll', '404.html'}
 files = {p.relative_to(PUBLIC).as_posix(): p for p in PUBLIC.rglob('*') if p.is_file()}
 assert files and 'index.html' in files
 for rel in files:

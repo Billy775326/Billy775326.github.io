@@ -9,19 +9,23 @@
 | `hexo/source/css/site-preserved.css` | 迁移保留的原 CSS 与现有自定义补丁 |
 | `hexo/source/css/cards.css` | 首页卡片定制样式 |
 | `hexo/source/_data/site.json` | 网站维护时间 |
+| `hexo/source/_data/image-dimensions.json` | 正文图片真实尺寸，构建离线使用 |
+| `hexo/source/_data/published-assets.json`、`hexo/source/upload/` | 明确允许发布的旧图片兼容路径 |
 | `hexo/themes/butterfly/` | 本地可维护主题，5.7.0，保留许可证 |
 | `hexo/scripts/site-data.js` | 保留标签 slug，导出构建模型供校验 |
 | `hexo/bin/finalize.py` | 现站格式、缩略图、页脚、导航、SEO 兼容处理 |
 | `hexo/bin/verify.py` | 发布前数据与链接校验 |
+| `hexo/bin/verify_seo.py`、`check_publish_tree.py` | 结构化数据、索引边界与发布目录校验 |
+| `.github/workflows/pages.yml` | 从源工程构建，只部署 hexo/public |
 | `hexo/bin/release.py` | 备份及同步已校验产物；不提交/推送 |
 | `hexo/migration/` | 迁移正文基线、旧跳转与原 Markdown 参考 |
 | `hexo/package-lock.json` | 锁定插件与依赖版本，用 npm ci 安装 |
-| `hexo/public/` | 本地预览产物，忽略入库 |
-| 根 `blog/`、`index.html`、`page/`、`archives/` 等 | 自动生成的 Pages 发布内容，不手改 |
+| `hexo/public/` | 本地预览及 Actions 唯一部署目录，忽略入库 |
+| 根 `blog/`、`index.html`、`page/`、`archives/` 等 | 本地 release 同步的产物，供审阅和备份；不手改，Pages 不再直接托管根目录 |
 | `upload/` | 用户授权的图片备份；前端用图床 |
 | `scripts/` | 现有图床工具，凭据不得入库 |
 | `tools/`、`content/` | 迁移前维护方式的历史参考，不再驱动构建 |
 
-当前 45 篇文章、5 分类、92 标签；总数以后以 Hexo 构建模型为准。
+当前 38 篇文章、5 分类、92 标签；总数以后以 Hexo 构建模型为准。
 
 主题 JavaScript 只维护 `hexo/themes/butterfly/source/js/`；不要在 `hexo/source/js/` 放同路径副本，避免被主题生成器覆盖。

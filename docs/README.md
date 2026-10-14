@@ -5,11 +5,11 @@
 用户已授权恢复 Hexo 源工程并迁移发布流程。本条取代此前“禁止引入构建、直接维护 HTML”的旧限制。
 
 - `hexo/` 是唯一可编辑源工程：Hexo 8.1.2 + Butterfly 5.7.0。
-- 根目录 HTML/CSS/JS 是 GitHub Pages 发布产物，不直接修改。`main` 推送后仍由 Pages 发布，不改变现有域名 iowill.com。
+- 根目录 HTML/CSS/JS 是生成产物，不直接修改。2026-10-14 起，`main` 推送触发 `.github/workflows/pages.yml`，重新构建并仅部署 `hexo/public`，域名仍为 iowill.com。
 - `hexo/source/_posts/` 为文章源文件。45 篇历史文章保留为带 front matter 的 HTML，保留正文、代码、图片、锚点与永久链接；新文章使用 Markdown。
 - 分类标签以文章 front matter 为准，slug 映射在 `hexo/_config.yml`。根 `content/` 仅保留迁移前记录，不再作为生成输入。
 - `npm --prefix hexo run build`：生成、兼容处理、校验。`npm --prefix hexo run release`：再次构建校验、备份后更新根发布目录，不自动提交或推送。
-- 每页固定 18 篇，当前 45 篇 / 5 分类 / 92 标签、18/18/9。数字由构建产生，不手工维护文章列表。
+- 每页固定 18 篇，当前 38 篇 / 5 分类 / 92 标签、18/18/2。数字由构建产生，不手工维护文章列表。
 - 不运行旧 `tools/` 静态批处理：它们不适用于含源工程的目录，已加防误用提示。
 - 文章正文的修改时间只在内容实际修改时更新；网站维护时间修改 `hexo/source/_data/site.json`。
 - 图片备份仍放 `upload/文章名/`，前端引用图床。令牌、密码、服务器真实 IP 不入库。
@@ -23,3 +23,5 @@
 - [../hexo/README.md](../hexo/README.md)：环境、插件及迁移说明。
 
 用户新要求完成后，继续当天更新约定和变更记录。全站 UTF-8 / LF；不得提交 node_modules、public、临时文件和凭据。
+
+仓库仍公开存储源文件与图片备份，但博客域名不再部署整库。历史独立页面作为可访问的 noindex 存档保留；只有 `hexo/source/_data/published-assets.json` 列出的旧图片兼容路径可进入网站的 `/upload/`。

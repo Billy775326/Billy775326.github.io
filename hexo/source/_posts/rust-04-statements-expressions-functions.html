@@ -1,21 +1,21 @@
 ---
 title: "20240410-Rust-04-语句与表达式与函数"
 date: "2024-09-20T12:46:07.000Z"
-updated: "2024-09-20T12:46:07.000Z"
+updated: "2026-10-14T14:32:02+08:00"
 permalink: "blog/2024/09/rust-04-statements-expressions-functions/"
 slug: "rust-04-statements-expressions-functions"
 categories: ["编程开发"]
 tags: ["Rust", "语言基础", "函数与表达式"]
-description: "Rust代码中的函数和变量名都使用下划线命名法（snake case，直译为蛇形命名法）规范风格。此命名法中，所有字母都是小写并使用下划线分隔单词。"
+description: "梳理 Rust 函数的定义与命名、参数和返回值，结合代码区分语句与表达式，说明函数体末尾表达式和分号的关系，帮助初学者对照函数示例阅读，为理解后续所有权与控制流打下基础。"
 cover: "https://img.iowill.com/file/编程开发/历史封面恢复/15988c23a9965c5e/cover.png"
 thumbnail: "https://img.iowill.com/file/编程开发/历史封面恢复/15988c23a9965c5e/thumbs/cover.jpg"
 disableNunjucks: true
 migration_order: 27
-legacy_html: true
+legacy_html: false
 comments: false
 related_nav: [{"url": "/blog/2024/09/rust-05-control-flow/", "rel": "prev", "title": "20240410-Rust-05-控制流"}, {"url": "/blog/2024/09/rust-00-introduction/", "rel": "next", "title": "20240410-Rust-00-前言"}]
 ---
-<h1 id="语句与表达式与函数"><a class="headerlink" href="#语句与表达式与函数" title="语句与表达式与函数"></a>语句与表达式与函数</h1><h2 id="函数"><a class="headerlink" href="#函数" title="函数"></a>函数</h2><p><code>main</code>函数是程序入口，<code>fn</code>是用来声明新函数的关键字。</p>
+<span id="语句与表达式与函数"></span><h2 id="函数"><a class="headerlink" href="#函数" title="函数"></a>函数</h2><p><code>main</code>函数是程序入口，<code>fn</code>是用来声明新函数的关键字。</p>
 <p>Rust代码中的函数和变量名都使用下划线命名法（<em>snake case</em>，直译为蛇形命名法）规范风格。此命名法中，所有字母都是小写并使用下划线分隔单词。</p>
 <p>与C/C++不同的是，Rust 不关心函数定义于何处，只要定义了就行。</p>
 <p>形参必须标注类型。</p>

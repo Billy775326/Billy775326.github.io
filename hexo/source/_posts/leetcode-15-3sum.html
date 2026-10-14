@@ -1,21 +1,21 @@
 ---
 title: "20240327-LeetCode-15.三数之和"
 date: "2024-09-20T12:46:06.000Z"
-updated: "2024-09-20T12:46:06.000Z"
+updated: "2026-10-14T14:32:02+08:00"
 permalink: "blog/2024/09/leetcode-15-3sum/"
 slug: "leetcode-15-3sum"
 categories: ["算法与数据结构"]
 tags: ["LeetCode", "数组", "双指针", "排序"]
-description: "给你一个整数数组 nums ，判断是否存在三元组 [nums[i], nums[j], nums[k]] 满足 i != j、i != k 且 j != k ，同时还满足 nums[i] + …"
+description: "整理 LeetCode 第 15 题三数之和的题目要求与解题代码：从整数数组中寻找元素和为零的三元组，关注下标不能重复、结果去重以及解法中的边界处理，附题目示例与对应的实现代码。"
 cover: "https://img.iowill.com/file/算法与数据结构/历史封面恢复/f49ccac42cce047b/cover.png"
 thumbnail: "https://img.iowill.com/file/算法与数据结构/历史封面恢复/f49ccac42cce047b/thumbs/cover.jpg"
 disableNunjucks: true
 migration_order: 31
-legacy_html: true
+legacy_html: false
 comments: false
 related_nav: [{"url": "/blog/2024/09/rust-01-guessing-game/", "rel": "prev", "title": "20240408-Rust-01-猜数字游戏"}, {"url": "/blog/2024/09/github-ssh-port-443/", "rel": "next", "title": "20240320-配置GitHub-SSH默认使用443端口"}]
 ---
-<h1 id="15-三数之和"><a class="headerlink" href="#15-三数之和" title="15.三数之和"></a>15.三数之和</h1><h2 id="题目描述"><a class="headerlink" href="#题目描述" title="题目描述"></a>题目描述</h2><p>给你一个整数数组 <code>nums</code> ，判断是否存在三元组 <code>[nums[i], nums[j], nums[k]]</code> 满足 <code>i != j</code>、<code>i != k</code> 且 <code>j != k</code> ，同时还满足 <code>nums[i] + nums[j] + nums[k] == 0</code> 。请</p>
+<span id="15-三数之和"></span><h2 id="题目描述"><a class="headerlink" href="#题目描述" title="题目描述"></a>题目描述</h2><p>给你一个整数数组 <code>nums</code> ，判断是否存在三元组 <code>[nums[i], nums[j], nums[k]]</code> 满足 <code>i != j</code>、<code>i != k</code> 且 <code>j != k</code> ，同时还满足 <code>nums[i] + nums[j] + nums[k] == 0</code> 。请</p>
 <p>你返回所有和为 <code>0</code> 且不重复的三元组。</p>
 <p>**注意：**答案中不可以包含重复的三元组。</p>
 <p><strong>示例 1：</strong></p>

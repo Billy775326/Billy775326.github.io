@@ -1,7 +1,7 @@
 ---
 title: "LeetCode-189.轮转数组"
 date: "2024-09-20T12:46:08.000Z"
-updated: "2024-09-20T12:46:08.000Z"
+updated: "2026-10-14T14:32:02+08:00"
 permalink: "blog/2024/09/leetcode-189-rotate-array/"
 slug: "leetcode-189-rotate-array"
 categories: ["算法与数据结构"]
@@ -11,11 +11,11 @@ cover: "https://img.iowill.com/file/算法与数据结构/历史封面恢复/056
 thumbnail: "https://img.iowill.com/file/算法与数据结构/历史封面恢复/056722a6da1f0117/thumbs/cover.jpg"
 disableNunjucks: true
 migration_order: 23
-legacy_html: true
+legacy_html: false
 comments: false
 related_nav: [{"url": "/blog/2024/09/leetcode-80-remove-duplicates-ii/", "rel": "prev", "title": "LeetCode-80.删除有序数组中的重复项II"}, {"url": "/blog/2024/09/webserver-0-introduction/", "rel": "next", "title": "20240627-WebServer-0"}]
 ---
-<h1 id="189-轮转数组"><a class="headerlink" href="#189-轮转数组" title="189.轮转数组"></a>189.轮转数组</h1><h2 id="题目描述"><a class="headerlink" href="#题目描述" title="题目描述"></a>题目描述</h2><p>给定一个整数数组 <code>nums</code>，将数组中的元素向右轮转 <code>k</code> 个位置，其中 <code>k</code> 是非负数。</p>
+<span id="189-轮转数组"></span><h2 id="题目描述"><a class="headerlink" href="#题目描述" title="题目描述"></a>题目描述</h2><p>给定一个整数数组 <code>nums</code>，将数组中的元素向右轮转 <code>k</code> 个位置，其中 <code>k</code> 是非负数。</p>
 <p><strong>示例 1:</strong></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/></pre></td><td class="code"><pre><span class="line">输入: nums = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>], k = <span class="number">3</span></span><br/><span class="line">输出: [<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br/><span class="line">解释:</span><br/><span class="line">向右轮转 <span class="number">1</span> 步: [<span class="number">7</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br/><span class="line">向右轮转 <span class="number">2</span> 步: [<span class="number">6</span>,<span class="number">7</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br/><span class="line">向右轮转 <span class="number">3</span> 步: [<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br/></pre></td></tr></table></figure>
 <p><strong>示例 2:</strong></p>

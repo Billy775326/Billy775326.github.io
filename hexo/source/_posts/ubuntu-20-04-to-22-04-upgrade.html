@@ -1,42 +1,44 @@
 ---
 title: "ubuntu20.04 update to 22.04"
 date: "2024-07-31T08:37:46.000Z"
-updated: "2024-07-31T08:37:46.000Z"
+updated: "2026-10-14T14:35:48+08:00"
 permalink: "blog/2024/07/ubuntu-20-04-to-22-04-upgrade/"
 slug: "ubuntu-20-04-to-22-04-upgrade"
 categories: ["系统与运维"]
 tags: ["Linux", "Ubuntu", "系统升级"]
-description: "你现在使用的 Ubuntu 20.04.6 LTS 已经是最新的长期支持版本（LTS）。要升级到更高的版本（如 Ubuntu 22.04 LTS），需要确保系统配置允许这种升级。以下是步骤： Ĵ"
+description: "说明 Ubuntu 20.04 LTS 升级到 22.04 LTS 的适用路径，依次检查备份、软件包状态和 LTS 提示设置，再使用 do-release-upgrade 升级，并整理无可用版本时的排查与升级后验证。"
 cover: "https://iowill.com/upload/Focal-Fossa-wallpaper.jpg"
 thumbnail: "/upload/Focal-Fossa-wallpaper.jpg"
 disableNunjucks: true
 migration_order: 43
-legacy_html: true
+legacy_html: false
 comments: false
 related_nav: [{"url": "/blog/2024/09/install-x11vnc-remote-desktop/", "rel": "prev", "title": "安装x11vnc远程桌面"}, {"url": "/blog/2024/07/markdown-editor/", "rel": "next", "title": "Markdown Editor"}]
 ---
-<p>你现在使用的 Ubuntu 20.04.6 LTS 已经是最新的长期支持版本（LTS）。要升级到更高的版本（如 Ubuntu 22.04 LTS），需要确保系统配置允许这种升级。以下是步骤：</p>
-<p>确保系统配置正确<br/>更新所有包：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get update &amp;&amp; <span class="built_in">sudo</span> apt-get upgrade</span><br/></pre></td></tr></table></figure>
-<p>编辑升级配置：<br/>确保 /etc/update-manager/release-upgrades 文件中 Prompt 设置为 lts 或 normal。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/update-manager/release-upgrades</span><br/></pre></td></tr></table></figure>
-<p>确保文件包含以下内容：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">Prompt=lts</span><br/></pre></td></tr></table></figure>
-<p>运行升级命令：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> do-release-upgrade</span><br/></pre></td></tr></table></figure>
-<p>如果还是无法升级，可以尝试以下步骤<br/>清理缓存并修复包依赖：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get clean</span><br/><span class="line"><span class="built_in">sudo</span> apt-get autoclean</span><br/><span class="line"><span class="built_in">sudo</span> apt-get autoremove</span><br/><span class="line"><span class="built_in">sudo</span> apt-get update</span><br/><span class="line"><span class="built_in">sudo</span> apt-get dist-upgrade</span><br/></pre></td></tr></table></figure>
-<p>尝试强制升级：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> do-release-upgrade -d</span><br/></pre></td></tr></table></figure>
-<p>检查是否存在阻止升级的问题<br/>检查 PPA 源：<br/>升级前，可能需要禁用所有第三方 PPA 源：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">mv</span> /etc/apt/sources.list.d /etc/apt/sources.list.d.bak</span><br/></pre></td></tr></table></figure>
-<p>运行升级命令：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> do-release-upgrade</span><br/></pre></td></tr></table></figure>
-<p>如果仍然无法升级，请确认以下几点<br/>检查网络连接是否正常。<br/>确保 Ubuntu 存储库可以访问。<br/>尝试手动编辑源列表以指向更高版本的存储库。<br/>手动编辑源列表<br/>备份当前源列表：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> /etc/apt/sources.list /etc/apt/sources.list.bak</span><br/></pre></td></tr></table></figure>
-<p>编辑源列表：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/apt/sources.list</span><br/></pre></td></tr></table></figure>
-<p>将所有 focal 改为 jammy（假设要升级到 22.04），然后保存并退出。</p>
-<p>更新包信息并升级系统：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get update</span><br/><span class="line"><span class="built_in">sudo</span> apt-get upgrade</span><br/><span class="line"><span class="built_in">sudo</span> apt-get dist-upgrade</span><br/></pre></td></tr></table></figure>
-<p>完成这些步骤后，系统应该能够顺利升级到更新的版本。如果在任何一步遇到错误，请提供详细的错误信息以便进一步诊断。</p>
+<p>本文说明 <strong>Ubuntu 20.04 LTS（Focal Fossa）到 Ubuntu 22.04 LTS（Jammy Jellyfish）</strong>的相邻 LTS 升级路径，适用于需要完成这一阶段迁移的现有系统。20.04.6 是 20.04 系列的维护版本，不能称为“最新 LTS”；22.04 也不是本文更新时的最新 LTS。版本支持周期应查看 <a href="https://ubuntu.com/about/release-cycle" rel="noopener" target="_blank">Ubuntu 发布周期</a>。</p>
+<p>下面按命令行流程组织，重点面向 Ubuntu Server 和云主机。LTS 原地升级应逐级进行；需要继续迁往后续 LTS 时，先验证本次升级完成，再评估下一阶段。路径规则见 <a href="https://ubuntu.com/server/docs/how-to/software/upgrade-your-release/" rel="noopener" target="_blank">Ubuntu 官方发行版升级说明</a>。</p>
+<h2 id="upgrade-preparation">1. 确认系统和恢复条件</h2>
+<p>先读取当前版本与磁盘空间，确认确实从 20.04 开始：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/></pre></td><td class="code"><pre><span class="line">cat /etc/os-release</span><br/><span class="line">df -h / /boot</span><br/></pre></td></tr></table></figure>
+<ul><li>把业务数据、配置和必要的数据库备份保存到另一位置，确认可以恢复；云主机可另备快照。</li><li>阅读 <a href="https://documentation.ubuntu.com/release-notes/22.04/" rel="noopener" target="_blank">Ubuntu 22.04 发行说明</a>，检查应用、驱动与第三方软件的兼容性。</li><li>预留维护时间、下载空间与重启窗口；远程操作前确认云控制台或其他恢复入口可用。</li><li>记录第三方 PPA 和软件源。升级器会禁用第三方源，升级后应确认其支持 Jammy 再恢复，不能直接把旧源全部启用。</li></ul>
+<h2 id="upgrade-current-packages">2. 完整更新当前发行版</h2>
+<p>先保持软件源对应 Focal，刷新包索引并完成当前发行版的软件包升级；查看将安装、移除的包清单后再确认。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br/><span class="line">sudo apt dist-upgrade -o APT::Get::Always-Include-Phased-Updates=true</span><br/><span class="line">sudo apt install update-manager-core</span><br/></pre></td></tr></table></figure>
+<p>这里的 <code>dist-upgrade</code> 仍在更新 20.04 的包，不会自行把系统变为 22.04。如果命令失败、存在未配置的软件包或依赖冲突，先处理具体错误，再继续发行版升级。官方文档要求先完整更新当前系统，并注意分阶段推送的软件包可能阻止升级。</p>
+<p>检查是否需要重启：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">test -f /run/reboot-required &amp;&amp; cat /run/reboot-required</span><br/></pre></td></tr></table></figure>
+<p>若该文件存在，安排重启并重新登录。文件不存在时，这条检查通常不输出内容；它本身不会执行重启。</p>
+<h2 id="upgrade-lts-settings">3. 检查 LTS 升级设置</h2>
+<p>编辑配置文件，确认只有目标设置生效：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">sudo nano /etc/update-manager/release-upgrades</span><br/></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">Prompt=lts</span><br/></pre></td></tr></table></figure>
+<p><code>Prompt=lts</code> 表示检查 LTS 到 LTS 的升级，<code>Prompt=never</code> 会关闭升级提示。相关选项见 <a href="https://help.ubuntu.com/community/Upgrades" rel="noopener" target="_blank">Ubuntu 升级帮助</a>。不要通过把所有源中的 <code>focal</code> 替换成 <code>jammy</code> 来代替发行版升级器。</p>
+<h2 id="run-release-upgrade">4. 运行发行版升级器</h2>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">sudo do-release-upgrade</span><br/></pre></td></tr></table></figure>
+<p>确认升级器提出的目标为 Ubuntu 22.04，再阅读下载量、包变更和移除清单。升级过程中留意配置文件差异提示，按实际业务需要决定保留或替换配置；完成后按提示重启。不要因等待下载或配置而中断进程。</p>
+<p><strong><code>-d</code> 不是修复升级失败的通用“强制”开关。</strong>它用于请求开发版本，官方不建议在生产环境中使用；LTS 刚发布、常规升级尚未开放时也有特殊测试用途。本文的稳定版本迁移流程使用不带 <code>-d</code> 的命令。</p>
+<h2 id="upgrade-troubleshooting">5. 没有发现新版本时如何排查</h2>
+<ul><li>确认当前版本、<code>Prompt=lts</code> 和系统时钟，检查网络、代理及 Ubuntu 软件源访问是否正常。</li><li>确认当前发行版的软件包更新已成功完成，按提示重启；用 <code>apt-mark showhold</code> 检查被保留的包，不要在不了解原因时全部解除保留。</li><li>如果升级已启动又失败，查看 <code>/var/log/dist-upgrade/</code> 中的日志，保留具体错误信息后定位问题。</li><li>按官方发行说明核对升级通道状态。不要把临时关闭的升级通道当作需要改源、移动整个软件源目录或追加 <code>-d</code> 的理由。</li></ul>
+<h2 id="upgrade-verification">6. 重启后的验证</h2>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/></pre></td><td class="code"><pre><span class="line">cat /etc/os-release</span><br/><span class="line">uname -r</span><br/><span class="line">systemctl --failed</span><br/><span class="line">sudo apt update</span><br/></pre></td></tr></table></figure>
+<p><code>/etc/os-release</code> 中应显示 <code>VERSION_ID="22.04"</code> 和 Jammy 代号。随后检查网络、SSH、磁盘挂载、业务服务与应用日志，再逐项处理受影响的第三方软件。版本号变更不代表所有业务都已验证通过。</p>
+<p>以上为依据官方文档整理的操作与检查方法；命令输出应以目标机器实际执行结果为准。</p>

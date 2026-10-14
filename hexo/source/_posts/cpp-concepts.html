@@ -1,21 +1,21 @@
 ---
 title: "20240414-C++-Concepts"
 date: "2024-09-20T12:46:08.000Z"
-updated: "2024-09-20T12:46:08.000Z"
+updated: "2026-10-14T14:32:02+08:00"
 permalink: "blog/2024/09/cpp-concepts/"
 slug: "cpp-concepts"
 categories: ["编程开发"]
 tags: ["C++", "C++20", "模板编程"]
-description: "概念（Concepts）是C++20中引入的一项特性，它们是对模板参数的约束，用于指定模板参数必须满足的接口（例如，一组必需的函数、类型、操作符等）和语义要求。概念旨在提高模板编程的表达力和安全性，…"
+description: "介绍 C++20 Concepts 如何为模板参数表达约束，通过概念定义、约束使用和代码示例梳理其基本写法，帮助理解模板要求、接口表达与代码可读性之间的关系，便于对照示例学习。"
 cover: "https://img.iowill.com/file/编程开发/历史封面恢复/41f18857e4600766/cover.png"
 thumbnail: "https://img.iowill.com/file/编程开发/历史封面恢复/41f18857e4600766/thumbs/cover.jpg"
 disableNunjucks: true
 migration_order: 21
-legacy_html: true
+legacy_html: false
 comments: false
 related_nav: [{"url": "/blog/2024/09/webserver-0-introduction/", "rel": "prev", "title": "20240627-WebServer-0"}, {"url": "/blog/2024/09/rust-09-structs/", "rel": "next", "title": "20240413-Rust-09-结构体"}]
 ---
-<h1 id="C-Concepts"><a class="headerlink" href="#C-Concepts" title="C++ Concepts"></a>C++ Concepts</h1><p>概念（Concepts）是C++20中引入的一项特性，它们是对模板参数的约束，用于指定模板参数必须满足的接口（例如，一组必需的函数、类型、操作符等）和语义要求。概念旨在提高模板编程的表达力和安全性，通过更清晰的语义来改善编译器错误信息，并促使编写更干净、更易于理解的代码。</p>
+<span id="C-Concepts"></span><p>概念（Concepts）是C++20中引入的一项特性，它们是对模板参数的约束，用于指定模板参数必须满足的接口（例如，一组必需的函数、类型、操作符等）和语义要求。概念旨在提高模板编程的表达力和安全性，通过更清晰的语义来改善编译器错误信息，并促使编写更干净、更易于理解的代码。</p>
 <p>在C++20之前，模板编程通常是通过特化和重载来实现各种约束的，这往往会产生冗长的错误信息，让人难以理解实际的问题所在。概念允许你以更声明式的方式指定约束，使得模板的意图更明确，能够在编译时提早发现错误，同时生成更有用的错误信息。</p>
 <p><strong>以下是一些使用概念的优势：</strong></p>
 <ol>

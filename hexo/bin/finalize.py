@@ -1,10 +1,11 @@
-"""Preserve site conventions after Hexo renders; never edits source or article bodies."""
+"""Preserve site conventions after Hexo renders; article changes are image hints only."""
 from pathlib import Path
 from datetime import datetime, timezone, timedelta
 from html import escape
 from urllib.parse import quote, unquote
 import json, re, xml.etree.ElementTree as ET
 from bs4 import BeautifulSoup as B
+from site_metadata import archive_noindex, normalize_images, page_description, valid_schema
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / 'public'
@@ -14,7 +15,9 @@ lookup = {'/' + p['path'].removesuffix('index.html'): p for p in posts}
 updated = json.loads((ROOT / 'source/_data/site.json').read_text(encoding='utf8'))['updated_at']
 footer = (ROOT / 'migration/footer.html').read_text(encoding='utf8')
 footer = re.sub(r'2023[–-]\d{4}', '2023–' + updated[:4], footer)
-author = {'@type': 'Person', '@id': BASE + '/#author', 'name': 'Billy', 'url': BASE + '/', 'sameAs': ['https://github.com/Billy775326']}
+dimension_file = ROOT / 'source/_data/image-dimensions.json'
+dimensions = json.loads(dimension_file.read_text(encoding='utf8')) if dimension_file.exists() else {}
+author = {'@type': 'Person', '@id': BASE + '/#author', 'name': 'Billy', 'url': BASE + '/about/', 'sameAs': ['https://github.com/Billy775326']}
 
 def meta(s, key, value, prop=False):
     attr = 'property' if prop else 'name'
@@ -29,8 +32,11 @@ def navlink(p, rel):
     return f'<a class="pagination-related" href="{escape(url)}" rel="{rel}" title="{escape(p["title"])}" aria-label="{label}：{escape(p["title"])}"><img class="cover" loading="lazy" src="{escape(p["thumbnail"])}" alt="{escape(p["title"])}"><div class="info"><div class="info-1"><div class="info-item-1">{label}</div><div class="info-item-2">{escape(p["title"])}</div></div><div class="info-2">阅读全文：{escape(p["title"])}</div></div></a>'
 
 for file in PUBLIC.rglob('*.html'):
-    if file.relative_to(PUBLIC).parts[0] == 'legacy-html': continue
-    raw = file.read_text(encoding='utf8'); s = B(raw, 'html.parser')
+    raw = file.read_text(encoding='utf8')
+    if file.relative_to(PUBLIC).parts[0] == 'legacy-html':
+        file.write_text(archive_noindex(raw), encoding='utf8', newline='\n')
+        continue
+    s = B(raw, 'html.parser')
     if not s.head: continue
     # Upstream inject helpers emit spaces on empty JavaScript lines. Normalize
     # only head scripts; historical article/code whitespace stays untouched.
@@ -43,6 +49,14 @@ for file in PUBLIC.rglob('*.html'):
     c = s.select_one('link[rel=canonical]')
     if c: c['href'] = canonical
     meta(s, 'og:url', canonical, True)
+    description = lookup[url]['description'] if url in lookup else page_description(url, posts)
+    if description is None:
+        existing = s.select_one('meta[name="description"]')
+        description = existing.get('content') if existing else None
+    if description:
+        meta(s, 'description', description)
+        meta(s, 'og:description', description, True)
+        meta(s, 'twitter:description', description)
     f = s.select_one('#footer')
     if f: f.replace_with(B(footer, 'html.parser'))
     for t in s.select('time[datetime]'):
@@ -63,12 +77,14 @@ for file in PUBLIC.rglob('*.html'):
     last = s.select_one('[data-lastpushdate]')
     if last: last['data-lastpushdate'] = updated
     for schema in s.select('script[type="application/ld+json"]'):
-        try: data = json.loads(schema.string or '')
-        except ValueError: continue
+        data = valid_schema(schema.string or '')
+        if data is None:
+            schema.decompose()
+            continue
         if data.get('@type') == 'BlogPosting' and url in lookup:
             p = lookup[url]
             data.update({'@id': canonical + '#article', 'url': canonical, 'description': p['description'], 'author': author, 'publisher': author, 'inLanguage': 'zh-CN', 'mainEntityOfPage': {'@type': 'WebPage', '@id': canonical}, 'isPartOf': {'@type': 'WebSite', '@id': BASE + '/#website'}, 'articleSection': p['categories'][0]['name'], 'keywords': [t['name'] for t in p['tags']]})
-        elif data.get('@type') == 'WebSite': data.update({'@id': BASE + '/#website', 'author': author, 'url': BASE + '/', 'inLanguage': 'zh-CN'})
+        elif data.get('@type') == 'WebSite': data.update({'@id': BASE + '/#website', 'author': author, 'url': BASE + '/', 'inLanguage': 'zh-CN', 'description': description})
         schema.string = json.dumps(data, ensure_ascii=False).replace('</', '<\\/')
     if url in lookup:
         p = lookup[url]
@@ -88,8 +104,9 @@ for file in PUBLIC.rglob('*.html'):
         for old in s.select('script[type="application/ld+json"]'):
             if '"AboutPage"' in (old.string or ''): old.decompose()
         sc = s.new_tag('script', attrs={'type': 'application/ld+json'})
-        sc.string = json.dumps({'@context': 'https://schema.org', '@type': 'AboutPage', 'url': canonical, 'name': '关于 Billy', 'inLanguage': 'zh-CN', 'mainEntity': author}, ensure_ascii=False)
+        sc.string = json.dumps({'@context': 'https://schema.org', '@type': 'AboutPage', 'url': canonical, 'name': '关于 Billy', 'description': description, 'inLanguage': 'zh-CN', 'mainEntity': author}, ensure_ascii=False).replace('</', '<\\/')
         s.head.append(sc)
+    normalize_images(s, dimensions)
     file.write_text(str(s), encoding='utf8', newline='\n')
 
 for name, text in json.loads((ROOT / 'migration/redirects.json').read_text(encoding='utf8')).items():

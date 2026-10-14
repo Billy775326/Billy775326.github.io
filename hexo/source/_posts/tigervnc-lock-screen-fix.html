@@ -1,21 +1,21 @@
 ---
 title: "TigerVNC 锁屏问题解决方案"
 date: "2026-09-10T07:29:21.000Z"
-updated: "2026-09-10T07:29:21.000Z"
+updated: "2026-10-14T14:32:02+08:00"
 permalink: "blog/2026/09/tigervnc-lock-screen-fix/"
 slug: "tigervnc-lock-screen-fix"
 categories: ["系统与运维"]
 tags: ["Linux", "VNC", "TigerVNC", "远程桌面", "故障排查"]
-description: "TigerVNC 锁屏问题解决方案问题诊断 根本原因：Linux logind 服务将会话标记为”locked”（常见于休眠/锁屏后） 典型表现： VNC 连接后黑屏 认证失败提示   直接解决方案：1loginctl unlock-sessions  # 解锁所有会话   [TOC]  永久性解决方案方案A：禁用自动锁屏（推荐用于服务器）12gsettings set org.gnom"
+description: "记录 TigerVNC 连接后黑屏等问题与会话锁定状态有关时的排查思路，涵盖 loginctl 状态检查、会话解锁、桌面自动锁屏设置及 VNC 服务启动状态与配置检查。"
 cover: "https://img.iowill.com/file/系统与运维/历史封面恢复/7fc947503a0c42f3/cover.webp"
 thumbnail: "https://img.iowill.com/file/系统与运维/历史封面恢复/7fc947503a0c42f3/thumbs/cover.jpg"
 disableNunjucks: true
 migration_order: 6
-legacy_html: true
+legacy_html: false
 comments: false
 related_nav: [{"url": "/blog/2026/09/ubuntu-gnome-tigervnc-setup/", "rel": "prev", "title": "Ubuntu GNOME 桌面安装和配置 TigerVNC，包含服务设置、桌面环境适配和防火墙配置"}]
 ---
-<h1 id="TigerVNC-锁屏问题解决方案"><a class="headerlink" href="#TigerVNC-锁屏问题解决方案" title="TigerVNC 锁屏问题解决方案"></a>TigerVNC 锁屏问题解决方案</h1><h2 id="问题诊断"><a class="headerlink" href="#问题诊断" title="问题诊断"></a>问题诊断</h2><ul>
+<span id="TigerVNC-锁屏问题解决方案"></span><h2 id="问题诊断"><a class="headerlink" href="#问题诊断" title="问题诊断"></a>问题诊断</h2><ul>
 <li><strong>根本原因</strong>：Linux <code>logind</code> 服务将会话标记为”locked”（常见于休眠/锁屏后）</li>
 <li><strong>典型表现</strong>：<ul>
 <li>VNC 连接后黑屏</li>

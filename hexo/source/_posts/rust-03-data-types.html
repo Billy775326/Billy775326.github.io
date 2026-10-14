@@ -1,7 +1,7 @@
 ---
 title: "20240409-Rust-03-数据类型"
 date: "2024-09-20T12:46:07.000Z"
-updated: "2024-09-20T12:46:07.000Z"
+updated: "2026-10-14T14:32:02+08:00"
 permalink: "blog/2024/09/rust-03-data-types/"
 slug: "rust-03-data-types"
 categories: ["编程开发"]
@@ -11,11 +11,11 @@ cover: "https://img.iowill.com/file/编程开发/历史封面恢复/15988c23a996
 thumbnail: "https://img.iowill.com/file/编程开发/历史封面恢复/15988c23a9965c5e/thumbs/cover.jpg"
 disableNunjucks: true
 migration_order: 25
-legacy_html: true
+legacy_html: false
 comments: false
 related_nav: [{"url": "/blog/2024/09/rust-00-introduction/", "rel": "prev", "title": "20240410-Rust-00-前言"}, {"url": "/blog/2024/09/linux-kernel-root-privilege/", "rel": "next", "title": "Linux内核态赋予进程root权限"}]
 ---
-<h1 id="数据类型"><a class="headerlink" href="#数据类型" title="数据类型"></a>数据类型</h1><blockquote>
+<span id="数据类型"></span><blockquote>
 <p>Rust 的每个值都有确切的<strong>数据类型</strong>（<em>data type</em>），该类型告诉 Rust 数据是被指定成哪类数据，从而让 Rust 知道如何使用该数据。在本节中，我们将介绍两种数据类型：标量类型和复合类型。</p>
 <p>请记住 Rust 是一种<strong>静态类型</strong>（<em>statically typed</em>）的语言，这意味着它必须在编译期知道所有变量的类型。</p>
 </blockquote>
@@ -102,7 +102,7 @@ related_nav: [{"url": "/blog/2024/09/rust-00-introduction/", "rel": "prev", "tit
 </tr>
 </tbody></table>
 <blockquote>
-<h5 id="整型溢出"><a class="headerlink" href="#整型溢出" title="整型溢出"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch03-02-data-types.html#%E6%95%B4%E5%9E%8B%E6%BA%A2%E5%87%BA" rel="noopener" target="_blank">整型溢出</a></h5><p>比方说有一个 <code>u8</code> ，它可以存放从 0 到 255 的值。那么当你将其修改为范围之外的值，比如 256，则会发生<strong>整型溢出</strong>（<em>integer overflow</em>），这会导致两种行为的其中一种。当在调试（debug）模式编译时，Rust 会检查整型溢出，若存在这些问题则使程序在编译时 <em>panic</em>。Rust 使用 panic 这个术语来表明程序因错误而退出。第 9 章 <a href="https://www.rustwiki.org.cn/zh-CN/book/ch09-01-unrecoverable-errors-with-panic.html" rel="noopener" target="_blank">“<code>panic!</code> 与不可恢复的错误”</a>会详细介绍 panic。</p>
+<h4 id="整型溢出"><a class="headerlink" href="#整型溢出" title="整型溢出"></a><a href="https://www.rustwiki.org.cn/zh-CN/book/ch03-02-data-types.html#%E6%95%B4%E5%9E%8B%E6%BA%A2%E5%87%BA" rel="noopener" target="_blank">整型溢出</a></h4><p>比方说有一个 <code>u8</code> ，它可以存放从 0 到 255 的值。那么当你将其修改为范围之外的值，比如 256，则会发生<strong>整型溢出</strong>（<em>integer overflow</em>），这会导致两种行为的其中一种。当在调试（debug）模式编译时，Rust 会检查整型溢出，若存在这些问题则使程序在编译时 <em>panic</em>。Rust 使用 panic 这个术语来表明程序因错误而退出。第 9 章 <a href="https://www.rustwiki.org.cn/zh-CN/book/ch09-01-unrecoverable-errors-with-panic.html" rel="noopener" target="_blank">“<code>panic!</code> 与不可恢复的错误”</a>会详细介绍 panic。</p>
 <p>在当使用 <code>--release</code> 参数进行发布（release）模式构建时，Rust <strong>不</strong>检测会导致 panic 的整型溢出。相反当检测到整型溢出时，Rust 会进行一种被称为二进制补码包裹（<em>two’s complement wrapping</em>）的操作。简而言之，大于该类型最大值的数值会被“包裹”成该类型能够支持的对应数字的最小值。比如在 <code>u8</code> 的情况下，256 变成 0，257 变成 1，依此类推。程序不会 panic，但是该变量的值可能不是你期望的值。依赖整型溢出包裹的行为不是一种正确的做法。</p>
 <p>要显式处理溢出的可能性，可以使用标准库针对原始数字类型提供的以下一系列方法：</p>
 <ul>

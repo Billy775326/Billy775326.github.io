@@ -1,29 +1,32 @@
 ---
 title: "20240320-配置GitHub-SSH默认使用443端口"
 date: "2024-09-20T12:46:06.000Z"
-updated: "2024-09-20T12:46:06.000Z"
+updated: "2026-10-14T14:35:48+08:00"
 permalink: "blog/2024/09/github-ssh-port-443/"
 slug: "github-ssh-port-443"
 categories: ["软件与工具"]
 tags: ["Git", "GitHub", "SSH", "网络配置"]
-description: "Hi UserName! You’ve successfully authenticated, but GitHub does not provide shell access."
+description: "当 GitHub 的 SSH 22 端口连接受限时，可测试 ssh.github.com 的 443 端口，并在用户 SSH 配置中设置主机别名。本文介绍连接验证、认证成功提示、主机指纹核对和适用范围。"
 cover: "https://img.iowill.com/file/软件与工具/历史封面恢复/8a613376d99813ec/cover.jpg"
 thumbnail: "https://img.iowill.com/file/软件与工具/历史封面恢复/8a613376d99813ec/thumbs/cover.jpg"
 disableNunjucks: true
 migration_order: 30
-legacy_html: true
+legacy_html: false
 comments: false
 related_nav: [{"url": "/blog/2024/09/leetcode-15-3sum/", "rel": "prev", "title": "20240327-LeetCode-15.三数之和"}]
 ---
-<h1 id="配置GitHub-SSH默认使用443端口"><a class="headerlink" href="#配置GitHub-SSH默认使用443端口" title="配置GitHub SSH默认使用443端口"></a>配置GitHub SSH默认使用443端口</h1><h2 id="1-测试443端口是否可用"><a class="headerlink" href="#1-测试443端口是否可用" title="1.测试443端口是否可用"></a>1.测试443端口是否可用</h2><p>首先测试一下使用443端口进行GitHub SSH连接：</p>
+<span id="配置GitHub-SSH默认使用443端口"></span><p>当访问 GitHub.com 的 SSH 22 端口受网络规则限制时，可以尝试通过 <code>ssh.github.com:443</code> 连接。这里仍然使用 SSH 协议，443 是连接端口；HTTP 代理或只允许 HTTPS 流量的网络仍可能拦截它。</p>
+<p>本文假定你已经生成 SSH 密钥并把公钥添加到对应 GitHub 账号。该入口面向 GitHub.com，不适用于 GitHub Enterprise Server 或带数据驻留的 GitHub Enterprise Cloud。配置与范围见 <a href="https://docs.github.com/en/authentication/troubleshooting-ssh/using-ssh-over-the-https-port" rel="noopener" target="_blank">GitHub 官方说明</a>。</p>
+<h2 id="1-测试443端口是否可用"><a class="headerlink" href="#1-测试443端口是否可用" title="1.测试443端口是否可用"></a>1.测试443端口是否可用</h2><p>首先测试一下使用443端口进行GitHub SSH连接：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">ssh -T -p 443 git@ssh.github.com</span><br/></pre></td></tr></table></figure>
-<p>如果一切正常，那么你应该得到如下输出：</p>
+<p>首次连接可能要求确认主机密钥，先与 <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints" rel="noopener" target="_blank">GitHub 公布的 SSH 指纹</a>核对。认证成功时会看到类似输出，其中 UserName 是你的账号名：</p>
 <blockquote>
 <p>Hi UserName! You’ve successfully authenticated, but GitHub does not provide shell access.</p>
 </blockquote>
+<p>这条提示说明认证成功；GitHub 不提供交互式 Shell 是正常行为。若出现 <code>Permission denied (publickey)</code>，应检查使用的密钥和账号授权。</p>
 <h2 id="2-配置SSH使用443端口"><a class="headerlink" href="#2-配置SSH使用443端口" title="2.配置SSH使用443端口"></a>2.配置SSH使用443端口</h2><p><strong>SSH客户端配置文件</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">全局配置文件：/etc/ssh/ssh_config</span></span><br/><span class="line"><span class="meta prompt_"># </span><span class="language-bash">用户配置文件：~/.ssh/config <span class="comment"># 如果不存在则创建</span></span></span><br/></pre></td></tr></table></figure>
-<p>在你的SSH客户端配置文件中增加以下内容：</p>
+<p>优先编辑当前用户的 <code>~/.ssh/config</code>（Windows OpenSSH 通常位于用户目录下的 <code>.ssh/config</code>）。如果已有 <code>Host github.com</code> 配置，请检查并合并对应项：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/></pre></td><td class="code"><pre><span class="line">Host github.com</span><br/><span class="line">  Hostname ssh.github.com</span><br/><span class="line">  Port 443</span><br/><span class="line">  User git</span><br/></pre></td></tr></table></figure>
 <p>再次测试是否有效：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br/></pre></td></tr></table></figure>

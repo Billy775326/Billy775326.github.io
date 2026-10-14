@@ -13,6 +13,8 @@ npm run release
 
 详细流程：[发布文档](../docs/publishing.md)。源工程不是生成产物副本：文章模型、首页、分页、归档、标签、搜索、统计由 Hexo 与插件重新生成，源文章更新可驱动整个站点。
 
+2026-10-14 起 GitHub Pages 使用 Actions 构建，只部署 `public/`，不再直接托管仓库根目录。源码、文档、脚本和整库 upload 备份仍留在仓库，不进入博客域名；兼容图片由 `source/_data/published-assets.json` 明确列出。构建中的 `verify_seo.py` 和 `check_publish_tree.py` 检查结构化数据、索引边界与资源白名单。
+
 ## 已安装插件
 
 | 插件 | 用途 |

@@ -23,6 +23,7 @@
     "js/**",
     "css/**",
     "img/**",
+    "upload/**",
     "CNAME",
     "robots.txt",
     "legacy-html/**"

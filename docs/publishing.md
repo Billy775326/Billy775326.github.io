@@ -89,7 +89,24 @@ git status --short
 release 会先校验并在仓库外 `../backups/hexo-release-时间/` 备份待覆盖文件，再复制到根目录。仅清理上次 release-manifest 中已不存在的受管文件，不删除源文件、docs、upload 或其他未跟踪内容。
 
 4. 审核并提交本次源文件与生成产物，再正常 `git push origin main`。不要无差别加入与本次无关的图片。
-5. 等待 GitHub Pages 成功，检查线上新文章、首页、搜索、图片和 sitemap。
+5. 等待 `Build and deploy blog` 工作流成功，检查线上新文章、首页、搜索、图片和 sitemap。工作流从源工程重新构建，仅上传 `hexo/public`，不再发布仓库根目录。
+
+### 发布目录与索引边界（2026-10-14）
+
+- GitHub 仓库 Settings → Pages → Build and deployment 的 Source 使用 **GitHub Actions**；不要改回 Deploy from a branch，否则源稿和备份会重新暴露在博客域名下。
+- 工作流 `.github/workflows/pages.yml` 使用 Node.js 24 / Python 3.12，执行 npm ci、安装 Python 依赖、build + verify，再上传 `hexo/public`。部署失败时保留上一次已成功的 Pages 版本。
+- 本地仍执行 release，以保留发布前校验、生成产物审阅与自动备份。不要手改生成产物：CI 会从源文件重新构建。
+- `hexo/bin/check_publish_tree.py` 限制发布目录，拒绝源码、文档、压缩备份和未列入白名单的 upload 文件。现有六张旧资源（两张在用封面/标识及四张已恢复的历史插图）通过 `hexo/source/upload/` 保留原路径，白名单为 `_data/published-assets.json`；新增文章仍使用图床。
+- `legacy-html/` 的历史独立页保持可访问，但输出 `noindex, follow` 且不进入 Sitemap。不将 robots.txt 改为禁止抓取该目录，以便爬虫能读取 noindex。
+- 网站域名不再提供 `/hexo/`、`/docs/`、`/scripts/` 和整库 `/upload/` 内容；公开 GitHub 仓库仍可查看源文件，这不是仓库私有化。
+- 回滚内容优先正常 git revert + push，由工作流重建。若必须恢复旧的分支发布方式，应先确认根目录内容，并知晓整库源稿会重新对外可访问。
+
+### 图片尺寸与模板校验
+
+- 正文图片真实尺寸保存在 `hexo/source/_data/image-dimensions.json`，按原 src URL 记录 width/height。新增或替换图片时从实际文件读取尺寸后更新；不得猜测或拉伸图片。构建不依赖图床网络请求。
+- finalizer 只补充正文图片的尺寸和加载提示；历史保真校验只忽略这些呈现属性，仍核对文本、图片地址、alt 和链接。
+- 首页前三张卡片封面正常加载，其余原生懒加载；JSON-LD 不允许空块，作者链接使用 /about/。
+- 修改这类模板后执行 `python hexo/bin/test_publish_tree.py`、`npm --prefix hexo run build`，涉及发布流程时再运行 `python hexo/bin/test_new_post.py` 检查临时新文与重复构建一致性。
 
 ## 校验与回滚
 

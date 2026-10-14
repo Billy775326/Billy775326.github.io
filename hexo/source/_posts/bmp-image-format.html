@@ -1,18 +1,52 @@
 ---
 title: "BMP图片格式"
 date: "2024-09-20T12:46:05.000Z"
-updated: "2024-09-20T12:46:05.000Z"
+updated: "2026-10-14T14:35:48+08:00"
 permalink: "blog/2024/09/bmp-image-format/"
 slug: "bmp-image-format"
 categories: ["编程开发"]
 tags: ["图像格式", "BMP"]
-description: "解析 BMP 位图文件格式：文件头、信息头与像素数据的布局，逐字段分析其含义与读写方式。"
+description: "以 24 位未压缩 BMP 为例，说明文件头、信息头与像素数据的布局，解释小端存储、BGR 顺序、四字节行对齐及图像方向，并用尺寸计算示例帮助检查偏移和文件大小。"
 cover: "https://img.iowill.com/file/编程开发/历史封面恢复/93ab2044a1d48b1b/cover.jpg"
 thumbnail: "https://img.iowill.com/file/编程开发/历史封面恢复/93ab2044a1d48b1b/thumbs/cover.jpg"
 disableNunjucks: true
 migration_order: 37
-legacy_html: true
+legacy_html: false
 comments: false
 related_nav: []
 ---
-<p><img alt="bmp.png" src="https://s2.loli.net/2024/09/20/hmtQkegKV2XfE45.png"/></p>
+<p>BMP 位图文件把图像尺寸、像素格式和像素数据放在同一文件中。下面以 Windows 常见的 <strong>40 字节 BITMAPINFOHEADER、24 位、BI_RGB 未压缩</strong>格式为例；调色板、位域掩码和压缩 BMP 需要按各自格式另外解析。</p>
+<h2 id="bmp-layout">文件从哪里开始读</h2>
+<p>常见布局为文件头、DIB 信息头、可选颜色信息、像素数据。文件头中的 <code>bfOffBits</code>给出像素区相对文件起点的偏移，不能一律假定像素从第 54 字节开始。信息头也有多个版本，应先读 <code>biSize</code> 再决定解析方式。参见微软的<a href="https://learn.microsoft.com/en-us/windows/win32/gdi/bitmap-header-types" rel="noopener" target="_blank">位图头类型说明</a>。</p>
+<p><img alt="BMP 位图文件结构示意图" src="https://s2.loli.net/2024/09/20/hmtQkegKV2XfE45.png"/></p>
+<h2 id="bmp-file-header">14 字节文件头</h2>
+<p>下表偏移以文件起点为零。整数按小端读取：低有效字节在前，例如 <code>36 00 00 00</code> 表示十进制 54。文件开头的两个字节为 <code>42 4D</code>，对应 ASCII 字符 <code>BM</code>。</p>
+<table><thead><tr><th>偏移</th><th>大小</th><th>字段</th><th>含义</th></tr></thead><tbody>
+<tr><td>0</td><td>2 字节</td><td>bfType</td><td>文件标识，数值为 0x4D42</td></tr>
+<tr><td>2</td><td>4 字节</td><td>bfSize</td><td>文件总大小，单位为字节</td></tr>
+<tr><td>6</td><td>2 字节</td><td>bfReserved1</td><td>保留，必须为 0</td></tr>
+<tr><td>8</td><td>2 字节</td><td>bfReserved2</td><td>保留，必须为 0</td></tr>
+<tr><td>10</td><td>4 字节</td><td>bfOffBits</td><td>像素数据的起始偏移</td></tr>
+</tbody></table>
+<p>字段定义见 <a href="https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-bitmapfileheader" rel="noopener" target="_blank">BITMAPFILEHEADER</a>。读取二进制文件时还要检查实际长度，不能只信任头部声明的大小。</p>
+<h2 id="bmp-info-header">40 字节信息头</h2>
+<p>本例信息头紧跟文件头，下表偏移仍从文件起点计算。</p>
+<table><thead><tr><th>偏移</th><th>大小</th><th>字段</th><th>本例中的含义</th></tr></thead><tbody>
+<tr><td>14</td><td>4 字节</td><td>biSize</td><td>信息头本身的大小，为 40</td></tr>
+<tr><td>18</td><td>4 字节</td><td>biWidth</td><td>有符号整数，图像宽度，单位为像素</td></tr>
+<tr><td>22</td><td>4 字节</td><td>biHeight</td><td>有符号整数，绝对值为高度，符号决定行方向</td></tr>
+<tr><td>26</td><td>2 字节</td><td>biPlanes</td><td>必须为 1</td></tr>
+<tr><td>28</td><td>2 字节</td><td>biBitCount</td><td>每像素位数，本例为 24</td></tr>
+<tr><td>30</td><td>4 字节</td><td>biCompression</td><td>BI_RGB 为 0，表示本例像素未压缩</td></tr>
+<tr><td>34</td><td>4 字节</td><td>biSizeImage</td><td>像素区大小；未压缩 RGB 允许填 0，需据尺寸计算</td></tr>
+<tr><td>38、42</td><td>各 4 字节</td><td>biXPelsPerMeter、biYPelsPerMeter</td><td>水平、垂直分辨率，单位为像素/米</td></tr>
+<tr><td>46、50</td><td>各 4 字节</td><td>biClrUsed、biClrImportant</td><td>使用的颜色数与重要颜色数；本例无颜色表，均为 0</td></tr>
+</tbody></table>
+<p>字段与方向说明见 <a href="https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-bitmapinfoheader" rel="noopener" target="_blank">BITMAPINFOHEADER</a>。24 位像素以蓝、绿、红（BGR）三个字节存储，每通道 8 位，没有独立的透明度通道。</p>
+<h2 id="bmp-row-stride">行对齐和图像方向</h2>
+<p>24 位像素每行的有效数据是 <code>width × 3</code> 字节，文件中的每行要补齐到 4 字节的整数倍。补齐字节不属于下一个像素。可按下列公式计算行跨度与像素区大小：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/></pre></td><td class="code"><pre><span class="line">stride = ((width * 24 + 31) // 32) * 4</span><br/><span class="line">pixel_bytes = stride * abs(height)</span><br/></pre></td></tr></table></figure>
+<p>例如宽度 3、高度 2：每行像素占 9 字节，需要补 3 字节，行跨度为 12 字节，像素区共 24 字节。在本例没有额外颜色信息、像素偏移为 54 的前提下，文件总大小为 <code>54 + 24 = 78</code> 字节。这是按格式计算的示例值。</p>
+<p>对本例的未压缩 RGB，<code>biHeight &gt; 0</code> 表示文件先存最下面一行；<code>biHeight &lt; 0</code> 表示先存最上面一行。每行内部仍从左往右排列。逐行读取时，应同时处理行跨度和高度符号，否则容易出现错行或上下颠倒。相关布局见 <a href="https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-bitmapinfo" rel="noopener" target="_blank">BITMAPINFO 的说明</a>。</p>
+<h2 id="bmp-checks">解析时核对什么</h2>
+<ul><li>确认 BM 标识、信息头大小、位深与压缩类型属于解析器支持的范围。</li><li>确认宽度为正、高度非零，并限制允许的尺寸，检查乘法和偏移计算是否溢出。</li><li>确认像素偏移在头部之后且位于文件范围内，再核对 <code>bfOffBits + pixel_bytes</code> 不超过实际文件长度。</li><li>不要把 24 位 BI_RGB 的 BGR 顺序、大小计算或第 54 字节的例子直接套用到调色板、压缩或其他信息头版本。</li></ul>
