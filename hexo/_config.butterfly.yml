@@ -133,7 +133,9 @@ aside:
       link: https://github.com/Billy775326
   card_announcement:
     enable: true
-    content: 欢迎来到我的博客，记录学习与折腾
+    content: >-
+      这里记录写代码、部署服务和折腾工具时遇到的问题，也分享解决过程。<br>
+      <a href="/archives/">文章归档</a> · <a href="/about/#contact">交流与纠错</a>
   card_recent_post:
     enable: true
     limit: 5
