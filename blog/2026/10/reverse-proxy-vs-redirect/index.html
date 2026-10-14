@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html data-theme="light" lang="zh-CN"><head><meta charset="utf-8"/><meta content="IE=edge" http-equiv="X-UA-Compatible"/><meta content="width=device-width, initial-scale=1.0,viewport-fit=cover" name="viewport"/><title>反向代理和重定向有什么区别？网站迁移时怎样减少排名波动 | Billy 的博客</title><meta content="Billy" name="author"/><meta content="Billy" name="copyright"/><meta content="telephone=no" name="format-detection"/><meta content="#ffffff" name="theme-color"/><meta content="反向代理与重定向都能把访问引向另一台服务器，但浏览器地址、请求过程和搜索引擎收到的信号并不相同。结合 Nginx 配置，说明 301、302、307、308 的区别，以及换域名时如何处理旧链接、规范网址和抓取验证。" name="description"/>
+<meta content="article" property="og:type"/>
+<meta content="反向代理和重定向有什么区别？网站迁移时怎样减少排名波动" property="og:title"/>
+<meta content="https://iowill.com/blog/2026/10/reverse-proxy-vs-redirect/" property="og:url"/>
+<meta content="Billy 的博客" property="og:site_name"/>
+<meta content="反向代理与重定向都能把访问引向另一台服务器，但浏览器地址、请求过程和搜索引擎收到的信号并不相同。结合 Nginx 配置，说明 301、302、307、308 的区别，以及换域名时如何处理旧链接、规范网址和抓取验证。" property="og:description"/>
+<meta content="zh_CN" property="og:locale"/>
+<meta content="https://img.iowill.com/file/%E7%B3%BB%E7%BB%9F%E4%B8%8E%E8%BF%90%E7%BB%B4/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E5%8C%BA%E5%88%AB/cover.png" property="og:image"/>
+<meta content="2026-10-14T09:07:00.000Z" property="article:published_time"/>
+<meta content="2026-10-14T09:07:00.000Z" property="article:modified_time"/>
+<meta content="Billy" property="article:author"/>
+<meta content="Nginx" property="article:tag"/>
+<meta content="SEO" property="article:tag"/>
+<meta content="反向代理" property="article:tag"/>
+<meta content="网站迁移" property="article:tag"/>
+<meta content="重定向" property="article:tag"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://img.iowill.com/file/%E7%B3%BB%E7%BB%9F%E4%B8%8E%E8%BF%90%E7%BB%B4/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E5%8C%BA%E5%88%AB/cover.png" name="twitter:image"/><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "反向代理和重定向有什么区别？网站迁移时怎样减少排名波动", "url": "https://iowill.com/blog/2026/10/reverse-proxy-vs-redirect/", "image": "https://img.iowill.com/file/系统与运维/反向代理和重定向的区别/cover.png", "datePublished": "2026-10-14T09:07:00.000Z", "dateModified": "2026-10-14T09:07:00.000Z", "author": {"@type": "Person", "@id": "https://iowill.com/#author", "name": "Billy", "url": "https://iowill.com/about/", "sameAs": ["https://github.com/Billy775326"]}, "@id": "https://iowill.com/blog/2026/10/reverse-proxy-vs-redirect/#article", "description": "反向代理与重定向都能把访问引向另一台服务器，但浏览器地址、请求过程和搜索引擎收到的信号并不相同。结合 Nginx 配置，说明 301、302、307、308 的区别，以及换域名时如何处理旧链接、规范网址和抓取验证。", "publisher": {"@type": "Person", "@id": "https://iowill.com/#author", "name": "Billy", "url": "https://iowill.com/about/", "sameAs": ["https://github.com/Billy775326"]}, "inLanguage": "zh-CN", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://iowill.com/blog/2026/10/reverse-proxy-vs-redirect/"}, "isPartOf": {"@type": "WebSite", "@id": "https://iowill.com/#website"}, "articleSection": "系统与运维", "keywords": ["Nginx", "SEO", "反向代理", "网站迁移", "重定向"]}</script><link href="/img/favicon.png" rel="shortcut icon"/><link href="https://iowill.com/blog/2026/10/reverse-proxy-vs-redirect/" rel="canonical"/><link href="//cdn.jsdelivr.net" rel="preconnect"/><link href="/css/index.css?v=5.7.0" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css" rel="stylesheet"/><script>
+    (() => {
+
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+
+
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+
+
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+
+
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+
+    })()
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '反向代理和重定向有什么区别？网站迁移时怎样减少排名波动',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link href="/css/site-preserved.css" rel="stylesheet"/><link href="/css/cards.css" rel="stylesheet"/><meta content="Hexo 8.1.2" name="generator"/><meta content="反向代理与重定向都能把访问引向另一台服务器，但浏览器地址、请求过程和搜索引擎收到的信号并不相同。结合 Nginx 配置，说明 301、302、307、308 的区别，以及换域名时如何处理旧链接、规范网址和抓取验证。" name="twitter:description"/><meta content="Nginx,SEO,反向代理,网站迁移,重定向" name="keywords"/></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img alt="avatar" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='/img/friend_404.gif'" src="/img/avatar.jpg"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">96</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://img.iowill.com/file/系统与运维/反向代理和重定向的区别/cover.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Billy 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">反向代理和重定向有什么区别？网站迁移时怎样减少排名波动</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">反向代理和重定向有什么区别？网站迁移时怎样减少排名波动</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-14T09:07:00.000Z" title="2026-10-14 17:07:00">2026-10-14 17:07:00</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-14T09:07:00.000Z" title="2026-10-14 17:07:00">2026-10-14 17:07:00</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/systems-operations/">系统与运维</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" data-flag-title="" id=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>给网站换服务器或者换域名时，经常会遇到两个选择：反向代理和重定向。两种方式都可能让访客看到另一台服务器上的内容，但对浏览器和搜索引擎来说，它们做的事情不同。</p>
+<p><strong>反向代理负责在服务器之间转发请求；重定向告诉访问者，应该去另一个网址重新请求。</strong> 只换服务器、保留原网址，可以使用反向代理。如果文章正式搬到新网址，需要旧链接把访客和搜索引擎带过去，通常应设置永久重定向。</p>
+<p>它们都不是提升排名的捷径。迁移是否顺利，更取决于旧文章能否找到对应的新文章，以及新页面能否被正常抓取。</p>
+<h2 id="同样能打开页面，请求过程有什么不同"><a class="headerlink" href="#同样能打开页面，请求过程有什么不同" title="同样能打开页面，请求过程有什么不同"></a>同样能打开页面，请求过程有什么不同</h2><p>假设对外提供访问的是 <code>www.example.com</code>，真正运行应用的是服务器上的 <code>127.0.0.1:8080</code>。</p>
+<p>使用反向代理时，请求大致这样走：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/></pre></td><td class="code"><pre><span class="line">浏览器请求 www.example.com/article/</span><br/><span class="line">    → Nginx 请求本机应用 127.0.0.1:8080</span><br/><span class="line">    → 应用返回文章</span><br/><span class="line">    → Nginx 将文章返回给浏览器</span><br/></pre></td></tr></table></figure>
+<p>浏览器访问的仍然是 <code>www.example.com/article/</code>。它不需要知道应用运行在哪个端口，也不会因为 Nginx 取了一次上游内容，就自动把地址栏改成上游地址。<a href="https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/">NGINX 的反向代理说明</a></p>
+<p>重定向则多了一次由客户端发起的请求：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/></pre></td><td class="code"><pre><span class="line">浏览器请求 old.example.com/article/</span><br/><span class="line">    ← 301，Location: https://new.example.com/article/</span><br/><span class="line">浏览器请求 new.example.com/article/</span><br/><span class="line">    ← 200，文章内容</span><br/></pre></td></tr></table></figure>
+<p>第一次响应告诉浏览器新地址，第二次请求才取得文章。对正常的网页导航，地址栏也会跟着改变。</p>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>反向代理</th>
+<th>HTTP 重定向</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>谁请求另一个服务</td>
+<td>代理服务器</td>
+<td>浏览器或爬虫</td>
+</tr>
+<tr>
+<td>关键行为</td>
+<td>转发请求和响应</td>
+<td>返回跳转状态码与目标地址</td>
+</tr>
+<tr>
+<td>地址栏</td>
+<td>通常保留原访问地址</td>
+<td>跳转后显示目标地址</td>
+</tr>
+<tr>
+<td>常见用途</td>
+<td>应用入口、负载分配、隐藏内部服务地址</td>
+<td>换域名、改路径、统一网址</td>
+</tr>
+<tr>
+<td>是否声明页面搬家</td>
+<td>本身不声明</td>
+<td>永久重定向可以表达迁移意图</td>
+</tr>
+</tbody></table>
+<p>这里的“通常”不能省掉：反向代理后面的应用也可能返回 301 或 302。代理转发这个响应后，浏览器照样可能跳转。不能仅凭地址栏有没有变化，就断言网站是否使用了反向代理。</p>
+<p><img alt="反向代理由服务器转发请求，重定向由浏览器接收 Location 后发起新请求" decoding="async" height="941" loading="eager" src="https://img.iowill.com/file/%E7%B3%BB%E7%BB%9F%E4%B8%8E%E8%BF%90%E7%BB%B4/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E5%8C%BA%E5%88%AB/body1.png" width="1672"/></p>
+<p><em>图中演示上游正常返回内容的情况：代理转发响应；重定向则让浏览器重新请求目标网址。</em></p>
+<h2 id="301、302、307、308，迁移时选哪个"><a class="headerlink" href="#301、302、307、308，迁移时选哪个" title="301、302、307、308，迁移时选哪个"></a>301、302、307、308，迁移时选哪个</h2><table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>含义</th>
+<th>请求方法的处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>301</td>
+<td>永久移动</td>
+<td>客户端可能把 POST 改为 GET</td>
+</tr>
+<tr>
+<td>302</td>
+<td>临时移动</td>
+<td>客户端可能把 POST 改为 GET</td>
+</tr>
+<tr>
+<td>307</td>
+<td>临时重定向</td>
+<td>自动跟随时不得改变请求方法</td>
+</tr>
+<tr>
+<td>308</td>
+<td>永久重定向</td>
+<td>自动跟随时不得改变请求方法</td>
+</tr>
+</tbody></table>
+<p>307 和 308 对方法的约束，主要在表单提交、API 等场景里更重要。博客文章通常通过 GET 访问，永久迁移使用 301 是常见做法。<a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-redirection-3xx">HTTP 状态码定义，RFC 9110</a></p>
+<p>从 Google 的处理方式看，301 和 308 会提供“目标网址应成为规范网址”的信号；302 和 307 表达临时跳转，本身不提供同样的目标规范化信号。但这不等于“302 的目标永远不会被收录”，搜索引擎还会参考其他信号。<a href="https://developers.google.com/search/docs/crawling-indexing/301-redirects">Google：重定向与搜索</a></p>
+<p>如果要使用百度搜索资源平台的网站改版工具，需要注意它的规则明确要求设置 <strong>301</strong>。不能仅凭 308 在 HTTP 中也属于永久重定向，就假定所有搜索平台的迁移工具都按相同方式处理。<a href="https://ziyuan.baidu.com/rewrite">百度：网站改版工具</a></p>
+<h2 id="反向代理会影响网站排名吗"><a class="headerlink" href="#反向代理会影响网站排名吗" title="反向代理会影响网站排名吗"></a>反向代理会影响网站排名吗</h2><p>先分清楚是在换服务器，还是在换网址。</p>
+<p>如果文章一直使用 <code>https://www.example.com/article/</code>，只是后端从一台机器迁到另一台机器，那么页面地址没有迁移。Nginx、CDN 或负载均衡承担转发，都不需要因此给每篇文章设置 301。Google 也把这类基础设施调整与 URL 迁移分开说明。<a href="https://developers.google.com/search/docs/crawling-indexing/site-move-no-url-changes">Google：不更改网址的网站迁移</a></p>
+<p>代理配置仍然可能间接影响搜索表现，例如：</p>
+<ul>
+<li>后端不可用，访客和爬虫经常遇到 502、504。</li>
+<li>应用不知道外部使用 HTTPS，生成了 HTTP 链接或错误的跳转。</li>
+<li>页面里的 canonical 指向了内部域名、旧域名。</li>
+<li>CDN 或防护规则把正常爬虫挡在验证页面外。</li>
+</ul>
+<p>这些是可用性和页面信号的问题，并不是“使用反向代理就会降权”。上线后应检查实际响应，而不只是确认首页看起来能打开。</p>
+<p>另一种容易混淆的情况是：旧域名反向代理新域名，两边都返回同一篇文章的 200 页面。访客确实看到了新内容，但搜索引擎仍然面对两个可访问的网址。<strong>这不等于已经完成域名迁移。</strong></p>
+<p>重复内容也不意味着一定会受到处罚；问题在于搜索引擎可能选择一个与你预期不同的规范网址。canonical 可以表达首选地址，却不会让浏览器跳转，也不是搜索引擎必须执行的命令。<a href="https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls">Google：合并重复网址</a></p>
+<h2 id="换域名时，最容易出错的是旧路径"><a class="headerlink" href="#换域名时，最容易出错的是旧路径" title="换域名时，最容易出错的是旧路径"></a>换域名时，最容易出错的是旧路径</h2><p>假设旧文章在：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">https://old.example.com/archives/p42</span><br/></pre></td></tr></table></figure>
+<p>新站重新整理过路径，对应文章变成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">https://new.example.com/blog/reverse-proxy-vs-redirect/</span><br/></pre></td></tr></table></figure>
+<p>如果只把域名替换掉，访客会被送到：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">https://new.example.com/archives/p42</span><br/></pre></td></tr></table></figure>
+<p>这个地址可能根本不存在。重定向返回了 301，不代表迁移就正确了；还要看它最终落在哪里。</p>
+<p>也不要图省事，把所有旧文章都重定向到新首页。用户想看具体文章，却落到一个不相关的页面，这类跳转可能被 Google 当作 soft 404。应优先建立文章之间的对应关系；确实删除且没有合适替代内容的页面，可以返回 404 或 410。如果几篇文章合并成一篇，跳转到相关的合并页面则更合理。<a href="https://developers.google.com/search/docs/crawling-indexing/site-move-with-url-changes">Google：更改网址的网站迁移</a></p>
+<p><img alt="路径改变时，旧文章应重定向到对应的新文章，单纯替换域名可能落到 404" decoding="async" height="941" loading="lazy" src="https://img.iowill.com/file/%E7%B3%BB%E7%BB%9F%E4%B8%8E%E8%BF%90%E7%BB%B4/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E5%8C%BA%E5%88%AB/body2.png" width="1672"/></p>
+<p><em>图中将新文章路径简写为 <code>/blog/article/</code>。只有新站已经改变路径、原路径不存在时，下面的跳转才会落到 404。</em></p>
+<h2 id="Nginx-配置分别怎么写"><a class="headerlink" href="#Nginx-配置分别怎么写" title="Nginx 配置分别怎么写"></a>Nginx 配置分别怎么写</h2><p>下面使用示例域名，配置片段应放进已有的、匹配对应域名的 <code>server</code> 块中，不是一份完整的 HTTPS 配置。</p>
+<h3 id="保留网址，转发给本机应用"><a class="headerlink" href="#保留网址，转发给本机应用" title="保留网址，转发给本机应用"></a>保留网址，转发给本机应用</h3><p>假设 Nginx 直接接收访客的 HTTPS 请求，应用运行在同一台机器的 8080 端口：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/></pre></td><td class="code"><pre><span class="line"><span class="section">location</span> / {</span><br/><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:8080;</span><br/><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br/><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
+<p>这里的 <code>proxy_pass</code> 没有附加 URI，在这个简单配置中会把请求路径传给上游。<code>Host</code> 和 <code>X-Forwarded-Proto</code> 用于告诉应用外部访问的主机名与协议；应用自身也要正确配置公开访问地址，并按其框架要求信任代理头。<a href="https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass">NGINX：proxy_pass</a></p>
+<p>如果 Nginx 前面还有一层 CDN，并且 CDN 到 Nginx 使用 HTTP，<code>$scheme</code> 反映的就不是浏览器到 CDN 的协议。此时需要按实际代理链配置可信的转发信息，不能原样套用后就认为 HTTPS 信息一定正确。</p>
+<h3 id="只换域名，文章路径保持不变"><a class="headerlink" href="#只换域名，文章路径保持不变" title="只换域名，文章路径保持不变"></a>只换域名，文章路径保持不变</h3><p>在旧域名对应的配置中：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/></pre></td><td class="code"><pre><span class="line"><span class="section">location</span> / {</span><br/><span class="line">    <span class="attribute">return</span> <span class="number">301</span> https://new.example.com<span class="variable">$request_uri</span>;</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
+<p><code>$request_uri</code> 包含原始路径和查询参数。这种写法适合新旧站路径一致的情况；若新站改了目录结构，就需要单独建立映射。<a href="https://nginx.org/en/docs/http/ngx_http_rewrite_module.html#return">NGINX：return 指令</a></p>
+<h3 id="域名和文章路径一起变了"><a class="headerlink" href="#域名和文章路径一起变了" title="域名和文章路径一起变了"></a>域名和文章路径一起变了</h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/></pre></td><td class="code"><pre><span class="line"><span class="section">location</span> = /archives/p42 {</span><br/><span class="line">    <span class="attribute">return</span> <span class="number">301</span> https://new.example.com/blog/reverse-proxy-vs-redirect/;</span><br/><span class="line">}</span><br/></pre></td></tr></table></figure>
+<p>这是一个明确的旧文章到新文章的映射。这个固定目标不会自动保留查询参数；如果旧站通过参数区分文章或内容，需要把参数规则一起纳入迁移设计。</p>
+<p>旧站的 HTTP、HTTPS 入口都应考虑到。尤其是 HTTPS：浏览器必须先完成 TLS 连接，才能读到 301，所以旧域名的证书不能因为“只做跳转”就放任过期。</p>
+<p>反向代理和重定向也可以配合使用：旧域名先 301 到新域名，新域名再由 Nginx 转发到应用。它们解决的是不同环节的问题。</p>
+<h2 id="301-配好了，排名就能保持吗"><a class="headerlink" href="#301-配好了，排名就能保持吗" title="301 配好了，排名就能保持吗"></a>301 配好了，排名就能保持吗</h2><p>不能这样保证。</p>
+<p>Google 说明永久重定向不会因为跳转本身造成 PageRank 损失，但 PageRank 只是排名系统中的一部分。迁移还涉及重新抓取、索引更新、内容变化和页面可访问性，期间可能出现排名波动。不存在适用于所有网站的“几天恢复”或“保留百分之多少权重”。<a href="https://developers.google.com/search/docs/crawling-indexing/site-move-with-url-changes">Google：网站迁移常见问题</a></p>
+<p>比较稳妥的做法，是让几个信号指向同一个地址：</p>
+<ul>
+<li>旧文章直接跳到最终的新文章，减少不必要的连续跳转。</li>
+<li>新页面使用指向自身正式网址的 canonical。</li>
+<li>站内链接和 Sitemap 使用新网址。</li>
+<li>不用 robots.txt 阻止爬虫读取需要处理的旧页面重定向。</li>
+</ul>
+<p>canonical、跳转目标和 Sitemap 如果各指一个地址，会让迁移意图变得含糊。搜索引擎会综合这些信号，而不是只看有没有一个 301。<a href="https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls">Google：规范网址的选择</a></p>
+<p>旧域名也不要迁完马上关闭。Google 建议一般至少保留重定向一年；百度改版工具则要求持续保留到新站流量稳定。旧链接仍有人使用时，继续保留跳转也能避免访客走进死路。<a href="https://developers.google.com/search/docs/crawling-indexing/site-move-with-url-changes">Google 的重定向保留建议</a>、<a href="https://ziyuan.baidu.com/rewrite">百度改版要求</a></p>
+<h2 id="用-curl-检查，别只看地址栏"><a class="headerlink" href="#用-curl-检查，别只看地址栏" title="用 curl 检查，别只看地址栏"></a>用 curl 检查，别只看地址栏</h2><p>先查看旧文章的第一次响应：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">curl -sS -D - -o response.html <span class="string">"https://old.example.com/archives/p42"</span></span><br/></pre></td></tr></table></figure>
+<p>把示例域名换成实际域名。检查状态码和 <code>Location</code>，确认目标是对应的新文章。这里使用 GET 并将响应体保存到文件，避免只检查 HEAD 时遗漏不同的服务器处理逻辑。</p>
+<p>再跟随跳转，查看最终结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">curl -sS -L --max-redirs 5 -D chain.headers -o final.html -w <span class="string">"%{http_code} %{url_effective}\n"</span> <span class="string">"https://old.example.com/archives/p42"</span></span><br/></pre></td></tr></table></figure>
+<p>Windows PowerShell 中可把 <code>curl</code> 写成 <code>curl.exe</code>，避免旧版本中的命令别名干扰。</p>
+<p><code>chain.headers</code> 保存各次响应头，<code>final.html</code> 保存最终内容。检查最终 URL、状态码，以及内容是否真的是对应文章。有些站点的错误页也返回 200，所以不能只看到数字就结束检查。</p>
+<p>这些检查能验证跳转和响应，却不能证明搜索引擎已经收录或完成迁移。上线后还需要结合搜索平台的索引报告、服务器抓取日志和旧链接访问情况，观察迁移结果。</p>
+<p>对博客搬家来说，关键不是在反向代理和重定向之间选一个“更利于 SEO”的技术名词，而是先确定：<strong>文章的网址是否要变？旧网址最终应该把人带到哪里？</strong> 这两件事明确了，配置才有依据。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://iowill.com/about/">Billy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://iowill.com/blog/2026/10/reverse-proxy-vs-redirect/">https://iowill.com/blog/2026/10/reverse-proxy-vs-redirect/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://iowill.com" target="_blank">Billy 的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Nginx/">Nginx</a><a class="post-meta__tags" href="/tags/SEO/">SEO</a><a class="post-meta__tags" href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/">反向代理</a><a class="post-meta__tags" href="/tags/%E7%BD%91%E7%AB%99%E8%BF%81%E7%A7%BB/">网站迁移</a><a class="post-meta__tags" href="/tags/%E9%87%8D%E5%AE%9A%E5%90%91/">重定向</a></div></div><nav aria-label="文章导航" class="pagination-post" id="pagination"><a aria-label="上一篇：用了代理，为什么还会暴露真实 IP？WebRTC 泄漏排查与防护" class="pagination-related" href="/blog/2026/10/webrtc-ip-leak/" rel="prev" title="用了代理，为什么还会暴露真实 IP？WebRTC 泄漏排查与防护"><img alt="用了代理，为什么还会暴露真实 IP？WebRTC 泄漏排查与防护" class="cover" decoding="async" loading="lazy" src="https://img.iowill.com/file/系统与运维/用了代理为什么还会暴露真实IP-WebRTC泄漏排查与防护/thumbs/cover.jpg"/><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">用了代理，为什么还会暴露真实 IP？WebRTC 泄漏排查与防护</div></div><div class="info-2">阅读全文：用了代理，为什么还会暴露真实 IP？WebRTC 泄漏排查与防护</div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img alt="avatar" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='/img/friend_404.gif'" src="/img/avatar.jpg"/></div><div class="author-info-name">Billy</div><div class="author-info-description">记录学习与折腾</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">96</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a href="https://github.com/Billy775326" id="card-info-btn"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客，记录学习与折腾</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8C%E6%A0%B7%E8%83%BD%E6%89%93%E5%BC%80%E9%A1%B5%E9%9D%A2%EF%BC%8C%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C"><span class="toc-text">同样能打开页面，请求过程有什么不同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#301%E3%80%81302%E3%80%81307%E3%80%81308%EF%BC%8C%E8%BF%81%E7%A7%BB%E6%97%B6%E9%80%89%E5%93%AA%E4%B8%AA"><span class="toc-text">301、302、307、308，迁移时选哪个</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E4%BC%9A%E5%BD%B1%E5%93%8D%E7%BD%91%E7%AB%99%E6%8E%92%E5%90%8D%E5%90%97"><span class="toc-text">反向代理会影响网站排名吗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8D%A2%E5%9F%9F%E5%90%8D%E6%97%B6%EF%BC%8C%E6%9C%80%E5%AE%B9%E6%98%93%E5%87%BA%E9%94%99%E7%9A%84%E6%98%AF%E6%97%A7%E8%B7%AF%E5%BE%84"><span class="toc-text">换域名时，最容易出错的是旧路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nginx-%E9%85%8D%E7%BD%AE%E5%88%86%E5%88%AB%E6%80%8E%E4%B9%88%E5%86%99"><span class="toc-text">Nginx 配置分别怎么写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E7%95%99%E7%BD%91%E5%9D%80%EF%BC%8C%E8%BD%AC%E5%8F%91%E7%BB%99%E6%9C%AC%E6%9C%BA%E5%BA%94%E7%94%A8"><span class="toc-text">保留网址，转发给本机应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AA%E6%8D%A2%E5%9F%9F%E5%90%8D%EF%BC%8C%E6%96%87%E7%AB%A0%E8%B7%AF%E5%BE%84%E4%BF%9D%E6%8C%81%E4%B8%8D%E5%8F%98"><span class="toc-text">只换域名，文章路径保持不变</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D%E5%92%8C%E6%96%87%E7%AB%A0%E8%B7%AF%E5%BE%84%E4%B8%80%E8%B5%B7%E5%8F%98%E4%BA%86"><span class="toc-text">域名和文章路径一起变了</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#301-%E9%85%8D%E5%A5%BD%E4%BA%86%EF%BC%8C%E6%8E%92%E5%90%8D%E5%B0%B1%E8%83%BD%E4%BF%9D%E6%8C%81%E5%90%97"><span class="toc-text">301 配好了，排名就能保持吗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8-curl-%E6%A3%80%E6%9F%A5%EF%BC%8C%E5%88%AB%E5%8F%AA%E7%9C%8B%E5%9C%B0%E5%9D%80%E6%A0%8F"><span class="toc-text">用 curl 检查，别只看地址栏</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/reverse-proxy-vs-redirect/" title="反向代理和重定向有什么区别？网站迁移时怎样减少排名波动"><img alt="反向代理和重定向有什么区别？网站迁移时怎样减少排名波动" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/系统与运维/反向代理和重定向的区别/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/10/reverse-proxy-vs-redirect/" title="反向代理和重定向有什么区别？网站迁移时怎样减少排名波动">反向代理和重定向有什么区别？网站迁移时怎样减少排名波动</a><time datetime="2026-10-14T09:07:00.000Z" title="2026/10/14 17:07:00">2026/10/14 17:07:00</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/webrtc-ip-leak/" title="用了代理，为什么还会暴露真实 IP？WebRTC 泄漏排查与防护"><img alt="用了代理，为什么还会暴露真实 IP？WebRTC 泄漏排查与防护" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/系统与运维/用了代理为什么还会暴露真实IP-WebRTC泄漏排查与防护/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/10/webrtc-ip-leak/" title="用了代理，为什么还会暴露真实 IP？WebRTC 泄漏排查与防护">用了代理，为什么还会暴露真实 IP？WebRTC 泄漏排查与防护</a><time datetime="2026-10-12T03:23:47.000Z" title="2026/10/12 11:23:47">2026/10/12 11:23:47</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/dynamic-class-locators/" title="网页 class 变了，自动化脚本怎么定位元素？"><img alt="网页 class 变了，自动化脚本怎么定位元素？" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/编程开发/网页class变了-自动化脚本怎么定位元素/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/10/dynamic-class-locators/" title="网页 class 变了，自动化脚本怎么定位元素？">网页 class 变了，自动化脚本怎么定位元素？</a><time datetime="2026-10-10T07:25:55.000Z" title="2026/10/10 15:25:55">2026/10/10 15:25:55</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/semantic-versioning/" title="版本号怎么定？从 1.0.0 理解语义化版本"><img alt="版本号怎么定？从 1.0.0 理解语义化版本" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/编程开发/版本号怎么定-从1.0.0理解语义化版本/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/10/semantic-versioning/" title="版本号怎么定？从 1.0.0 理解语义化版本">版本号怎么定？从 1.0.0 理解语义化版本</a><time datetime="2026-10-09T09:16:32.000Z" title="2026/10/09 17:16:32">2026/10/09 17:16:32</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/generated-class-names/" title="网页里的 class 为什么像乱码？用一个榜单理解生成类名"><img alt="网页里的 class 为什么像乱码？用一个榜单理解生成类名" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/编程开发/网页里的class为什么像乱码-用一个榜单理解生成类名/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/10/generated-class-names/" title="网页里的 class 为什么像乱码？用一个榜单理解生成类名">网页里的 class 为什么像乱码？用一个榜单理解生成类名</a><time datetime="2026-10-08T08:24:59.000Z" title="2026/10/08 16:24:59">2026/10/08 16:24:59</time></div></div></div></div></div></div></main><footer aria-label="网站页脚" id="footer"><div class="footer-other"><div class="footer-credits"><span class="copyright">© 2023–2026 By <a href="/">Billy</a></span><span class="framework-info">由 <a href="https://hexo.io" rel="noopener" target="_blank">Hexo</a> 驱动<span aria-hidden="true" class="footer-separator">·</span><a href="https://github.com/jerryc127/hexo-theme-butterfly" rel="noopener" target="_blank">Butterfly</a> 主题</span></div><div class="footer_custom_text"><nav aria-label="页脚导航"><a href="/about/"><i aria-hidden="true" class="fas fa-user"></i>关于</a><a href="/archives/"><i aria-hidden="true" class="fas fa-archive"></i>归档</a><a href="/categories/"><i aria-hidden="true" class="fas fa-folder-open"></i>分类</a><a href="/tags/"><i aria-hidden="true" class="fas fa-tags"></i>标签</a><a href="/sitemap.xml"><i aria-hidden="true" class="fas fa-sitemap"></i>站点地图</a><a href="https://github.com/Billy775326" rel="me noopener" target="_blank"><i aria-hidden="true" class="fab fa-github"></i>GitHub</a></nav></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" title="阅读模式" type="button"><i class="fas fa-book-open"></i></button><button id="darkmode" title="日间和夜间模式切换" type="button"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" title="单栏和双栏切换" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" title="设置" type="button"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" title="目录" type="button"><i class="fas fa-list-ul"></i></button><button id="go-up" title="回到顶部" type="button"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async="" data-pjax="" src="/js/visit-counter.js?v=20261005"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" hidden="hidden" id="loading-status"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=20261005-domready"></script></div></div></body></html>

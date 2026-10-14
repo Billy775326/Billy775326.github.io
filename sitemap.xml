@@ -1,6 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://iowill.com/blog/2026/10/reverse-proxy-vs-redirect/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-10-14T09:07:00.000Z</lastmod>
+  </url>
+  <url>
     <loc>https://iowill.com/blog/2024/09/1panel-container-localhost-connection-fix/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -384,6 +390,11 @@
     <priority>0.2</priority>
   </url>
   <url>
+    <loc>https://iowill.com/tags/Nginx/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
     <loc>https://iowill.com/tags/Playwright/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -519,6 +530,11 @@
     <priority>0.2</priority>
   </url>
   <url>
+    <loc>https://iowill.com/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
     <loc>https://iowill.com/tags/%E5%8F%98%E9%87%8F%E4%B8%8E%E5%8F%AF%E5%8F%98%E6%80%A7/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -649,6 +665,11 @@
     <priority>0.2</priority>
   </url>
   <url>
+    <loc>https://iowill.com/tags/%E7%BD%91%E7%AB%99%E8%BF%81%E7%A7%BB/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
     <loc>https://iowill.com/tags/%E7%BD%91%E7%BB%9C%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -695,6 +716,11 @@
   </url>
   <url>
     <loc>https://iowill.com/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://iowill.com/tags/%E9%87%8D%E5%AE%9A%E5%90%91/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
