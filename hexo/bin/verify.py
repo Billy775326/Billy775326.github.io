@@ -25,7 +25,7 @@ for old in baseline:
     assert old['slug'] in lookup, ('Lost article', old['slug'])
     current = lookup[old['slug']]
     assert '/' + current['path'].removesuffix('index.html') == old['url']
-    assert datetime.fromisoformat(current['date'].replace('Z', '+00:00')) == datetime.fromisoformat(old['date'].replace('Z', '+00:00'))
+    assert datetime.fromisoformat(current['date'].replace('Z', '+00:00')) == datetime.fromisoformat(old['date'].replace('Z', '+00:00')), ('Published date changed', old['slug'], current['date'], old['date'])
     # Imported HTML is kept structurally identical; future edits may remove legacy_html.
     if current['legacy_html']:
         s = B((PUBLIC / current['path']).read_text(encoding='utf8'), 'html.parser')

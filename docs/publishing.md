@@ -107,6 +107,7 @@ release 会先校验并在仓库外 `../backups/hexo-release-时间/` 备份待�
 - finalizer 只补充正文图片的尺寸和加载提示；历史保真校验只忽略这些呈现属性，仍核对文本、图片地址、alt 和链接。
 - 首页前三张卡片封面正常加载，其余原生懒加载；JSON-LD 不允许空块，作者链接使用 /about/。
 - 修改这类模板后执行 `python hexo/bin/test_publish_tree.py`、`npm --prefix hexo run build`，涉及发布流程时再运行 `python hexo/bin/test_new_post.py` 检查临时新文与重复构建一致性。
+- `scripts/site-data.js` 在处理文章前将 Node 进程时区统一为站点配置时区，避免 Hexo 8 对已有时区的 ISO 时间二次偏移。回归检查分别以 UTC、Asia/Shanghai 启动构建，输出必须一致；不得靠改写原文章 date 来绕过检查。
 
 ## 校验与回滚
 

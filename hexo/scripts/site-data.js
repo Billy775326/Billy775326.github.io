@@ -2,6 +2,12 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
+// Hexo 8's post processor adjusts dates using the process-local UTC offset,
+// even when front matter already supplies an explicit ISO timezone. Match the
+// process timezone to the configured display timezone before posts are read so
+// Windows, local previews and UTC Linux runners preserve the same instants.
+process.env.TZ = hexo.config.timezone || 'Asia/Shanghai';
+
 // Existing tag URLs include spaces (e.g. Docker Compose). Hexo's default slugize
 // would silently change those URLs. Preserve names and explicitly mapped slugs.
 hexo.model('Tag').schema.virtual('slug').get(function () {

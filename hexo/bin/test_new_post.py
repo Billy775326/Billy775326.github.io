@@ -1,6 +1,6 @@
 """Exercise publication in an isolated source copy; never touches live source/output."""
 from pathlib import Path
-import json, shutil, subprocess, tempfile, sys, hashlib
+import json, shutil, subprocess, tempfile, sys, hashlib, os
 from datetime import datetime, timezone
 from bs4 import BeautifulSoup as B
 
@@ -33,12 +33,13 @@ echo hello
 ```
 ''', encoding='utf8')
     hexo = test / 'node_modules/hexo/bin/hexo'
-    def build():
-        subprocess.run(['node', str(hexo), 'clean'], cwd=test, check=True, stdout=subprocess.PIPE)
-        subprocess.run(['node', str(hexo), 'generate'], cwd=test, check=True, stdout=subprocess.PIPE)
+    def build(zone):
+        env = dict(os.environ, TZ=zone)
+        subprocess.run(['node', str(hexo), 'clean'], cwd=test, check=True, stdout=subprocess.PIPE, env=env)
+        subprocess.run(['node', str(hexo), 'generate'], cwd=test, check=True, stdout=subprocess.PIPE, env=env)
         for name in ['finalize.py', 'verify.py']:
             subprocess.run([sys.executable, str(test / 'bin' / name)], cwd=test, check=True, stdout=subprocess.PIPE)
-    build()
+    build('UTC')
     pages = ['index.html', 'page/2/index.html', 'page/3/index.html']
     counts = [len(B((test/'public'/p).read_text(encoding='utf8'),'html.parser').select('.recent-post-item')) for p in pages]
     assert counts == [18, 18, 3], counts
@@ -46,6 +47,6 @@ echo hello
     assert page.select_one('#article-container strong').text == 'test'
     assert page.select_one('figure.highlight') is not None
     def hashes(): return {p.relative_to(test/'public').as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in (test/'public').rglob('*') if p.is_file()}
-    before=hashes();build();after=hashes()
+    before=hashes();build('Asia/Shanghai');after=hashes()
     assert before == after, [p for p in before if before[p] != after.get(p)]
-print('PASS: new Markdown post, 39 posts, 18/18/3, automatic search/taxonomy/statistics, reproducible builds')
+print('PASS: new Markdown post, 39 posts, 18/18/3, automatic search/taxonomy/statistics, reproducible UTC/Asia-Shanghai builds')
