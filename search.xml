@@ -3,149 +3,132 @@
   <entry>
     <title>反向代理和重定向有什么区别？网站迁移时怎样减少排名波动</title>
     <url>/blog/2026/10/reverse-proxy-vs-redirect/</url>
-    <content><![CDATA[<p>给网站换服务器或者换域名时，经常会遇到两个选择：反向代理和重定向。两种方式都可能让访客看到另一台服务器上的内容，但对浏览器和搜索引擎来说，它们做的事情不同。</p>
-<p><strong>反向代理负责在服务器之间转发请求；重定向告诉访问者，应该去另一个网址重新请求。</strong> 只换服务器、保留原网址，可以使用反向代理。如果文章正式搬到新网址，需要旧链接把访客和搜索引擎带过去，通常应设置永久重定向。</p>
-<p>它们都不是提升排名的捷径。迁移是否顺利，更取决于旧文章能否找到对应的新文章，以及新页面能否被正常抓取。</p>
-<h2 id="同样能打开页面，请求过程有什么不同"><a href="#同样能打开页面，请求过程有什么不同" class="headerlink" title="同样能打开页面，请求过程有什么不同"></a>同样能打开页面，请求过程有什么不同</h2><p>假设对外提供访问的是 <code>www.example.com</code>，真正运行应用的是服务器上的 <code>127.0.0.1:8080</code>。</p>
-<p>使用反向代理时，请求大致这样走：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">浏览器请求 www.example.com/article/</span><br><span class="line">    → Nginx 请求本机应用 127.0.0.1:8080</span><br><span class="line">    → 应用返回文章</span><br><span class="line">    → Nginx 将文章返回给浏览器</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<p>博客换了域名，旧站怎么处理？一种做法是让旧域名反向代理新站，另一种是直接跳转过去。看起来都能打开文章，搜索引擎收到的信息却不一样。</p>
+<p>用反向代理，旧网址仍在提供内容；用永久重定向，旧网址会告诉浏览器和爬虫：“这篇文章搬到这里了。”所以，换服务器但不换网址，与正式更换文章地址，需要分开处理。</p>
+<h2 id="内容是服务器取回来，还是浏览器重新去取"><a href="#内容是服务器取回来，还是浏览器重新去取" class="headerlink" title="内容是服务器取回来，还是浏览器重新去取"></a>内容是服务器取回来，还是浏览器重新去取</h2><p>先看反向代理。对外地址是 <code>www.example.com</code>，应用运行在同一台机器的 <code>127.0.0.1:8080</code>：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">浏览器 → www.example.com 上的 Nginx → 本机应用</span><br><span class="line">浏览器 ← Nginx 返回内容             ← 应用响应</span><br></pre></td></tr></table></figure>
 
-<p>浏览器访问的仍然是 <code>www.example.com/article/</code>。它不需要知道应用运行在哪个端口，也不会因为 Nginx 取了一次上游内容，就自动把地址栏改成上游地址。<a href="https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/">NGINX 的反向代理说明</a></p>
-<p>重定向则多了一次由客户端发起的请求：</p>
+<p>浏览器只访问了公开域名，取上游内容的工作由 Nginx 完成。用户不需要知道应用端口，地址栏也通常保持原样。<a href="https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/">NGINX 反向代理说明</a></p>
+<p>换成重定向，过程就变了：</p>
 <figure class="highlight text"><table><tr><td class="code"><pre><span class="line">浏览器请求 old.example.com/article/</span><br><span class="line">    ← 301，Location: https://new.example.com/article/</span><br><span class="line">浏览器请求 new.example.com/article/</span><br><span class="line">    ← 200，文章内容</span><br></pre></td></tr></table></figure>
 
-<p>第一次响应告诉浏览器新地址，第二次请求才取得文章。对正常的网页导航，地址栏也会跟着改变。</p>
+<p>旧站返回新地址，浏览器再发起一次请求，文章是从新地址拿到的。爬虫跟随 HTTP 重定向时也要请求目标网址。</p>
 <table>
 <thead>
 <tr>
-<th>对比项</th>
+<th></th>
 <th>反向代理</th>
-<th>HTTP 重定向</th>
+<th>重定向</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>谁请求另一个服务</td>
+<td>谁去请求另一端</td>
 <td>代理服务器</td>
 <td>浏览器或爬虫</td>
 </tr>
 <tr>
-<td>关键行为</td>
-<td>转发请求和响应</td>
-<td>返回跳转状态码与目标地址</td>
-</tr>
-<tr>
 <td>地址栏</td>
-<td>通常保留原访问地址</td>
-<td>跳转后显示目标地址</td>
+<td>通常保留原地址</td>
+<td>导航到目标地址</td>
 </tr>
 <tr>
 <td>常见用途</td>
-<td>应用入口、负载分配、隐藏内部服务地址</td>
-<td>换域名、改路径、统一网址</td>
+<td>把内部应用接到公开入口</td>
+<td>换域名、改文章路径、统一网址</td>
 </tr>
 <tr>
-<td>是否声明页面搬家</td>
-<td>本身不声明</td>
+<td>是否表示文章搬家</td>
+<td>不表示</td>
 <td>永久重定向可以表达迁移意图</td>
 </tr>
 </tbody></table>
-<p>这里的“通常”不能省掉：反向代理后面的应用也可能返回 301 或 302。代理转发这个响应后，浏览器照样可能跳转。不能仅凭地址栏有没有变化，就断言网站是否使用了反向代理。</p>
+<p>代理后面的应用也可能返回 301 或 302，浏览器收到后仍会跳转。因此，“用了反向代理”不等于“绝对不会跳转”，两者可以出现在同一次访问中。</p>
 <p><img src="https://img.iowill.com/file/%E7%B3%BB%E7%BB%9F%E4%B8%8E%E8%BF%90%E7%BB%B4/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E5%8C%BA%E5%88%AB/body1.png" alt="反向代理由服务器转发请求，重定向由浏览器接收 Location 后发起新请求"></p>
-<p><em>图中演示上游正常返回内容的情况：代理转发响应；重定向则让浏览器重新请求目标网址。</em></p>
-<h2 id="301、302、307、308，迁移时选哪个"><a href="#301、302、307、308，迁移时选哪个" class="headerlink" title="301、302、307、308，迁移时选哪个"></a>301、302、307、308，迁移时选哪个</h2><table>
+<p><em>上半部分是代理转发内容，下半部分是浏览器收到新地址后重新请求。</em></p>
+<h2 id="换域名，不能只替换域名"><a href="#换域名，不能只替换域名" class="headerlink" title="换域名，不能只替换域名"></a>换域名，不能只替换域名</h2><p>假设旧文章地址是：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">https://old.example.com/archives/p42</span><br></pre></td></tr></table></figure>
+
+<p>新博客换了程序，也整理过链接，现在这篇文章在：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">https://new.example.com/blog/reverse-proxy-vs-redirect/</span><br></pre></td></tr></table></figure>
+
+<p>如果规则只是把旧域名替换成新域名，实际落点就成了：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">https://new.example.com/archives/p42</span><br></pre></td></tr></table></figure>
+
+<p>新站没有这个路径，结果是一次成功的 301，接着一次 404。只测试旧首页能否跳到新首页，很容易漏掉这种问题。</p>
+<p>把所有旧文章都送到首页也不合适。点进一篇具体文章，却只看到首页列表，读者还得重新找；Google 也可能把这种不相关的跳转按 soft 404 处理。旧文章有对应内容，就跳到对应页面；几篇内容合并了，可以跳到合并后的文章；确实删除且没有替代内容，返回 404 或 410 即可。<a href="https://developers.google.com/search/docs/crawling-indexing/site-move-with-url-changes">Google 网站迁移文档</a></p>
+<p><img src="https://img.iowill.com/file/%E7%B3%BB%E7%BB%9F%E4%B8%8E%E8%BF%90%E7%BB%B4/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E5%8C%BA%E5%88%AB/body2.png" alt="路径改变时，旧文章应重定向到对应的新文章，单纯替换域名可能落到 404"></p>
+<p><em>图中把新路径简写为 <code>/blog/article/</code>。下面的 404 来自新站不存在的旧路径，并非保留路径一定会出错。</em></p>
+<h2 id="Nginx-的三种配置"><a href="#Nginx-的三种配置" class="headerlink" title="Nginx 的三种配置"></a>Nginx 的三种配置</h2><p>以下片段放在对应域名已有的 <code>server</code> 块内。域名需要替换，HTTPS 证书等配置沿用实际站点设置。</p>
+<h3 id="网址不变，后面接一个应用"><a href="#网址不变，后面接一个应用" class="headerlink" title="网址不变，后面接一个应用"></a>网址不变，后面接一个应用</h3><p>Nginx 直接接收浏览器的 HTTPS 请求，应用监听本机 8080 端口：</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:8080;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个例子里，<code>proxy_pass</code> 后面没有附加 URI，请求路径会传给应用。两个请求头分别传递外部主机名和协议；应用还需要正确设置公开访问地址，并按框架要求配置可信代理。<a href="https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass">NGINX：proxy_pass</a></p>
+<p>如果前面还有 CDN，且 CDN 到 Nginx 走 HTTP，<code>$scheme</code> 读到的是这一段的 HTTP，而不是浏览器访问 CDN 时的 HTTPS。出现跳转循环、链接变成 HTTP 等问题时，这一层也要检查，不能只看应用配置。</p>
+<h3 id="换域名，路径不变"><a href="#换域名，路径不变" class="headerlink" title="换域名，路径不变"></a>换域名，路径不变</h3><p>在旧域名的 <code>server</code> 块里：</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">return</span> <span class="number">301</span> https://new.example.com<span class="variable">$request_uri</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>$request_uri</code> 保留路径和查询参数。新旧站目录结构相同，才适合这样整体替换。<a href="https://nginx.org/en/docs/http/ngx_http_rewrite_module.html#return">NGINX：return 指令</a></p>
+<h3 id="路径也改了"><a href="#路径也改了" class="headerlink" title="路径也改了"></a>路径也改了</h3><p>给旧文章明确指定新地址：</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> = /archives/p42 &#123;</span><br><span class="line">    <span class="attribute">return</span> <span class="number">301</span> https://new.example.com/blog/reverse-proxy-vs-redirect/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里的目标是固定地址，不会自动带上原查询参数。如果旧站靠参数区分文章，例如同一路径下的不同文章 ID，就要把参数也纳入映射规则。</p>
+<p>旧站的 HTTP 和 HTTPS 都要覆盖。HTTPS 必须先完成 TLS 连接，浏览器才能读到跳转响应，所以旧域名即使只用来跳转，也仍需要有效证书。</p>
+<p>实际部署可以是“旧域名 301 到新域名，新域名反向代理应用”。没必要在两种技术之间二选一。</p>
+<h2 id="博客搬家用-301，其他几个状态码呢"><a href="#博客搬家用-301，其他几个状态码呢" class="headerlink" title="博客搬家用 301，其他几个状态码呢"></a>博客搬家用 301，其他几个状态码呢</h2><table>
 <thead>
 <tr>
 <th>状态码</th>
 <th>含义</th>
-<th>请求方法的处理</th>
+<th>自动跟随时如何处理请求方法</th>
 </tr>
 </thead>
 <tbody><tr>
 <td>301</td>
 <td>永久移动</td>
-<td>客户端可能把 POST 改为 GET</td>
+<td>POST 可能改为 GET</td>
 </tr>
 <tr>
 <td>302</td>
 <td>临时移动</td>
-<td>客户端可能把 POST 改为 GET</td>
+<td>POST 可能改为 GET</td>
 </tr>
 <tr>
 <td>307</td>
 <td>临时重定向</td>
-<td>自动跟随时不得改变请求方法</td>
+<td>保持原请求方法</td>
 </tr>
 <tr>
 <td>308</td>
 <td>永久重定向</td>
-<td>自动跟随时不得改变请求方法</td>
+<td>保持原请求方法</td>
 </tr>
 </tbody></table>
-<p>307 和 308 对方法的约束，主要在表单提交、API 等场景里更重要。博客文章通常通过 GET 访问，永久迁移使用 301 是常见做法。<a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-redirection-3xx">HTTP 状态码定义，RFC 9110</a></p>
-<p>从 Google 的处理方式看，301 和 308 会提供“目标网址应成为规范网址”的信号；302 和 307 表达临时跳转，本身不提供同样的目标规范化信号。但这不等于“302 的目标永远不会被收录”，搜索引擎还会参考其他信号。<a href="https://developers.google.com/search/docs/crawling-indexing/301-redirects">Google：重定向与搜索</a></p>
-<p>如果要使用百度搜索资源平台的网站改版工具，需要注意它的规则明确要求设置 <strong>301</strong>。不能仅凭 308 在 HTTP 中也属于永久重定向，就假定所有搜索平台的迁移工具都按相同方式处理。<a href="https://ziyuan.baidu.com/rewrite">百度：网站改版工具</a></p>
-<h2 id="反向代理会影响网站排名吗"><a href="#反向代理会影响网站排名吗" class="headerlink" title="反向代理会影响网站排名吗"></a>反向代理会影响网站排名吗</h2><p>先分清楚是在换服务器，还是在换网址。</p>
-<p>如果文章一直使用 <code>https://www.example.com/article/</code>，只是后端从一台机器迁到另一台机器，那么页面地址没有迁移。Nginx、CDN 或负载均衡承担转发，都不需要因此给每篇文章设置 301。Google 也把这类基础设施调整与 URL 迁移分开说明。<a href="https://developers.google.com/search/docs/crawling-indexing/site-move-no-url-changes">Google：不更改网址的网站迁移</a></p>
-<p>代理配置仍然可能间接影响搜索表现，例如：</p>
+<p>普通文章页面大多是 GET 请求，永久迁移使用 301 很常见。307、308 与前两个状态码的差别，在表单、API 等涉及 POST 的场景里更值得留意。<a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-redirection-3xx">RFC 9110：重定向状态码</a></p>
+<p>Google 将 301、308 作为目标网址成为规范网址的信号。302、307 表达临时跳转，本身没有同样的含义，但也不能据此说目标页面永远不会被收录。<a href="https://developers.google.com/search/docs/crawling-indexing/301-redirects">Google：重定向与搜索</a></p>
+<p>如果还准备在百度搜索资源平台提交网站改版，按它的要求设置 301。百度改版工具明确写的是 301，不能直接把 Google 对 308 的处理方式套过去。<a href="https://ziyuan.baidu.com/rewrite">百度网站改版工具</a></p>
+<h2 id="对排名的影响，得看改了什么"><a href="#对排名的影响，得看改了什么" class="headerlink" title="对排名的影响，得看改了什么"></a>对排名的影响，得看改了什么</h2><p>只换服务器、接入代理，文章的公开网址没有变化，就没有必要为了 SEO 给文章加一次跳转。Google 将这种基础设施变化与网址迁移分开处理。<a href="https://developers.google.com/search/docs/crawling-indexing/site-move-no-url-changes">Google：不更改网址的网站迁移</a></p>
+<p>代理本身没有什么“加权”效果。更实际的问题是：后端是否频繁返回 502、504，防护规则是否把爬虫拦在验证页外，应用生成的链接和 canonical 是否指向正确域名。代理接好了，页面却时常打不开，当然会影响访问和抓取。</p>
+<p>如果用旧域名反向代理新站，两边都返回同一篇文章的 200 页面，搜索引擎看到的是两个可访问的网址。它没有因为内容来自新服务器，就自动知道你准备弃用旧域名。canonical 能声明首选网址，但不会带着读者跳转，也不能保证搜索引擎一定选择它。重复页面不等于必然受罚，不过可能留下你不想保留的那个地址。<a href="https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls">Google：合并重复网址</a></p>
+<p>真正换了文章网址，则需要给搜索引擎时间重新抓取和更新索引。Google 说明永久重定向不会因为跳转本身损失 PageRank，但 <strong>PageRank 不等于某个关键词的排名</strong>。内容、可访问性以及索引处理都可能影响结果，不能承诺迁移后位置不变，也没有通用的恢复天数。<a href="https://developers.google.com/search/docs/crawling-indexing/site-move-with-url-changes">Google：网站迁移常见问题</a></p>
+<p>迁移时可以逐项核对这些地方：</p>
 <ul>
-<li>后端不可用，访客和爬虫经常遇到 502、504。</li>
-<li>应用不知道外部使用 HTTPS，生成了 HTTP 链接或错误的跳转。</li>
-<li>页面里的 canonical 指向了内部域名、旧域名。</li>
-<li>CDN 或防护规则把正常爬虫挡在验证页面外。</li>
+<li>旧文章直接跳到对应的新文章，避免绕过多个中间地址。</li>
+<li>新文章的 canonical 指向自己的正式网址。</li>
+<li>站内链接和 Sitemap 改用新网址。</li>
+<li>旧网址允许爬虫访问，不用 robots.txt 把重定向挡住。</li>
 </ul>
-<p>这些是可用性和页面信号的问题，并不是“使用反向代理就会降权”。上线后应检查实际响应，而不只是确认首页看起来能打开。</p>
-<p>另一种容易混淆的情况是：旧域名反向代理新域名，两边都返回同一篇文章的 200 页面。访客确实看到了新内容，但搜索引擎仍然面对两个可访问的网址。<strong>这不等于已经完成域名迁移。</strong></p>
-<p>重复内容也不意味着一定会受到处罚；问题在于搜索引擎可能选择一个与你预期不同的规范网址。canonical 可以表达首选地址，却不会让浏览器跳转，也不是搜索引擎必须执行的命令。<a href="https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls">Google：合并重复网址</a></p>
-<h2 id="换域名时，最容易出错的是旧路径"><a href="#换域名时，最容易出错的是旧路径" class="headerlink" title="换域名时，最容易出错的是旧路径"></a>换域名时，最容易出错的是旧路径</h2><p>假设旧文章在：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">https://old.example.com/archives/p42</span><br></pre></td></tr></table></figure>
-
-<p>新站重新整理过路径，对应文章变成：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">https://new.example.com/blog/reverse-proxy-vs-redirect/</span><br></pre></td></tr></table></figure>
-
-<p>如果只把域名替换掉，访客会被送到：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">https://new.example.com/archives/p42</span><br></pre></td></tr></table></figure>
-
-<p>这个地址可能根本不存在。重定向返回了 301，不代表迁移就正确了；还要看它最终落在哪里。</p>
-<p>也不要图省事，把所有旧文章都重定向到新首页。用户想看具体文章，却落到一个不相关的页面，这类跳转可能被 Google 当作 soft 404。应优先建立文章之间的对应关系；确实删除且没有合适替代内容的页面，可以返回 404 或 410。如果几篇文章合并成一篇，跳转到相关的合并页面则更合理。<a href="https://developers.google.com/search/docs/crawling-indexing/site-move-with-url-changes">Google：更改网址的网站迁移</a></p>
-<p><img src="https://img.iowill.com/file/%E7%B3%BB%E7%BB%9F%E4%B8%8E%E8%BF%90%E7%BB%B4/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E5%8C%BA%E5%88%AB/body2.png" alt="路径改变时，旧文章应重定向到对应的新文章，单纯替换域名可能落到 404"></p>
-<p><em>图中将新文章路径简写为 <code>/blog/article/</code>。只有新站已经改变路径、原路径不存在时，下面的跳转才会落到 404。</em></p>
-<h2 id="Nginx-配置分别怎么写"><a href="#Nginx-配置分别怎么写" class="headerlink" title="Nginx 配置分别怎么写"></a>Nginx 配置分别怎么写</h2><p>下面使用示例域名，配置片段应放进已有的、匹配对应域名的 <code>server</code> 块中，不是一份完整的 HTTPS 配置。</p>
-<h3 id="保留网址，转发给本机应用"><a href="#保留网址，转发给本机应用" class="headerlink" title="保留网址，转发给本机应用"></a>保留网址，转发给本机应用</h3><p>假设 Nginx 直接接收访客的 HTTPS 请求，应用运行在同一台机器的 8080 端口：</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:8080;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这里的 <code>proxy_pass</code> 没有附加 URI，在这个简单配置中会把请求路径传给上游。<code>Host</code> 和 <code>X-Forwarded-Proto</code> 用于告诉应用外部访问的主机名与协议；应用自身也要正确配置公开访问地址，并按其框架要求信任代理头。<a href="https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass">NGINX：proxy_pass</a></p>
-<p>如果 Nginx 前面还有一层 CDN，并且 CDN 到 Nginx 使用 HTTP，<code>$scheme</code> 反映的就不是浏览器到 CDN 的协议。此时需要按实际代理链配置可信的转发信息，不能原样套用后就认为 HTTPS 信息一定正确。</p>
-<h3 id="只换域名，文章路径保持不变"><a href="#只换域名，文章路径保持不变" class="headerlink" title="只换域名，文章路径保持不变"></a>只换域名，文章路径保持不变</h3><p>在旧域名对应的配置中：</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">return</span> <span class="number">301</span> https://new.example.com<span class="variable">$request_uri</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>$request_uri</code> 包含原始路径和查询参数。这种写法适合新旧站路径一致的情况；若新站改了目录结构，就需要单独建立映射。<a href="https://nginx.org/en/docs/http/ngx_http_rewrite_module.html#return">NGINX：return 指令</a></p>
-<h3 id="域名和文章路径一起变了"><a href="#域名和文章路径一起变了" class="headerlink" title="域名和文章路径一起变了"></a>域名和文章路径一起变了</h3><figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> = /archives/p42 &#123;</span><br><span class="line">    <span class="attribute">return</span> <span class="number">301</span> https://new.example.com/blog/reverse-proxy-vs-redirect/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这是一个明确的旧文章到新文章的映射。这个固定目标不会自动保留查询参数；如果旧站通过参数区分文章或内容，需要把参数规则一起纳入迁移设计。</p>
-<p>旧站的 HTTP、HTTPS 入口都应考虑到。尤其是 HTTPS：浏览器必须先完成 TLS 连接，才能读到 301，所以旧域名的证书不能因为“只做跳转”就放任过期。</p>
-<p>反向代理和重定向也可以配合使用：旧域名先 301 到新域名，新域名再由 Nginx 转发到应用。它们解决的是不同环节的问题。</p>
-<h2 id="301-配好了，排名就能保持吗"><a href="#301-配好了，排名就能保持吗" class="headerlink" title="301 配好了，排名就能保持吗"></a>301 配好了，排名就能保持吗</h2><p>不能这样保证。</p>
-<p>Google 说明永久重定向不会因为跳转本身造成 PageRank 损失，但 PageRank 只是排名系统中的一部分。迁移还涉及重新抓取、索引更新、内容变化和页面可访问性，期间可能出现排名波动。不存在适用于所有网站的“几天恢复”或“保留百分之多少权重”。<a href="https://developers.google.com/search/docs/crawling-indexing/site-move-with-url-changes">Google：网站迁移常见问题</a></p>
-<p>比较稳妥的做法，是让几个信号指向同一个地址：</p>
-<ul>
-<li>旧文章直接跳到最终的新文章，减少不必要的连续跳转。</li>
-<li>新页面使用指向自身正式网址的 canonical。</li>
-<li>站内链接和 Sitemap 使用新网址。</li>
-<li>不用 robots.txt 阻止爬虫读取需要处理的旧页面重定向。</li>
-</ul>
-<p>canonical、跳转目标和 Sitemap 如果各指一个地址，会让迁移意图变得含糊。搜索引擎会综合这些信号，而不是只看有没有一个 301。<a href="https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls">Google：规范网址的选择</a></p>
-<p>旧域名也不要迁完马上关闭。Google 建议一般至少保留重定向一年；百度改版工具则要求持续保留到新站流量稳定。旧链接仍有人使用时，继续保留跳转也能避免访客走进死路。<a href="https://developers.google.com/search/docs/crawling-indexing/site-move-with-url-changes">Google 的重定向保留建议</a>、<a href="https://ziyuan.baidu.com/rewrite">百度改版要求</a></p>
-<h2 id="用-curl-检查，别只看地址栏"><a href="#用-curl-检查，别只看地址栏" class="headerlink" title="用 curl 检查，别只看地址栏"></a>用 curl 检查，别只看地址栏</h2><p>先查看旧文章的第一次响应：</p>
+<p>尤其别漏了新站模板：页面已经搬过来，canonical 却还指着旧站，会与重定向传达的信息冲突。<a href="https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls">Google：规范网址的选择</a></p>
+<p>旧域名也要继续维护。Google 一般建议至少保留重定向一年，百度改版工具要求持续保留到新站流量稳定。搜索之外，其他网站和读者收藏夹里的旧链接，也还需要这个入口。<a href="https://developers.google.com/search/docs/crawling-indexing/site-move-with-url-changes">Google 的保留建议</a>、<a href="https://ziyuan.baidu.com/rewrite">百度改版要求</a></p>
+<h2 id="配完以后，拿旧文章链接测一遍"><a href="#配完以后，拿旧文章链接测一遍" class="headerlink" title="配完以后，拿旧文章链接测一遍"></a>配完以后，拿旧文章链接测一遍</h2><p>先看第一次响应，把示例地址换成实际的旧文章地址：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -sS -D - -o response.html <span class="string">&quot;https://old.example.com/archives/p42&quot;</span></span><br></pre></td></tr></table></figure>
 
-<p>把示例域名换成实际域名。检查状态码和 <code>Location</code>，确认目标是对应的新文章。这里使用 GET 并将响应体保存到文件，避免只检查 HEAD 时遗漏不同的服务器处理逻辑。</p>
-<p>再跟随跳转，查看最终结果：</p>
+<p>终端里应能看到重定向状态码，以及指向新文章的 <code>Location</code>。这里发的是 GET，响应体保存到 <code>response.html</code>，避免只测 HEAD 时遇到与正常访问不同的处理结果。</p>
+<p>再跟随跳转：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -sS -L --max-redirs 5 -D chain.headers -o final.html -w <span class="string">&quot;%&#123;http_code&#125; %&#123;url_effective&#125;\n&quot;</span> <span class="string">&quot;https://old.example.com/archives/p42&quot;</span></span><br></pre></td></tr></table></figure>
 
-<p>Windows PowerShell 中可把 <code>curl</code> 写成 <code>curl.exe</code>，避免旧版本中的命令别名干扰。</p>
-<p><code>chain.headers</code> 保存各次响应头，<code>final.html</code> 保存最终内容。检查最终 URL、状态码，以及内容是否真的是对应文章。有些站点的错误页也返回 200，所以不能只看到数字就结束检查。</p>
-<p>这些检查能验证跳转和响应，却不能证明搜索引擎已经收录或完成迁移。上线后还需要结合搜索平台的索引报告、服务器抓取日志和旧链接访问情况，观察迁移结果。</p>
-<p>对博客搬家来说，关键不是在反向代理和重定向之间选一个“更利于 SEO”的技术名词，而是先确定：<strong>文章的网址是否要变？旧网址最终应该把人带到哪里？</strong> 这两件事明确了，配置才有依据。</p>
+<p><code>chain.headers</code> 里有整条跳转链的响应头，<code>final.html</code> 是最终拿到的内容。Windows PowerShell 可以写 <code>curl.exe</code>，避开旧版本里的命令别名。</p>
+<p>除了最终地址和状态码，还要打开页面确认文章内容。有的网站连错误页都返回 200，看到 200 就算通过，会把问题留下来。</p>
+<p>测试时挑几篇不同目录的旧文章，尤其是改过路径、带参数和有外部链接的页面。确认这些链接都能把人带到原本要看的内容，再通过搜索平台的索引报告和服务器日志观察后续抓取情况。跳转配置生效，与搜索引擎完成迁移，是两件需要分别确认的事。</p>
 ]]></content>
       <categories>
         <category>系统与运维</category>
