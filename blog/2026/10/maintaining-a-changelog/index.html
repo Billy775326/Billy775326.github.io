@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html data-theme="light" lang="zh-CN"><head><meta charset="utf-8"/><meta content="IE=edge" http-equiv="X-UA-Compatible"/><meta content="width=device-width, initial-scale=1.0,viewport-fit=cover" name="viewport"/><title>更新日志怎么写？从一次 Bug 修复开始维护 CHANGELOG | Billy 的博客</title><meta content="Billy" name="author"/><meta content="Billy" name="copyright"/><meta content="telephone=no" name="format-detection"/><meta content="#ffffff" name="theme-color"/><meta content="更新日志只写修复 Bug，用户很难判断是否需要升级。用文章列表工具的版本变化，说明 CHANGELOG 应记录什么、怎样维护 Unreleased、发布时如何整理，以及它与 Git 提交记录和 GitHub Releases 的关系。" name="description"/>
+<meta content="article" property="og:type"/>
+<meta content="更新日志怎么写？从一次 Bug 修复开始维护 CHANGELOG" property="og:title"/>
+<meta content="https://iowill.com/blog/2026/10/maintaining-a-changelog/" property="og:url"/>
+<meta content="Billy 的博客" property="og:site_name"/>
+<meta content="更新日志只写修复 Bug，用户很难判断是否需要升级。用文章列表工具的版本变化，说明 CHANGELOG 应记录什么、怎样维护 Unreleased、发布时如何整理，以及它与 Git 提交记录和 GitHub Releases 的关系。" property="og:description"/>
+<meta content="zh_CN" property="og:locale"/>
+<meta content="https://img.iowill.com/file/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E5%86%99/cover.png" property="og:image"/>
+<meta content="2026-10-15T02:51:45.000Z" property="article:published_time"/>
+<meta content="2026-10-15T02:51:45.000Z" property="article:modified_time"/>
+<meta content="Billy" property="article:author"/>
+<meta content="Git" property="article:tag"/>
+<meta content="更新日志" property="article:tag"/>
+<meta content="版本管理" property="article:tag"/>
+<meta content="语义化版本" property="article:tag"/>
+<meta content="软件工程" property="article:tag"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://img.iowill.com/file/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E5%86%99/cover.png" name="twitter:image"/><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "更新日志怎么写？从一次 Bug 修复开始维护 CHANGELOG", "url": "https://iowill.com/blog/2026/10/maintaining-a-changelog/", "image": "https://img.iowill.com/file/编程开发/更新日志怎么写/cover.png", "datePublished": "2026-10-15T02:51:45.000Z", "dateModified": "2026-10-15T02:51:45.000Z", "author": {"@type": "Person", "@id": "https://iowill.com/#author", "name": "Billy", "url": "https://iowill.com/about/", "sameAs": ["https://github.com/Billy775326"]}, "@id": "https://iowill.com/blog/2026/10/maintaining-a-changelog/#article", "description": "更新日志只写修复 Bug，用户很难判断是否需要升级。用文章列表工具的版本变化，说明 CHANGELOG 应记录什么、怎样维护 Unreleased、发布时如何整理，以及它与 Git 提交记录和 GitHub Releases 的关系。", "publisher": {"@type": "Person", "@id": "https://iowill.com/#author", "name": "Billy", "url": "https://iowill.com/about/", "sameAs": ["https://github.com/Billy775326"]}, "inLanguage": "zh-CN", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://iowill.com/blog/2026/10/maintaining-a-changelog/"}, "isPartOf": {"@type": "WebSite", "@id": "https://iowill.com/#website"}, "articleSection": "编程开发", "keywords": ["Git", "更新日志", "版本管理", "语义化版本", "软件工程"]}</script><link href="/img/favicon.png" rel="shortcut icon"/><link href="https://iowill.com/blog/2026/10/maintaining-a-changelog/" rel="canonical"/><link href="//cdn.jsdelivr.net" rel="preconnect"/><link href="/css/index.css?v=5.7.0" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css" rel="stylesheet"/><script>
+    (() => {
+
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+
+
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+
+
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+
+
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+
+    })()
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '更新日志怎么写？从一次 Bug 修复开始维护 CHANGELOG',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link href="/css/site-preserved.css" rel="stylesheet"/><link href="/css/cards.css" rel="stylesheet"/><meta content="Hexo 8.1.2" name="generator"/><meta content="更新日志只写修复 Bug，用户很难判断是否需要升级。用文章列表工具的版本变化，说明 CHANGELOG 应记录什么、怎样维护 Unreleased、发布时如何整理，以及它与 Git 提交记录和 GitHub Releases 的关系。" name="twitter:description"/><meta content="Git,更新日志,版本管理,语义化版本,软件工程" name="keywords"/></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img alt="avatar" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='/img/friend_404.gif'" src="/img/avatar.jpg"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">40</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">97</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://img.iowill.com/file/编程开发/更新日志怎么写/cover.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Billy 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">更新日志怎么写？从一次 Bug 修复开始维护 CHANGELOG</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">更新日志怎么写？从一次 Bug 修复开始维护 CHANGELOG</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-15T02:51:45.000Z" title="2026-10-15 10:51:45">2026-10-15 10:51:45</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-15T02:51:45.000Z" title="2026-10-15 10:51:45">2026-10-15 10:51:45</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/programming/">编程开发</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" data-flag-title="" id=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>准备升级一个工具，打开更新说明，只看到“修复已知问题，优化使用体验”。到底修了什么？之前遇到的错误还在不在？升级后需不需要改配置？这句话几乎没有帮上忙。</p>
+<p>更新日志（Changelog）应该能回答这些问题。它按版本整理值得使用者关注的变化，让人不用逐个翻提交，也能知道新版本改了什么、会影响哪里。</p>
+<p>之前写过<a href="https://iowill.com/blog/2026/10/semantic-versioning/">版本号怎么定</a>。版本号能表达兼容性变化，具体改了哪些行为，还得靠更新日志说明。这次继续用一个虚构的文章列表工具举例，项目名、版本和日期都用于演示。</p>
+<h2 id="把“修复-Bug”写具体"><a class="headerlink" href="#把“修复-Bug”写具体" title="把“修复 Bug”写具体"></a>把“修复 Bug”写具体</h2><p>假设工具现在是 <code>1.4.2</code>，约定按发布时间从新到旧返回文章。同一时刻发布多篇文章时，列表顺序却不稳定，重新构建后可能变动。</p>
+<p>开发过程中，提交记录可能是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/></pre></td><td class="code"><pre><span class="line">fix: 修正排序</span><br/><span class="line">test: 补充相同日期的测试</span><br/><span class="line">refactor: 提取比较函数</span><br/></pre></td></tr></table></figure>
+<p>这三条记录能帮助维护者追踪代码，但用户更关心自己遇到的现象有没有解决。发布说明可以合并成一条：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/></pre></td><td class="code"><pre><span class="line"><span class="section">### Fixed</span></span><br/><span class="line"></span><br/><span class="line"><span class="bullet">-</span> 修复发布时间相同的文章在重新构建后顺序变化的问题；</span><br/><span class="line">  同一时刻的文章现在按 slug 升序排列，其他日期的排序保持不变。</span><br/></pre></td></tr></table></figure>
+<p>这条记录交代了触发条件、原来的问题和修复后的行为。这里假设工具以前没有承诺同一时刻文章的具体顺序，因此补上稳定排序不会改变既有约定。如果之前已经约定另一种顺序，就不能直接当作兼容修复。</p>
+<p>不用给每条记录套固定句式，但至少让人看得出它在说哪个功能。“优化导出”可以具体到“CSV 导出改为分批读取，减少一次性加载的数据量”；“更快、更稳定”如果没有测试依据，就别拿来代替说明。</p>
+<p>Olivier Lacan 在 2014 年的访谈里也谈到过这类困扰：笼统的修复说明，让使用者无法确认自己关心的问题是否解决。他讨论更新日志时，着眼的是项目外部使用者需要知道的变化。<a href="https://changelog.com/podcast/127">The Changelog 第 127 期</a></p>
+<p><img alt="将排序修复、测试和重构提交合并成一条说明触发条件与前后行为的更新日志" decoding="async" height="941" loading="eager" src="https://img.iowill.com/file/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E5%86%99/body1.png" width="1672"/></p>
+<p><em>三次相关提交可以整理成一条修复说明，让使用者知道问题何时出现，以及升级后有什么变化。</em></p>
+<h2 id="根目录放一份-CHANGELOG-md"><a class="headerlink" href="#根目录放一份-CHANGELOG-md" title="根目录放一份 CHANGELOG.md"></a>根目录放一份 CHANGELOG.md</h2><p><a href="https://keepachangelog.com/zh-CN/1.1.0/">Keep a Changelog</a> 提供了一套容易采用的组织方式：每个版本单独记录，新版放在前面，写明发布日期，把同类变化归在一起；尚未发布的改动放在顶部的 <code>Unreleased</code>。</p>
+<p>常用分组如下：</p>
+<table>
+<thead>
+<tr>
+<th>分组</th>
+<th>记录内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Added</td>
+<td>新增功能</td>
+</tr>
+<tr>
+<td>Changed</td>
+<td>现有行为的调整</td>
+</tr>
+<tr>
+<td>Deprecated</td>
+<td>仍可使用、但准备淘汰的功能</td>
+</tr>
+<tr>
+<td>Removed</td>
+<td>已经移除的功能</td>
+</tr>
+<tr>
+<td>Fixed</td>
+<td>问题修复</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>安全相关修正</td>
+</tr>
+</tbody></table>
+<p>没有内容的分组可以省略。这一点与早期访谈中保留空分组、标注“Nothing”的做法不同；项目后来的记录已明确改为去掉空分组。采用格式时，以<a href="https://keepachangelog.com/zh-CN/1.1.0/">现行说明</a>为准。</p>
+<p>下面是一份示例文件。日期是演示发布日期；链接中的 <code>OWNER</code>、<code>REPO</code> 和版本标签要换成自己仓库里真实存在的值。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/><span class="line">7</span><br/><span class="line">8</span><br/><span class="line">9</span><br/><span class="line">10</span><br/><span class="line">11</span><br/><span class="line">12</span><br/><span class="line">13</span><br/><span class="line">14</span><br/><span class="line">15</span><br/><span class="line">16</span><br/><span class="line">17</span><br/><span class="line">18</span><br/><span class="line">19</span><br/><span class="line">20</span><br/><span class="line">21</span><br/><span class="line">22</span><br/><span class="line">23</span><br/><span class="line">24</span><br/><span class="line">25</span><br/><span class="line">26</span><br/><span class="line">27</span><br/><span class="line">28</span><br/></pre></td><td class="code"><pre><span class="line"><span class="section"># 更新日志</span></span><br/><span class="line"></span><br/><span class="line">这里记录文章列表工具各版本对使用者有影响的变化。</span><br/><span class="line">日志结构参考 Keep a Changelog，版本号遵循 SemVer 2.0.0。</span><br/><span class="line"></span><br/><span class="line"><span class="section">## [Unreleased]</span></span><br/><span class="line"></span><br/><span class="line"><span class="section">### Added</span></span><br/><span class="line"></span><br/><span class="line"><span class="bullet">-</span> listPosts() 新增可选的 category 参数，支持按分类筛选；</span><br/><span class="line">  不传参数时保持原有行为。</span><br/><span class="line"></span><br/><span class="line"><span class="section">## [1.4.3] - 2026-10-15</span></span><br/><span class="line"></span><br/><span class="line"><span class="section">### Fixed</span></span><br/><span class="line"></span><br/><span class="line"><span class="bullet">-</span> 修复发布时间相同的文章在重新构建后顺序变化的问题；</span><br/><span class="line">  同一时刻的文章现在按 slug 升序排列。</span><br/><span class="line"></span><br/><span class="line"><span class="section">## [1.4.2] - 2026-10-09</span></span><br/><span class="line"></span><br/><span class="line"><span class="section">### Fixed</span></span><br/><span class="line"></span><br/><span class="line"><span class="bullet">-</span> 修复空文章列表导出 CSV 时抛出异常的问题，改为输出仅含表头的文件。</span><br/><span class="line"></span><br/><span class="line">[<span class="symbol">Unreleased</span>]: <span class="link">https://github.com/OWNER/REPO/compare/v1.4.3...HEAD</span></span><br/><span class="line">[<span class="symbol">1.4.3</span>]: <span class="link">https://github.com/OWNER/REPO/compare/v1.4.2...v1.4.3</span></span><br/><span class="line">[<span class="symbol">1.4.2</span>]: <span class="link">https://github.com/OWNER/REPO/releases/tag/v1.4.2</span></span><br/></pre></td></tr></table></figure>
+<p><code>Unreleased</code> 里的分类筛选尚未发布，用户安装 <code>1.4.3</code> 不会获得它。版本段落一定要与实际发布内容对应，不能因为功能已经合并进主分支，就写进当前稳定版的说明。</p>
+<p>这里把 <code>1.4.2</code> 链接到它的 Release 页面，其他版本链接到两次标签间的比较页。比较页方便追查实现细节，正文负责解释这些改动有什么用。若项目不在 GitHub，可以换成对应平台的版本或比较链接。</p>
+<h2 id="哪些改动值得写进去"><a class="headerlink" href="#哪些改动值得写进去" title="哪些改动值得写进去"></a>哪些改动值得写进去</h2><p>以这份文章列表工具为例，我会这样取舍：</p>
+<table>
+<thead>
+<tr>
+<th>改动</th>
+<th>更新日志里的处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>修复特定日期下的排序错误</td>
+<td>写清触发条件和修复后的结果</td>
+</tr>
+<tr>
+<td>增加分类筛选参数</td>
+<td>说明参数用途，以及不传参数时是否兼容</td>
+</tr>
+<tr>
+<td>重命名内部变量</td>
+<td>通常留在提交记录里即可</td>
+</tr>
+<tr>
+<td>改变默认导出目录</td>
+<td>写出旧目录、新目录及对已有脚本的影响</td>
+</tr>
+<tr>
+<td>提高运行时最低版本</td>
+<td>明确新要求，提醒升级环境</td>
+</tr>
+<tr>
+<td>修正文档里错误的安装命令</td>
+<td>如果会影响安装，值得记录</td>
+</tr>
+</tbody></table>
+<p>取舍依据是使用者会不会因此改变操作，而不只是改动落在哪类文件里。一次看似很小的配置修改，可能让已有部署无法启动；几百行内部重构，也可能完全不影响外部用法。</p>
+<p>依赖升级同样要看影响。只是整理开发依赖，可以留在维护记录里；如果解决了已披露的漏洞，应说明受影响范围、修复版本，并链接到相应安全公告。不要只给出一个依赖名称，让用户自己猜为什么需要升级。</p>
+<h2 id="开发时随手记，发布时再核对"><a class="headerlink" href="#开发时随手记，发布时再核对" title="开发时随手记，发布时再核对"></a>开发时随手记，发布时再核对</h2><p>对个人项目，可以在实现一项面向用户的改动时，顺手往 <code>Unreleased</code> 加一条。多人协作则可以让 PR 同时提交变更说明。写的时候上下文还在，比隔几周翻几十条提交更容易说清楚。</p>
+<p><code>Unreleased</code> 也不要当成愿望清单。这里只放已经进入待发布代码的变化；还在讨论的功能放到 Issue 或路线图。功能被撤回时，相关条目也要一起调整。</p>
+<p>继续前面的例子：<code>1.4.3</code> 已发布，分类筛选还在 <code>Unreleased</code>。准备发布 <code>1.5.0</code> 时，可以按下面的顺序处理：</p>
+<ol>
+<li>对照本次发布的分支或提交范围，确认分类筛选确实在内，没有混入其他分支的功能。</li>
+<li>把这一条移到 <code>1.5.0</code> 小节，填实际发布日期，顶部继续保留 <code>Unreleased</code>。</li>
+<li>将 <code>1.5.0</code> 的比较链接设为 <code>v1.4.3...v1.5.0</code>，把 <code>Unreleased</code> 链接的起点改为 <code>v1.5.0</code>。</li>
+<li>核对包版本、发布标签、构建产物和 Release 说明，确认它们对应同一次发布。</li>
+</ol>
+<p>如果同时维护多个版本分支，比较链接的终点应指向相应分支，不能全部照抄 <code>HEAD</code>。标签也应落在实际发布的提交上，避免日志描述的是一份代码，用户拿到的是另一份。</p>
+<p>日志里写 <code>Fixed</code> 还是 <code>Changed</code>，不会替你决定版本号。对于已经遵守 SemVer 且进入 <code>1.0.0</code> 以后的项目，兼容修复、新增兼容功能、不兼容 API 修改，分别涉及修订号、次版本号、主版本号。一次发布混合多类改动时，要考虑其中要求最高的兼容性变化。<a href="https://semver.org/lang/zh-CN/">SemVer 2.0.0</a></p>
+<p><img alt="核对发布范围与兼容性后，将分类筛选从 Unreleased 移入 1.5.0，并更新日期和版本链接" decoding="async" height="941" loading="lazy" src="https://img.iowill.com/file/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E5%86%99/body2.png" width="1672"/></p>
+<p><em>示例中的分类筛选随 1.5.0 发布；顶部继续保留 Unreleased，供下一轮开发记录使用。</em></p>
+<h2 id="弃用和删除要分开交代"><a class="headerlink" href="#弃用和删除要分开交代" title="弃用和删除要分开交代"></a>弃用和删除要分开交代</h2><p>假设旧版用 <code>limit</code> 配置每页数量，之后打算统一为 <code>pageSize</code>。如果一发布新版就删掉旧字段，读者只看到“整理分页配置”，升级后很可能才发现文章数量不对。</p>
+<p>可以先提供兼容期，在 <code>1.5.0</code> 中新增 <code>pageSize</code>，仍接受 <code>limit</code>，并说明两个字段同时出现时如何处理。比如约定新字段优先，日志可以写成：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/><span class="line">7</span><br/><span class="line">8</span><br/></pre></td><td class="code"><pre><span class="line"><span class="section">### Added</span></span><br/><span class="line"></span><br/><span class="line"><span class="bullet">-</span> 新增 pageSize 配置项，用于指定每页文章数量。</span><br/><span class="line"></span><br/><span class="line"><span class="section">### Deprecated</span></span><br/><span class="line"></span><br/><span class="line"><span class="bullet">-</span> limit 仍可使用，但计划在 2.0.0 移除，请改用 pageSize。</span><br/><span class="line">  两项同时配置时，以 pageSize 为准。</span><br/></pre></td></tr></table></figure>
+<p>真正发布 <code>2.0.0</code>、移除旧字段时，再写：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/></pre></td><td class="code"><pre><span class="line"><span class="section">### Removed</span></span><br/><span class="line"></span><br/><span class="line"><span class="bullet">-</span> 不再读取 limit 配置项。升级前请将 limit: 18 改为 pageSize: 18；</span><br/><span class="line">  仅保留旧字段会使用默认每页数量。</span><br/></pre></td></tr></table></figure>
+<p>这让用户知道现在还能不能用、何时需要改，以及不改会发生什么。删除时间尚未确定，就写“将在后续主版本移除”，不要随意承诺一个日期。若遵守 SemVer，标记公共 API 弃用本身也要求递增次版本号，真正的不兼容删除则涉及主版本号。<a href="https://semver.org/lang/zh-CN/">SemVer 第 7、8 条</a></p>
+<h2 id="自动生成后，还要改哪几处"><a class="headerlink" href="#自动生成后，还要改哪几处" title="自动生成后，还要改哪几处"></a>自动生成后，还要改哪几处</h2><p>GitHub 的自动发布说明可以汇总合并的 PR、贡献者和完整变更链接，也支持用标签分组或排除部分内容。它很适合帮忙收集发布材料，官方流程同样要求检查生成结果。<a href="https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes">GitHub 自动生成发布说明</a></p>
+<p>但 PR 标题如果只有“修复分页”，自动生成出来仍然只有这几个字。发布前可以重点检查：同一功能的多次修复是否需要合并，内部重构是否挤占了主要内容，以及参数变更有没有写出迁移办法。</p>
+<p>约定式提交也能帮工具识别变更。<code>feat</code>、<code>fix</code>、<code>BREAKING CHANGE</code> 等标记有助于自动分类和版本计算，但不是所有 <code>fix</code> 都必然兼容；破坏性修改可以出现在任何提交类型中。<a href="https://www.conventionalcommits.org/zh-hans/v1.0.0/">Conventional Commits 1.0.0</a></p>
+<p>如果让 AI 帮忙整理，也应给它本次发布范围内的提交或 PR，而不是只给一个版本号。特别要检查它有没有把“准备支持”写成“已经支持”，或把模糊的性能改动扩写成未经测试的提升数字。</p>
+<p>个人项目可以把仓库里的 <code>CHANGELOG.md</code> 作为维护入口，发布时把本版本段落同步到 GitHub Releases；较长的迁移步骤另写文档，再从两处链接过去。这样后续纠错有明确的原稿，不容易出现两份说明各写各的。</p>
+<p>发现旧日志漏了一项重要变化，可以补充说明；如果某个版本已经发出又撤回，也应留下撤回原因和可用替代版本，方便已经安装它的人追查。文字说明的修订，不意味着可以悄悄替换已发布的软件包。遵守 SemVer 的项目需要用新版本发布软件内容的修改。<a href="https://semver.org/lang/zh-CN/">SemVer 第 3 条</a></p>
+<p>如果项目以前从没维护过更新日志，可以先从下一次发布开始。核实得清楚的旧版本逐步补录，记不清的不要靠猜。先把最近一次“修复 Bug”改写成具体的问题、影响和处理结果，这份文件就已经有用了。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://iowill.com/about/">Billy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://iowill.com/blog/2026/10/maintaining-a-changelog/">https://iowill.com/blog/2026/10/maintaining-a-changelog/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://iowill.com" target="_blank">Billy 的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Git/">Git</a><a class="post-meta__tags" href="/tags/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/">更新日志</a><a class="post-meta__tags" href="/tags/%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86/">版本管理</a><a class="post-meta__tags" href="/tags/%E8%AF%AD%E4%B9%89%E5%8C%96%E7%89%88%E6%9C%AC/">语义化版本</a><a class="post-meta__tags" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/">软件工程</a></div></div><nav aria-label="文章导航" class="pagination-post" id="pagination"><a aria-label="上一篇：反向代理和重定向有什么区别？网站迁移时怎样减少排名波动" class="pagination-related prev-post" href="/blog/2026/10/reverse-proxy-vs-redirect/" rel="prev" title="反向代理和重定向有什么区别？网站迁移时怎样减少排名波动"><img alt="反向代理和重定向有什么区别？网站迁移时怎样减少排名波动" class="cover" decoding="async" loading="lazy" src="https://img.iowill.com/file/系统与运维/反向代理和重定向的区别/thumbs/cover.jpg"/><div class="info"><div class="info-1"><div class="info-item-1"><i aria-hidden="true" class="fas fa-angle-left fa-fw"></i>上一篇</div><div class="info-item-2">反向代理和重定向有什么区别？网站迁移时怎样减少排名波动</div></div><div class="info-2">阅读全文：反向代理和重定向有什么区别？网站迁移时怎样减少排名波动</div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img alt="avatar" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='/img/friend_404.gif'" src="/img/avatar.jpg"/></div><div class="author-info-name">Billy</div><div class="author-info-description">记录学习与折腾</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">40</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">97</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a href="https://github.com/Billy775326" id="card-info-btn"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里记录写代码、部署服务和折腾工具时遇到的问题，也分享解决过程。<br/> <a href="/archives/">文章归档</a> · <a href="/about/#contact">交流与纠错</a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%8A%E2%80%9C%E4%BF%AE%E5%A4%8D-Bug%E2%80%9D%E5%86%99%E5%85%B7%E4%BD%93"><span class="toc-text">把“修复 Bug”写具体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B9%E7%9B%AE%E5%BD%95%E6%94%BE%E4%B8%80%E4%BB%BD-CHANGELOG-md"><span class="toc-text">根目录放一份 CHANGELOG.md</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%AA%E4%BA%9B%E6%94%B9%E5%8A%A8%E5%80%BC%E5%BE%97%E5%86%99%E8%BF%9B%E5%8E%BB"><span class="toc-text">哪些改动值得写进去</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E6%97%B6%E9%9A%8F%E6%89%8B%E8%AE%B0%EF%BC%8C%E5%8F%91%E5%B8%83%E6%97%B6%E5%86%8D%E6%A0%B8%E5%AF%B9"><span class="toc-text">开发时随手记，发布时再核对</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%83%E7%94%A8%E5%92%8C%E5%88%A0%E9%99%A4%E8%A6%81%E5%88%86%E5%BC%80%E4%BA%A4%E4%BB%A3"><span class="toc-text">弃用和删除要分开交代</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E5%90%8E%EF%BC%8C%E8%BF%98%E8%A6%81%E6%94%B9%E5%93%AA%E5%87%A0%E5%A4%84"><span class="toc-text">自动生成后，还要改哪几处</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/maintaining-a-changelog/" title="更新日志怎么写？从一次 Bug 修复开始维护 CHANGELOG"><img alt="更新日志怎么写？从一次 Bug 修复开始维护 CHANGELOG" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/编程开发/更新日志怎么写/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/10/maintaining-a-changelog/" title="更新日志怎么写？从一次 Bug 修复开始维护 CHANGELOG">更新日志怎么写？从一次 Bug 修复开始维护 CHANGELOG</a><time datetime="2026-10-15T02:51:45.000Z" title="2026/10/15 10:51:45">2026/10/15 10:51:45</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/reverse-proxy-vs-redirect/" title="反向代理和重定向有什么区别？网站迁移时怎样减少排名波动"><img alt="反向代理和重定向有什么区别？网站迁移时怎样减少排名波动" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/系统与运维/反向代理和重定向的区别/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/10/reverse-proxy-vs-redirect/" title="反向代理和重定向有什么区别？网站迁移时怎样减少排名波动">反向代理和重定向有什么区别？网站迁移时怎样减少排名波动</a><time datetime="2026-10-14T09:07:00.000Z" title="2026/10/14 17:07:00">2026/10/14 17:07:00</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/webrtc-ip-leak/" title="用了代理，为什么还会暴露真实 IP？WebRTC 泄漏排查与防护"><img alt="用了代理，为什么还会暴露真实 IP？WebRTC 泄漏排查与防护" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/系统与运维/用了代理为什么还会暴露真实IP-WebRTC泄漏排查与防护/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/10/webrtc-ip-leak/" title="用了代理，为什么还会暴露真实 IP？WebRTC 泄漏排查与防护">用了代理，为什么还会暴露真实 IP？WebRTC 泄漏排查与防护</a><time datetime="2026-10-12T03:23:47.000Z" title="2026/10/12 11:23:47">2026/10/12 11:23:47</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/dynamic-class-locators/" title="网页 class 变了，自动化脚本怎么定位元素？"><img alt="网页 class 变了，自动化脚本怎么定位元素？" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/编程开发/网页class变了-自动化脚本怎么定位元素/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/10/dynamic-class-locators/" title="网页 class 变了，自动化脚本怎么定位元素？">网页 class 变了，自动化脚本怎么定位元素？</a><time datetime="2026-10-10T07:25:55.000Z" title="2026/10/10 15:25:55">2026/10/10 15:25:55</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/semantic-versioning/" title="版本号怎么定？从 1.0.0 理解语义化版本"><img alt="版本号怎么定？从 1.0.0 理解语义化版本" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/编程开发/版本号怎么定-从1.0.0理解语义化版本/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/10/semantic-versioning/" title="版本号怎么定？从 1.0.0 理解语义化版本">版本号怎么定？从 1.0.0 理解语义化版本</a><time datetime="2026-10-09T09:16:32.000Z" title="2026/10/09 17:16:32">2026/10/09 17:16:32</time></div></div></div></div></div></div></main><footer aria-label="网站页脚" id="footer"><div class="footer-other"><div class="footer-credits"><span class="copyright">© 2023–2026 By <a href="/">Billy</a></span><span class="framework-info">由 <a href="https://hexo.io" rel="noopener" target="_blank">Hexo</a> 驱动<span aria-hidden="true" class="footer-separator">·</span><a href="https://github.com/jerryc127/hexo-theme-butterfly" rel="noopener" target="_blank">Butterfly</a> 主题</span></div><div class="footer_custom_text"><nav aria-label="页脚导航"><a href="/about/"><i aria-hidden="true" class="fas fa-user"></i>关于</a><a href="/archives/"><i aria-hidden="true" class="fas fa-archive"></i>归档</a><a href="/categories/"><i aria-hidden="true" class="fas fa-folder-open"></i>分类</a><a href="/tags/"><i aria-hidden="true" class="fas fa-tags"></i>标签</a><a href="/sitemap.xml"><i aria-hidden="true" class="fas fa-sitemap"></i>站点地图</a><a href="https://github.com/Billy775326" rel="me noopener" target="_blank"><i aria-hidden="true" class="fab fa-github"></i>GitHub</a></nav></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" title="阅读模式" type="button"><i class="fas fa-book-open"></i></button><button id="darkmode" title="日间和夜间模式切换" type="button"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" title="单栏和双栏切换" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" title="设置" type="button"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" title="目录" type="button"><i class="fas fa-list-ul"></i></button><button id="go-up" title="回到顶部" type="button"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async="" data-pjax="" src="/js/visit-counter.js?v=20261005"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" hidden="hidden" id="loading-status"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=20261005-domready"></script></div></div></body></html>
