@@ -7934,6 +7934,12 @@ body {
 }
 [data-theme='dark'] body { background: var(--global-bg); }
 
+/* Preserve intrinsic proportions when article images shrink to the content width. */
+#article-container > p img[width][height],
+#article-container > figure > img[width][height] {
+  height: auto;
+}
+
 /* Sidebar glass: translucent surface without fading text or changing geometry. */
 #aside-content .card-widget {
   background: rgba(255, 255, 255, .94);

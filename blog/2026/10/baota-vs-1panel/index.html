@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html data-theme="light" lang="zh-CN"><head><meta charset="utf-8"/><meta content="IE=edge" http-equiv="X-UA-Compatible"/><meta content="width=device-width, initial-scale=1.0,viewport-fit=cover" name="viewport"/><title>宝塔和 1Panel 有什么区别？建站与自托管该怎么选 | Billy 的博客</title><meta content="Billy" name="author"/><meta content="Billy" name="copyright"/><meta content="telephone=no" name="format-detection"/><meta content="#ffffff" name="theme-color"/><meta content="宝塔和 1Panel 都能管理网站、数据库和 Docker，区别不能只看有没有容器。结合 PHP 建站、自托管应用、备份恢复与迁移，比较两者的管理方式、免费与付费功能，以及已有网站是否值得换面板。" name="description"/>
+<meta content="article" property="og:type"/>
+<meta content="宝塔和 1Panel 有什么区别？建站与自托管该怎么选" property="og:title"/>
+<meta content="https://iowill.com/blog/2026/10/baota-vs-1panel/" property="og:url"/>
+<meta content="Billy 的博客" property="og:site_name"/>
+<meta content="宝塔和 1Panel 都能管理网站、数据库和 Docker，区别不能只看有没有容器。结合 PHP 建站、自托管应用、备份恢复与迁移，比较两者的管理方式、免费与付费功能，以及已有网站是否值得换面板。" property="og:description"/>
+<meta content="zh_CN" property="og:locale"/>
+<meta content="https://img.iowill.com/file/%E7%B3%BB%E7%BB%9F%E4%B8%8E%E8%BF%90%E7%BB%B4/%E5%AE%9D%E5%A1%94%E4%B8%8E1Panel%E7%9A%84%E5%8C%BA%E5%88%AB/cover.png" property="og:image"/>
+<meta content="2026-10-16T09:46:45.000Z" property="article:published_time"/>
+<meta content="2026-10-16T09:46:45.000Z" property="article:modified_time"/>
+<meta content="Billy" property="article:author"/>
+<meta content="1Panel" property="article:tag"/>
+<meta content="Docker" property="article:tag"/>
+<meta content="宝塔" property="article:tag"/>
+<meta content="服务器管理" property="article:tag"/>
+<meta content="网站部署" property="article:tag"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://img.iowill.com/file/%E7%B3%BB%E7%BB%9F%E4%B8%8E%E8%BF%90%E7%BB%B4/%E5%AE%9D%E5%A1%94%E4%B8%8E1Panel%E7%9A%84%E5%8C%BA%E5%88%AB/cover.png" name="twitter:image"/><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "宝塔和 1Panel 有什么区别？建站与自托管该怎么选", "url": "https://iowill.com/blog/2026/10/baota-vs-1panel/", "image": "https://img.iowill.com/file/系统与运维/宝塔与1Panel的区别/cover.png", "datePublished": "2026-10-16T09:46:45.000Z", "dateModified": "2026-10-16T09:46:45.000Z", "author": {"@type": "Person", "@id": "https://iowill.com/#author", "name": "Billy", "url": "https://iowill.com/about/", "sameAs": ["https://github.com/Billy775326"]}, "@id": "https://iowill.com/blog/2026/10/baota-vs-1panel/#article", "description": "宝塔和 1Panel 都能管理网站、数据库和 Docker，区别不能只看有没有容器。结合 PHP 建站、自托管应用、备份恢复与迁移，比较两者的管理方式、免费与付费功能，以及已有网站是否值得换面板。", "publisher": {"@type": "Person", "@id": "https://iowill.com/#author", "name": "Billy", "url": "https://iowill.com/about/", "sameAs": ["https://github.com/Billy775326"]}, "inLanguage": "zh-CN", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://iowill.com/blog/2026/10/baota-vs-1panel/"}, "isPartOf": {"@type": "WebSite", "@id": "https://iowill.com/#website"}, "articleSection": "系统与运维", "keywords": ["1Panel", "Docker", "宝塔", "服务器管理", "网站部署"]}</script><link href="/img/favicon.png" rel="shortcut icon"/><link href="https://iowill.com/blog/2026/10/baota-vs-1panel/" rel="canonical"/><link href="//cdn.jsdelivr.net" rel="preconnect"/><link href="/css/index.css?v=5.7.0" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css" rel="stylesheet"/><script>
+    (() => {
+
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+
+
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+
+
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+
+
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+
+    })()
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '宝塔和 1Panel 有什么区别？建站与自托管该怎么选',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link href="/css/site-preserved.css" rel="stylesheet"/><link href="/css/cards.css" rel="stylesheet"/><meta content="Hexo 8.1.2" name="generator"/><meta content="宝塔和 1Panel 都能管理网站、数据库和 Docker，区别不能只看有没有容器。结合 PHP 建站、自托管应用、备份恢复与迁移，比较两者的管理方式、免费与付费功能，以及已有网站是否值得换面板。" name="twitter:description"/><meta content="1Panel,Docker,宝塔,服务器管理,网站部署" name="keywords"/></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img alt="avatar" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='/img/friend_404.gif'" src="/img/avatar.jpg"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">100</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://img.iowill.com/file/系统与运维/宝塔与1Panel的区别/cover.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Billy 的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">宝塔和 1Panel 有什么区别？建站与自托管该怎么选</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">宝塔和 1Panel 有什么区别？建站与自托管该怎么选</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-16T09:46:45.000Z" title="2026-10-16 17:46:45">2026-10-16 17:46:45</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-16T09:46:45.000Z" title="2026-10-16 17:46:45">2026-10-16 17:46:45</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/systems-operations/">系统与运维</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">3.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" data-flag-title="" id=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>准备给服务器装个管理面板，宝塔和 1Panel 经常会一起出现在候选名单里。搜索两者的区别，很容易看到一种说法：宝塔适合传统建站，1Panel 适合 Docker。</p>
+<p>这个说法能描述一部分常见用法，但拿它直接选型，容易漏掉不少东西。宝塔已经有 Docker 应用商店和容器管理；1Panel 也能创建静态网站、PHP 网站和反向代理，并非只能安装商店里的应用。<a href="https://docs.bt.cn/user-guide/docker/deployment/deployment/">宝塔 Docker 应用商店</a>、<a href="https://1panel.pro/docs/v2/user_manual/websites/website_create/">1Panel 建站文档</a>都能查到这些功能。</p>
+<p><strong>宝塔和 1Panel 都能承担日常建站与应用管理，实际差异更值得从部署方式、维护习惯和已有环境来看。</strong> 已经熟悉宝塔的 PHP 建站流程，可以继续沿用；准备在新服务器上部署多个容器应用，可以优先试一下 1Panel 的管理流程。这里的“优先”是选型建议，不是性能或安全测试结论。</p>
+<p>本文按 2026 年 10 月 16 日可查的官方资料整理，讨论 Linux 服务器，1Panel 以 V2 文档为准，不混用旧版本教程，也不把功能表当作实测结果。</p>
+<h2 id="平时在面板里做什么"><a class="headerlink" href="#平时在面板里做什么" title="平时在面板里做什么"></a>平时在面板里做什么</h2><p>如果主要工作是上传一套 PHP 程序、创建数据库、调整 PHP 扩展和伪静态规则，关注点通常围绕“网站”展开：文件放在哪里，用哪个 PHP 版本，域名和证书有没有配好。</p>
+<p>宝塔的常见建站流程就围绕这些操作组织。安装 LNMP 或 LAMP 环境后，可以管理网站目录、PHP 版本、SSL、数据库和反向代理等设置。这些能力在<a href="https://www.bt.cn/product/linux/">宝塔 Linux 面板介绍</a>中有说明。</p>
+<p>如果主要工作变成部署一个相册、一个监控服务，再加一个网盘，关注点就会多出镜像版本、端口、环境变量、数据挂载和容器日志。1Panel 将应用商店、运行环境、容器与网站管理放在同一套面板中，这种使用方式值得容器应用较多的人试一试。<a href="https://github.com/1Panel-dev/1Panel">1Panel 项目说明</a></p>
+<p>但“常见流程”不代表功能边界。宝塔也能管理容器应用；1Panel 的 PHP 文档还提供了本地运行环境入口，前提是服务器已经安装 <code>php-fpm</code>。所以，“1Panel 的 PHP 一律只能跑在容器里”也不够准确。<a href="https://1panel.pro/docs/v2/user_manual/websites/php/">1Panel PHP 运行环境</a></p>
+<p>下面这张表更适合用来确定试用重点，而不是给两个面板打分：</p>
+<table>
+<thead>
+<tr>
+<th>你关心的事情</th>
+<th>宝塔</th>
+<th>1Panel</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PHP 网站维护</td>
+<td>可以沿着网站、PHP、数据库的常见流程操作</td>
+<td>同样支持，需确认所选运行环境及扩展配置</td>
+</tr>
+<tr>
+<td>Docker 应用</td>
+<td>有应用商店和容器管理</td>
+<td>有应用商店、容器和 Compose 管理</td>
+</tr>
+<tr>
+<td>静态站与反向代理</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>已有网站接入</td>
+<td>先核对现有服务、目录及配置</td>
+<td>同样需要核对，不能默认安装后全部自动接管</td>
+</tr>
+<tr>
+<td>备份与恢复</td>
+<td>确认选择了哪些备份对象</td>
+<td>同样确认对象、存储位置与恢复范围</td>
+</tr>
+<tr>
+<td>费用</td>
+<td>区分免费版及付费版本、插件</td>
+<td>区分社区版、专业版及企业版</td>
+</tr>
+</tbody></table>
+<h2 id="建同样一个-PHP-网站，维护细节可能不同"><a class="headerlink" href="#建同样一个-PHP-网站，维护细节可能不同" title="建同样一个 PHP 网站，维护细节可能不同"></a>建同样一个 PHP 网站，维护细节可能不同</h2><p>假设有一套 PHP 程序，需要连接 MySQL，并且会把用户上传的图片保存到本地目录。</p>
+<p>不管选哪个面板，至少都要确认三件事：PHP 版本和扩展能否满足程序要求，数据库能否连通，上传文件会保存在哪里。</p>
+<p>如果采用宿主机上的 PHP 环境，就检查对应的 PHP 配置、文件权限和数据库连接方式。如果采用容器运行环境，还要弄清楚容器内目录与宿主机目录的映射，以及数据库与 PHP 是否处于可互通的网络中。这是部署方式带来的区别，不能简单归因于面板品牌。</p>
+<p>一个容易卡住的地方是数据库地址。程序以前填的是 <code>127.0.0.1</code>，迁进具有独立网络空间的容器后，原样照抄可能就连不上了。此时这个地址指向当前容器，而不是宿主机，也不是另一个数据库容器。处于同一自定义 Docker 网络中的容器，可以通过容器名称等网络内名称通信；具体连接地址仍要按实际网络配置填写。使用 host 网络等情况则不能直接套用这个判断。<a href="https://docs.docker.com/engine/network/">Docker 容器网络文档</a></p>
+<p>同理，在宿主机上安装一个 PHP 扩展，并不会自动给另一个容器中的 PHP 装上它。排查时先确认请求实际由哪套环境处理，比反复点“重启”有效。</p>
+<p>对已有网站来说，这类细节往往比面板界面是否好看更影响迁移成本。</p>
+<p><img alt="宿主机与独立网络容器的部署示意：PHP 与 MySQL 的网络边界及目录挂载" decoding="async" height="941" loading="eager" src="https://img.iowill.com/file/%E7%B3%BB%E7%BB%9F%E4%B8%8E%E8%BF%90%E7%BB%B4/%E5%AE%9D%E5%A1%94%E4%B8%8E1Panel%E7%9A%84%E5%8C%BA%E5%88%AB/body1.png" width="1672"/></p>
+<p><em>图中比较的是两种部署方式，并非宝塔与 1Panel 的功能边界；独立网络中的容器需要按实际网络配置连接数据库。</em></p>
+<h2 id="应用商店方便，但装好之后还要维护"><a class="headerlink" href="#应用商店方便，但装好之后还要维护" title="应用商店方便，但装好之后还要维护"></a>应用商店方便，但装好之后还要维护</h2><p>应用商店能省去一部分手写配置的工作。选择应用、填写域名和账号，确实比从头找部署文件省事。</p>
+<p>我会继续检查安装后的状态：应用数据在哪个目录，数据库是独立服务还是随应用一起部署，哪些端口开放到了宿主机，升级前有没有可恢复的备份。</p>
+<p>尤其要分清应用版本、镜像版本和面板版本。更新面板，不等于所有应用都完成升级；更新镜像，也不等于数据库结构变更一定可逆。如果应用升级修改了数据结构，回退镜像未必能让旧版本继续读取新数据，仍需查看应用自己的升级说明。</p>
+<p>因此，我更看重面板是否方便查看配置和日志，以及出了问题后能不能找到原始部署信息。应用装上去只是开始，几个月后升级失败时，才会真正用到这些入口。</p>
+<p>如果已经熟悉 Docker Compose，也可以先不装面板。把部署文件、数据目录和备份流程维护好，再决定是否需要一个可视化管理界面。面板是减少重复操作的工具，并非部署容器的必需条件。</p>
+<h2 id="备份按钮都有，恢复能力要亲自确认"><a class="headerlink" href="#备份按钮都有，恢复能力要亲自确认" title="备份按钮都有，恢复能力要亲自确认"></a>备份按钮都有，恢复能力要亲自确认</h2><p>两者都有备份相关能力。宝塔提供网站、数据库等计划任务，也有选择备份对象的备份功能；1Panel 的网站备份支持备份、恢复、下载和导入。<a href="https://docs.bt.cn/user-guide/crontab/task/">宝塔计划任务</a>、<a href="https://docs.bt.cn/user-guide/config/backup/create-backup">宝塔创建备份</a>、<a href="https://1panel.pro/docs/v2/user_manual/websites/website_backup/">1Panel 网站备份</a></p>
+<p>选面板时，与其只问“能不能自动备份”，我更建议实际恢复一次。</p>
+<p>例如，一个有数据库的网站，只有网站文件压缩包，未必就能恢复出完整内容。容器应用除了部署文件，可能还需要持久化目录、数据库和环境配置。备份名称里写着“网站”或“应用”，也不能据此推断它包含了整台服务器。</p>
+<p>可以在测试环境做一次很小的验证：新建一篇内容、上传一张图片，完成备份，再恢复到另一个测试实例。检查内容、图片、登录和后台操作是否正常。这样能直接发现漏备份了什么，而不必等到服务器故障时才研究备份包。</p>
+<p>还有一点容易忽略：备份只放在原服务器的同一块磁盘上，仍然会受到这块磁盘故障的影响。面板选哪一个，都应该给重要数据留一份独立副本。</p>
+<p><img alt="网站文件、数据库和环境配置独立备份后，在测试环境恢复并检查内容、图片和登录" decoding="async" height="941" loading="lazy" src="https://img.iowill.com/file/%E7%B3%BB%E7%BB%9F%E4%B8%8E%E8%BF%90%E7%BB%B4/%E5%AE%9D%E5%A1%94%E4%B8%8E1Panel%E7%9A%84%E5%8C%BA%E5%88%AB/body2.png" width="1672"/></p>
+<p><em>先核对备份范围，再实际恢复验证；图示流程不表示不同面板的备份包可以直接互相导入。</em></p>
+<h2 id="免费功能够不够，要对照自己的需求"><a class="headerlink" href="#免费功能够不够，要对照自己的需求" title="免费功能够不够，要对照自己的需求"></a>免费功能够不够，要对照自己的需求</h2><p>宝塔有免费版、专业版和企业版；1Panel 有社区版、专业版和企业版。基础网站和服务器管理不等于必须付费，但某些安全、管理或服务能力会按版本区分。<a href="https://docs.bt.cn/purchase-guides/package-version-comparison/">宝塔版本对比</a>、<a href="https://1panel.cn/versions.html">1Panel 版本对比</a></p>
+<p>例如，需要的是创建网站和定时备份，还是多节点管理、WAF、告警及技术支持，应该分开看。不要因为介绍页展示了某项功能，就默认免费安装后也能完整使用。</p>
+<p>这里不列固定价格。一方面活动和授权方式会调整，另一方面单台服务器与多节点场景的支出并不相同。确定必须用到的功能后，再核对当前版本说明和授权范围，比较才有意义。</p>
+<h2 id="哪个更省内存，哪个更安全？"><a class="headerlink" href="#哪个更省内存，哪个更安全？" title="哪个更省内存，哪个更安全？"></a>哪个更省内存，哪个更安全？</h2><p>没有相同配置、相同服务和相同负载的测试，我不想给这两个问题排一个名次。</p>
+<p>一台机器的资源占用包含面板本身，也包含 Web 服务、数据库、应用进程及其他组件。只看面板使用什么编程语言，或者有没有 Docker，推不出整台服务器会省多少内存。</p>
+<p>如果服务器配置比较紧张，可以在两套测试环境中部署同样的业务，观察空闲状态和实际访问时的内存、CPU、磁盘占用，再测试一次备份或升级。只比较刚装完面板的首页数字，对之后要运行的业务帮助有限。</p>
+<p>安全也不能直接从“开源”“容器化”或“有付费防火墙”推出结论。容器的隔离效果与具体权限配置有关，面板通常又拥有较高的服务器管理权限。对个人服务器来说，限制管理入口的访问范围、及时更新面板和应用、保留可靠备份，比相信某个面板装上就不会出问题更实际。</p>
+<h2 id="已经用了宝塔，有必要换到-1Panel-吗？"><a class="headerlink" href="#已经用了宝塔，有必要换到-1Panel-吗？" title="已经用了宝塔，有必要换到 1Panel 吗？"></a>已经用了宝塔，有必要换到 1Panel 吗？</h2><p>如果网站运行稳定，备份可恢复，也没有缺少的必要功能，我倾向于先不迁移。换面板本身不会给网站带来业务收益，却会增加一次环境变更。</p>
+<p>如果原来的管理方式已经不适合现在的应用，比如容器服务越来越多，或者想重新整理运行环境，可以先拿一个非关键应用试用另一套面板。看看安装、查日志、备份和更新是否真的更顺手，再考虑迁移其他服务。</p>
+<p>迁移前，把这些内容记下来：</p>
+<ul>
+<li>网站程序、用户上传文件和数据库导出。</li>
+<li>运行环境版本、扩展、环境变量及计划任务。</li>
+<li>域名、证书、反向代理、重写规则和访问限制。</li>
+<li>容器部署配置、持久化目录，以及外部存储或邮件服务等依赖。</li>
+</ul>
+<p>不要默认一个面板生成的备份包能被另一个面板直接导入。更稳妥的做法是先在新环境重建服务，用应用和数据库支持的方式迁移数据，验证后再切换流量，保留旧环境用于回退。</p>
+<p>如果域名和页面 URL 没变，只是换了服务器或面板，并不需要因此添加 301 重定向。若同时调整域名或文章路径，才需要另行处理旧地址到新地址的对应关系。这个区别在<a href="https://iowill.com/blog/2026/10/reverse-proxy-vs-redirect/">反向代理和重定向的文章</a>里有展开。</p>
+<h2 id="新服务器，我会怎么试"><a class="headerlink" href="#新服务器，我会怎么试" title="新服务器，我会怎么试"></a>新服务器，我会怎么试</h2><p>如果主要维护 PHP 网站，我会先用一套真实程序验证版本、扩展、重写规则和文件权限，哪个面板更容易完成这些操作，就优先考虑哪个。</p>
+<p>如果主要部署容器应用，我会挑一个带数据库和持久化目录的应用，分别走一遍安装、修改配置、查看日志、备份恢复和升级流程。只成功打开首页，还不足以判断后续维护是否省心。</p>
+<p>每次在独立的测试环境中试一套，避免两个面板同时管理相同的端口和服务。试完之后，最好能回答：应用出问题时我去哪里看日志，数据坏了如何恢复，离开这个面板以后还能不能接着维护。</p>
+<p>能回答这些问题，再决定长期使用哪一个，通常比比较应用商店里有多少个图标更有用。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://iowill.com/about/">Billy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://iowill.com/blog/2026/10/baota-vs-1panel/">https://iowill.com/blog/2026/10/baota-vs-1panel/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://iowill.com" target="_blank">Billy 的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/1Panel/">1Panel</a><a class="post-meta__tags" href="/tags/Docker/">Docker</a><a class="post-meta__tags" href="/tags/%E5%AE%9D%E5%A1%94/">宝塔</a><a class="post-meta__tags" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/">服务器管理</a><a class="post-meta__tags" href="/tags/%E7%BD%91%E7%AB%99%E9%83%A8%E7%BD%B2/">网站部署</a></div></div><nav aria-label="文章导航" class="pagination-post" id="pagination"><a aria-label="上一篇：更新日志怎么写？从一次 Bug 修复开始维护 CHANGELOG" class="pagination-related prev-post" href="/blog/2026/10/maintaining-a-changelog/" rel="prev" title="更新日志怎么写？从一次 Bug 修复开始维护 CHANGELOG"><img alt="更新日志怎么写？从一次 Bug 修复开始维护 CHANGELOG" class="cover" decoding="async" loading="lazy" src="https://img.iowill.com/file/编程开发/更新日志怎么写/thumbs/cover.jpg"/><div class="info"><div class="info-1"><div class="info-item-1"><i aria-hidden="true" class="fas fa-angle-left fa-fw"></i>上一篇</div><div class="info-item-2">更新日志怎么写？从一次 Bug 修复开始维护 CHANGELOG</div></div><div class="info-2">阅读全文：更新日志怎么写？从一次 Bug 修复开始维护 CHANGELOG</div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img alt="avatar" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='/img/friend_404.gif'" src="/img/avatar.jpg"/></div><div class="author-info-name">Billy</div><div class="author-info-description">记录学习与折腾</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">100</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a href="https://github.com/Billy775326" id="card-info-btn"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里记录写代码、部署服务和折腾工具时遇到的问题，也分享解决过程。<br/> <a href="/archives/">文章归档</a> · <a href="/about/#contact">交流与纠错</a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B3%E6%97%B6%E5%9C%A8%E9%9D%A2%E6%9D%BF%E9%87%8C%E5%81%9A%E4%BB%80%E4%B9%88"><span class="toc-text">平时在面板里做什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E5%90%8C%E6%A0%B7%E4%B8%80%E4%B8%AA-PHP-%E7%BD%91%E7%AB%99%EF%BC%8C%E7%BB%B4%E6%8A%A4%E7%BB%86%E8%8A%82%E5%8F%AF%E8%83%BD%E4%B8%8D%E5%90%8C"><span class="toc-text">建同样一个 PHP 网站，维护细节可能不同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%95%86%E5%BA%97%E6%96%B9%E4%BE%BF%EF%BC%8C%E4%BD%86%E8%A3%85%E5%A5%BD%E4%B9%8B%E5%90%8E%E8%BF%98%E8%A6%81%E7%BB%B4%E6%8A%A4"><span class="toc-text">应用商店方便，但装好之后还要维护</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD%E6%8C%89%E9%92%AE%E9%83%BD%E6%9C%89%EF%BC%8C%E6%81%A2%E5%A4%8D%E8%83%BD%E5%8A%9B%E8%A6%81%E4%BA%B2%E8%87%AA%E7%A1%AE%E8%AE%A4"><span class="toc-text">备份按钮都有，恢复能力要亲自确认</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%8D%E8%B4%B9%E5%8A%9F%E8%83%BD%E5%A4%9F%E4%B8%8D%E5%A4%9F%EF%BC%8C%E8%A6%81%E5%AF%B9%E7%85%A7%E8%87%AA%E5%B7%B1%E7%9A%84%E9%9C%80%E6%B1%82"><span class="toc-text">免费功能够不够，要对照自己的需求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%AA%E4%B8%AA%E6%9B%B4%E7%9C%81%E5%86%85%E5%AD%98%EF%BC%8C%E5%93%AA%E4%B8%AA%E6%9B%B4%E5%AE%89%E5%85%A8%EF%BC%9F"><span class="toc-text">哪个更省内存，哪个更安全？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%B2%E7%BB%8F%E7%94%A8%E4%BA%86%E5%AE%9D%E5%A1%94%EF%BC%8C%E6%9C%89%E5%BF%85%E8%A6%81%E6%8D%A2%E5%88%B0-1Panel-%E5%90%97%EF%BC%9F"><span class="toc-text">已经用了宝塔，有必要换到 1Panel 吗？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E6%88%91%E4%BC%9A%E6%80%8E%E4%B9%88%E8%AF%95"><span class="toc-text">新服务器，我会怎么试</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/baota-vs-1panel/" title="宝塔和 1Panel 有什么区别？建站与自托管该怎么选"><img alt="宝塔和 1Panel 有什么区别？建站与自托管该怎么选" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/系统与运维/宝塔与1Panel的区别/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/10/baota-vs-1panel/" title="宝塔和 1Panel 有什么区别？建站与自托管该怎么选">宝塔和 1Panel 有什么区别？建站与自托管该怎么选</a><time datetime="2026-10-16T09:46:45.000Z" title="2026/10/16 17:46:45">2026/10/16 17:46:45</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/maintaining-a-changelog/" title="更新日志怎么写？从一次 Bug 修复开始维护 CHANGELOG"><img alt="更新日志怎么写？从一次 Bug 修复开始维护 CHANGELOG" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/编程开发/更新日志怎么写/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/10/maintaining-a-changelog/" title="更新日志怎么写？从一次 Bug 修复开始维护 CHANGELOG">更新日志怎么写？从一次 Bug 修复开始维护 CHANGELOG</a><time datetime="2026-10-15T02:51:45.000Z" title="2026/10/15 10:51:45">2026/10/15 10:51:45</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/reverse-proxy-vs-redirect/" title="反向代理和重定向有什么区别？网站迁移时怎样减少排名波动"><img alt="反向代理和重定向有什么区别？网站迁移时怎样减少排名波动" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/系统与运维/反向代理和重定向的区别/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/10/reverse-proxy-vs-redirect/" title="反向代理和重定向有什么区别？网站迁移时怎样减少排名波动">反向代理和重定向有什么区别？网站迁移时怎样减少排名波动</a><time datetime="2026-10-14T09:07:00.000Z" title="2026/10/14 17:07:00">2026/10/14 17:07:00</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/webrtc-ip-leak/" title="用了代理，为什么还会暴露真实 IP？WebRTC 泄漏排查与防护"><img alt="用了代理，为什么还会暴露真实 IP？WebRTC 泄漏排查与防护" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/系统与运维/用了代理为什么还会暴露真实IP-WebRTC泄漏排查与防护/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/10/webrtc-ip-leak/" title="用了代理，为什么还会暴露真实 IP？WebRTC 泄漏排查与防护">用了代理，为什么还会暴露真实 IP？WebRTC 泄漏排查与防护</a><time datetime="2026-10-12T03:23:47.000Z" title="2026/10/12 11:23:47">2026/10/12 11:23:47</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/10/dynamic-class-locators/" title="网页 class 变了，自动化脚本怎么定位元素？"><img alt="网页 class 变了，自动化脚本怎么定位元素？" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='/img/404.jpg'" src="https://img.iowill.com/file/编程开发/网页class变了-自动化脚本怎么定位元素/thumbs/cover.jpg"/></a><div class="content"><a class="title" href="/blog/2026/10/dynamic-class-locators/" title="网页 class 变了，自动化脚本怎么定位元素？">网页 class 变了，自动化脚本怎么定位元素？</a><time datetime="2026-10-10T07:25:55.000Z" title="2026/10/10 15:25:55">2026/10/10 15:25:55</time></div></div></div></div></div></div></main><footer aria-label="网站页脚" id="footer"><div class="footer-other"><div class="footer-credits"><span class="copyright">© 2023–2026 By <a href="/">Billy</a></span><span class="framework-info">由 <a href="https://hexo.io" rel="noopener" target="_blank">Hexo</a> 驱动<span aria-hidden="true" class="footer-separator">·</span><a href="https://github.com/jerryc127/hexo-theme-butterfly" rel="noopener" target="_blank">Butterfly</a> 主题</span></div><div class="footer_custom_text"><nav aria-label="页脚导航"><a href="/about/"><i aria-hidden="true" class="fas fa-user"></i>关于</a><a href="/archives/"><i aria-hidden="true" class="fas fa-archive"></i>归档</a><a href="/categories/"><i aria-hidden="true" class="fas fa-folder-open"></i>分类</a><a href="/tags/"><i aria-hidden="true" class="fas fa-tags"></i>标签</a><a href="/sitemap.xml"><i aria-hidden="true" class="fas fa-sitemap"></i>站点地图</a><a href="https://github.com/Billy775326" rel="me noopener" target="_blank"><i aria-hidden="true" class="fab fa-github"></i>GitHub</a></nav></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" title="阅读模式" type="button"><i class="fas fa-book-open"></i></button><button id="darkmode" title="日间和夜间模式切换" type="button"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" title="单栏和双栏切换" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" title="设置" type="button"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" title="目录" type="button"><i class="fas fa-list-ul"></i></button><button id="go-up" title="回到顶部" type="button"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script async="" data-pjax="" src="/js/visit-counter.js?v=20261005"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" hidden="hidden" id="loading-status"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=20261005-domready"></script></div></div></body></html>

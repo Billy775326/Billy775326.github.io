@@ -42,11 +42,11 @@ echo hello
     build('UTC')
     pages = ['index.html', 'page/2/index.html', 'page/3/index.html']
     counts = [len(B((test/'public'/p).read_text(encoding='utf8'),'html.parser').select('.recent-post-item')) for p in pages]
-    assert counts == [18, 18, 5], counts
+    assert counts == [18, 18, 6], counts
     page = B((test/'public/blog/2026/10/migration-test/index.html').read_text(encoding='utf8'), 'html.parser')
     assert page.select_one('#article-container strong').text == 'test'
     assert page.select_one('figure.highlight') is not None
     def hashes(): return {p.relative_to(test/'public').as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in (test/'public').rglob('*') if p.is_file()}
     before=hashes();build('Asia/Shanghai');after=hashes()
     assert before == after, [p for p in before if before[p] != after.get(p)]
-print('PASS: new Markdown post, 41 posts, 18/18/5, automatic search/taxonomy/statistics, reproducible UTC/Asia-Shanghai builds')
+print('PASS: new Markdown post, 42 posts, 18/18/6, automatic search/taxonomy/statistics, reproducible UTC/Asia-Shanghai builds')

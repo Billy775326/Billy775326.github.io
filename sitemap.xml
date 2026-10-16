@@ -1,6 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://iowill.com/blog/2026/10/baota-vs-1panel/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-10-16T09:46:45.000Z</lastmod>
+  </url>
+  <url>
     <loc>https://iowill.com/blog/2026/10/maintaining-a-changelog/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -551,6 +557,11 @@
     <priority>0.2</priority>
   </url>
   <url>
+    <loc>https://iowill.com/tags/%E5%AE%9D%E5%A1%94/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
     <loc>https://iowill.com/tags/%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -616,6 +627,11 @@
     <priority>0.2</priority>
   </url>
   <url>
+    <loc>https://iowill.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
     <loc>https://iowill.com/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -677,6 +693,11 @@
   </url>
   <url>
     <loc>https://iowill.com/tags/%E7%BD%91%E7%AB%99%E8%BF%81%E7%A7%BB/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://iowill.com/tags/%E7%BD%91%E7%AB%99%E9%83%A8%E7%BD%B2/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
