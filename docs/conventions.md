@@ -171,3 +171,5 @@
 ## 2026-10-16 正文插图比例
 
 正文段落及直接 figure 插图保留真实 width/height 属性，并在 site-preserved.css 中设置 height: auto，使窄屏缩小宽度时高度按原图比例变化；不影响首页封面和侧栏裁切样式。图片预览须核对实际显示比例，不能只检查无横向溢出。
+
+线上 CDN 会缓存 CSS；修改 site-preserved.css 后同步更新 _config.butterfly.yml 中对应 stylesheet 链接的版本参数，并验证页面实际引用的完整 URL，避免新 HTML 配到旧 CSS。当前版本 v=20261016-1。

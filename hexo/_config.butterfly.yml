@@ -490,7 +490,7 @@ structured_data:
 css_prefix: true
 inject:
   head:
-    - <link rel="stylesheet" href="/css/site-preserved.css">
+    - <link rel="stylesheet" href="/css/site-preserved.css?v=20261016-1">
     - <link rel="stylesheet" href="/css/cards.css">
   bottom: null
 CDN:
